@@ -259,6 +259,75 @@ body { overflow-x: hidden; }
   line-height: 1.5;
   border-top: 1px solid var(--border);
 }
+/* Configuración desplegable */
+.config-section {
+  margin-top: 12px;
+}
+.config-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #64748b;
+  font-family: 'Inter', sans-serif;
+  font-size: .75rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: all .15s;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.config-toggle:hover {
+  background: #f8fafc;
+  color: var(--primary);
+}
+.config-toggle .toggle-icon {
+  margin-left: auto;
+  font-size: .7rem;
+  transition: transform .2s;
+}
+.config-toggle.open .toggle-icon {
+  transform: rotate(180deg);
+}
+.config-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease;
+}
+.config-content.open {
+  max-height: 400px;
+}
+.config-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 10px 9px 16px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: #64748b;
+  font-family: 'Inter', sans-serif;
+  font-size: .72rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all .15s;
+  margin-top: 3px;
+}
+.config-btn:hover {
+  background: #f1f5f9;
+  color: var(--primary);
+}
+.config-btn .config-icon {
+  font-size: .95rem;
+  flex-shrink: 0;
+}
 .main-content {
   flex: 1;
   min-width: 0;
@@ -268,6 +337,281 @@ body { overflow-x: hidden; }
 }
 /* Ocultar tabs originales */
 .main-tabs-wrap { display: none !important; }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE MÓVIL — IVC Engativá
+   ══════════════════════════════════════════════ */
+
+/* ── Barra inferior de navegación (móvil) ── */
+#mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-top: 2px solid #e2e8f0;
+  z-index: 500;
+  padding: 6px 0 env(safe-area-inset-bottom, 6px);
+  box-shadow: 0 -4px 20px rgba(15,23,42,.10);
+}
+#mobile-nav .mnav-inner {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.mnav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 10px;
+  color: #64748b;
+  font-family: 'Inter', sans-serif;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  transition: all .15s;
+  min-width: 60px;
+}
+.mnav-btn .mnav-icon { font-size: 1.3rem; line-height: 1; }
+.mnav-btn.active { color: #1e3a8a; }
+.mnav-btn.active .mnav-icon-wrap {
+  background: #eff6ff;
+  border-radius: 10px;
+  padding: 4px 14px;
+}
+.mnav-badge {
+  background: #ef4444;
+  color: #fff;
+  font-size: .5rem;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 999px;
+  margin-top: -22px;
+  margin-left: 18px;
+  min-width: 14px;
+  text-align: center;
+  display: none;
+}
+.mnav-badge.show { display: inline-block; }
+
+/* ── Header móvil ── */
+#mobile-header {
+  display: none;
+  background: linear-gradient(135deg, #1e293b, #1e3a8a);
+  padding: 12px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 400;
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+#mobile-header .mh-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#mobile-header .mh-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#mobile-header .mh-logo {
+  width: 32px; height: 32px;
+  background: #f59e0b;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 11px; color: #fff;
+}
+#mobile-header .mh-title {
+  font-size: 13px; font-weight: 800; color: #fff; line-height: 1.1;
+}
+#mobile-header .mh-sub {
+  font-size: 10px; color: rgba(255,255,255,.55);
+}
+#mobile-header .mh-fb {
+  font-size: 10px; color: rgba(255,255,255,.6);
+}
+
+/* ── Botón FAB nuevo registro ── */
+#fab-nuevo {
+  display: none;
+  position: fixed;
+  bottom: 75px;
+  right: 18px;
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(245,158,11,.45);
+  font-size: 1.6rem;
+  cursor: pointer;
+  z-index: 450;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: transform .15s;
+}
+#fab-nuevo:active { transform: scale(.93); }
+
+
+/* ══ CARRITO DE REPORTE ══ */
+#carrito-bar {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #1e293b, #1e3a8a);
+  color: #fff;
+  border-radius: 50px;
+  padding: 10px 20px;
+  box-shadow: 0 8px 32px rgba(15,23,42,.4);
+  z-index: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  min-width: 340px;
+  justify-content: space-between;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(20px);
+  transition: opacity .25s, transform .25s;
+}
+#carrito-bar.visible {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+#carrito-count {
+  background: #f59e0b;
+  color: #1e293b;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 13px;
+  font-weight: 900;
+}
+.carrito-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter .15s;
+  white-space: nowrap;
+}
+.carrito-btn:hover { filter: brightness(1.15); }
+.carrito-btn-add   { background: #10b981; color: #fff; }
+.carrito-btn-pdf   { background: #f59e0b; color: #1e293b; }
+.carrito-btn-clear { background: rgba(255,255,255,.15); color: #fff; }
+
+@media (max-width: 768px) {
+  /* Ocultar sidebar desktop */
+  .sidebar { display: none !important; }
+
+  /* Ocultar header original */
+  .header-block { display: none !important; }
+  #topbar-orig  { display: none !important; }
+
+  /* Mostrar elementos móvil */
+  #mobile-header { display: block; }
+  #carrito-bar { bottom: 75px; left: 12px; right: 12px; transform: translateY(20px); min-width: 0; border-radius: 14px; flex-wrap: wrap; gap: 8px; }
+  #carrito-bar.visible { transform: translateY(0); }
+  #mobile-nav    { display: block; }
+  #fab-nuevo     { display: flex; }
+
+  /* Layout: sin sidebar, padding inferior para la nav bar */
+  .layout-wrap {
+    flex-direction: column;
+    min-height: calc(100vh - 60px);
+    padding-bottom: 70px;
+  }
+  .main-content {
+    height: auto !important;
+    overflow-y: visible;
+    padding-bottom: 16px;
+  }
+
+  /* Header original de la página oculto */
+  .header-block { display: none; }
+
+  /* Grids adaptados */
+  .g2, .g3, .g4 { grid-template-columns: 1fr !important; }
+
+  /* Dashboard KPIs en 2 columnas en móvil */
+  div[style*="grid-template-columns:repeat(4,1fr)"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Tabla de resultados: scroll horizontal */
+  .ca { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { min-width: 600px; }
+
+  /* Botones de acción en tabla: columna */
+  .ca table td div[style*="display:flex"] {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  /* Formulario: padding reducido */
+  .mview { padding: 0 !important; }
+  .ca { padding: 12px !important; }
+
+  /* Constructor de dirección: scroll */
+  .ab-row {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .ab-row select, .ab-row input {
+    min-width: 60px !important;
+    flex: 1;
+  }
+
+  /* Botones de la barra superior: ocultar en móvil */
+  .toolbar-desktop { display: none !important; }
+
+  /* Toast más ancho en móvil */
+  #toastEl {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 80px !important;
+    max-width: none !important;
+  }
+
+  /* Modal: pantalla completa en móvil */
+  .mo .md {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Dashboard sidebar oculto en móvil */
+  #dash-sidebar { display: none !important; }
+  #dash-content { padding: 10px !important; }
+
+  /* Filtros: una columna */
+  #filtros-panel > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .mnav-btn { min-width: 50px; padding: 6px 8px; font-size: .52rem; }
+  #mobile-header .mh-title { font-size: 12px; }
+}
 .app { max-width: 100% !important; padding-bottom: 0 !important; }
 
 </style>
@@ -289,6 +633,46 @@ body { overflow-x: hidden; }
 </div>
 
 <!-- LAYOUT PRINCIPAL -->
+
+<!-- ══ HEADER MÓVIL ══ -->
+<div id="mobile-header">
+  <div class="mh-inner">
+    <div class="mh-brand">
+      <div class="mh-logo">IVC</div>
+      <div>
+        <div class="mh-title">Registro de Operativos</div>
+        <div class="mh-sub">IVC · Alcaldía Local de Engativá</div>
+      </div>
+    </div>
+    <div class="mh-fb" id="mh-fb-status"></div>
+  </div>
+</div>
+
+<!-- ══ FAB NUEVO REGISTRO ══ -->
+<button id="fab-nuevo" onclick="switchMain('form',document.getElementById('sidebtn-form'))" title="Nuevo registro">✦</button>
+
+<!-- ══ NAV BAR INFERIOR MÓVIL ══ -->
+<div id="mobile-nav">
+  <div class="mnav-inner">
+    <button class="mnav-btn active" id="mnav-recs" onclick="mnavSwitch('recs',this)">
+      <div class="mnav-icon-wrap"><div class="mnav-icon">📋</div></div>
+      <span>Resultados</span>
+    </button>
+    <button class="mnav-btn" id="mnav-dash" onclick="mnavSwitch('dash',this)">
+      <div class="mnav-icon-wrap"><div class="mnav-icon">📊</div></div>
+      <span>Dashboard</span>
+    </button>
+    <button class="mnav-btn" id="mnav-form" onclick="mnavSwitch('form',this)">
+      <div class="mnav-icon-wrap"><div class="mnav-icon">✦</div></div>
+      <span>Nuevo</span>
+    </button>
+    <button class="mnav-btn" id="mnav-reporte" onclick="mnavSwitch('reporte',this)">
+      <div class="mnav-icon-wrap"><div class="mnav-icon">📄</div></div>
+      <span>Reporte</span>
+    </button>
+  </div>
+</div>
+
 <div class="layout-wrap">
 
   <!-- SIDEBAR IZQUIERDO -->
@@ -310,6 +694,34 @@ body { overflow-x: hidden; }
       <span class="btn-icon">✦</span>
       <span>Nuevo registro</span>
     </button>
+    <button class="sidebar-nav-btn" id="sidebtn-reporte" onclick="switchMain('reporte',this)">
+      <span class="btn-icon">📄</span>
+      <span>Reporte PDF</span>
+      <span class="btn-badge" id="reporte-badge" style="display:none">0</span>
+    </button>
+
+    <!-- Sección Configuración -->
+    <div class="config-section">
+      <button class="config-toggle" id="config-toggle" onclick="toggleConfig()">
+        <span class="btn-icon">⚙️</span>
+        <span>Configuración</span>
+        <span class="toggle-icon">▼</span>
+      </button>
+      <div class="config-content" id="config-content">
+        <button class="config-btn" onclick="pedirClaveImport()">
+          <span class="config-icon">⬆️</span>
+          <span>Importar Excel</span>
+        </button>
+        <button class="config-btn" onclick="abrirAdmin()">
+          <span class="config-icon">⚙️</span>
+          <span>Admin listas</span>
+        </button>
+        <button class="config-btn" onclick="document.getElementById('importJsonFile').click()">
+          <span class="config-icon">📂</span>
+          <span>Cargar histórico JSON</span>
+        </button>
+      </div>
+    </div>
 
     <div class="sidebar-footer">
       SIGRE · IVC<br>Alcaldía Engativá<br>2026
@@ -333,12 +745,6 @@ body { overflow-x: hidden; }
         <button onclick="toggleFiltros()" id="btn-toggle-filtros"
           style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#eff6ff;color:#1e40af;border:1.5px solid #93c5fd;border-radius:8px;font-family:'Inter',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .15s">
           🔍 Búsqueda
-        </button>
-        <button class="btn btn-save" style="font-size:.72rem;padding:7px 14px" onclick="pedirClaveImport()">&#8679; Importar Excel</button>
-        <button class="btn" style="font-size:.72rem;padding:7px 14px;background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;border:none" onclick="abrirAdmin()">⚙️ Admin listas</button>
-        <button onclick="document.getElementById('importJsonFile').click()"
-          style="padding:7px 14px;background:#0a1628;color:#f59e0b;border:1.5px solid #f59e0b;border-radius:8px;font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;white-space:nowrap">
-          📂 Cargar histórico JSON
         </button>
         <input type="file" id="importJsonFile" accept=".json" style="display:none" onchange="importarHistoricoJSON(event)">
       </div>
@@ -408,7 +814,7 @@ body { overflow-x: hidden; }
         <div class="f"><label>Barrio</label><input type="text" id="fltBarrio" placeholder="Ej. Bochica" oninput="applyFilters()"></div>
         <div class="f"><label>UPZ</label><input type="text" id="fltUPZ" placeholder="Ej. Garcés Navas" oninput="applyFilters()"></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
         <div class="f"><label>Tipo IVC</label>
           <select id="fltTipo" onchange="applyFilters()">
             <option value="">— Todos —</option>
@@ -418,6 +824,19 @@ body { overflow-x: hidden; }
             <option value="MOV">Movilidad</option>
             <option value="OBR">Obras</option>
           </select>
+        </div>
+        <div class="f"><label>Acta</label>
+          <select id="fltActa" onchange="applyFilters()">
+            <option value="">— Todos —</option>
+            <option value="con">✅ Con acta</option>
+            <option value="sin">⬜ Sin acta</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom:10px">
+        <div class="f"><label>N° ID Operativo</label>
+          <input type="text" id="fltIdOp" placeholder="Ej. 33281" oninput="applyFilters()"
+            style="font-family:'Inter',sans-serif;font-size:.8rem">
         </div>
       </div>
       <!-- Constructor de dirección para filtro -->
@@ -468,9 +887,22 @@ body { overflow-x: hidden; }
       <div class="stitle">01 &middot; Identificaci&oacute;n del Operativo</div>
       <div class="card">
         <div class="g2 mb">
-          <div class="f"><label>ID del Operativo</label><input type="number" id="idop" placeholder="Ej. 33282"></div>
+          <div class="f"><label>ID del Operativo</label><input type="number" id="idop" placeholder="Ej. 33282" oninput="checkDuplicateID()"></div>
           <div class="f"><label>Fecha de la visita <span class="req">*</span></label><input type="date" id="fecha" data-req data-lbl="Fecha de la visita" data-sec="s1"></div>
         </div>
+        
+        <!-- Panel de advertencia de duplicados -->
+        <div id="duplicateWarning" style="display:none;background:#fff7ed;border:1.5px solid #fdba74;border-radius:10px;padding:14px;margin-bottom:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+            <span style="font-size:1.2rem">⚠️</span>
+            <div style="font-size:.78rem;font-weight:800;color:#c2410c">Ya existen registros con este ID</div>
+          </div>
+          <div style="font-size:.72rem;color:#9a3412;margin-bottom:10px">
+            Se encontraron <strong id="duplicateCount">0</strong> operativo(s) con el ID <strong id="duplicateIDLabel"></strong>. Revisa si alguno corresponde al registro que deseas hacer:
+          </div>
+          <div id="duplicateList" style="display:flex;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto"></div>
+        </div>
+        
         <div class="g2 mb">
           <div class="f"><label>Hora de inicio</label><input type="time" id="h1"></div>
           <div class="f"><label>Hora de finalizaci&oacute;n</label><input type="time" id="h2"></div>
@@ -1063,6 +1495,71 @@ body { overflow-x: hidden; }
   </div>
 </div><!-- /mview-form -->
 
+    <!-- ══ VISTA: REPORTE PDF ══ -->
+    <div class="mview" id="mview-reporte">
+      <div class="ca">
+
+        <!-- Encabezado -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+          <div>
+            <div class="stitle" style="margin-bottom:4px">📄 Generador de Reporte PDF</div>
+            <div style="font-size:.75rem;color:var(--muted)">Selecciona los registros que deseas incluir en el reporte</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <button onclick="reporteSeleccionarTodos()"
+              style="padding:7px 14px;background:#eff6ff;color:#1e40af;border:1.5px solid #93c5fd;border-radius:8px;font-family:'Inter',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer">
+              ☑ Seleccionar todos
+            </button>
+            <button onclick="reporteDeseleccionarTodos()"
+              style="padding:7px 14px;background:#f1f5f9;color:#64748b;border:1.5px solid #e2e8f0;border-radius:8px;font-family:'Inter',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer">
+              ☐ Deseleccionar
+            </button>
+            <button id="btn-descargar-reporte" onclick="reporteDescargarPDF()" disabled
+              style="padding:7px 18px;background:#94a3b8;color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:.75rem;font-weight:700;cursor:not-allowed;display:flex;align-items:center;gap:6px;transition:all .2s">
+              📄 Descargar PDF <span id="reporte-sel-cnt" style="background:rgba(255,255,255,.25);padding:1px 7px;border-radius:999px">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filtro rápido dentro del reporte -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;margin-bottom:14px;align-items:end" id="reporte-filtros">
+          <div class="f"><label style="font-size:.7rem">Buscar dirección</label>
+            <input type="text" id="rpt-dir" placeholder="Ej. CR 95G" oninput="reporteRenderLista()"></div>
+          <div class="f"><label style="font-size:.7rem">Componente</label>
+            <select id="rpt-cc" onchange="reporteRenderLista()">
+              <option value="">— Todos —</option>
+              <option value="AE">Actividad Económica</option>
+              <option value="EP">Espacio Público</option>
+              <option value="AMB">Ambiente</option>
+              <option value="MOV">Movilidad</option>
+              <option value="OBR">Obras</option>
+            </select>
+          </div>
+          <div class="f"><label style="font-size:.7rem">Acta</label>
+            <select id="rpt-acta" onchange="reporteRenderLista()">
+              <option value="">— Todos —</option>
+              <option value="con">✅ Con acta</option>
+              <option value="sin">⬜ Sin acta</option>
+            </select>
+          </div>
+          <button onclick="reporteLimpiarFiltros()"
+            style="padding:8px 12px;background:#f1f5f9;color:#64748b;border:1.5px solid #e2e8f0;border-radius:8px;font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;white-space:nowrap">
+            ✕ Limpiar
+          </button>
+        </div>
+
+        <!-- Contador seleccionados -->
+        <div id="reporte-resumen" style="background:#eff6ff;border:1.5px solid #93c5fd;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:.78rem;color:#1e40af;font-weight:600;display:none">
+          <span id="reporte-resumen-txt"></span>
+        </div>
+
+        <!-- Lista de registros con checkboxes -->
+        <div id="reporte-lista" style="display:flex;flex-direction:column;gap:6px"></div>
+
+      </div>
+    </div><!-- /mview-reporte -->
+
+
     <!-- VISTA: DASHBOARD -->
     <div class="mview" id="mview-dash" style="background:#0d1b2a;min-height:calc(100vh - 90px)">
 
@@ -1127,6 +1624,13 @@ body { overflow-x: hidden; }
                 <input type="date" id="dash-hasta" onchange="renderDash()"
                   style="background:#0a1628;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:4px 6px;font-family:'Inter',sans-serif;font-size:.68rem">
               </div>
+            </div>
+            <!-- TIPO DE ESTABLECIMIENTO (solo visible en AE) -->
+            <div id="dash-tipo-est-container" style="display:none;flex-direction:column;gap:2px">
+              <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#a0b4c8">TIPO ESTABLECIMIENTO</div>
+              <select id="dash-tipo-est" onchange="renderDash()" style="background:#0a1628;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:4px 8px;font-family:'Inter',sans-serif;font-size:.72rem;min-width:150px">
+                <option value="">All</option>
+              </select>
             </div>
             <button onclick="limpiarDash()" style="margin-left:auto;background:transparent;border:1px solid #1e3a5f;color:#a0b4c8;padding:5px 10px;border-radius:4px;font-family:'Inter',sans-serif;font-size:.65rem;cursor:pointer">✕ Limpiar filtros</button>
           </div>
@@ -1210,12 +1714,25 @@ body { overflow-x: hidden; }
 
 <!-- MODAL EDITAR -->
 <div class="mo" id="moEditEl" onclick="if(event.target===this)cerrarEditar()">
-  <div class="md" style="max-width:680px">
+  <div class="md" style="max-width:780px;max-height:92vh">
     <div class="md-hdr">
-      <div class="md-ttl">&#9998; Editar Operativo</div>
+      <div style="display:flex;align-items:center;gap:12px;flex:1">
+        <button onclick="event.stopPropagation();navEditReg(-1)" id="btnEditPrev" 
+          style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .2s"
+          onmouseover="this.style.background='rgba(255,255,255,.25)'"
+          onmouseout="this.style.background='rgba(255,255,255,.15)'">←</button>
+        <div style="flex:1">
+          <div class="md-ttl">&#9998; Editar Operativo</div>
+          <div id="editNavInfo" style="font-size:.65rem;color:rgba(255,255,255,.7);margin-top:2px"></div>
+        </div>
+        <button onclick="event.stopPropagation();navEditReg(1)" id="btnEditNext"
+          style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .2s"
+          onmouseover="this.style.background='rgba(255,255,255,.25)'"
+          onmouseout="this.style.background='rgba(255,255,255,.15)'">→</button>
+      </div>
       <button class="md-x" onclick="cerrarEditar()">&#10005;</button>
     </div>
-    <div class="md-body" style="padding:1.25rem">
+    <div class="md-body" style="padding:1.25rem;max-height:calc(92vh - 140px);overflow-y:auto">
 
       <!-- Identificación -->
       <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:10px">Identificación</div>
@@ -1227,6 +1744,7 @@ body { overflow-x: hidden; }
         <div class="f"><label>Hora inicio</label><input type="time" id="eH1"></div>
         <div class="f"><label>Hora fin</label><input type="time" id="eH2"></div>
       </div>
+      
       <!-- Megatoma / Operativo Conjunto -->
       <div class="g2 mb">
         <div class="f">
@@ -1256,32 +1774,32 @@ body { overflow-x: hidden; }
           </div>
         </div>
       </div>
+      
       <div class="f mb">
         <label>Responsable <span class="req">*</span></label>
         <select id="eResp" onchange="toggleERespOtro()">
           <option value="">&#8212; Seleccionar &#8212;</option>
           <optgroup label="Profesionales">
-            <option>JOHANA GARZ&Oacute;N</option><option>ANDR&Eacute;S ARIAS</option><option>ANLLY ROJAS</option>
-            <option>MAURICIO G&Oacute;MEZ</option><option>YAMILE ESPITIA</option><option>DAVID ALBA</option>
+            <option>JOHANA GARZÓN</option><option>ANDRÉS ARIAS</option><option>ANLLY ROJAS</option>
+            <option>MAURICIO GÓMEZ</option><option>YAMILE ESPITIA</option><option>DAVID ALBA</option>
             <option>JOSE GONZALEZ</option><option>HECTOR RAMIREZ</option><option>SAMUEL URBINA</option>
             <option>MIGUEL PEREZ</option><option>JENNY ARROYO</option><option>ADRIANA FORERO</option>
-            <option>JENIFER NIETO</option><option>JHON LADINO</option><option>MARIA &Aacute;LVAREZ</option>
+            <option>JENIFER NIETO</option><option>JHON LADINO</option><option>MARIA ÁLVAREZ</option>
             <option>HENRY FORIGUA</option>
           </optgroup>
           <optgroup label="Gestores">
-            <option>LEONARDO PI&Ntilde;A</option><option>JAIRO LOZANO</option><option>LILIANA CHARRY</option>
+            <option>LEONARDO PIÑA</option><option>JAIRO LOZANO</option><option>LILIANA CHARRY</option>
             <option>WILDEMAR CARVAJAL</option><option>JENIFER ESPINOSA</option><option>GIOVANNY GAVIRIA</option>
             <option>NICOLAS GALEANO</option><option>DANIELA QUINTERO</option><option>CAROL FORERO</option>
-            <option>ANDR&Eacute;S PALACIO</option>
+            <option>ANDRÉS PALACIO</option>
           </optgroup>
-          <optgroup label="T&eacute;cnicos">
-            <option>JEISSON RODR&Iacute;GUEZ</option><option>EFREN SIERRA</option><option>CAMILO VARGAS</option>
+          <optgroup label="Técnicos">
+            <option>JEISSON RODRÍGUEZ</option><option>EFREN SIERRA</option><option>CAMILO VARGAS</option>
             <option>LADY MARTINEZ</option><option>JHON MONCADA</option><option>WILSON PULIDO</option>
             <option>ALEXANDRA MONTENEGRO</option><option>JUAN CAMPO</option>
           </optgroup>
           <option value="__OTRO__">&#9998; Otro...</option>
         </select>
-        <!-- Campo libre para nombre personalizado -->
         <div id="eResp-otro-wrap" style="display:none;margin-top:6px">
           <input type="text" id="eResp-otro"
             placeholder="Escribe el nombre completo..."
@@ -1291,12 +1809,55 @@ body { overflow-x: hidden; }
         </div>
       </div>
 
+      <!-- Tipo de IVC -->
+      <div class="f mb">
+        <label>Componente <span class="req">*</span></label>
+        <div class="chips" id="eChipsComponente">
+          <div class="chip" data-comp="AE" onclick="cambiarComponenteEdit(this)">ACTIVIDAD ECONÓMICA</div>
+          <div class="chip" data-comp="EP" onclick="cambiarComponenteEdit(this)">ESPACIO PÚBLICO</div>
+          <div class="chip" data-comp="AMB" onclick="cambiarComponenteEdit(this)">AMBIENTE</div>
+          <div class="chip" data-comp="MOV" onclick="cambiarComponenteEdit(this)">MOVILIDAD</div>
+          <div class="chip" data-comp="OBR" onclick="cambiarComponenteEdit(this)">OBRAS</div>
+        </div>
+      </div>
+
+      <div class="f mb">
+        <label>Tipo de IVC <span class="req">*</span></label>
+        <div class="chips" id="eChipsTipoIVC"></div>
+      </div>
+
       <!-- Ubicación -->
       <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Ubicación</div>
       <div class="f mb"><label>Dirección</label><input type="text" id="eDir" placeholder="Ej. CR 73A # 65B - 43"></div>
       <div class="g2 mb">
         <div class="f"><label>Barrio</label><input type="text" id="eBarrio" placeholder="Barrio"></div>
         <div class="f"><label>UPZ</label><input type="text" id="eUpz" placeholder="UPZ"></div>
+      </div>
+
+      <!-- COMPONENTE: Contenedor dinámico según tipo -->
+      <div id="eCompContainer"></div>
+
+      <!-- Totales -->
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Totales consolidados</div>
+      <div class="g3 mb">
+        <div class="f"><label>Total m²</label><input type="number" id="eTotM2" placeholder="0" min="0"></div>
+        <div class="f"><label>Total m³</label><input type="number" id="eTotM3" placeholder="0" min="0"></div>
+        <div class="f"><label>Vehículos</label><input type="number" id="eTotVeh" placeholder="0" min="0"></div>
+      </div>
+      <div class="g3 mb">
+        <div class="f"><label>Cambuches</label><input type="number" id="eTotCamb" placeholder="0" min="0"></div>
+        <div class="f"><label>Carretas</label><input type="number" id="eTotCar" placeholder="0" min="0"></div>
+        <div class="f"><label>Vendedores</label><input type="number" id="eTotVend" placeholder="0" min="0"></div>
+      </div>
+      <div class="g3 mb">
+        <div class="f"><label>Food Trucks</label><input type="number" id="eTotFT" placeholder="0" min="0"></div>
+        <div class="f"><label>Personas</label><input type="number" id="eTotPers" placeholder="0" min="0"></div>
+        <div class="f"><label>Armas</label><input type="number" id="eTotArmas" placeholder="0" min="0"></div>
+      </div>
+      <div class="g3 mb">
+        <div class="f"><label>Dosis SPA</label><input type="number" id="eTotDosis" placeholder="0" min="0"></div>
+        <div class="f"><label>Comparendos</label><input type="number" id="eTotComp" placeholder="0" min="0"></div>
+        <div class="f"><label>Suspensiones</label><input type="number" id="eTotSusp" placeholder="0" min="0"></div>
       </div>
 
       <!-- Observaciones -->
@@ -1311,9 +1872,21 @@ body { overflow-x: hidden; }
         <div class="hint">Enlace de Google Drive, OneDrive, Dropbox u otra nube</div>
       </div>
     </div>
-    <div style="padding:0 1.25rem 1.25rem;display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn btn-ghost" onclick="cerrarEditar()">Cancelar</button>
-      <button class="btn btn-save" id="btnGuardarEdit" onclick="guardarEdicion()">&#10003; Guardar cambios</button>
+    <div style="padding:0 1.25rem 1.25rem;display:flex;gap:8px;justify-content:space-between;align-items:center;border-top:1px solid var(--border);margin-top:8px;padding-top:12px">
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost" onclick="cerrarEditar()">Cancelar</button>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn" id="btnGuardarYAnterior" onclick="guardarYNavegar(-1)"
+          style="background:linear-gradient(135deg,#0369a1,#0284c7);color:white;display:flex;align-items:center;gap:6px">
+          <span>←</span> Guardar y Anterior
+        </button>
+        <button class="btn btn-save" id="btnGuardarEdit" onclick="guardarEdicion()">&#10003; Guardar</button>
+        <button class="btn" id="btnGuardarYSiguiente" onclick="guardarYNavegar(1)"
+          style="background:linear-gradient(135deg,#0369a1,#0284c7);color:white;display:flex;align-items:center;gap:6px">
+          Guardar y Siguiente <span>→</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -1466,6 +2039,9 @@ const LISTAS_DEFAULT = {
   responsables:{"Profesionales": ["JOHANA GARZÓN", "ANDRÉS ARIAS", "ANLLY ROJAS", "MAURICIO GÓMEZ", "YAMILE ESPITIA", "DAVID ALBA", "JOSE GONZALEZ", "HECTOR RAMIREZ", "SAMUEL URBINA", "MIGUEL PEREZ", "JENNY ARROYO", "ADRIANA FORERO", "JENIFER NIETO", "JHON LADINO", "MARIA ÁLVAREZ", "HENRY FORIGUA"], "Gestores": ["LEONARDO PIÑA", "JAIRO LOZANO", "LILIANA CHARRY", "WILDEMAR CARVAJAL", "JENIFER ESPINOSA", "GIOVANNY GAVIRIA", "NICOLAS GALEANO", "DANIELA QUINTERO", "CAROL FORERO", "ANDRÉS PALACIO"], "Técnicos": ["JEISSON RODRÍGUEZ", "EFREN SIERRA", "CAMILO VARGAS", "LADY MARTINEZ", "JHON MONCADA", "WILSON PULIDO", "ALEXANDRA MONTENEGRO", "JUAN CAMPO"]},
   tipos_ae:    [{"value": "AUTOPARTES", "label": "Autopartes"}, {"value": "BARES DE ALTO IMPACTO", "label": "Bares de alto impacto"}, {"value": "BICICLETAS", "label": "Bicicletas"}, {"value": "BODEGAS DE RECICLAJE", "label": "Bodegas de reciclaje"}, {"value": "CASAS DEL LENOCINIO", "label": "Casas del lenocinio"}, {"value": "ESTABLECIMIENTOS DE COMERCIO", "label": "Establecimientos de comercio"}, {"value": "HOTELES Y MOTELES", "label": "Hoteles y moteles"}, {"value": "METROLOGIA LEGAL", "label": "Metrología legal"}, {"value": "PARQUEADEROS", "label": "Parqueaderos"}, {"value": "POLVORA Y PIROTECNIA", "label": "Pólvora y pirotecnia"}, {"value": "TELEFONOS MOVILES CELULARES", "label": "Teléfonos móviles celulares"}],
   lineas_amb:  [{"value": "RECUPERACION EP RONDA", "label": "RECUPERACIÓN DE ESPACIO PÚBLICO Y ZONA DE RONDA CUERPOS DE AGUA POR DISPOSICIÓN INADECUADA DE RESIDUOS"}, {"value": "ESTRATEGIA RESIDUOS CARRETEROS CAMBUCHES", "label": "ESTRATEGIA DE RESIDUOS (BASURAS), CARRETEROS Y CAMBUCHES"}, {"value": "SENTENCIA RIO BOGOTA", "label": "SENTENCIA RIO BOGOTÁ"}, {"value": "CONEXIONES ILEGALES", "label": "CONEXIONES ILEGALES"}],
+  tipos_ep:    [{"value": "POLIGONOS DE MONITOREO", "label": "Polígonos de monitoreo"}, {"value": "HECHOS NOTORIOS", "label": "Hechos notorios"}, {"value": "RETIRO FOOD TRUCKS", "label": "Retiro food trucks / trailers"}, {"value": "VENDEDORES INFORMALES", "label": "Vendedores informales"}, {"value": "HABITANTES DE CALLE", "label": "Habitantes de calle"}, {"value": "EXTENSION ECONOMICA", "label": "Extensión económica"}, {"value": "ELEMENTOS QUE LIMITAN", "label": "Elementos que limitan la libre circulación"}, {"value": "OPERATIVO CONJUNTO", "label": "Operativo conjunto"}],
+  poligonos_ep:["COLINDANCIA QUIRIGUA CENTRAL","HUMEDAL JUAN AMARRILLO","RONDA HUMEDAL SANTA MARIA DEL LAGO","HUMEDAL JABOQUE","CANAL BONANZA"],
+  tipos_obr:   [{"value": "OBRA SIN LICENCIA", "label": "Obra sin licencia"}, {"value": "OBRA CON LICENCIA", "label": "Obra con licencia"}, {"value": "CERRAMIENTO ILEGAL", "label": "Cerramiento ilegal"}, {"value": "DEMOLICION", "label": "Demolición"}, {"value": "CONSTRUCCION ILEGAL", "label": "Construcción ilegal"}, {"value": "INVASION EP", "label": "Invasión espacio público por obra"}],
   colegios:    ["IED Antonio Villavicencio", "IED Aquileo Parra", "IED Bolivia", "IED Boyacá Real", "IED Café Madrid", "IED Ciudadela Colsubsidio", "IED Delia Zapata Olivella", "IED El Salitre", "IED Engativá", "IED Garcés Navas", "IED General Santander", "IED Gran Colombia", "IED Jhon F. Kennedy", "IED Jorge Eliécer Gaitán", "IED La Palestina", "IED Las Américas", "IED Las Flores", "IED Laureano Gómez", "IED Luis Carlos Galán Sarmiento", "IED Marco Tulio Fernández", "IED Minuto de Buenos Aires", "IED Naciones Unidas", "IED Nuevo Horizonte", "IED Quirigua", "IED República de Colombia", "IED Santa Bárbara", "IED Santo Tomás de Aquino", "IED Simón Bolívar", "IED Tabora", "IED Técnico Menorah", "IED Tibabuyes Universal", "IED Villa Amalia", "IED Villa Luz"]
 };
 
@@ -1565,25 +2141,89 @@ function poblarSelects(listas) {
       lstCol.appendChild(opt);
     });
   }
+
+  // ── Tipos EP (chips) ──
+  const secMonEP = document.getElementById('secMonEP');
+  if (secMonEP) {
+    const curVal = document.getElementById('secMonEPVal')?.value || '';
+    secMonEP.innerHTML = '';
+    (listas.tipos_ep || []).forEach(t => {
+      const val = t.value || t;
+      const lbl = t.label || t;
+      const div = document.createElement('div');
+      div.className = 'chip' + (curVal === val ? ' on' : '');
+      div.textContent = lbl;
+      div.onclick = function() { selSecMonEP(this, val); };
+      secMonEP.appendChild(div);
+    });
+  }
+
+  // ── Polígonos EP ──
+  const selPol = document.getElementById('poligono');
+  if (selPol) {
+    const curPol = selPol.value;
+    selPol.innerHTML = '<option value="">— Seleccionar polígono —</option>';
+    (listas.poligonos_ep || []).forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p; opt.textContent = p;
+      selPol.appendChild(opt);
+    });
+    if (curPol) selPol.value = curPol;
+  }
+
+  // ── Tipos OBR (select si existe, sino chips) ──
+  const selObr = document.getElementById('tipoObr');
+  if (selObr) {
+    const curObr = selObr.value;
+    selObr.innerHTML = '<option value="">— Seleccionar tipo —</option>';
+    (listas.tipos_obr || []).forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t.value || t; opt.textContent = t.label || t;
+      selObr.appendChild(opt);
+    });
+    if (curObr) selObr.value = curObr;
+  }
 }
 
 // Cargar listas desde Firebase (con fallback a LISTAS_DEFAULT)
 LISTAS_REF.once('value', function(snap) {
   if (snap.exists()) {
     _listas = snap.val();
-    // Inicializar si faltan claves
-    if (!_listas.barrios)      _listas.barrios      = LISTAS_DEFAULT.barrios;
-    if (!_listas.responsables) _listas.responsables = LISTAS_DEFAULT.responsables;
-    if (!_listas.tipos_ae)     _listas.tipos_ae     = LISTAS_DEFAULT.tipos_ae;
-    if (!_listas.lineas_amb)   _listas.lineas_amb   = LISTAS_DEFAULT.lineas_amb;
-    if (!_listas.colegios)     _listas.colegios     = LISTAS_DEFAULT.colegios;
+    console.log('📥 Listas cargadas desde Firebase:', _listas);
+    // Inicializar SOLO si faltan claves (undefined o null)
+    if (!_listas.barrios || Object.keys(_listas.barrios).length === 0) {
+      _listas.barrios = LISTAS_DEFAULT.barrios;
+    }
+    if (!_listas.responsables || Object.keys(_listas.responsables).length === 0) {
+      _listas.responsables = LISTAS_DEFAULT.responsables;
+    }
+    if (!_listas.tipos_ae || _listas.tipos_ae.length === 0) {
+      _listas.tipos_ae = LISTAS_DEFAULT.tipos_ae;
+    }
+    if (!_listas.lineas_amb || _listas.lineas_amb.length === 0) {
+      _listas.lineas_amb = LISTAS_DEFAULT.lineas_amb;
+    }
+    if (!_listas.colegios || _listas.colegios.length === 0) {
+      _listas.colegios = LISTAS_DEFAULT.colegios;
+    }
+    if (!_listas.tipos_ep || _listas.tipos_ep.length === 0) {
+      _listas.tipos_ep = LISTAS_DEFAULT.tipos_ep;
+    }
+    if (!_listas.poligonos_ep || _listas.poligonos_ep.length === 0) {
+      _listas.poligonos_ep = LISTAS_DEFAULT.poligonos_ep;
+    }
+    if (!_listas.tipos_obr || _listas.tipos_obr.length === 0) {
+      _listas.tipos_obr = LISTAS_DEFAULT.tipos_obr;
+    }
   } else {
+    console.log('🆕 Primera vez: creando listas por defecto');
     // Primera vez: subir las listas por defecto a Firebase
     _listas = JSON.parse(JSON.stringify(LISTAS_DEFAULT));
     LISTAS_REF.set(_listas);
   }
   poblarSelects(_listas);
 }, function(err) {
+  console.error('❌ Error cargando listas:', err);
   // Sin conexión: usar defaults
   _listas = JSON.parse(JSON.stringify(LISTAS_DEFAULT));
   poblarSelects(_listas);
@@ -1648,7 +2288,7 @@ const DASH_COLORS = {AE:'#f59e0b',EP:'#3b82f6',AMB:'#10b981',MOV:'#f97316',OBR:'
 const UPZ_BAR_COLORS = ['#e84040','#e86f40','#c8a020','#1e7fa0','#1e50a0','#1e3070','#8a8020','#3040a0','#6030a0'];
 
 function limpiarDash() {
-  ['dash-upz','dash-barrio','dash-dir','dash-desde','dash-hasta'].forEach(id => {
+  ['dash-upz','dash-barrio','dash-dir','dash-desde','dash-hasta','dash-tipo-est'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
@@ -1663,6 +2303,15 @@ function setDashTab(tab) {
     b.style.borderTopColor = isActive ? '#f59e0b' : 'transparent';
     b.style.fontWeight = isActive ? '700' : '600';
   });
+  // Mostrar/ocultar filtro de tipo de establecimiento solo en AE
+  const tipoEstContainer = document.getElementById('dash-tipo-est-container');
+  if (tipoEstContainer) {
+    tipoEstContainer.style.display = (tab === 'AE') ? 'flex' : 'none';
+  }
+  // Poblar el select de tipos de establecimiento si es AE
+  if (tab === 'AE') {
+    populateDashTipoEstFilter();
+  }
   renderDash();
 }
 
@@ -1672,6 +2321,7 @@ function getDashRecs() {
   const dirF  = (document.getElementById('dash-dir')?.value || '').toLowerCase();
   const desde = document.getElementById('dash-desde')?.value || '';
   const hasta = document.getElementById('dash-hasta')?.value || '';
+  const tipoEstF = document.getElementById('dash-tipo-est')?.value || '';
   return recs.filter(r => {
     if (r.cc !== dashTab) return false;
     if (upzF  && (r.ub?.upz||'')    !== upzF)  return false;
@@ -1679,6 +2329,8 @@ function getDashRecs() {
     if (dirF  && !(r.ub?.dir||'').toLowerCase().includes(dirF)) return false;
     if (desde && (r.meta?.fecha||'') < desde)   return false;
     if (hasta && (r.meta?.fecha||'') > hasta)   return false;
+    // Filtro de tipo de establecimiento (solo para AE)
+    if (tipoEstF && dashTab === 'AE' && (r.ae?.tipo||'') !== tipoEstF) return false;
     return true;
   });
 }
@@ -1689,6 +2341,14 @@ function populateDashBarrioFilter() {
   if (!sel) return;
   const barrios = [...new Set(recs.filter(r => !upzF || r.ub?.upz === upzF).map(r => r.ub?.barrio||'').filter(Boolean))].sort();
   sel.innerHTML = '<option value="">All</option>' + barrios.map(b => `<option>${b}</option>`).join('');
+}
+
+function populateDashTipoEstFilter() {
+  const sel = document.getElementById('dash-tipo-est');
+  if (!sel) return;
+  // Obtener todos los tipos únicos de establecimientos desde los registros de AE
+  const tipos = [...new Set(recs.filter(r => r.cc === 'AE' && r.ae?.tipo).map(r => r.ae.tipo))].sort();
+  sel.innerHTML = '<option value="">All</option>' + tipos.map(t => `<option value="${t}">${t}</option>`).join('');
 }
 
 // ── KPI box ──
@@ -1808,8 +2468,26 @@ function renderDashSidebar(rs) {
     OBR: [{ico:'🏗️',lbl:'OBRAS EN OPERACIÓN'},{ico:'ℹ️',lbl:'DETALLE DE OPERATIVOS'}],
   };
   const items = configs[dashTab]||[];
-  const totalArmas = rs.reduce((a,r)=>a+Number(r.tot?.armas||0),0);
-  const totalDosis = rs.reduce((a,r)=>a+Number(r.tot?.dosis||0),0);
+  
+  // Sumar armas y dosis desde todos los lugares posibles (amb, ae, tot)
+  const totalArmas = rs.reduce((a,r)=>{
+    const armasAmb = Number(r.amb?.nArmas || 0);
+    const armasAE = Number(r.ae?.armas || r.ae?.nArmas || 0);
+    const armasTot = Number(r.tot?.armas || 0);
+    // Tomar el máximo entre los valores específicos del componente y el total
+    const maxArmas = Math.max(armasAmb, armasAE, armasTot);
+    return a + maxArmas;
+  }, 0);
+  
+  const totalDosis = rs.reduce((a,r)=>{
+    const dosisAmb = Number(r.amb?.dosis || 0);
+    const dosisAE = Number(r.ae?.dosis || 0);
+    const dosisTot = Number(r.tot?.dosis || 0);
+    // Tomar el máximo entre los valores específicos del componente y el total
+    const maxDosis = Math.max(dosisAmb, dosisAE, dosisTot);
+    return a + maxDosis;
+  }, 0);
+  
   // Donut mini armas
   const armasSVG = `<svg width="64" height="64" viewBox="0 0 64 64">
     <circle cx="32" cy="32" r="24" fill="none" stroke="#1e3a5f" stroke-width="8"/>
@@ -1848,11 +2526,19 @@ function renderDash() {
   populateDashBarrioFilter();
   const rs = getDashRecs();
   renderDashSidebar(rs);
+  
+  console.log('=== DEBUG DASHBOARD ===');
+  console.log('Total recs:', recs.length);
+  console.log('dashTab:', dashTab);
+  console.log('Filtered recs:', rs.length);
+  console.log('Sample rec:', recs[0]);
 
   if (rs.length === 0) {
     d.innerHTML = `<div style="text-align:center;padding:60px;color:#4a7fa5">
       <div style="font-size:2.5rem;margin-bottom:10px">📊</div>
       <div style="font-weight:700;color:#7090a8">Sin datos para los filtros seleccionados</div>
+      <div style="font-size:.75rem;color:#64748b;margin-top:8px">Total de registros en DB: ${recs.length}</div>
+      <div style="font-size:.75rem;color:#64748b">Tab actual: ${dashTab}</div>
     </div>`;
     return;
   }
@@ -1886,6 +2572,24 @@ function renderDash() {
       ${pbiDonut(tipoData,'TIPO DE ACTIVIDAD')}
       ${pbiBarH(upzData,'NÚMERO DE OPERATIVOS POR UPZ')}
     </div>`;
+    
+    // Nueva gráfica: Suspensiones por tipo de establecimiento
+    const suspPorTipo = (() => {
+      const m = {};
+      rs.forEach(r => {
+        const tipo = r.ae?.tipo || '';
+        const susp = Number(r.tot?.susp || 0);
+        if (tipo && susp > 0) {
+          m[tipo] = (m[tipo] || 0) + susp;
+        }
+      });
+      return Object.entries(m).map(([k,v])=>({k,v})).sort((a,b)=>b.v-a.v);
+    })();
+    
+    if (suspPorTipo.length > 0) {
+      html += `<div style="margin-bottom:12px">${pbiBarH(suspPorTipo,'SUSPENSIONES POR TIPO DE ESTABLECIMIENTO')}</div>`;
+    }
+    
     if (monthly.length>1) html += `<div style="margin-bottom:12px">${pbiSparkline(monthly,'TENDENCIA MENSUAL DE OPERATIVOS','#f59e0b')}</div>`;
   }
   else if (dashTab === 'EP') {
@@ -2015,6 +2719,21 @@ function toggleFiltros() {
   }
 }
 
+// ── TOGGLE CONFIGURACIÓN SIDEBAR ──────────────────────
+function toggleConfig() {
+  const toggle = document.getElementById('config-toggle');
+  const content = document.getElementById('config-content');
+  const isOpen = content.classList.contains('open');
+  
+  if (isOpen) {
+    content.classList.remove('open');
+    toggle.classList.remove('open');
+  } else {
+    content.classList.add('open');
+    toggle.classList.add('open');
+  }
+}
+
 function switchMain(v, btn) {
   document.querySelectorAll('.mview').forEach(x => x.classList.remove('on'));
   document.querySelectorAll('.sidebar-nav-btn').forEach(x => x.classList.remove('active'));
@@ -2030,7 +2749,16 @@ function switchMain(v, btn) {
   // Scroll al tope del contenido principal
   const mc = document.querySelector('.main-content');
   if (mc) mc.scrollTop = 0;
-  if (v === 'dash') renderDash();
+  
+  // Repoblar selects cuando se cambia al formulario
+  if (v === 'form' && _listas) {
+    poblarSelects(_listas);
+  }
+  
+  if (v === 'dash') {
+    // Inicializar el tab correcto si es la primera vez
+    setDashTab(dashTab);
+  }
 }
 
 // ── SECTION NAV (stub — vista vertical, sin pasos) ─────
@@ -2246,6 +2974,92 @@ function saveRec(){
     });
 }
 
+// ── VERIFICAR ID DUPLICADO ────────────────────────────
+function checkDuplicateID() {
+  const idInput = document.getElementById('idop');
+  const idValue = idInput.value.trim();
+  const warningPanel = document.getElementById('duplicateWarning');
+  const duplicateList = document.getElementById('duplicateList');
+  const duplicateCount = document.getElementById('duplicateCount');
+  const duplicateIDLabel = document.getElementById('duplicateIDLabel');
+  
+  // Si no hay ID o el ID está vacío, ocultar el panel
+  if (!idValue) {
+    warningPanel.style.display = 'none';
+    return;
+  }
+  
+  // Buscar registros con el mismo ID
+  const duplicates = recs.filter(r => {
+    const recID = (r.meta?.idOp || '').toString().trim();
+    return recID === idValue;
+  });
+  
+  // Si no hay duplicados, ocultar el panel
+  if (duplicates.length === 0) {
+    warningPanel.style.display = 'none';
+    return;
+  }
+  
+  // Mostrar el panel y actualizar la información
+  warningPanel.style.display = 'block';
+  duplicateCount.textContent = duplicates.length;
+  duplicateIDLabel.textContent = idValue;
+  
+  // Generar la lista de duplicados
+  duplicateList.innerHTML = duplicates.map((r, idx) => {
+    const fecha = r.meta?.fecha || 'Sin fecha';
+    const resp = r.meta?.resp || 'Sin responsable';
+    const dir = r.ub?.dir || 'Sin dirección';
+    const barrio = r.ub?.barrio || '';
+    const componente = r.cc || '';
+    const tipoLabel = {
+      'AE': 'Actividad Económica',
+      'EP': 'Espacio Público',
+      'AMB': 'Ambiente',
+      'MOV': 'Movilidad',
+      'OBR': 'Obras'
+    }[componente] || componente;
+    
+    const compColor = {
+      'AE': 'background:#ede9fe;color:#7c3aed',
+      'EP': 'background:#dbeafe;color:#1e40af',
+      'AMB': 'background:#dcfce7;color:#166534',
+      'MOV': 'background:#dbeafe;color:#1e40af',
+      'OBR': 'background:#ffedd5;color:#9a3412'
+    }[componente] || 'background:#f1f5f9;color:#475569';
+    
+    return `
+      <div style="background:white;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px 12px;cursor:pointer;transition:all .15s" 
+           onmouseover="this.style.borderColor='#93c5fd';this.style.background='#f0f9ff'" 
+           onmouseout="this.style.borderColor='#e2e8f0';this.style.background='white'"
+           onclick="viewRecFromDuplicate(${idx}, ${JSON.stringify(r._fbKey).replace(/"/g, '&quot;')})">
+        <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;margin-bottom:6px">
+          <div>
+            <div style="font-size:.8rem;font-weight:700;color:#0f172a;margin-bottom:2px">📅 ${fecha} · ${resp}</div>
+            <div style="font-size:.72rem;color:#64748b">📍 ${dir}${barrio ? ' · ' + barrio : ''}</div>
+          </div>
+          <div style="font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:4px;white-space:nowrap;${compColor}">
+            ${tipoLabel}
+          </div>
+        </div>
+        ${r.acta?.link ? '<div style="font-size:.65rem;color:#15803d;display:flex;align-items:center;gap:4px">✅ Con acta cargada</div>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// Función auxiliar para ver un registro desde la lista de duplicados
+function viewRecFromDuplicate(index, fbKey) {
+  // Encontrar el índice real en el array completo
+  const realIdx = recs.findIndex(r => r._fbKey === fbKey);
+  if (realIdx !== -1) {
+    selIdx = realIdx;
+    selKey = fbKey;
+    openModal();
+  }
+}
+
 // ── RESET ──────────────────────────────────────────────
 function resetForm(){
   document.querySelectorAll('input:not([type=checkbox]):not([type=hidden]),textarea').forEach(el=>{
@@ -2329,12 +3143,12 @@ function getFilteredRecs(){
   const upz    = (document.getElementById('fltUPZ')?.value   || '').toLowerCase().trim();
   const tipo   = document.getElementById('fltTipo')?.value   || '';
   const dir    = (document.getElementById('fltDir')?.value   || '').toLowerCase().trim();
+  const acta   = document.getElementById('fltActa')?.value  || '';
+  const idOp   = (document.getElementById('fltIdOp')?.value || '').toLowerCase().trim();
 
   return recs.filter(r => {
     const fecha = r.meta?.fecha || '';
-    // Fecha exacta
     if(modoFecha === 'exacto' && exacto && fecha !== exacto) return false;
-    // Rango
     if(modoFecha === 'rango'){
       if(desde && fecha && fecha < desde) return false;
       if(hasta && fecha && fecha > hasta) return false;
@@ -2343,6 +3157,9 @@ function getFilteredRecs(){
     if(upz    && !(r.ub?.upz||'').toLowerCase().includes(upz))       return false;
     if(tipo   && r.cc !== tipo)                                       return false;
     if(dir    && !(r.ub?.dir||'').toLowerCase().includes(dir))        return false;
+    if(acta === 'con' && !(r.acta?.link)) return false;
+    if(acta === 'sin' && r.acta?.link)    return false;
+    if(idOp && !(r.meta?.idOp||'').toLowerCase().includes(idOp)) return false;
     return true;
   });
 }
@@ -2389,7 +3206,9 @@ function applyFilters(){
   const upz    = document.getElementById('fltUPZ')?.value    || '';
   const tipo   = document.getElementById('fltTipo')?.value   || '';
   const dir    = document.getElementById('fltDir')?.value    || '';
-  const active = desde||hasta||exacto||barrio||upz||tipo||dir;
+  const acta   = document.getElementById('fltActa')?.value   || '';
+  const idOp   = document.getElementById('fltIdOp')?.value   || '';
+  const active = desde||hasta||exacto||barrio||upz||tipo||dir||acta||idOp;
   const res    = document.getElementById('fltResumen');
   const btn    = document.getElementById('btnClearFilters');
   if(res){
@@ -2404,6 +3223,9 @@ function applyFilters(){
         const labels = {AE:'Actividad Económica',EP:'Espacio Público',AMB:'Ambiente',MOV:'Movilidad',OBR:'Obras'};
         parts.push('🏷 ' + labels[tipo]);
       }
+      if(acta === 'con') parts.push('📄 Con acta');
+      if(acta === 'sin') parts.push('📄 Sin acta');
+      if(idOp) parts.push('🔑 ID: ' + idOp);
       res.style.display = 'block';
       res.textContent = 'Filtrando por: ' + parts.join(' · ');
       if(btn) btn.style.color = 'var(--danger)';
@@ -2416,7 +3238,7 @@ function applyFilters(){
 }
 
 function clearFilters(){
-  ['fltDesde','fltHasta','fltBarrio','fltUPZ','fltExacto'].forEach(id=>{
+  ['fltDesde','fltHasta','fltBarrio','fltUPZ','fltExacto','fltTipo','fltActa','fltIdOp'].forEach(id=>{
     const el = document.getElementById(id); if(el) el.value='';
   });
   const sel = document.getElementById('fltTipo'); if(sel) sel.selectedIndex=0;
@@ -2492,11 +3314,24 @@ function updateRecsList(){
       t.armas>0?`<span class="badge" style="background:#fee2e2;color:#991b1b">${t.armas} arm.</span>`:'',
       t.veh>0?`<span class="badge" style="background:#f1f5f9;color:#374151">${t.veh} veh.</span>`:'',
     ].filter(Boolean).join('');
+    
+    // Obtener el nombre y estilo del componente
+    const ccLabels = {AE:'ACTIVIDAD ECONÓMICA',EP:'ESPACIO PÚBLICO',AMB:'AMBIENTE',MOV:'MOVILIDAD',OBR:'OBRAS'};
+    const ccStyles = {
+      AE:'background:#ede9fe;color:#7c3aed',
+      EP:'background:#dbeafe;color:#1e40af',
+      AMB:'background:#dcfce7;color:#166534',
+      MOV:'background:#dbeafe;color:#1e40af',
+      OBR:'background:#ffedd5;color:#9a3412'
+    };
+    const ccLabel = ccLabels[cc] || '';
+    const ccStyle = ccStyles[cc] || 'background:#f1f5f9;color:#475569';
+    
     return `<div class="rrow" onclick="openMo(${globalIdx})">
       <div class="rnum">${idOp||String(n-i).padStart(2,'0')}</div>
       <div style="min-width:0">
         <div class="rmain" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          ${tipos.length?`<span style="font-size:.68rem;font-weight:800;${compStyle(tipos)};padding:1px 7px;border-radius:4px">${tipos[0]}</span>`:''}
+          ${ccLabel?`<span style="font-size:.68rem;font-weight:800;${ccStyle};padding:1px 7px;border-radius:4px">${ccLabel}</span>`:''}
           <span>${barrio||upz||'Sin ubicación'}</span>
           ${idOp?`<span style="font-size:.65rem;color:var(--muted);font-weight:400">#${idOp}</span>`:''}
         </div>
@@ -2599,6 +3434,7 @@ function openMo(idx){
       M('Residuos recolectados m³', a.m3) +
       M('Llantas recuperadas', a.llantas) +
       M('HC identificados', a.hc) +
+      M('Cambuches retirados', a.camb) +
       M('Carretas retiradas', a.car||a.carretas) +
       M('Dosis incautadas', a.dosis) +
       M('Armas incautadas', a.nArmas) +
@@ -2891,6 +3727,7 @@ function importExcel(input){
             m3:      n(row,'AMB - m³'),
             llantas: n(row,'AMB - Llantas'),
             hc:      n(row,'AMB - HC'),
+            camb:    n(row,'AMB - Cambuches'),
             car:     n(row,'AMB - Carretas'),
             dosis:   n(row,'AMB - Dosis'),
             res:     s(row,'AMB - Resultados')
@@ -3006,12 +3843,17 @@ function verificarClaveAccion(){
 function abrirEditar(){
   if(selIdx===null) return;
   const r = recs[selIdx];
-  // Poblar campos
+  
+  // Actualizar info de navegación
+  updateEditNavInfo();
+  
+  // IDENTIFICACIÓN
   document.getElementById('eIdop').value  = r.meta?.idOp  || '';
   document.getElementById('eFecha').value  = r.meta?.fecha  || '';
   document.getElementById('eH1').value     = r.meta?.h1     || '';
   document.getElementById('eH2').value     = r.meta?.h2     || '';
-  // Responsable: si el nombre no está en el listado, mostrar campo libre
+  
+  // Responsable
   const respVal = r.meta?.resp || '';
   const eRespSel = document.getElementById('eResp');
   const optValues = Array.from(eRespSel.options).map(o => o.value);
@@ -3024,25 +3866,437 @@ function abrirEditar(){
     document.getElementById('eResp-otro-wrap').style.display = 'none';
     document.getElementById('eResp-otro').value = '';
   }
-  document.getElementById('eDir').value    = r.ub?.dir      || '';
-  document.getElementById('eBarrio').value = r.ub?.barrio   || '';
-  document.getElementById('eUpz').value    = r.ub?.upz      || '';
-  document.getElementById('eObs').value    = r.gen?.obs     || '';
-  document.getElementById('eActaLink').value = r.acta?.link  || '';
+  
   // Megatoma
   const eMeg = r.meta?.megatoma || 'NO';
   document.getElementById('eMegatoma-si').checked = eMeg === 'SI';
   document.getElementById('eMegatoma-no').checked = eMeg !== 'SI';
   eToggleMegatoma();
+  
   // Operativo conjunto
   const eConj = r.meta?.opConjunto || 'NO';
   document.getElementById('eConjunto-si').checked = eConj === 'SI';
   document.getElementById('eConjunto-no').checked = eConj !== 'SI';
   document.getElementById('eEntidadesConjunto').value = r.meta?.entidadesConjunto || '';
   eToggleConjunto();
+  
+  // COMPONENTE - Marcar el componente actual
+  const ccActual = r.cc || 'AE';
+  document.querySelectorAll('#eChipsComponente .chip').forEach(chip => {
+    chip.classList.remove('on');
+    if (chip.dataset.comp === ccActual) {
+      chip.classList.add('on');
+    }
+  });
+  
+  // TIPO DE IVC - Renderizar chips según componente
+  renderEditTipoIVC(r.tipoIVC || [], ccActual);
+  
+  // UBICACIÓN
+  document.getElementById('eDir').value    = r.ub?.dir      || '';
+  document.getElementById('eBarrio').value = r.ub?.barrio   || '';
+  document.getElementById('eUpz').value    = r.ub?.upz      || '';
+  
+  // COMPONENTE ESPECÍFICO
+  renderEditComponente(r);
+  
+  // TOTALES
+  const t = r.tot || {};
+  document.getElementById('eTotM2').value = t.m2 || '';
+  document.getElementById('eTotM3').value = t.m3 || '';
+  document.getElementById('eTotVeh').value = t.veh || '';
+  document.getElementById('eTotCamb').value = t.camb || '';
+  document.getElementById('eTotCar').value = t.car || '';
+  document.getElementById('eTotVend').value = t.vend || '';
+  document.getElementById('eTotFT').value = t.ft || '';
+  document.getElementById('eTotPers').value = t.pers || '';
+  document.getElementById('eTotArmas').value = t.armas || '';
+  document.getElementById('eTotDosis').value = t.dosis || '';
+  document.getElementById('eTotComp').value = t.comp || '';
+  document.getElementById('eTotSusp').value = t.susp || '';
+  
+  // OBSERVACIONES Y ACTA
+  document.getElementById('eObs').value    = r.gen?.obs     || '';
+  document.getElementById('eActaLink').value = r.acta?.link  || '';
+  
+  // Scroll al inicio del modal
+  const modalBody = document.querySelector('#moEditEl .md-body');
+  if (modalBody) modalBody.scrollTop = 0;
+  
   // Cerrar modal de detalle y abrir edición
   document.getElementById('moEl').classList.remove('on');
   document.getElementById('moEditEl').classList.add('on');
+}
+
+// Actualizar información de navegación en el header del modal
+function updateEditNavInfo() {
+  const info = document.getElementById('editNavInfo');
+  const btnPrev = document.getElementById('btnEditPrev');
+  const btnNext = document.getElementById('btnEditNext');
+  const btnGuardarYAnt = document.getElementById('btnGuardarYAnterior');
+  const btnGuardarYSig = document.getElementById('btnGuardarYSiguiente');
+  
+  if (info && selIdx !== null) {
+    const r = recs[selIdx];
+    const idOp = r.meta?.idOp || 'S/N';
+    const fecha = r.meta?.fecha || '';
+    const pos = selIdx + 1;
+    const total = recs.length;
+    
+    info.textContent = `Registro ${pos} de ${total} · ID ${idOp} · ${fecha}`;
+    
+    // Deshabilitar botones según posición
+    const isFirst = selIdx === 0;
+    const isLast = selIdx === total - 1;
+    
+    if (btnPrev) {
+      btnPrev.disabled = isFirst;
+      btnPrev.style.opacity = isFirst ? '0.3' : '1';
+      btnPrev.style.cursor = isFirst ? 'not-allowed' : 'pointer';
+    }
+    if (btnNext) {
+      btnNext.disabled = isLast;
+      btnNext.style.opacity = isLast ? '0.3' : '1';
+      btnNext.style.cursor = isLast ? 'not-allowed' : 'pointer';
+    }
+    if (btnGuardarYAnt) {
+      btnGuardarYAnt.disabled = isFirst;
+      btnGuardarYAnt.style.opacity = isFirst ? '0.5' : '1';
+      btnGuardarYAnt.style.cursor = isFirst ? 'not-allowed' : 'pointer';
+    }
+    if (btnGuardarYSig) {
+      btnGuardarYSig.disabled = isLast;
+      btnGuardarYSig.style.opacity = isLast ? '0.5' : '1';
+      btnGuardarYSig.style.cursor = isLast ? 'not-allowed' : 'pointer';
+    }
+  }
+}
+
+// Navegar entre registros en modo edición (sin guardar)
+function navEditReg(direction) {
+  if (selIdx === null) return;
+  
+  const newIdx = selIdx + direction;
+  if (newIdx < 0 || newIdx >= recs.length) return;
+  
+  // Actualizar índice y key
+  selIdx = newIdx;
+  selKey = recs[selIdx]._fbKey;
+  
+  // Recargar el formulario con el nuevo registro
+  abrirEditar();
+}
+
+// Guardar y navegar al siguiente/anterior
+function guardarYNavegar(direction) {
+  if (selIdx === null) return;
+  
+  const newIdx = selIdx + direction;
+  if (newIdx < 0 || newIdx >= recs.length) {
+    // Si no hay más registros, solo guardar
+    guardarEdicion();
+    return;
+  }
+  
+  const key = selKey || recs[selIdx]?._fbKey;
+  if (!key) { 
+    toast('No se encontró la clave del registro','err'); 
+    return; 
+  }
+  
+  const r = recs[selIdx];
+  const cc = r.cc || '';
+  
+  // Construir objeto actualizado (mismo código que guardarEdicion)
+  const updates = {};
+  
+  // META
+  updates['meta/idOp'] = document.getElementById('eIdop').value;
+  updates['meta/fecha'] = document.getElementById('eFecha').value;
+  updates['meta/h1'] = document.getElementById('eH1').value;
+  updates['meta/h2'] = document.getElementById('eH2').value;
+  
+  const selResp = document.getElementById('eResp');
+  if (selResp.value === '__OTRO__') {
+    updates['meta/resp'] = document.getElementById('eResp-otro').value.trim().toUpperCase() || '';
+  } else {
+    updates['meta/resp'] = selResp.value;
+  }
+  
+  updates['meta/megatoma'] = document.querySelector('input[name="eMegatoma"]:checked')?.value || 'NO';
+  updates['meta/opConjunto'] = document.querySelector('input[name="eConjunto"]:checked')?.value || 'NO';
+  updates['meta/entidadesConjunto'] = document.getElementById('eEntidadesConjunto').value.trim();
+  
+  // TIPO IVC
+  const tipoIVC = [];
+  document.querySelectorAll('#eChipsTipoIVC .chip.on').forEach(chip => {
+    tipoIVC.push(chip.dataset.val);
+  });
+  updates['tipoIVC'] = tipoIVC;
+  
+  // UBICACIÓN
+  updates['ub/dir'] = document.getElementById('eDir').value;
+  updates['ub/barrio'] = document.getElementById('eBarrio').value;
+  updates['ub/upz'] = document.getElementById('eUpz').value;
+  
+  // COMPONENTE ESPECÍFICO
+  const gv = id => document.getElementById(id)?.value || '';
+  const gn = id => Number(document.getElementById(id)?.value || 0);
+  
+  if (cc === 'AE') {
+    updates['ae/tipo'] = gv('eAE_tipo');
+    updates['ae/nom'] = gv('eAE_nom');
+    updates['ae/medida'] = gv('eAE_medida');
+    updates['ae/res'] = gv('eAE_res');
+  } else if (cc === 'EP') {
+    updates['ep/pol'] = gv('eEP_pol');
+    updates['ep/secMon'] = gv('eEP_secMon');
+    updates['ep/ft'] = gn('eEP_ft');
+    updates['ep/res'] = gv('eEP_res');
+  } else if (cc === 'AMB') {
+    updates['amb/linea'] = gv('eAMB_linea');
+    updates['amb/m2'] = gn('eAMB_m2');
+    updates['amb/m3'] = gn('eAMB_m3');
+    updates['amb/llantas'] = gn('eAMB_llantas');
+    updates['amb/hc'] = gn('eAMB_hc');
+    updates['amb/camb'] = gn('eAMB_camb');
+    updates['amb/car'] = gn('eAMB_car');
+    updates['amb/dosis'] = gn('eAMB_dosis');
+    updates['amb/nArmas'] = gn('eAMB_nArmas');
+    updates['amb/tipoArma'] = gv('eAMB_tipoArma');
+    updates['amb/res'] = gv('eAMB_res');
+  } else if (cc === 'MOV') {
+    updates['mov/accion'] = gv('eMOV_accion');
+    updates['mov/veh'] = gn('eMOV_veh');
+    updates['mov/comp'] = gn('eMOV_comp');
+    updates['mov/m2'] = gn('eMOV_m2');
+    updates['mov/obs'] = gv('eMOV_obs');
+  } else if (cc === 'OBR') {
+    updates['obr/enOp'] = gv('eOBR_enOp');
+    updates['obr/ocupaEP'] = gv('eOBR_ocupaEP');
+    updates['obr/m2Ocupa'] = gn('eOBR_m2Ocupa');
+    updates['obr/persona'] = gv('eOBR_persona');
+    updates['obr/obs'] = gv('eOBR_obs');
+  }
+  
+  // TOTALES
+  updates['tot/m2'] = gn('eTotM2');
+  updates['tot/m3'] = gn('eTotM3');
+  updates['tot/veh'] = gn('eTotVeh');
+  updates['tot/camb'] = gn('eTotCamb');
+  updates['tot/car'] = gn('eTotCar');
+  updates['tot/vend'] = gn('eTotVend');
+  updates['tot/ft'] = gn('eTotFT');
+  updates['tot/pers'] = gn('eTotPers');
+  updates['tot/armas'] = gn('eTotArmas');
+  updates['tot/dosis'] = gn('eTotDosis');
+  updates['tot/comp'] = gn('eTotComp');
+  updates['tot/susp'] = gn('eTotSusp');
+  
+  // GENERAL
+  updates['gen/obs'] = document.getElementById('eObs').value;
+  
+  // ACTA
+  const link = document.getElementById('eActaLink').value.trim();
+  if (link) {
+    updates['acta/link'] = link;
+  } else {
+    updates['acta'] = null;
+  }
+  
+  // Deshabilitar botones mientras guarda
+  const btnGuardarYAnt = document.getElementById('btnGuardarYAnterior');
+  const btnGuardarYSig = document.getElementById('btnGuardarYSiguiente');
+  const btnGuardar = document.getElementById('btnGuardarEdit');
+  
+  if (btnGuardarYAnt) { btnGuardarYAnt.disabled = true; btnGuardarYAnt.innerHTML = 'Guardando...'; }
+  if (btnGuardarYSig) { btnGuardarYSig.disabled = true; btnGuardarYSig.innerHTML = 'Guardando...'; }
+  if (btnGuardar) { btnGuardar.disabled = true; btnGuardar.textContent = 'Guardando...'; }
+  
+  RESULTADOS_REF.child(key).update(updates)
+    .then(() => {
+      toast('✓ Guardado','ok');
+      
+      // Navegar al siguiente/anterior registro
+      selIdx = newIdx;
+      selKey = recs[selIdx]._fbKey;
+      
+      // Cargar el nuevo registro
+      setTimeout(() => {
+        abrirEditar();
+      }, 200);
+    })
+    .catch(err => { 
+      console.error('Error al guardar:', err);
+      toast('Error: ' + err.message, 'err');
+      
+      // Rehabilitar botones
+      if (btnGuardarYAnt) { 
+        btnGuardarYAnt.disabled = false; 
+        btnGuardarYAnt.innerHTML = '<span>←</span> Guardar y Anterior'; 
+      }
+      if (btnGuardarYSig) { 
+        btnGuardarYSig.disabled = false; 
+        btnGuardarYSig.innerHTML = 'Guardar y Siguiente <span>→</span>'; 
+      }
+      if (btnGuardar) { 
+        btnGuardar.disabled = false; 
+        btnGuardar.textContent = '✓ Guardar'; 
+      }
+    });
+}
+
+// Renderizar chips de Tipo IVC en edición
+function renderEditTipoIVC(selected, cc) {
+  const container = document.getElementById('eChipsTipoIVC');
+  if (!container) return;
+  
+  console.log('=== DEBUG renderEditTipoIVC ===');
+  console.log('Selected:', selected);
+  console.log('CC:', cc);
+  
+  const opciones = {
+    'AE': ['MEGATOMA - COMANDO SITUACIONAL', 'OPERATIVO ORDINARIO'],
+    'EP': ['Polígonos de monitoreo', 'Hechos notorios', 'Retiro food trucks / trailers', 'Vendedores informales', 'Habitantes de calle', 'Extensión económica', 'Elementos que limitan la libre circulación', 'Operativo conjunto'],
+    'AMB': ['Recuperación de espacio público', 'Estrategia de residuos', 'Sentencia Río Bogotá', 'Conexiones ilegales'],
+    'MOV': ['Control de estacionamiento', 'Inmovilización de vehículos', 'Comparendos', 'Operativo de tránsit o'],
+    'OBR': ['Obra sin licencia', 'Obra con licencia', 'Cerramiento ilegal', 'Demolición', 'Construcción ilegal', 'Invasión espacio público']
+  };
+  
+  const opts = opciones[cc] || opciones['AE'];
+  
+  // Normalizar función para comparación flexible
+  const normalize = (str) => str.trim().toUpperCase().replace(/\s+/g, ' ');
+  const selectedNorm = selected.map(s => normalize(s));
+  
+  container.innerHTML = opts.map(op => {
+    const isSelected = selectedNorm.some(sel => 
+      normalize(op) === sel || 
+      sel.includes(normalize(op)) || 
+      normalize(op).includes(sel)
+    );
+    console.log(`Opción: "${op}" - Seleccionada: ${isSelected}`);
+    return `<div class="chip ${isSelected?'on':''}" data-val="${op}" onclick="toggleEditChip(this)">${op}</div>`;
+  }).join('');
+}
+
+function toggleEditChip(el) {
+  el.classList.toggle('on');
+}
+
+// Cambiar componente en modo edición
+function cambiarComponenteEdit(chipEl) {
+  // Desmarcar todos los chips de componente
+  document.querySelectorAll('#eChipsComponente .chip').forEach(c => c.classList.remove('on'));
+  
+  // Marcar el chip seleccionado
+  chipEl.classList.add('on');
+  
+  // Obtener el componente seleccionado
+  const nuevoCC = chipEl.dataset.comp;
+  
+  console.log('=== Cambio de componente ===');
+  console.log('Nuevo CC:', nuevoCC);
+  
+  // Limpiar tipos de IVC seleccionados
+  document.querySelectorAll('#eChipsTipoIVC .chip').forEach(c => c.classList.remove('on'));
+  
+  // Renderizar los nuevos tipos de IVC según el componente
+  renderEditTipoIVC([], nuevoCC);
+  
+  // Renderizar el formulario del nuevo componente (vacío)
+  const r = selIdx !== null ? recs[selIdx] : {};
+  const rNuevo = {...r, cc: nuevoCC};
+  
+  // Limpiar datos del componente anterior para mostrar formulario vacío
+  if (nuevoCC === 'AE') {
+    rNuevo.ae = {};
+  } else if (nuevoCC === 'EP') {
+    rNuevo.ep = {};
+  } else if (nuevoCC === 'AMB') {
+    rNuevo.amb = {};
+  } else if (nuevoCC === 'MOV') {
+    rNuevo.mov = {};
+  } else if (nuevoCC === 'OBR') {
+    rNuevo.obr = {};
+  }
+  
+  renderEditComponente(rNuevo);
+}
+
+// Renderizar formulario específico del componente
+function renderEditComponente(r) {
+  const container = document.getElementById('eCompContainer');
+  if (!container) return;
+  
+  const cc = r.cc || '';
+  let html = '';
+  
+  if (cc === 'AE') {
+    const ae = r.ae || {};
+    html = `
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ae);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Actividad Económica</div>
+      <div class="f mb"><label>Tipo de establecimiento</label><input type="text" id="eAE_tipo" value="${ae.tipo||''}" placeholder="Tipo"></div>
+      <div class="f mb"><label>Nombre del establecimiento</label><input type="text" id="eAE_nom" value="${ae.nom||''}" placeholder="Nombre"></div>
+      <div class="f mb"><label>Medida preventiva</label><input type="text" id="eAE_medida" value="${ae.medida||''}" placeholder="Medida"></div>
+      <div class="f mb"><label>Resultados</label><textarea id="eAE_res" style="min-height:50px">${ae.res||''}</textarea></div>
+    `;
+  } else if (cc === 'EP') {
+    const ep = r.ep || {};
+    html = `
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ep);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Espacio Público</div>
+      <div class="f mb"><label>Polígono de monitoreo</label><input type="text" id="eEP_pol" value="${ep.pol||''}" placeholder="Polígono"></div>
+      <div class="f mb"><label>Sector monitoreo</label><input type="text" id="eEP_secMon" value="${ep.secMon||''}" placeholder="Sector"></div>
+      <div class="f mb"><label>Food Trucks</label><input type="number" id="eEP_ft" value="${ep.ft||''}" min="0"></div>
+      <div class="f mb"><label>Resultados</label><textarea id="eEP_res" style="min-height:50px">${ep.res||''}</textarea></div>
+    `;
+  } else if (cc === 'AMB') {
+    const amb = r.amb || {};
+    html = `
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amb);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Ambiente</div>
+      <div class="f mb"><label>Línea de acción</label><input type="text" id="eAMB_linea" value="${amb.linea||''}" placeholder="Línea"></div>
+      <div class="g3 mb">
+        <div class="f"><label>m²</label><input type="number" id="eAMB_m2" value="${amb.m2||''}" min="0"></div>
+        <div class="f"><label>m³</label><input type="number" id="eAMB_m3" value="${amb.m3||''}" min="0"></div>
+        <div class="f"><label>Llantas</label><input type="number" id="eAMB_llantas" value="${amb.llantas||''}" min="0"></div>
+      </div>
+      <div class="g3 mb">
+        <div class="f"><label>HC</label><input type="number" id="eAMB_hc" value="${amb.hc||''}" min="0"></div>
+        <div class="f"><label>Cambuches</label><input type="number" id="eAMB_camb" value="${amb.camb||''}" min="0"></div>
+        <div class="f"><label>Carretas</label><input type="number" id="eAMB_car" value="${amb.car||''}" min="0"></div>
+      </div>
+      <div class="g3 mb">
+        <div class="f"><label>Dosis</label><input type="number" id="eAMB_dosis" value="${amb.dosis||''}" min="0"></div>
+        <div class="f"><label>Armas</label><input type="number" id="eAMB_nArmas" value="${amb.nArmas||''}" min="0"></div>
+        <div class="f"><label>Tipo arma</label><input type="text" id="eAMB_tipoArma" value="${amb.tipoArma||''}"></div>
+      </div>
+      <div class="f mb"><label>Resultados</label><textarea id="eAMB_res" style="min-height:50px">${amb.res||''}</textarea></div>
+    `;
+  } else if (cc === 'MOV') {
+    const mov = r.mov || {};
+    html = `
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mov);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Movilidad</div>
+      <div class="f mb"><label>Acción</label><input type="text" id="eMOV_accion" value="${mov.accion||''}" placeholder="Acción"></div>
+      <div class="g3 mb">
+        <div class="f"><label>Vehículos</label><input type="number" id="eMOV_veh" value="${mov.veh||''}" min="0"></div>
+        <div class="f"><label>Comparendos</label><input type="number" id="eMOV_comp" value="${mov.comp||''}" min="0"></div>
+        <div class="f"><label>m²</label><input type="number" id="eMOV_m2" value="${mov.m2||''}" min="0"></div>
+      </div>
+      <div class="f mb"><label>Observaciones</label><textarea id="eMOV_obs" style="min-height:50px">${mov.obs||''}</textarea></div>
+    `;
+  } else if (cc === 'OBR') {
+    const obr = r.obr || {};
+    html = `
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--obr);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Obras</div>
+      <div class="f mb"><label>Obra en operación</label><input type="text" id="eOBR_enOp" value="${obr.enOp||''}" placeholder="Sí/No"></div>
+      <div class="f mb"><label>Ocupa EP</label><input type="text" id="eOBR_ocupaEP" value="${obr.ocupaEP||''}" placeholder="Sí/No"></div>
+      <div class="f mb"><label>m² ocupados</label><input type="number" id="eOBR_m2Ocupa" value="${obr.m2Ocupa||''}" min="0"></div>
+      <div class="f mb"><label>Persona atiende</label><input type="text" id="eOBR_persona" value="${obr.persona||''}"></div>
+      <div class="f mb"><label>Observaciones</label><textarea id="eOBR_obs" style="min-height:50px">${obr.obs||''}</textarea></div>
+    `;
+  }
+  
+  container.innerHTML = html;
 }
 
 function cerrarEditar(){
@@ -3054,37 +4308,134 @@ function guardarEdicion(){
   const key = selKey || recs[selIdx]?._fbKey;
   if(!key){ toast('No se encontró la clave del registro','err'); return; }
   const r = recs[selIdx];
-  // Construir objeto actualizado
-  const updates = {
-    'meta/idOp': document.getElementById('eIdop').value,
-    'meta/fecha': document.getElementById('eFecha').value,
-    'meta/h1':    document.getElementById('eH1').value,
-    'meta/h2':    document.getElementById('eH2').value,
-    'meta/resp': (function(){
-      const sel = document.getElementById('eResp');
-      if (sel.value === '__OTRO__') {
-        return document.getElementById('eResp-otro').value.trim().toUpperCase() || '';
-      }
-      return sel.value;
-    })(),
-    'meta/megatoma':         document.querySelector('input[name="eMegatoma"]:checked')?.value || 'NO',
-    'meta/opConjunto':       document.querySelector('input[name="eConjunto"]:checked')?.value || 'NO',
-    'meta/entidadesConjunto': document.getElementById('eEntidadesConjunto').value.trim(),
-    'ub/dir':     document.getElementById('eDir').value,
-    'ub/barrio':  document.getElementById('eBarrio').value,
-    'ub/upz':     document.getElementById('eUpz').value,
-    'gen/obs':    document.getElementById('eObs').value,
-  };
+  
+  // Obtener el componente seleccionado del chip
+  const chipCC = document.querySelector('#eChipsComponente .chip.on');
+  const cc = chipCC ? chipCC.dataset.comp : (r.cc || '');
+  
+  console.log('=== Guardando edición ===');
+  console.log('Componente seleccionado:', cc);
+  
+  // Construir objeto actualizado con estructura anidada correcta
+  const updates = {};
+  
+  // COMPONENTE (cc)
+  updates['cc'] = cc;
+  
+  // META
+  updates['meta/idOp'] = document.getElementById('eIdop').value;
+  updates['meta/fecha'] = document.getElementById('eFecha').value;
+  updates['meta/h1'] = document.getElementById('eH1').value;
+  updates['meta/h2'] = document.getElementById('eH2').value;
+  
+  const selResp = document.getElementById('eResp');
+  if (selResp.value === '__OTRO__') {
+    updates['meta/resp'] = document.getElementById('eResp-otro').value.trim().toUpperCase() || '';
+  } else {
+    updates['meta/resp'] = selResp.value;
+  }
+  
+  updates['meta/megatoma'] = document.querySelector('input[name="eMegatoma"]:checked')?.value || 'NO';
+  updates['meta/opConjunto'] = document.querySelector('input[name="eConjunto"]:checked')?.value || 'NO';
+  updates['meta/entidadesConjunto'] = document.getElementById('eEntidadesConjunto').value.trim();
+  
+  // TIPO IVC - recolectar chips seleccionados
+  const tipoIVC = [];
+  document.querySelectorAll('#eChipsTipoIVC .chip.on').forEach(chip => {
+    tipoIVC.push(chip.dataset.val);
+  });
+  updates['tipoIVC'] = tipoIVC;
+  
+  // UBICACIÓN
+  updates['ub/dir'] = document.getElementById('eDir').value;
+  updates['ub/barrio'] = document.getElementById('eBarrio').value;
+  updates['ub/upz'] = document.getElementById('eUpz').value;
+  
+  // COMPONENTE ESPECÍFICO - Limpiar componentes no seleccionados
+  const gv = id => document.getElementById(id)?.value || '';
+  const gn = id => Number(document.getElementById(id)?.value || 0);
+  
+  // Limpiar todos los componentes primero
+  updates['ae'] = null;
+  updates['ep'] = null;
+  updates['amb'] = null;
+  updates['mov'] = null;
+  updates['obr'] = null;
+  
+  // Guardar solo el componente seleccionado
+  if (cc === 'AE') {
+    updates['ae/tipo'] = gv('eAE_tipo');
+    updates['ae/nom'] = gv('eAE_nom');
+    updates['ae/medida'] = gv('eAE_medida');
+    updates['ae/res'] = gv('eAE_res');
+  } else if (cc === 'EP') {
+    updates['ep/pol'] = gv('eEP_pol');
+    updates['ep/secMon'] = gv('eEP_secMon');
+    updates['ep/ft'] = gn('eEP_ft');
+    updates['ep/res'] = gv('eEP_res');
+  } else if (cc === 'AMB') {
+    updates['amb/linea'] = gv('eAMB_linea');
+    updates['amb/m2'] = gn('eAMB_m2');
+    updates['amb/m3'] = gn('eAMB_m3');
+    updates['amb/llantas'] = gn('eAMB_llantas');
+    updates['amb/hc'] = gn('eAMB_hc');
+    updates['amb/camb'] = gn('eAMB_camb');
+    updates['amb/car'] = gn('eAMB_car');
+    updates['amb/dosis'] = gn('eAMB_dosis');
+    updates['amb/nArmas'] = gn('eAMB_nArmas');
+    updates['amb/tipoArma'] = gv('eAMB_tipoArma');
+    updates['amb/res'] = gv('eAMB_res');
+  } else if (cc === 'MOV') {
+    updates['mov/accion'] = gv('eMOV_accion');
+    updates['mov/veh'] = gn('eMOV_veh');
+    updates['mov/comp'] = gn('eMOV_comp');
+    updates['mov/m2'] = gn('eMOV_m2');
+    updates['mov/obs'] = gv('eMOV_obs');
+  } else if (cc === 'OBR') {
+    updates['obr/enOp'] = gv('eOBR_enOp');
+    updates['obr/ocupaEP'] = gv('eOBR_ocupaEP');
+    updates['obr/m2Ocupa'] = gn('eOBR_m2Ocupa');
+    updates['obr/persona'] = gv('eOBR_persona');
+    updates['obr/obs'] = gv('eOBR_obs');
+  }
+  
+  // TOTALES
+  updates['tot/m2'] = gn('eTotM2');
+  updates['tot/m3'] = gn('eTotM3');
+  updates['tot/veh'] = gn('eTotVeh');
+  updates['tot/camb'] = gn('eTotCamb');
+  updates['tot/car'] = gn('eTotCar');
+  updates['tot/vend'] = gn('eTotVend');
+  updates['tot/ft'] = gn('eTotFT');
+  updates['tot/pers'] = gn('eTotPers');
+  updates['tot/armas'] = gn('eTotArmas');
+  updates['tot/dosis'] = gn('eTotDosis');
+  updates['tot/comp'] = gn('eTotComp');
+  updates['tot/susp'] = gn('eTotSusp');
+  
+  // GENERAL
+  updates['gen/obs'] = document.getElementById('eObs').value;
+  
+  // ACTA
   const link = document.getElementById('eActaLink').value.trim();
-  updates['acta'] = link ? {link} : null;
+  if (link) {
+    updates['acta/link'] = link;
+  } else {
+    updates['acta'] = null;
+  }
+  
   const btn = document.getElementById('btnGuardarEdit');
   btn.disabled = true; btn.textContent = 'Guardando...';
+  
   RESULTADOS_REF.child(key).update(updates)
     .then(()=>{
       toast('✓ Registro actualizado en Firebase','ok');
       cerrarEditar();
     })
-    .catch(err=>{ toast('Error: '+err.message,'err'); })
+    .catch(err=>{ 
+      console.error('Error al guardar:', err);
+      toast('Error: '+err.message,'err'); 
+    })
     .finally(()=>{ btn.disabled=false; btn.textContent='✓ Guardar cambios'; });
 }
 
@@ -3133,6 +4484,9 @@ function toast(msg,type){
       <button class="admin-tab"        onclick="adminTab('tipos_ae')"  style="padding:10px 16px;border:none;background:none;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:#64748b;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap">🏪 Tipos AE</button>
       <button class="admin-tab"        onclick="adminTab('lineas_amb')"style="padding:10px 16px;border:none;background:none;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:#64748b;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap">🌿 Líneas AMB</button>
       <button class="admin-tab"        onclick="adminTab('colegios')"  style="padding:10px 16px;border:none;background:none;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:#64748b;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap">🏫 Colegios</button>
+      <button class="admin-tab"        onclick="adminTab('tipos_ep')"  style="padding:10px 16px;border:none;background:none;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:#64748b;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap">🏙 Tipos EP</button>
+      <button class="admin-tab"        onclick="adminTab('poligonos_ep')" style="padding:10px 16px;border:none;background:none;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:#64748b;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap">🗺 Polígonos</button>
+      <button class="admin-tab"        onclick="adminTab('tipos_obr')" style="padding:10px 16px;border:none;background:none;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:#64748b;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap">🏗 Tipos OBR</button>
     </div>
 
     <!-- Contenido dinámico -->
@@ -3164,6 +4518,9 @@ function toast(msg,type){
 .admin-tab.active { color:#1e3a8a!important; border-bottom-color:#1e3a8a!important; }
 .admin-item { display:flex;align-items:center;gap:8px;padding:7px 10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:6px;font-size:13px;color:#1e293b;font-family:Inter,sans-serif; }
 .admin-item span { flex:1; }
+.admin-actions { display:flex;gap:4px;flex-shrink:0; }
+.admin-edit { background:none;border:none;color:#3b82f6;font-size:16px;cursor:pointer;padding:2px 6px;border-radius:4px;flex-shrink:0; }
+.admin-edit:hover { background:#dbeafe; }
 .admin-del { background:none;border:none;color:#ef4444;font-size:16px;cursor:pointer;padding:2px 6px;border-radius:4px;flex-shrink:0; }
 .admin-del:hover { background:#fee2e2; }
 .admin-add-row { display:flex;gap:8px;margin-top:12px; }
@@ -3171,6 +4528,12 @@ function toast(msg,type){
 .admin-add-row input:focus, .admin-add-row select:focus { border-color:#3b82f6; }
 .admin-add-btn { padding:8px 16px;background:linear-gradient(135deg,#1e293b,#1e3a8a);color:#fff;border:none;border-radius:8px;font-family:Inter,sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap; }
 .admin-section-title { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#64748b;margin:14px 0 8px; }
+.admin-editing { background:#eff6ff!important;border-color:#3b82f6!important; }
+.admin-edit-actions { display:flex;gap:6px;margin-top:8px;justify-content:flex-end; }
+.admin-save-btn { padding:6px 14px;background:#10b981;color:#fff;border:none;border-radius:6px;font-family:Inter,sans-serif;font-size:12px;font-weight:600;cursor:pointer; }
+.admin-save-btn:hover { background:#059669; }
+.admin-cancel-btn { padding:6px 14px;background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;border-radius:6px;font-family:Inter,sans-serif;font-size:12px;font-weight:600;cursor:pointer; }
+.admin-cancel-btn:hover { background:#e2e8f0; }
 </style>
 
 <script>
@@ -3206,7 +4569,7 @@ function cerrarAdmin() {
 function adminTab(tab) {
   _adminTab = tab;
   document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
-  const tabs = ['barrios','resp','tipos_ae','lineas_amb','colegios'];
+  const tabs = ['barrios','resp','tipos_ae','lineas_amb','colegios','tipos_ep','poligonos_ep','tipos_obr'];
   const idx = tabs.indexOf(tab);
   document.querySelectorAll('.admin-tab')[idx]?.classList.add('active');
   renderAdminBody();
@@ -3268,7 +4631,13 @@ function renderAdminBody() {
     let html = '<div style="font-size:12px;color:#64748b;margin-bottom:14px">Tipos de establecimiento para operativos de Actividad Económica.</div>';
     (_listas.tipos_ae || []).forEach((t, i) => {
       const lbl = t.label || t; const val = t.value || t;
-      html += `<div class="admin-item"><span><strong>${val}</strong> — ${lbl}</span><button class="admin-del" onclick="adminDelItem('tipos_ae',${i})" title="Eliminar">🗑</button></div>`;
+      html += `<div class="admin-item" id="admin-ae-${i}">
+        <span id="admin-ae-text-${i}"><strong>${val}</strong> — ${lbl}</span>
+        <div class="admin-actions">
+          <button class="admin-edit" onclick="adminEditAE(${i})" title="Editar">✏️</button>
+          <button class="admin-del" onclick="adminDelItem('tipos_ae',${i})" title="Eliminar">🗑</button>
+        </div>
+      </div>`;
     });
     html += `<div class="admin-section-title" style="margin-top:20px">➕ Agregar tipo AE</div>
       <div class="admin-add-row" style="flex-wrap:wrap;gap:8px">
@@ -3283,7 +4652,13 @@ function renderAdminBody() {
     let html = '<div style="font-size:12px;color:#64748b;margin-bottom:14px">Líneas de acción para operativos de Ambiente.</div>';
     (_listas.lineas_amb || []).forEach((l, i) => {
       const lbl = l.label || l; const val = l.value || l;
-      html += `<div class="admin-item"><span><strong>${val}</strong><br><span style="font-size:11px;color:#64748b">${lbl}</span></span><button class="admin-del" onclick="adminDelItem('lineas_amb',${i})" title="Eliminar">🗑</button></div>`;
+      html += `<div class="admin-item" id="admin-amb-${i}">
+        <span id="admin-amb-text-${i}"><strong>${val}</strong><br><span style="font-size:11px;color:#64748b">${lbl}</span></span>
+        <div class="admin-actions">
+          <button class="admin-edit" onclick="adminEditAMB(${i})" title="Editar">✏️</button>
+          <button class="admin-del" onclick="adminDelItem('lineas_amb',${i})" title="Eliminar">🗑</button>
+        </div>
+      </div>`;
     });
     html += `<div class="admin-section-title" style="margin-top:20px">➕ Agregar línea AMB</div>
       <div class="admin-add-row" style="flex-wrap:wrap;gap:8px">
@@ -3306,13 +4681,293 @@ function renderAdminBody() {
       </div>`;
     body.innerHTML = html;
   }
+
+  else if (_adminTab === 'tipos_ep') {
+    let html = '<div style="font-size:12px;color:#64748b;margin-bottom:14px">Tipos de sección de monitoreo para operativos de Espacio Público (aparecen como chips en el formulario).</div>';
+    (_listas.tipos_ep || []).forEach((t, i) => {
+      const lbl = t.label || t; const val = t.value || t;
+      html += `<div class="admin-item" id="admin-ep-${i}">
+        <span id="admin-ep-text-${i}"><strong>${val}</strong> — ${lbl}</span>
+        <div class="admin-actions">
+          <button class="admin-edit" onclick="adminEditEP(${i})" title="Editar">✏️</button>
+          <button class="admin-del" onclick="adminDelItem('tipos_ep',${i})" title="Eliminar">🗑</button>
+        </div>
+      </div>`;
+    });
+    html += `<div class="admin-section-title" style="margin-top:20px">➕ Agregar tipo EP</div>
+      <div class="admin-add-row" style="flex-wrap:wrap;gap:8px">
+        <input type="text" id="a-ep-val" placeholder="Valor interno (ej: MEGATOMA)" oninput="this.value=this.value.toUpperCase()" style="flex:1;min-width:160px">
+        <input type="text" id="a-ep-lbl" placeholder="Etiqueta visible (ej: Megatoma)" style="flex:1;min-width:160px">
+        <button class="admin-add-btn" onclick="adminAddEP()">Agregar</button>
+      </div>`;
+    body.innerHTML = html;
+  }
+
+  else if (_adminTab === 'poligonos_ep') {
+    let html = '<div style="font-size:12px;color:#64748b;margin-bottom:14px">Polígonos de monitoreo de Espacio Público disponibles en el formulario.</div>';
+    (_listas.poligonos_ep || []).sort().forEach((p, i) => {
+      html += `<div class="admin-item"><span>${p}</span><button class="admin-del" onclick="adminDelItem('poligonos_ep',${i})" title="Eliminar">🗑</button></div>`;
+    });
+    html += `<div class="admin-section-title" style="margin-top:20px">➕ Agregar polígono</div>
+      <div class="admin-add-row">
+        <input type="text" id="a-pol-inp" placeholder="Nombre del polígono" oninput="this.value=this.value.toUpperCase()">
+        <button class="admin-add-btn" onclick="adminAddPoligono()">Agregar</button>
+      </div>`;
+    body.innerHTML = html;
+  }
+
+  else if (_adminTab === 'tipos_obr') {
+    let html = '<div style="font-size:12px;color:#64748b;margin-bottom:14px">Tipos de operativo para Obras y Urbanismo.</div>';
+    (_listas.tipos_obr || []).forEach((t, i) => {
+      const lbl = t.label || t; const val = t.value || t;
+      html += `<div class="admin-item" id="admin-obr-${i}">
+        <span id="admin-obr-text-${i}"><strong>${val}</strong> — ${lbl}</span>
+        <div class="admin-actions">
+          <button class="admin-edit" onclick="adminEditOBR(${i})" title="Editar">✏️</button>
+          <button class="admin-del" onclick="adminDelItem('tipos_obr',${i})" title="Eliminar">🗑</button>
+        </div>
+      </div>`;
+    });
+    html += `<div class="admin-section-title" style="margin-top:20px">➕ Agregar tipo OBR</div>
+      <div class="admin-add-row" style="flex-wrap:wrap;gap:8px">
+        <input type="text" id="a-obr-val" placeholder="Valor interno (ej: CERRAMIENTO)" oninput="this.value=this.value.toUpperCase()" style="flex:1;min-width:160px">
+        <input type="text" id="a-obr-lbl" placeholder="Etiqueta visible (ej: Cerramiento ilegal)" style="flex:1;min-width:160px">
+        <button class="admin-add-btn" onclick="adminAddOBR()">Agregar</button>
+      </div>`;
+    body.innerHTML = html;
+  }
 }
 
 // ── Guardar listas en Firebase ──
 function adminSave() {
-  LISTAS_REF.set(_listas)
-    .then(() => { poblarSelects(_listas); toast('✅ Lista actualizada','ok'); })
-    .catch(err => { console.error('adminSave:', err); toast('⚠ Error al guardar','err'); });
+  // Limpiar valores undefined que Firebase no acepta
+  const limpiarObjeto = (obj) => {
+    if (Array.isArray(obj)) {
+      return obj.map(item => limpiarObjeto(item));
+    }
+    if (obj && typeof obj === 'object') {
+      const limpio = {};
+      for (const key in obj) {
+        if (obj[key] !== undefined && obj[key] !== null) {
+          limpio[key] = limpiarObjeto(obj[key]);
+        }
+      }
+      return limpio;
+    }
+    return obj;
+  };
+  
+  const listasLimpias = limpiarObjeto(_listas);
+  console.log('💾 Guardando listas en Firebase:', listasLimpias);
+  
+  LISTAS_REF.set(listasLimpias)
+    .then(() => { 
+      console.log('✅ Listas guardadas exitosamente en Firebase');
+      poblarSelects(_listas); 
+      toast('✅ Lista actualizada','ok'); 
+    })
+    .catch(err => { 
+      console.error('adminSave error:', err); 
+      toast('⚠ Error al guardar: ' + err.message,'err'); 
+    });
+}
+
+// ── EP tipos ──
+function adminAddEP() {
+  const val = (document.getElementById('a-ep-val')?.value || '').trim().toUpperCase();
+  const lbl = (document.getElementById('a-ep-lbl')?.value || '').trim();
+  if (!val || !lbl) { toast('Completa valor y etiqueta','err'); return; }
+  if (!_listas.tipos_ep) _listas.tipos_ep = [];
+  if (_listas.tipos_ep.find(t => (t.value||t) === val)) { toast('Ya existe','err'); return; }
+  _listas.tipos_ep.push({ value: val, label: lbl });
+  adminSave(); renderAdminBody();
+}
+
+// ── Polígonos EP ──
+function adminAddPoligono() {
+  const p = (document.getElementById('a-pol-inp')?.value || '').trim().toUpperCase();
+  if (!p) { toast('Escribe el nombre del polígono','err'); return; }
+  if (!_listas.poligonos_ep) _listas.poligonos_ep = [];
+  if (_listas.poligonos_ep.includes(p)) { toast('Ya existe','err'); return; }
+  _listas.poligonos_ep.push(p);
+  adminSave(); renderAdminBody();
+}
+
+// ── OBR tipos ──
+function adminAddOBR() {
+  const val = (document.getElementById('a-obr-val')?.value || '').trim().toUpperCase();
+  const lbl = (document.getElementById('a-obr-lbl')?.value || '').trim();
+  if (!val || !lbl) { toast('Completa valor y etiqueta','err'); return; }
+  if (!_listas.tipos_obr) _listas.tipos_obr = [];
+  if (_listas.tipos_obr.find(t => (t.value||t) === val)) { toast('Ya existe','err'); return; }
+  _listas.tipos_obr.push({ value: val, label: lbl });
+  adminSave(); renderAdminBody();
+}
+
+// ── EDITAR ITEMS ──────────────────────────────────────
+let _editingItem = null;
+
+// Editar Tipo AE
+function adminEditAE(idx) {
+  if (_editingItem) adminCancelEdit(); // Cancelar edición previa
+  _editingItem = { type: 'tipos_ae', idx: idx };
+  
+  const item = _listas.tipos_ae[idx];
+  const val = item.value || item;
+  const lbl = item.label || item;
+  
+  const container = document.getElementById(`admin-ae-${idx}`);
+  container.classList.add('admin-editing');
+  
+  container.innerHTML = `
+    <div style="flex:1">
+      <input type="text" id="edit-ae-val-${idx}" value="${val}" placeholder="Valor interno" 
+        oninput="this.value=this.value.toUpperCase()" 
+        style="width:100%;margin-bottom:6px;padding:6px 10px;border:1.5px solid #3b82f6;border-radius:6px;font-family:Inter,sans-serif;font-size:13px">
+      <input type="text" id="edit-ae-lbl-${idx}" value="${lbl}" placeholder="Etiqueta visible" 
+        style="width:100%;padding:6px 10px;border:1.5px solid #3b82f6;border-radius:6px;font-family:Inter,sans-serif;font-size:13px">
+    </div>
+    <div class="admin-edit-actions">
+      <button class="admin-save-btn" onclick="adminSaveEditAE(${idx})">💾 Guardar</button>
+      <button class="admin-cancel-btn" onclick="adminCancelEdit()">✕ Cancelar</button>
+    </div>
+  `;
+}
+
+function adminSaveEditAE(idx) {
+  const val = (document.getElementById(`edit-ae-val-${idx}`)?.value || '').trim().toUpperCase();
+  const lbl = (document.getElementById(`edit-ae-lbl-${idx}`)?.value || '').trim();
+  
+  if (!val || !lbl) { toast('Completa valor y etiqueta','err'); return; }
+  
+  _listas.tipos_ae[idx] = { value: val, label: lbl };
+  _editingItem = null;
+  adminSave(); renderAdminBody();
+  toast('✓ Tipo AE actualizado','ok');
+}
+
+// Editar Línea AMB
+function adminEditAMB(idx) {
+  if (_editingItem) adminCancelEdit();
+  _editingItem = { type: 'lineas_amb', idx: idx };
+  
+  const item = _listas.lineas_amb[idx];
+  const val = item.value || item;
+  const lbl = item.label || item;
+  
+  const container = document.getElementById(`admin-amb-${idx}`);
+  container.classList.add('admin-editing');
+  
+  container.innerHTML = `
+    <div style="flex:1">
+      <input type="text" id="edit-amb-val-${idx}" value="${val}" placeholder="Valor corto" 
+        oninput="this.value=this.value.toUpperCase()" 
+        style="width:100%;margin-bottom:6px;padding:6px 10px;border:1.5px solid #3b82f6;border-radius:6px;font-family:Inter,sans-serif;font-size:13px">
+      <input type="text" id="edit-amb-lbl-${idx}" value="${lbl}" placeholder="Descripción completa" 
+        oninput="this.value=this.value.toUpperCase()" 
+        style="width:100%;padding:6px 10px;border:1.5px solid #3b82f6;border-radius:6px;font-family:Inter,sans-serif;font-size:13px">
+    </div>
+    <div class="admin-edit-actions">
+      <button class="admin-save-btn" onclick="adminSaveEditAMB(${idx})">💾 Guardar</button>
+      <button class="admin-cancel-btn" onclick="adminCancelEdit()">✕ Cancelar</button>
+    </div>
+  `;
+}
+
+function adminSaveEditAMB(idx) {
+  const val = (document.getElementById(`edit-amb-val-${idx}`)?.value || '').trim().toUpperCase();
+  const lbl = (document.getElementById(`edit-amb-lbl-${idx}`)?.value || '').trim().toUpperCase();
+  
+  if (!val || !lbl) { toast('Completa valor y descripción','err'); return; }
+  
+  _listas.lineas_amb[idx] = { value: val, label: lbl };
+  _editingItem = null;
+  adminSave(); renderAdminBody();
+  toast('✓ Línea AMB actualizada','ok');
+}
+
+// Editar Tipo EP
+function adminEditEP(idx) {
+  if (_editingItem) adminCancelEdit();
+  _editingItem = { type: 'tipos_ep', idx: idx };
+  
+  const item = _listas.tipos_ep[idx];
+  const val = item.value || item;
+  const lbl = item.label || item;
+  
+  const container = document.getElementById(`admin-ep-${idx}`);
+  container.classList.add('admin-editing');
+  
+  container.innerHTML = `
+    <div style="flex:1">
+      <input type="text" id="edit-ep-val-${idx}" value="${val}" placeholder="Valor interno" 
+        oninput="this.value=this.value.toUpperCase()" 
+        style="width:100%;margin-bottom:6px;padding:6px 10px;border:1.5px solid #3b82f6;border-radius:6px;font-family:Inter,sans-serif;font-size:13px">
+      <input type="text" id="edit-ep-lbl-${idx}" value="${lbl}" placeholder="Etiqueta visible" 
+        style="width:100%;padding:6px 10px;border:1.5px solid #3b82f6;border-radius:6px;font-family:Inter,sans-serif;font-size:13px">
+    </div>
+    <div class="admin-edit-actions">
+      <button class="admin-save-btn" onclick="adminSaveEditEP(${idx})">💾 Guardar</button>
+      <button class="admin-cancel-btn" onclick="adminCancelEdit()">✕ Cancelar</button>
+    </div>
+  `;
+}
+
+function adminSaveEditEP(idx) {
+  const val = (document.getElementById(`edit-ep-val-${idx}`)?.value || '').trim().toUpperCase();
+  const lbl = (document.getElementById(`edit-ep-lbl-${idx}`)?.value || '').trim();
+  
+  if (!val || !lbl) { toast('Completa valor y etiqueta','err'); return; }
+  
+  _listas.tipos_ep[idx] = { value: val, label: lbl };
+  _editingItem = null;
+  adminSave(); renderAdminBody();
+  toast('✓ Tipo EP actualizado','ok');
+}
+
+// Editar Tipo OBR
+function adminEditOBR(idx) {
+  if (_editingItem) adminCancelEdit();
+  _editingItem = { type: 'tipos_obr', idx: idx };
+  
+  const item = _listas.tipos_obr[idx];
+  const val = item.value || item;
+  const lbl = item.label || item;
+  
+  const container = document.getElementById(`admin-obr-${idx}`);
+  container.classList.add('admin-editing');
+  
+  container.innerHTML = `
+    <div style="flex:1">
+      <input type="text" id="edit-obr-val-${idx}" value="${val}" placeholder="Valor interno" 
+        oninput="this.value=this.value.toUpperCase()" 
+        style="width:100%;margin-bottom:6px;padding:6px 10px;border:1.5px solid #3b82f6;border-radius:6px;font-family:Inter,sans-serif;font-size:13px">
+      <input type="text" id="edit-obr-lbl-${idx}" value="${lbl}" placeholder="Etiqueta visible" 
+        style="width:100%;padding:6px 10px;border:1.5px solid #3b82f6;border-radius:6px;font-family:Inter,sans-serif;font-size:13px">
+    </div>
+    <div class="admin-edit-actions">
+      <button class="admin-save-btn" onclick="adminSaveEditOBR(${idx})">💾 Guardar</button>
+      <button class="admin-cancel-btn" onclick="adminCancelEdit()">✕ Cancelar</button>
+    </div>
+  `;
+}
+
+function adminSaveEditOBR(idx) {
+  const val = (document.getElementById(`edit-obr-val-${idx}`)?.value || '').trim().toUpperCase();
+  const lbl = (document.getElementById(`edit-obr-lbl-${idx}`)?.value || '').trim();
+  
+  if (!val || !lbl) { toast('Completa valor y etiqueta','err'); return; }
+  
+  _listas.tipos_obr[idx] = { value: val, label: lbl };
+  _editingItem = null;
+  adminSave(); renderAdminBody();
+  toast('✓ Tipo OBR actualizado','ok');
+}
+
+// Cancelar edición
+function adminCancelEdit() {
+  _editingItem = null;
+  renderAdminBody();
 }
 
 // ── Barrios ──
@@ -3376,7 +5031,406 @@ function adminAddColegio() {
   _listas.colegios.push(c);
   adminSave(); renderAdminBody();
 }
+
+// ══ NAVEGACIÓN MÓVIL ══
+function mnavSwitch(v, btn) {
+  document.querySelectorAll('.mnav-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  switchMain(v, document.getElementById('sidebtn-' + v));
+  // Scroll al top al cambiar sección
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Sincronizar nav móvil con nav desktop
+var _origSwitchMain = switchMain;
+switchMain = function(v, btn) {
+  _origSwitchMain(v, btn);
+  document.querySelectorAll('.mnav-btn').forEach(b => b.classList.remove('active'));
+  var mnav = document.getElementById('mnav-' + v);
+  if (mnav) mnav.classList.add('active');
+  // Ocultar FAB en formulario, mostrar en resultados/dashboard
+  var fab = document.getElementById('fab-nuevo');
+  if (fab) fab.style.display = (v === 'form') ? 'none' : 'flex';
+};
+
+// Sincronizar estado Firebase con header móvil
+(function() {
+  var orig = document.getElementById('fbStatus');
+  var mhFb = document.getElementById('mh-fb-status');
+  if (!orig || !mhFb) return;
+  var obs = new MutationObserver(function() {
+    if (mhFb) mhFb.textContent = orig.textContent;
+  });
+  obs.observe(orig, {childList: true, characterData: true, subtree: true});
+})();
+
+// Actualizar badge de conteo en nav móvil
+function updateMnavBadge() {
+  var cnt = document.getElementById('rcnt');
+  if (!cnt) return;
+  var n = parseInt(cnt.textContent || '0');
+}
+
+
+
+// ══════════════════════════════════════════════════════════
+// CARRITO DE REPORTE — acumula registros de múltiples filtros
+// ══════════════════════════════════════════════════════════
+var _carritoIds  = new Set();   // IDs únicos de registros añadidos
+var _carritoRecs = [];          // registros acumulados
+
+function carritoActualizar() {
+  var bar   = document.getElementById('carrito-bar');
+  var cnt   = document.getElementById('carrito-count');
+  var desc  = document.getElementById('carrito-desc');
+  if (!bar) return;
+  var n = _carritoRecs.length;
+  if (n > 0) {
+    bar.classList.add('visible');
+    cnt.textContent  = n;
+    desc.textContent = n === 1 ? 'registro en el reporte' : 'registros en el reporte';
+  } else {
+    bar.classList.remove('visible');
+  }
+}
+
+function carritoAgregar() {
+  var filtrados = getFilteredRecs();
+  if (!filtrados.length) { toast('⚠ No hay registros filtrados para agregar','err'); return; }
+  var nuevos = 0;
+  filtrados.forEach(function(r) {
+    // Clave única: fbKey o combinación id+fecha+dir
+    var key = r._fbKey || (String(r.id) + '|' + (r.meta&&r.meta.fecha||'') + '|' + (r.ub&&r.ub.dir||''));
+    if (!_carritoIds.has(key)) {
+      _carritoIds.add(key);
+      _carritoRecs.push(r);
+      nuevos++;
+    }
+  });
+  carritoActualizar();
+  if (nuevos > 0) {
+    toast('✅ ' + nuevos + ' registro(s) agregados al reporte · Total: ' + _carritoRecs.length, 'ok');
+  } else {
+    toast('ℹ Todos los registros filtrados ya estaban en el reporte', 'ok');
+  }
+}
+
+function carritoLimpiar() {
+  if (_carritoRecs.length === 0) return;
+  if (!confirm('¿Limpiar el reporte? Se eliminarán los ' + _carritoRecs.length + ' registros acumulados.')) return;
+  _carritoIds  = new Set();
+  _carritoRecs = [];
+  carritoActualizar();
+  toast('🗑 Reporte limpiado', 'ok');
+}
+
+function carritoDescargarPDF() {
+  if (_carritoRecs.length === 0) { toast('⚠ El reporte está vacío','err'); return; }
+  generarPDFReporte(_carritoRecs, 'Reporte acumulado · ' + _carritoRecs.length + ' registros de múltiples filtros');
+}
+
+// ── Modificar el botón "Descargar reporte" para usar los filtrados actuales
+// (el carrito usa generarPDFReporte, botón principal también)
+function exportarReportePDF() {
+  var filtrados = getFilteredRecs();
+  if (!filtrados.length) { toast('⚠ No hay registros para exportar','err'); return; }
+  var desde  = document.getElementById('fltDesde')?.value  || '';
+  var hasta  = document.getElementById('fltHasta')?.value  || '';
+  var exacto = document.getElementById('fltExacto')?.value || '';
+  var barrio = document.getElementById('fltBarrio')?.value || '';
+  var upz    = document.getElementById('fltUPZ')?.value    || '';
+  var tipo   = document.getElementById('fltTipo')?.value   || '';
+  var dir    = document.getElementById('fltDir')?.value    || '';
+  var acta   = document.getElementById('fltActa')?.value   || '';
+  var idOp   = document.getElementById('fltIdOp')?.value   || '';
+  var tipoLabels = {AE:'Actividad Económica',EP:'Espacio Público',AMB:'Ambiente',MOV:'Movilidad',OBR:'Obras'};
+  var filtrosTexto = [
+    desde||hasta ? 'Período: '+(desde||'inicio')+' → '+(hasta||'hoy') : '',
+    exacto ? 'Fecha exacta: '+exacto : '',
+    upz    ? 'UPZ: '+upz : '',
+    barrio ? 'Barrio: '+barrio : '',
+    dir    ? 'Dirección: '+dir : '',
+    tipo   ? 'Componente: '+(tipoLabels[tipo]||tipo) : '',
+    acta === 'con' ? 'Con acta cargada' : acta === 'sin' ? 'Sin acta cargada' : '',
+    idOp   ? 'ID Operativo: '+idOp : '',
+  ].filter(Boolean).join(' | ') || 'Sin filtros — todos los registros';
+  generarPDFReporte(filtrados, filtrosTexto);
+}
+
+
+function cleanId(id) {
+  if (!id) return '—';
+  var s = String(id).trim();
+  return s.endsWith('.0') ? s.slice(0, -2) : s;
+}
+
+function getLugar(r) {
+  var ae  = r.ae  || {};
+  var ep  = r.ep  || {};
+  var amb = r.amb || {};
+  var mov = r.mov || {};
+  var est = r.est || {};
+  var gen = r.gen || {};
+  if (r.cc === 'AE')  return ae.nom  || est.nom || '—';
+  if (r.cc === 'EP')  return ep.pol  || '—';
+  if (r.cc === 'AMB') return amb.linea || est.nom || '—';
+  if (r.cc === 'MOV') return mov.accion || gen.obj || '—';
+  if (r.cc === 'OBR') return est.nom || gen.obj || '—';
+  return est.nom || '—';
+}
+
+function generarPDFReporte(lista, filtrosTexto) {
+  var hoy   = new Date();
+  var fecha = hoy.toLocaleDateString('es-CO',{day:'2-digit',month:'long',year:'numeric'});
+  var hora  = hoy.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+
+  var tots = lista.reduce(function(a,r) {
+    var t = r.tot || {};
+    return {
+      m2:   a.m2   + Number(t.m2   ||0),
+      m3:   a.m3   + Number(t.m3   ||0),
+      vend: a.vend + Number(t.vend ||0),
+      camb: a.camb + Number(t.camb ||0),
+      car:  a.car  + Number(t.car  ||0),
+      comp: a.comp + Number(t.comp ||0),
+      veh:  a.veh  + Number(t.veh  ||0),
+      pers: a.pers + Number(t.pers ||0),
+      susp: a.susp + Number(t.susp ||0),
+      armas:a.armas+ Number(t.armas||0),
+    };
+  },{m2:0,m3:0,vend:0,camb:0,car:0,comp:0,veh:0,pers:0,susp:0,armas:0});
+
+  var porCC = {};
+  lista.forEach(function(r){ var cc=r.cc||'OTR'; porCC[cc]=(porCC[cc]||0)+1; });
+  var tipoLabels = {AE:'Actividad Económica',EP:'Espacio Público',AMB:'Ambiente',MOV:'Movilidad',OBR:'Obras'};
+
+  var filas = lista.map(function(r,i) {
+    var t = r.tot || {};
+    var cc_color = {AE:'#f59e0b',EP:'#3b82f6',AMB:'#10b981',MOV:'#f97316',OBR:'#8b5cf6'}[r.cc]||'#64748b';
+    var acta_icon = (r.acta && r.acta.link)
+      ? '<a href="'+r.acta.link+'" style="color:#1d4ed8;font-size:10px">📎 Ver acta</a>'
+      : '<span style="color:#94a3b8;font-size:10px">—</span>';
+    var kpis = [];
+    if (r.cc==='AE'){ if(t.pers)kpis.push('👤 '+t.pers+' pers.'); if(t.susp)kpis.push('🚫 '+t.susp+' susp.'); if(t.m2)kpis.push('📐 '+t.m2+' m²'); }
+    else if(r.cc==='EP'){ if(t.vend)kpis.push('🛒 '+t.vend+' vend.'); if(t.m2)kpis.push('📐 '+t.m2+' m²'); if(t.camb)kpis.push('⛺ '+t.camb+' camb.'); }
+    else if(r.cc==='AMB'){ if(t.m2)kpis.push('📐 '+t.m2+' m²'); if(t.m3)kpis.push('🗑 '+t.m3+' m³'); if(t.camb)kpis.push('⛺ '+t.camb+' camb.'); if(t.car)kpis.push('🛒 '+t.car+' carr.'); }
+    else if(r.cc==='MOV'){ if(t.comp)kpis.push('📋 '+t.comp+' comp.'); if(t.veh)kpis.push('🚗 '+t.veh+' veh.'); if(t.m2)kpis.push('📐 '+t.m2+' m²'); }
+    return '<tr style="background:'+(i%2===0?'#f8fafc':'#fff')+'">'
+      +'<td style="padding:6px 8px;font-size:10px;color:#64748b;text-align:center">'+(i+1)+'</td>'
+      +'<td style="padding:6px 8px;font-size:10px;font-weight:700;color:#1e293b">'+cleanId(r.meta&&r.meta.idOp)+'</td>'
+      +'<td style="padding:6px 8px;font-size:10px;color:#334155">'+(r.meta&&r.meta.fecha||'—')+'</td>'
+      +'<td style="padding:6px 8px;font-size:10px"><span style="background:'+cc_color+'22;color:'+cc_color+';padding:2px 6px;border-radius:4px;font-weight:700">'+(r.cc||'—')+'</span></td>'
+      +'<td style="padding:6px 8px;font-size:10px;color:#334155;font-style:italic">'+getLugar(r)+'</td>'
+      +'<td style="padding:6px 8px;font-size:10px;color:#334155">'+(r.ub&&r.ub.upz||'—')+'</td>'
+      +'<td style="padding:6px 8px;font-size:10px;color:#334155">'+(r.ub&&r.ub.barrio||'—')+'</td>'
+      +'<td style="padding:6px 8px;font-size:10px;color:#1e40af;font-weight:600">'+(r.ub&&r.ub.dir||'—')+'</td>'
+      +'<td style="padding:6px 8px;font-size:10px;color:#475569">'+(kpis.join(' · ')||'—')+'</td>'
+      +'<td style="padding:6px 8px;text-align:center">'+acta_icon+'</td>'
+      +'</tr>';
+  }).join('');
+
+  var resumenCC = Object.entries(porCC)
+    .map(function(e){ return '<span style="background:#f1f5f9;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700">'+(tipoLabels[e[0]]||e[0])+': <strong>'+e[1]+'</strong></span>'; })
+    .join(' ');
+
+  var totales = [
+    tots.m2   ? '<span style="background:#eff6ff;padding:3px 10px;border-radius:6px;font-size:11px">📐 '+tots.m2.toLocaleString('es-CO')+' m²</span>' : '',
+    tots.vend ? '<span style="background:#eff6ff;padding:3px 10px;border-radius:6px;font-size:11px">🛒 '+tots.vend.toLocaleString('es-CO')+' vend.</span>' : '',
+    tots.camb ? '<span style="background:#eff6ff;padding:3px 10px;border-radius:6px;font-size:11px">⛺ '+tots.camb.toLocaleString('es-CO')+' camb.</span>' : '',
+    tots.comp ? '<span style="background:#eff6ff;padding:3px 10px;border-radius:6px;font-size:11px">📋 '+tots.comp.toLocaleString('es-CO')+' comp.</span>' : '',
+    tots.pers ? '<span style="background:#eff6ff;padding:3px 10px;border-radius:6px;font-size:11px">👤 '+tots.pers.toLocaleString('es-CO')+' pers.</span>' : '',
+    tots.susp ? '<span style="background:#eff6ff;padding:3px 10px;border-radius:6px;font-size:11px">🚫 '+tots.susp.toLocaleString('es-CO')+' susp.</span>' : '',
+  ].filter(Boolean).join(' ');
+
+  var html = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">'
+    +'<title>Reporte IVC Engativá — '+fecha+'</title>'
+    +'<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;color:#1e293b}'
+    +'@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}tr{page-break-inside:avoid}}'
+    +'@page{margin:1.5cm;size:A4 landscape}</style></head><body>'
+    +'<div style="background:linear-gradient(135deg,#1e293b,#1e3a8a);color:#fff;padding:18px 24px;border-radius:10px;margin-bottom:16px">'
+    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">'
+    +'<div><div style="font-size:18px;font-weight:900">RELACIÓN DE INTERVENCIONES IVC</div>'
+    +'<div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:3px">Alcaldía Local de Engativá · Inspección, Vigilancia y Control</div></div>'
+    +'<div style="text-align:right;font-size:11px;color:rgba(255,255,255,.65)">'
+    +'<div>Generado: '+fecha+' '+hora+'</div>'
+    +'<div style="margin-top:2px">Total registros: <strong style="color:#f59e0b;font-size:14px">'+lista.length+'</strong></div></div>'
+    +'</div></div>'
+    +'<div style="background:#eff6ff;border:1.5px solid #93c5fd;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#1e40af">'
+    +'<strong>🔍 Filtros / origen:</strong> '+filtrosTexto+'</div>'
+    +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">'+resumenCC+' '+totales+'</div>'
+    +'<table style="width:100%;border-collapse:collapse">'
+    +'<thead><tr style="background:linear-gradient(135deg,#1e293b,#1e3a8a);color:#fff">'
+    +'<th style="padding:8px;font-size:10px;text-align:center">#</th>'
+    +'<th style="padding:8px;font-size:10px;text-align:left">ID Op.</th>'
+    +'<th style="padding:8px;font-size:10px;text-align:left">Fecha</th>'
+    +'<th style="padding:8px;font-size:10px;text-align:left">Comp.</th>'
+    +'<th style="padding:8px;font-size:10px;text-align:left">Lugar / Establecimiento</th>'
+    +'<th style="padding:8px;font-size:10px;text-align:left">UPZ</th>'
+    +'<th style="padding:8px;font-size:10px;text-align:left">Barrio</th>'
+    +'<th style="padding:8px;font-size:10px;text-align:left">Dirección</th>'
+    +'<th style="padding:8px;font-size:10px;text-align:left">Resultados</th>'
+    +'<th style="padding:8px;font-size:10px;text-align:center">Acta</th>'
+    +'</tr></thead><tbody>'+filas+'</tbody></table>'
+    +'<div style="margin-top:18px;padding-top:10px;border-top:1.5px solid #e2e8f0;display:flex;justify-content:space-between;font-size:10px;color:#94a3b8">'
+    +'<span>IVC Engativá · Sistema de Registro de Operativos</span>'
+    +'<span>'+fecha+' '+hora+'</span></div>'
+    +'<script>window.onload=function(){window.print();}<\/script>'
+    +'</body></html>';
+
+  var win = window.open('','_blank','width=1200,height=800');
+  win.document.write(html);
+  win.document.close();
+}
+
+
+// ══════════════════════════════════════════════════════════
+// SECCIÓN REPORTE PDF — selección de registros
+// ══════════════════════════════════════════════════════════
+var _reporteSeleccionados = new Set(); // claves de registros seleccionados
+
+function reporteGetKey(r) {
+  return r._fbKey || (String(r.id||'') + '|' + (r.meta&&r.meta.fecha||'') + '|' + (r.ub&&r.ub.dir||''));
+}
+
+function reporteGetFiltrados() {
+  var dir  = (document.getElementById('rpt-dir')?.value  || '').toLowerCase().trim();
+  var cc   = document.getElementById('rpt-cc')?.value   || '';
+  var acta = document.getElementById('rpt-acta')?.value || '';
+  return recs.filter(function(r) {
+    if (dir  && !(r.ub?.dir||'').toLowerCase().includes(dir)) return false;
+    if (cc   && r.cc !== cc)                                   return false;
+    if (acta === 'con' && !(r.acta?.link))                    return false;
+    if (acta === 'sin' && r.acta?.link)                       return false;
+    return true;
+  });
+}
+
+function reporteRenderLista() {
+  var lista   = document.getElementById('reporte-lista');
+  var resumen = document.getElementById('reporte-resumen');
+  var rptTxt  = document.getElementById('reporte-resumen-txt');
+  if (!lista) return;
+
+  var filtrados = reporteGetFiltrados();
+  var cc_colors = {AE:'#f59e0b',EP:'#3b82f6',AMB:'#10b981',MOV:'#f97316',OBR:'#8b5cf6'};
+  var cc_labels = {AE:'AE',EP:'EP',AMB:'AMB',MOV:'MOV',OBR:'OBR'};
+
+  if (!filtrados.length) {
+    lista.innerHTML = '<div style="text-align:center;padding:40px;color:#94a3b8;font-size:13px">No hay registros con los filtros actuales</div>';
+    return;
+  }
+
+  lista.innerHTML = filtrados.map(function(r) {
+    var key    = reporteGetKey(r);
+    var sel    = _reporteSeleccionados.has(key);
+    var cc_col = cc_colors[r.cc] || '#64748b';
+    var cc_lbl = cc_labels[r.cc] || r.cc || '—';
+    var lugar  = getLugar(r);
+    var idLbl  = cleanId(r.meta&&r.meta.idOp);
+    var acta_lbl = (r.acta&&r.acta.link)
+      ? '<span style="color:#10b981;font-size:11px;font-weight:700">📎 Con acta</span>'
+      : '<span style="color:#94a3b8;font-size:11px">Sin acta</span>';
+    return '<div onclick="reporteToggle(\''+key.replace(/'/g,"\\'")+'\',this)" data-key="'+key.replace(/"/g,'&quot;')+'"'
+      +' style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:'+(sel?'#eff6ff':'#f8fafc')+';border:1.5px solid '+(sel?'#93c5fd':'#e2e8f0')+';border-radius:10px;cursor:pointer;transition:all .15s;user-select:none">'
+      +'<div style="width:20px;height:20px;border-radius:5px;border:2px solid '+(sel?'#1e40af':'#cbd5e1')+';background:'+(sel?'#1e40af':'#fff')+';display:flex;align-items:center;justify-content:center;flex-shrink:0">'
+      +(sel?'<svg width="12" height="12" viewBox="0 0 12 12"><polyline points="1,6 4,9 11,3" stroke="#fff" stroke-width="2" fill="none"/></svg>':'')
+      +'</div>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px">'
+      +'<span style="font-weight:800;font-size:13px;color:#1e293b">'+(idLbl||'—')+'</span>'
+      +'<span style="background:'+cc_col+'22;color:'+cc_col+';padding:1px 7px;border-radius:4px;font-size:11px;font-weight:700">'+cc_lbl+'</span>'
+      +'<span style="font-size:11px;color:#64748b">'+(r.meta&&r.meta.fecha||'—')+'</span>'
+      +acta_lbl
+      +'</div>'
+      +'<div style="font-size:12px;color:#1e40af;font-weight:600">'+(r.ub&&r.ub.dir||'—')+'</div>'
+      +(lugar&&lugar!=='—'?'<div style="font-size:11px;color:#475569;margin-top:1px">'+lugar+'</div>':'')
+      +'<div style="font-size:11px;color:#94a3b8">'+(r.ub&&r.ub.barrio||'')+(r.ub&&r.ub.upz?' · '+r.ub.upz:'')+'</div>'
+      +'</div>'
+      +'</div>';
+  }).join('');
+
+  // Actualizar resumen
+  var nSel = _reporteSeleccionados.size;
+  if (nSel > 0 && resumen && rptTxt) {
+    resumen.style.display = 'block';
+    rptTxt.textContent = nSel + ' registro(s) seleccionado(s) para el reporte';
+  } else if (resumen) {
+    resumen.style.display = 'none';
+  }
+  reporteActualizarBoton();
+}
+
+function reporteToggle(key, el) {
+  if (_reporteSeleccionados.has(key)) {
+    _reporteSeleccionados.delete(key);
+  } else {
+    _reporteSeleccionados.add(key);
+  }
+  reporteRenderLista();
+}
+
+function reporteSeleccionarTodos() {
+  reporteGetFiltrados().forEach(function(r) {
+    _reporteSeleccionados.add(reporteGetKey(r));
+  });
+  reporteRenderLista();
+}
+
+function reporteDeseleccionarTodos() {
+  reporteGetFiltrados().forEach(function(r) {
+    _reporteSeleccionados.delete(reporteGetKey(r));
+  });
+  reporteRenderLista();
+}
+
+function reporteLimpiarFiltros() {
+  var ids = ['rpt-dir','rpt-cc','rpt-acta'];
+  ids.forEach(function(id) { var el=document.getElementById(id); if(el) el.value=''; });
+  reporteRenderLista();
+}
+
+function reporteActualizarBoton() {
+  var btn = document.getElementById('btn-descargar-reporte');
+  var cnt = document.getElementById('reporte-sel-cnt');
+  var badge = document.getElementById('reporte-badge');
+  var n = _reporteSeleccionados.size;
+  if (cnt) cnt.textContent = n;
+  if (badge) {
+    badge.textContent = n;
+    badge.style.display = n > 0 ? 'inline-block' : 'none';
+  }
+  if (btn) {
+    if (n > 0) {
+      btn.disabled = false;
+      btn.style.background = 'linear-gradient(135deg,#1e293b,#1e3a8a)';
+      btn.style.cursor = 'pointer';
+    } else {
+      btn.disabled = true;
+      btn.style.background = '#94a3b8';
+      btn.style.cursor = 'not-allowed';
+    }
+  }
+}
+
+function reporteDescargarPDF() {
+  var selKeys = Array.from(_reporteSeleccionados);
+  if (!selKeys.length) { toast('⚠ No hay registros seleccionados','err'); return; }
+  var keySet = new Set(selKeys);
+  var lista = recs.filter(function(r) { return keySet.has(reporteGetKey(r)); });
+  generarPDFReporte(lista, 'Selección manual · ' + lista.length + ' registro(s)');
+}
+
+// Renderizar lista cuando se entra a la vista reporte
+var _origSwitchMain2 = switchMain;
+switchMain = function(v, btn) {
+  _origSwitchMain2(v, btn);
+  if (v === 'reporte') {
+    setTimeout(reporteRenderLista, 100);
+  }
+};
+
 </script>
 
+</div>
 </body>
 </html>
