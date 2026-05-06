@@ -943,24 +943,58 @@ body { overflow-x: hidden; }
           <label>Responsable del operativo <span class="req">*</span></label>
           <select id="resp" data-req data-lbl="Responsable del operativo" data-sec="s1">
             <option value="">&#8212; Seleccionar responsable &#8212;</option>
-            <optgroup label="&#8212;&#8212; Profesionales &#8212;&#8212;">
-              <option>JOHANA GARZ&Oacute;N</option><option>ANDR&Eacute;S ARIAS</option><option>ANLLY ROJAS</option>
-              <option>MAURICIO G&Oacute;MEZ</option><option>YAMILE ESPITIA</option><option>DAVID ALBA</option>
-              <option>JOSE GONZALEZ</option><option>HECTOR RAMIREZ</option><option>SAMUEL URBINA</option>
-              <option>MIGUEL PEREZ</option><option>JENNY ARROYO</option><option>ADRIANA FORERO</option>
-              <option>JENIFER NIETO</option><option>JHON LADINO</option><option>MARIA &Aacute;LVAREZ</option>
-              <option>HENRY FORIGUA</option>
+            <optgroup label="&#8212;&#8212; APOYO A LA SUPERVISIÓN &#8212;&#8212;">
+              <option>CORONEL WILSON VERGARA</option>
+              <option>RODRIGO MANCERA</option>
+              <option>ALEJANDRO FERNANDEZ</option>
             </optgroup>
-            <optgroup label="&#8212;&#8212; Gestores &#8212;&#8212;">
-              <option>LEONARDO PI&Ntilde;A</option><option>JAIRO LOZANO</option><option>LILIANA CHARRY</option>
-              <option>WILDEMAR CARVAJAL</option><option>JENIFER ESPINOSA</option><option>GIOVANNY GAVIRIA</option>
-              <option>NICOLAS GALEANO</option><option>DANIELA QUINTERO</option><option>CAROL FORERO</option>
-              <option>ANDR&Eacute;S PALACIO</option>
+            <optgroup label="&#8212;&#8212; REFERENTES &#8212;&#8212;">
+              <option>MILTON RINCÓN - 3017258748</option>
+              <option>ANGIEE ÁVILA - 3007631225</option>
+              <option>GERMAN ARDILA - 3133482779</option>
+              <option>FUAD CHADID - 3004901451</option>
             </optgroup>
-            <optgroup label="&#8212;&#8212; T&eacute;cnicos &#8212;&#8212;">
-              <option>JEISSON RODR&Iacute;GUEZ</option><option>EFREN SIERRA</option><option>CAMILO VARGAS</option>
-              <option>LADY MARTINEZ</option><option>JHON MONCADA</option><option>WILSON PULIDO</option>
-              <option>ALEXANDRA MONTENEGRO</option><option>JUAN CAMPO</option>
+            <optgroup label="&#8212;&#8212; PROFESIONALES &#8212;&#8212;">
+              <option>ANDRÉS ARIAS - 3105719200</option>
+              <option>DAVID ALBA - 3008039955</option>
+              <option>JOHANA GARZÓN - 3105871496</option>
+              <option>YAMILE ESPITIA - 3124528651</option>
+              <option>SAMUEL URBINA - 3228141143</option>
+              <option>MARÍA ÁLVAREZ - 3007783612</option>
+              <option>JENNY ARROYO - 3174243338</option>
+              <option>JENIFER NIETO - 3115340677</option>
+              <option>MIGUEL PEREZ - 3012780788</option>
+              <option>HECTOR RAMIREZ - 3112815970</option>
+              <option>DORIS MARTÍNEZ - 3162228971</option>
+              <option>MAURICIO GÓMEZ - 3183456671</option>
+              <option>HENRY FORIGUA - 3114655036</option>
+              <option>JHON LADINO - 3138933502</option>
+              <option>ADRIANA FORERO - 3166170141</option>
+              <option>ANLLY ROJAS - 3042440129</option>
+              <option>JOSE GONZALEZ - 3023390803</option>
+            </optgroup>
+            <optgroup label="&#8212;&#8212; GESTORES &#8212;&#8212;">
+              <option>LILIANA CHARRY - 3219530793</option>
+              <option>GIOVANNY GAVIRIA - 3132712060</option>
+              <option>NICOLAS GALEANO - 3008456610</option>
+              <option>JENIFER ESPINOSA - 3224117123</option>
+              <option>ANDRÉS PALACIO - 3226520394</option>
+              <option>JAIRO LOZANO - 3124002302</option>
+              <option>WILDEMAR CARVAJAL - 3208358546</option>
+              <option>CAROL FORERO - 3202548199</option>
+              <option>DANIELA QUINTERO - 3203595343</option>
+              <option>LEONARDO PIÑA - 3009022021</option>
+              <option>VIVIANA CASTILLO - 3102561296</option>
+            </optgroup>
+            <optgroup label="&#8212;&#8212; TÉCNICOS &#8212;&#8212;">
+              <option>WILSON PULIDO - 3227497891</option>
+              <option>JEISSON RODRÍGUEZ - 3124082466</option>
+              <option>EFREN SIERRA - 3133489940</option>
+              <option>JUAN CAMPO - 3134998898</option>
+              <option>JHON MONCADA - 3023407768</option>
+              <option>ALEXANDRA MONTENEGRO - 3227651213</option>
+              <option>CAMILO VARGAS - 3142249434</option>
+              <option>LADY MARTINEZ - 3175367781</option>
             </optgroup>
           </select>
         </div>
@@ -992,8 +1026,7 @@ body { overflow-x: hidden; }
             <div style="font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">Vista previa:</div>
             <div class="ab-prev empty" id="abPrev">Completa los campos para ver la direcci&oacute;n</div>
           </div>
-          <input type="text" id="dir" data-req data-lbl="Direcci&oacute;n" data-sec="s2" placeholder="O escribe manualmente: CR 73A # 65B BIS - 43" style="margin-top:6px">
-          <div class="hint">Usa el constructor o escribe directamente. Formato oficial: CR 73A # 65B BIS - 43</div>
+          <input type="hidden" id="dir" data-req data-lbl="Direcci&oacute;n" data-sec="s2">
         </div>
         <div class="g2">
           <div class="f">
@@ -1001,70 +1034,89 @@ body { overflow-x: hidden; }
             <select id="barrio" data-req data-lbl="Barrio" data-sec="s2" onchange="autoFillUPZ()">
               <option value="">&#8212; Seleccionar barrio &#8212;</option>
               <optgroup label="UPZ 26 &middot; Las Ferias">
-                <option data-upz="26 LAS FERIAS">LAS FERIAS</option><option data-upz="26 LAS FERIAS">BONANZA</option>
-                <option data-upz="26 LAS FERIAS">LAS FERIAS OCCIDENTAL</option><option data-upz="26 LAS FERIAS">SAN JOAQUIN</option>
-                <option data-upz="26 LAS FERIAS">CATALU&Ntilde;A</option><option data-upz="26 LAS FERIAS">LA CABA&Ntilde;A</option>
-                <option data-upz="26 LAS FERIAS">BELLAVISTA OCCIDENTAL</option><option data-upz="26 LAS FERIAS">LA ESTRADA</option>
-                <option data-upz="26 LAS FERIAS">DORADO NORTE</option><option data-upz="26 LAS FERIAS">EL LAUREL</option>
-                <option data-upz="26 LAS FERIAS">PALO BLANCO</option><option data-upz="26 LAS FERIAS">BOSQUE POPULAR</option>
-                <option data-upz="26 LAS FERIAS">JARDIN BOTANICO</option><option data-upz="26 LAS FERIAS">SANTA ROSA</option>
+                <option data-upz="26 LAS FERIAS">ACAPULCO</option><option data-upz="26 LAS FERIAS">BELLAVISTA OCCIDENTAL</option>
+                <option data-upz="26 LAS FERIAS">LA BONANZA</option><option data-upz="26 LAS FERIAS">BOSQUE POPULAR</option>
+                <option data-upz="26 LAS FERIAS">CATALU&Ntilde;A</option><option data-upz="26 LAS FERIAS">CIUDAD DE HONDA</option>
+                <option data-upz="26 LAS FERIAS">EL DORADO-SAN JOAQU&Iacute;N</option><option data-upz="26 LAS FERIAS">EL GUALI</option>
+                <option data-upz="26 LAS FERIAS">EL LAUREL</option><option data-upz="26 LAS FERIAS">EL PASEO</option>
+                <option data-upz="26 LAS FERIAS">ESTRADA</option><option data-upz="26 LAS FERIAS">LA CABA&Ntilde;A</option>
+                <option data-upz="26 LAS FERIAS">LA ESTRADITA</option><option data-upz="26 LAS FERIAS">LA EUROPA</option>
+                <option data-upz="26 LAS FERIAS">LA MARCELA</option><option data-upz="26 LAS FERIAS">LA RELIQUIA</option>
+                <option data-upz="26 LAS FERIAS">LAS FERIAS</option><option data-upz="26 LAS FERIAS">METR&Oacute;POLIS</option>
+                <option data-upz="26 LAS FERIAS">PALO BLANCO</option><option data-upz="26 LAS FERIAS">SANTO DOMINGO</option>
               </optgroup>
               <optgroup label="UPZ 29 &middot; Minuto de Dios">
-                <option data-upz="29 MINUTO DE DIOS">LA SERENA</option><option data-upz="29 MINUTO DE DIOS">PARIS GAITAN</option>
-                <option data-upz="29 MINUTO DE DIOS">BOCHICA</option><option data-upz="29 MINUTO DE DIOS">LOS CEREZOS</option>
-                <option data-upz="29 MINUTO DE DIOS">QUIRIGUA</option><option data-upz="29 MINUTO DE DIOS">QUIRIGUA ORIENTAL</option>
-                <option data-upz="29 MINUTO DE DIOS">LUIS CARLOS GALAN</option><option data-upz="29 MINUTO DE DIOS">MINUTO DE DIOS</option>
-                <option data-upz="29 MINUTO DE DIOS">VILLA CRISTINA</option><option data-upz="29 MINUTO DE DIOS">VILLAS DE GRANADA</option>
-                <option data-upz="29 MINUTO DE DIOS">VILLA GLADYS</option><option data-upz="29 MINUTO DE DIOS">EL CEDRO</option>
-                <option data-upz="29 MINUTO DE DIOS">VILLA SAGRARIO</option><option data-upz="29 MINUTO DE DIOS">FLORENCIA</option>
+                <option data-upz="29 MINUTO DE DIOS">ANDALUC&Iacute;A</option><option data-upz="29 MINUTO DE DIOS">CIUDAD BACH&Uacute;&Eacute;</option>
+                <option data-upz="29 MINUTO DE DIOS">COPETROCO LA TROPICAL</option><option data-upz="29 MINUTO DE DIOS">EL PORTAL DEL R&Iacute;O</option>
+                <option data-upz="29 MINUTO DE DIOS">LA PALESTINA</option><option data-upz="29 MINUTO DE DIOS">TISQUESUSA</option>
+                <option data-upz="29 MINUTO DE DIOS">LA ESPA&Ntilde;OLA</option><option data-upz="29 MINUTO DE DIOS">LA SERENA</option>
+                <option data-upz="29 MINUTO DE DIOS">LOS CEREZOS</option><option data-upz="29 MINUTO DE DIOS">LUIS CARLOS GAL&Aacute;N</option>
+                <option data-upz="29 MINUTO DE DIOS">MEISSEN-SIDAUTO</option><option data-upz="29 MINUTO DE DIOS">MINUTO DE DIOS</option>
+                <option data-upz="29 MINUTO DE DIOS">MORISCO</option><option data-upz="29 MINUTO DE DIOS">PAR&Iacute;S GAIT&Aacute;N</option>
+                <option data-upz="29 MINUTO DE DIOS">PRIMAVERA NORTE</option><option data-upz="29 MINUTO DE DIOS">QUIRIGUA</option>
               </optgroup>
               <optgroup label="UPZ 30 &middot; Boyac&aacute; Real">
-                <option data-upz="30 BOYACA REAL">FLORIDA BLANCA</option><option data-upz="30 BOYACA REAL">BOYACA</option>
-                <option data-upz="30 BOYACA REAL">ZARZAMORA</option><option data-upz="30 BOYACA REAL">SANTA HELENITA</option>
-                <option data-upz="30 BOYACA REAL">LOS PINOS FLORENCIA</option><option data-upz="30 BOYACA REAL">TABORA</option>
-                <option data-upz="30 BOYACA REAL">SANTA MARIA DEL LAGO</option><option data-upz="30 BOYACA REAL">LA SOLEDAD NORTE</option>
-                <option data-upz="30 BOYACA REAL">PARIS</option><option data-upz="30 BOYACA REAL">EL REAL</option>
-                <option data-upz="30 BOYACA REAL">LA ALMERIA</option><option data-upz="30 BOYACA REAL">LA GRANJA</option>
-                <option data-upz="30 BOYACA REAL">LAS FERIAS</option><option data-upz="30 BOYACA REAL">VILLA LUZ</option>
+                <option data-upz="30 BOYACÁ REAL">BOYAC&Aacute;</option><option data-upz="30 BOYACÁ REAL">EL CARMELO</option>
+                <option data-upz="30 BOYACÁ REAL">EL REFUGIO</option><option data-upz="30 BOYACÁ REAL">FLORENCIA</option>
+                <option data-upz="30 BOYACÁ REAL">FLORIDA BLANCA</option><option data-upz="30 BOYACÁ REAL">LA ALMER&Iacute;A</option>
+                <option data-upz="30 BOYACÁ REAL">LA GRANJA</option><option data-upz="30 BOYACÁ REAL">LA SOLEDAD NORTE</option>
+                <option data-upz="30 BOYACÁ REAL">LA SALINA</option><option data-upz="30 BOYACÁ REAL">LOS PINOS FLORENCIA</option>
+                <option data-upz="30 BOYACÁ REAL">MARATU</option><option data-upz="30 BOYACÁ REAL">PAR&Iacute;S</option>
+                <option data-upz="30 BOYACÁ REAL">SANTA HELENITA</option><option data-upz="30 BOYACÁ REAL">SANTA MAR&Iacute;A DEL LAGO</option>
+                <option data-upz="30 BOYACÁ REAL">SANTA ROSITA</option><option data-upz="30 BOYACÁ REAL">TABORA</option>
+                <option data-upz="30 BOYACÁ REAL">VERACRUZ</option><option data-upz="30 BOYACÁ REAL">ZARZAMORA</option>
               </optgroup>
               <optgroup label="UPZ 31 &middot; Santa Cecilia">
-                <option data-upz="31 SANTA CECILIA">SAN MARCOS</option><option data-upz="31 SANTA CECILIA">VILLA LUZ</option>
-                <option data-upz="31 SANTA CECILIA">EL SALITRE</option><option data-upz="31 SANTA CECILIA">NORMANDIA OCCIDENTAL</option>
-                <option data-upz="31 SANTA CECILIA">NORMANDIA</option><option data-upz="31 SANTA CECILIA">LOS MONJES</option>
-                <option data-upz="31 SANTA CECILIA">SAN IGNACIO</option><option data-upz="31 SANTA CECILIA">SANTA CECILIA</option>
-                <option data-upz="31 SANTA CECILIA">EL ENCANTO</option><option data-upz="31 SANTA CECILIA">EL LUJAN</option>
+                <option data-upz="31 SANTA CECILIA">EL ENCANTO</option><option data-upz="31 SANTA CECILIA">EL LUJ&Aacute;N</option>
+                <option data-upz="31 SANTA CECILIA">EL REAL</option><option data-upz="31 SANTA CECILIA">LOS MONJES</option>
+                <option data-upz="31 SANTA CECILIA">NORMAND&Iacute;A</option><option data-upz="31 SANTA CECILIA">NORMAND&Iacute;A OCCIDENTAL</option>
+                <option data-upz="31 SANTA CECILIA">SAN IGNACIO</option><option data-upz="31 SANTA CECILIA">SAN MARCOS</option>
+                <option data-upz="31 SANTA CECILIA">SANTA CECILIA</option><option data-upz="31 SANTA CECILIA">VILLA LUZ</option>
               </optgroup>
               <optgroup label="UPZ 72 &middot; Bolivia">
-                <option data-upz="72 BOLIVIA">BOCHICA II</option><option data-upz="72 BOLIVIA">EL CORTIJO</option>
-                <option data-upz="72 BOLIVIA">BOLIVIA ORIENTAL</option><option data-upz="72 BOLIVIA">BOLIVIA</option>
-                <option data-upz="72 BOLIVIA">CIUDADELA COLSUBSIDIO</option><option data-upz="72 BOLIVIA">BOCHICA</option>
+                <option data-upz="72 BOLIVIA">BOCHICA</option><option data-upz="72 BOLIVIA">BOCHICA COMPARTIR</option>
+                <option data-upz="72 BOLIVIA">BOLIVIA</option><option data-upz="72 BOLIVIA">CIUDADELA COLSUBSIDIO</option>
+                <option data-upz="72 BOLIVIA">CORTIJO</option>
               </optgroup>
               <optgroup label="UPZ 73 &middot; Garc&eacute;s Navas">
-                <option data-upz="73 GARCES NAVAS">ALAMOS NORTE</option><option data-upz="73 GARCES NAVAS">LOS ANGELES</option>
-                <option data-upz="73 GARCES NAVAS">EL CEDRO</option><option data-upz="73 GARCES NAVAS">ALAMOS</option>
-                <option data-upz="73 GARCES NAVAS">VILLAS DE GRANADA</option><option data-upz="73 GARCES NAVAS">GARCES NAVAS</option>
-                <option data-upz="73 GARCES NAVAS">VILLA AMALIA</option><option data-upz="73 GARCES NAVAS">LA PERLA</option>
-                <option data-upz="73 GARCES NAVAS">VILLAS DE ALCALA</option><option data-upz="73 GARCES NAVAS">GRAN GRANADA I Y II</option>
-                <option data-upz="73 GARCES NAVAS">VILLAS DE MADRIGAL</option><option data-upz="73 GARCES NAVAS">VILLA DEL MAR</option>
-                <option data-upz="73 GARCES NAVAS">SANTA MONICA</option>
+                <option data-upz="73 GARCÉS NAVAS">GARC&Eacute;S NAVAS</option><option data-upz="73 GARCÉS NAVAS">&Aacute;LAMOS</option>
+                <option data-upz="73 GARCÉS NAVAS">&Aacute;LAMOS NORTE</option><option data-upz="73 GARCÉS NAVAS">BOSQUES DE MARIANA</option>
+                <option data-upz="73 GARCÉS NAVAS">EL CEDRO</option><option data-upz="73 GARCÉS NAVAS">LOS &Aacute;NGELES</option>
+                <option data-upz="73 GARCÉS NAVAS">MOLINOS DE VIENTO</option><option data-upz="73 GARCÉS NAVAS">PLAZUELAS DEL VIRREY</option>
+                <option data-upz="73 GARCÉS NAVAS">SAN BASILIO</option><option data-upz="73 GARCÉS NAVAS">SANTA M&Oacute;NICA</option>
+                <option data-upz="73 GARCÉS NAVAS">VILLA AMALIA</option><option data-upz="73 GARCÉS NAVAS">VILLA SAGRARIO</option>
+                <option data-upz="73 GARCÉS NAVAS">VILLAS DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">VILLAS DEL MADRIGAL</option>
+                <option data-upz="73 GARCÉS NAVAS">VILLAS DEL DORADO-SAN ANTONIO</option><option data-upz="73 GARCÉS NAVAS">BOSQUES DE GRANADA</option>
+                <option data-upz="73 GARCÉS NAVAS">PARQUES DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">ANDALUC&Iacute;A PARQUES DE GRANADA</option>
+                <option data-upz="73 GARCÉS NAVAS">PORTAL DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">RINC&Oacute;N DE GRANADA</option>
+                <option data-upz="73 GARCÉS NAVAS">GRANADA CLUB RESIDENCIAL</option><option data-upz="73 GARCÉS NAVAS">LA ROTANA</option>
+                <option data-upz="73 GARCÉS NAVAS">MIRADOR DE LOS CEREZOS</option>
               </optgroup>
               <optgroup label="UPZ 74 &middot; Engativ&aacute;">
-                <option data-upz="74 ENGATIVA">EL CEDRO</option><option data-upz="74 ENGATIVA">SAN ANTONIO NORTE</option>
-                <option data-upz="74 ENGATIVA">VILLA TERESITA</option><option data-upz="74 ENGATIVA">ENGATIVA CENTRO</option>
-                <option data-upz="74 ENGATIVA">SABANAS EL DORADO</option><option data-upz="74 ENGATIVA">MARANDU</option>
-                <option data-upz="74 ENGATIVA">EL MUELLE</option><option data-upz="74 ENGATIVA">SAN ANTONIO</option>
-                <option data-upz="74 ENGATIVA">EL PALMAR</option><option data-upz="74 ENGATIVA">LA RIVIERA</option>
-                <option data-upz="74 ENGATIVA">VI&Ntilde;A DEL MAR</option><option data-upz="74 ENGATIVA">EL GACO</option>
-                <option data-upz="74 ENGATIVA">VILLA GLADYS</option><option data-upz="74 ENGATIVA">VILLAS DEL PALMAR</option>
+                <option data-upz="74 ENGATIVÁ">ALAMEDA</option><option data-upz="74 ENGATIVÁ">CENTAUROS DEL DANUBIO</option>
+                <option data-upz="74 ENGATIVÁ">EL CEDRO</option><option data-upz="74 ENGATIVÁ">EL MIRADOR</option>
+                <option data-upz="74 ENGATIVÁ">EL MUELLE</option><option data-upz="74 ENGATIVÁ">EL PALMAR</option>
+                <option data-upz="74 ENGATIVÁ">EL TRI&Aacute;NGULO</option><option data-upz="74 ENGATIVÁ">EL VERD&Uacute;N</option>
+                <option data-upz="74 ENGATIVÁ">ENGATIV&Aacute;-CENTRO</option><option data-upz="74 ENGATIVÁ">GRANJAS EL DORADO</option>
+                <option data-upz="74 ENGATIVÁ">LA CABA&Ntilde;A</option><option data-upz="74 ENGATIVÁ">LA ESPERANZA</option>
+                <option data-upz="74 ENGATIVÁ">LA FAENA</option><option data-upz="74 ENGATIVÁ">LA RIVIERA</option>
+                <option data-upz="74 ENGATIVÁ">LA TORQUIGUA</option><option data-upz="74 ENGATIVÁ">SANTA LUC&Iacute;A NORTE</option>
+                <option data-upz="74 ENGATIVÁ">LAS MERCEDES</option><option data-upz="74 ENGATIVÁ">LAS PALMAS</option>
+                <option data-upz="74 ENGATIVÁ">LINTERAMA</option><option data-upz="74 ENGATIVÁ">LOS LAURELES</option>
+                <option data-upz="74 ENGATIVÁ">LOS LAURELES-SABANAS EL DORADO</option><option data-upz="74 ENGATIVÁ">MARAND&Uacute;</option>
+                <option data-upz="74 ENGATIVÁ">PORVENIR</option><option data-upz="74 ENGATIVÁ">PUERTO AMOR-PLAYAS DEL JABOQUE</option>
+                <option data-upz="74 ENGATIVÁ">SAN ANTONIO NORTE</option><option data-upz="74 ENGATIVÁ">SAN BASILIO</option>
+                <option data-upz="74 ENGATIVÁ">SAN JOS&Eacute; OBRERO</option><option data-upz="74 ENGATIVÁ">SANTA LIBRADA</option>
+                <option data-upz="74 ENGATIVÁ">VILLA CLAVER I Y II</option><option data-upz="74 ENGATIVÁ">VILLA CONSTANZA</option>
+                <option data-upz="74 ENGATIVÁ">VILLAS DEL DORADO NORTE</option><option data-upz="74 ENGATIVÁ">VILLA GLADYS</option>
+                <option data-upz="74 ENGATIVÁ">VILLA MARY</option><option data-upz="74 ENGATIVÁ">VILLA SANDRA</option>
+                <option data-upz="74 ENGATIVÁ">VILLA TERESITA</option><option data-upz="74 ENGATIVÁ">VI&Ntilde;A DEL MAR</option>
               </optgroup>
               <optgroup label="UPZ 105 &middot; Jard&iacute;n Bot&aacute;nico">
-                <option data-upz="105 JARDIN BOTANICO">EL SALITRE LUIS MARIA FERNANDEZ</option>
-                <option data-upz="105 JARDIN BOTANICO">JARDIN BOTANICO</option>
-                <option data-upz="105 JARDIN BOTANICO">COMPENSAR I</option>
+                <option data-upz="105 JARDÍN BOTÁNICO">EL SALITRE-LUIS MAR&Iacute;A FERN&Aacute;NDEZ</option>
               </optgroup>
               <optgroup label="UPZ 116 &middot; &Aacute;lamos">
-                <option data-upz="116 ALAMOS">LOS ALAMOS</option><option data-upz="116 ALAMOS">SAN IGNACIO</option>
-                <option data-upz="116 ALAMOS">PARQUE INDUSTRIAL EL DORADO</option><option data-upz="116 ALAMOS">EL DORADO INDUSTRIAL</option>
+                <option data-upz="116 ÁLAMOS">SAN IGNACIO-LOS &Aacute;LAMOS</option>
               </optgroup>
             </select>
           </div>
@@ -1628,15 +1680,58 @@ body { overflow-x: hidden; }
               <label>Responsable del operativo <span class="req">*</span></label>
               <select id="regid-resp" onchange="regidToggleOtroResp()">
                 <option value="">— Seleccionar responsable —</option>
-                <optgroup label="────── Profesionales ──────">
-                  <option>JOHANA GARZÓN</option><option>ANDRÉS ARIAS</option><option>ANLLY ROJAS</option>
-                  <option>MAURICIO GÓMEZ</option><option>YAMILE ESPITIA</option><option>DAVID ALBA</option>
+                <optgroup label="────── APOYO A LA SUPERVISIÓN ──────">
+                  <option>CORONEL WILSON VERGARA</option>
+                  <option>RODRIGO MANCERA</option>
+                  <option>ALEJANDRO FERNANDEZ</option>
                 </optgroup>
-                <optgroup label="────── Gestores ──────">
-                  <option>LEONARDO PIÑA</option><option>JAIRO LOZANO</option><option>LILIANA CHARRY</option>
+                <optgroup label="────── REFERENTES ──────">
+                  <option>MILTON RINCÓN - 3017258748</option>
+                  <option>ANGIEE ÁVILA - 3007631225</option>
+                  <option>GERMAN ARDILA - 3133482779</option>
+                  <option>FUAD CHADID - 3004901451</option>
                 </optgroup>
-                <optgroup label="────── Técnicos ──────">
-                  <option>JEISSON RODRÍGUEZ</option><option>EFREN SIERRA</option><option>CAMILO VARGAS</option>
+                <optgroup label="────── PROFESIONALES ──────">
+                  <option>ANDRÉS ARIAS - 3105719200</option>
+                  <option>DAVID ALBA - 3008039955</option>
+                  <option>JOHANA GARZÓN - 3105871496</option>
+                  <option>YAMILE ESPITIA - 3124528651</option>
+                  <option>SAMUEL URBINA - 3228141143</option>
+                  <option>MARÍA ÁLVAREZ - 3007783612</option>
+                  <option>JENNY ARROYO - 3174243338</option>
+                  <option>JENIFER NIETO - 3115340677</option>
+                  <option>MIGUEL PEREZ - 3012780788</option>
+                  <option>HECTOR RAMIREZ - 3112815970</option>
+                  <option>DORIS MARTÍNEZ - 3162228971</option>
+                  <option>MAURICIO GÓMEZ - 3183456671</option>
+                  <option>HENRY FORIGUA - 3114655036</option>
+                  <option>JHON LADINO - 3138933502</option>
+                  <option>ADRIANA FORERO - 3166170141</option>
+                  <option>ANLLY ROJAS - 3042440129</option>
+                  <option>JOSE GONZALEZ - 3023390803</option>
+                </optgroup>
+                <optgroup label="────── GESTORES ──────">
+                  <option>LILIANA CHARRY - 3219530793</option>
+                  <option>GIOVANNY GAVIRIA - 3132712060</option>
+                  <option>NICOLAS GALEANO - 3008456610</option>
+                  <option>JENIFER ESPINOSA - 3224117123</option>
+                  <option>ANDRÉS PALACIO - 3226520394</option>
+                  <option>JAIRO LOZANO - 3124002302</option>
+                  <option>WILDEMAR CARVAJAL - 3208358546</option>
+                  <option>CAROL FORERO - 3202548199</option>
+                  <option>DANIELA QUINTERO - 3203595343</option>
+                  <option>LEONARDO PIÑA - 3009022021</option>
+                  <option>VIVIANA CASTILLO - 3102561296</option>
+                </optgroup>
+                <optgroup label="────── TÉCNICOS ──────">
+                  <option>WILSON PULIDO - 3227497891</option>
+                  <option>JEISSON RODRÍGUEZ - 3124082466</option>
+                  <option>EFREN SIERRA - 3133489940</option>
+                  <option>JUAN CAMPO - 3134998898</option>
+                  <option>JHON MONCADA - 3023407768</option>
+                  <option>ALEXANDRA MONTENEGRO - 3227651213</option>
+                  <option>CAMILO VARGAS - 3142249434</option>
+                  <option>LADY MARTINEZ - 3175367781</option>
                 </optgroup>
                 <option value="__OTRO__">OTRO (especificar)</option>
               </select>
@@ -1722,8 +1817,7 @@ body { overflow-x: hidden; }
                 <div style="font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">Vista previa:</div>
                 <div class="ab-prev empty" id="regid-abPrev">Completa los campos para ver la dirección</div>
               </div>
-              <input type="text" id="regid-dir" placeholder="O escribe manualmente: CR 73A # 65B BIS - 43" style="margin-top:6px">
-              <div class="hint">Usa el constructor o escribe directamente. Formato oficial: CR 73A # 65B BIS - 43</div>
+              <input type="hidden" id="regid-dir">
             </div>
             <div class="g2">
               <div class="f">
@@ -1731,70 +1825,89 @@ body { overflow-x: hidden; }
                 <select id="regid-barrio" onchange="regidAutoFillUPZ()">
                   <option value="">— Seleccionar barrio —</option>
                   <optgroup label="UPZ 26 · Las Ferias">
-                    <option data-upz="26 LAS FERIAS">LAS FERIAS</option><option data-upz="26 LAS FERIAS">BONANZA</option>
-                    <option data-upz="26 LAS FERIAS">LAS FERIAS OCCIDENTAL</option><option data-upz="26 LAS FERIAS">SAN JOAQUIN</option>
-                    <option data-upz="26 LAS FERIAS">CATALUÑA</option><option data-upz="26 LAS FERIAS">LA CABAÑA</option>
-                    <option data-upz="26 LAS FERIAS">BELLAVISTA OCCIDENTAL</option><option data-upz="26 LAS FERIAS">LA ESTRADA</option>
-                    <option data-upz="26 LAS FERIAS">DORADO NORTE</option><option data-upz="26 LAS FERIAS">EL LAUREL</option>
-                    <option data-upz="26 LAS FERIAS">PALO BLANCO</option><option data-upz="26 LAS FERIAS">BOSQUE POPULAR</option>
-                    <option data-upz="26 LAS FERIAS">JARDIN BOTANICO</option><option data-upz="26 LAS FERIAS">SANTA ROSA</option>
+                    <option data-upz="26 LAS FERIAS">ACAPULCO</option><option data-upz="26 LAS FERIAS">BELLAVISTA OCCIDENTAL</option>
+                    <option data-upz="26 LAS FERIAS">LA BONANZA</option><option data-upz="26 LAS FERIAS">BOSQUE POPULAR</option>
+                    <option data-upz="26 LAS FERIAS">CATALUÑA</option><option data-upz="26 LAS FERIAS">CIUDAD DE HONDA</option>
+                    <option data-upz="26 LAS FERIAS">EL DORADO-SAN JOAQUÍN</option><option data-upz="26 LAS FERIAS">EL GUALI</option>
+                    <option data-upz="26 LAS FERIAS">EL LAUREL</option><option data-upz="26 LAS FERIAS">EL PASEO</option>
+                    <option data-upz="26 LAS FERIAS">ESTRADA</option><option data-upz="26 LAS FERIAS">LA CABAÑA</option>
+                    <option data-upz="26 LAS FERIAS">LA ESTRADITA</option><option data-upz="26 LAS FERIAS">LA EUROPA</option>
+                    <option data-upz="26 LAS FERIAS">LA MARCELA</option><option data-upz="26 LAS FERIAS">LA RELIQUIA</option>
+                    <option data-upz="26 LAS FERIAS">LAS FERIAS</option><option data-upz="26 LAS FERIAS">METRÓPOLIS</option>
+                    <option data-upz="26 LAS FERIAS">PALO BLANCO</option><option data-upz="26 LAS FERIAS">SANTO DOMINGO</option>
                   </optgroup>
                   <optgroup label="UPZ 29 · Minuto de Dios">
-                    <option data-upz="29 MINUTO DE DIOS">LA SERENA</option><option data-upz="29 MINUTO DE DIOS">PARIS GAITAN</option>
-                    <option data-upz="29 MINUTO DE DIOS">BOCHICA</option><option data-upz="29 MINUTO DE DIOS">LOS CEREZOS</option>
-                    <option data-upz="29 MINUTO DE DIOS">QUIRIGUA</option><option data-upz="29 MINUTO DE DIOS">QUIRIGUA ORIENTAL</option>
-                    <option data-upz="29 MINUTO DE DIOS">LUIS CARLOS GALAN</option><option data-upz="29 MINUTO DE DIOS">MINUTO DE DIOS</option>
-                    <option data-upz="29 MINUTO DE DIOS">VILLA CRISTINA</option><option data-upz="29 MINUTO DE DIOS">VILLAS DE GRANADA</option>
-                    <option data-upz="29 MINUTO DE DIOS">VILLA GLADYS</option><option data-upz="29 MINUTO DE DIOS">EL CEDRO</option>
-                    <option data-upz="29 MINUTO DE DIOS">VILLA SAGRARIO</option><option data-upz="29 MINUTO DE DIOS">FLORENCIA</option>
+                    <option data-upz="29 MINUTO DE DIOS">ANDALUCÍA</option><option data-upz="29 MINUTO DE DIOS">CIUDAD BACHUÉ</option>
+                    <option data-upz="29 MINUTO DE DIOS">COPETROCO LA TROPICAL</option><option data-upz="29 MINUTO DE DIOS">EL PORTAL DEL RÍO</option>
+                    <option data-upz="29 MINUTO DE DIOS">LA PALESTINA</option><option data-upz="29 MINUTO DE DIOS">TISQUESUSA</option>
+                    <option data-upz="29 MINUTO DE DIOS">LA ESPAÑOLA</option><option data-upz="29 MINUTO DE DIOS">LA SERENA</option>
+                    <option data-upz="29 MINUTO DE DIOS">LOS CEREZOS</option><option data-upz="29 MINUTO DE DIOS">LUIS CARLOS GALÁN</option>
+                    <option data-upz="29 MINUTO DE DIOS">MEISSEN-SIDAUTO</option><option data-upz="29 MINUTO DE DIOS">MINUTO DE DIOS</option>
+                    <option data-upz="29 MINUTO DE DIOS">MORISCO</option><option data-upz="29 MINUTO DE DIOS">PARÍS GAITÁN</option>
+                    <option data-upz="29 MINUTO DE DIOS">PRIMAVERA NORTE</option><option data-upz="29 MINUTO DE DIOS">QUIRIGUA</option>
                   </optgroup>
                   <optgroup label="UPZ 30 · Boyacá Real">
-                    <option data-upz="30 BOYACA REAL">FLORIDA BLANCA</option><option data-upz="30 BOYACA REAL">BOYACA</option>
-                    <option data-upz="30 BOYACA REAL">ZARZAMORA</option><option data-upz="30 BOYACA REAL">SANTA HELENITA</option>
-                    <option data-upz="30 BOYACA REAL">LOS PINOS FLORENCIA</option><option data-upz="30 BOYACA REAL">TABORA</option>
-                    <option data-upz="30 BOYACA REAL">SANTA MARIA DEL LAGO</option><option data-upz="30 BOYACA REAL">LA SOLEDAD NORTE</option>
-                    <option data-upz="30 BOYACA REAL">PARIS</option><option data-upz="30 BOYACA REAL">EL REAL</option>
-                    <option data-upz="30 BOYACA REAL">LA ALMERIA</option><option data-upz="30 BOYACA REAL">LA GRANJA</option>
-                    <option data-upz="30 BOYACA REAL">LAS FERIAS</option><option data-upz="30 BOYACA REAL">VILLA LUZ</option>
+                    <option data-upz="30 BOYACÁ REAL">BOYACÁ</option><option data-upz="30 BOYACÁ REAL">EL CARMELO</option>
+                    <option data-upz="30 BOYACÁ REAL">EL REFUGIO</option><option data-upz="30 BOYACÁ REAL">FLORENCIA</option>
+                    <option data-upz="30 BOYACÁ REAL">FLORIDA BLANCA</option><option data-upz="30 BOYACÁ REAL">LA ALMERÍA</option>
+                    <option data-upz="30 BOYACÁ REAL">LA GRANJA</option><option data-upz="30 BOYACÁ REAL">LA SOLEDAD NORTE</option>
+                    <option data-upz="30 BOYACÁ REAL">LA SALINA</option><option data-upz="30 BOYACÁ REAL">LOS PINOS FLORENCIA</option>
+                    <option data-upz="30 BOYACÁ REAL">MARATU</option><option data-upz="30 BOYACÁ REAL">PARÍS</option>
+                    <option data-upz="30 BOYACÁ REAL">SANTA HELENITA</option><option data-upz="30 BOYACÁ REAL">SANTA MARÍA DEL LAGO</option>
+                    <option data-upz="30 BOYACÁ REAL">SANTA ROSITA</option><option data-upz="30 BOYACÁ REAL">TABORA</option>
+                    <option data-upz="30 BOYACÁ REAL">VERACRUZ</option><option data-upz="30 BOYACÁ REAL">ZARZAMORA</option>
                   </optgroup>
                   <optgroup label="UPZ 31 · Santa Cecilia">
-                    <option data-upz="31 SANTA CECILIA">SAN MARCOS</option><option data-upz="31 SANTA CECILIA">VILLA LUZ</option>
-                    <option data-upz="31 SANTA CECILIA">EL SALITRE</option><option data-upz="31 SANTA CECILIA">NORMANDIA OCCIDENTAL</option>
-                    <option data-upz="31 SANTA CECILIA">NORMANDIA</option><option data-upz="31 SANTA CECILIA">LOS MONJES</option>
-                    <option data-upz="31 SANTA CECILIA">SAN IGNACIO</option><option data-upz="31 SANTA CECILIA">SANTA CECILIA</option>
-                    <option data-upz="31 SANTA CECILIA">EL ENCANTO</option><option data-upz="31 SANTA CECILIA">EL LUJAN</option>
+                    <option data-upz="31 SANTA CECILIA">EL ENCANTO</option><option data-upz="31 SANTA CECILIA">EL LUJÁN</option>
+                    <option data-upz="31 SANTA CECILIA">EL REAL</option><option data-upz="31 SANTA CECILIA">LOS MONJES</option>
+                    <option data-upz="31 SANTA CECILIA">NORMANDÍA</option><option data-upz="31 SANTA CECILIA">NORMANDÍA OCCIDENTAL</option>
+                    <option data-upz="31 SANTA CECILIA">SAN IGNACIO</option><option data-upz="31 SANTA CECILIA">SAN MARCOS</option>
+                    <option data-upz="31 SANTA CECILIA">SANTA CECILIA</option><option data-upz="31 SANTA CECILIA">VILLA LUZ</option>
                   </optgroup>
                   <optgroup label="UPZ 72 · Bolivia">
-                    <option data-upz="72 BOLIVIA">BOCHICA II</option><option data-upz="72 BOLIVIA">EL CORTIJO</option>
-                    <option data-upz="72 BOLIVIA">BOLIVIA ORIENTAL</option><option data-upz="72 BOLIVIA">BOLIVIA</option>
-                    <option data-upz="72 BOLIVIA">CIUDADELA COLSUBSIDIO</option><option data-upz="72 BOLIVIA">BOCHICA</option>
+                    <option data-upz="72 BOLIVIA">BOCHICA</option><option data-upz="72 BOLIVIA">BOCHICA COMPARTIR</option>
+                    <option data-upz="72 BOLIVIA">BOLIVIA</option><option data-upz="72 BOLIVIA">CIUDADELA COLSUBSIDIO</option>
+                    <option data-upz="72 BOLIVIA">CORTIJO</option>
                   </optgroup>
                   <optgroup label="UPZ 73 · Garcés Navas">
-                    <option data-upz="73 GARCES NAVAS">ALAMOS NORTE</option><option data-upz="73 GARCES NAVAS">LOS ANGELES</option>
-                    <option data-upz="73 GARCES NAVAS">EL CEDRO</option><option data-upz="73 GARCES NAVAS">ALAMOS</option>
-                    <option data-upz="73 GARCES NAVAS">VILLAS DE GRANADA</option><option data-upz="73 GARCES NAVAS">GARCES NAVAS</option>
-                    <option data-upz="73 GARCES NAVAS">VILLA AMALIA</option><option data-upz="73 GARCES NAVAS">LA PERLA</option>
-                    <option data-upz="73 GARCES NAVAS">VILLAS DE ALCALA</option><option data-upz="73 GARCES NAVAS">GRAN GRANADA I Y II</option>
-                    <option data-upz="73 GARCES NAVAS">VILLAS DE MADRIGAL</option><option data-upz="73 GARCES NAVAS">VILLA DEL MAR</option>
-                    <option data-upz="73 GARCES NAVAS">SANTA MONICA</option>
+                    <option data-upz="73 GARCÉS NAVAS">GARCÉS NAVAS</option><option data-upz="73 GARCÉS NAVAS">ÁLAMOS</option>
+                    <option data-upz="73 GARCÉS NAVAS">ÁLAMOS NORTE</option><option data-upz="73 GARCÉS NAVAS">BOSQUES DE MARIANA</option>
+                    <option data-upz="73 GARCÉS NAVAS">EL CEDRO</option><option data-upz="73 GARCÉS NAVAS">LOS ÁNGELES</option>
+                    <option data-upz="73 GARCÉS NAVAS">MOLINOS DE VIENTO</option><option data-upz="73 GARCÉS NAVAS">PLAZUELAS DEL VIRREY</option>
+                    <option data-upz="73 GARCÉS NAVAS">SAN BASILIO</option><option data-upz="73 GARCÉS NAVAS">SANTA MÓNICA</option>
+                    <option data-upz="73 GARCÉS NAVAS">VILLA AMALIA</option><option data-upz="73 GARCÉS NAVAS">VILLA SAGRARIO</option>
+                    <option data-upz="73 GARCÉS NAVAS">VILLAS DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">VILLAS DEL MADRIGAL</option>
+                    <option data-upz="73 GARCÉS NAVAS">VILLAS DEL DORADO-SAN ANTONIO</option><option data-upz="73 GARCÉS NAVAS">BOSQUES DE GRANADA</option>
+                    <option data-upz="73 GARCÉS NAVAS">PARQUES DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">ANDALUCÍA PARQUES DE GRANADA</option>
+                    <option data-upz="73 GARCÉS NAVAS">PORTAL DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">RINCÓN DE GRANADA</option>
+                    <option data-upz="73 GARCÉS NAVAS">GRANADA CLUB RESIDENCIAL</option><option data-upz="73 GARCÉS NAVAS">LA ROTANA</option>
+                    <option data-upz="73 GARCÉS NAVAS">MIRADOR DE LOS CEREZOS</option>
                   </optgroup>
                   <optgroup label="UPZ 74 · Engativá">
-                    <option data-upz="74 ENGATIVA">EL CEDRO</option><option data-upz="74 ENGATIVA">SAN ANTONIO NORTE</option>
-                    <option data-upz="74 ENGATIVA">VILLA TERESITA</option><option data-upz="74 ENGATIVA">ENGATIVA CENTRO</option>
-                    <option data-upz="74 ENGATIVA">SABANAS EL DORADO</option><option data-upz="74 ENGATIVA">MARANDU</option>
-                    <option data-upz="74 ENGATIVA">EL MUELLE</option><option data-upz="74 ENGATIVA">SAN ANTONIO</option>
-                    <option data-upz="74 ENGATIVA">EL PALMAR</option><option data-upz="74 ENGATIVA">LA RIVIERA</option>
-                    <option data-upz="74 ENGATIVA">VIÑA DEL MAR</option><option data-upz="74 ENGATIVA">EL GACO</option>
-                    <option data-upz="74 ENGATIVA">VILLA GLADYS</option><option data-upz="74 ENGATIVA">VILLAS DEL PALMAR</option>
+                    <option data-upz="74 ENGATIVÁ">ALAMEDA</option><option data-upz="74 ENGATIVÁ">CENTAUROS DEL DANUBIO</option>
+                    <option data-upz="74 ENGATIVÁ">EL CEDRO</option><option data-upz="74 ENGATIVÁ">EL MIRADOR</option>
+                    <option data-upz="74 ENGATIVÁ">EL MUELLE</option><option data-upz="74 ENGATIVÁ">EL PALMAR</option>
+                    <option data-upz="74 ENGATIVÁ">EL TRIÁNGULO</option><option data-upz="74 ENGATIVÁ">EL VERDÚN</option>
+                    <option data-upz="74 ENGATIVÁ">ENGATIVÁ-CENTRO</option><option data-upz="74 ENGATIVÁ">GRANJAS EL DORADO</option>
+                    <option data-upz="74 ENGATIVÁ">LA CABAÑA</option><option data-upz="74 ENGATIVÁ">LA ESPERANZA</option>
+                    <option data-upz="74 ENGATIVÁ">LA FAENA</option><option data-upz="74 ENGATIVÁ">LA RIVIERA</option>
+                    <option data-upz="74 ENGATIVÁ">LA TORQUIGUA</option><option data-upz="74 ENGATIVÁ">SANTA LUCÍA NORTE</option>
+                    <option data-upz="74 ENGATIVÁ">LAS MERCEDES</option><option data-upz="74 ENGATIVÁ">LAS PALMAS</option>
+                    <option data-upz="74 ENGATIVÁ">LINTERAMA</option><option data-upz="74 ENGATIVÁ">LOS LAURELES</option>
+                    <option data-upz="74 ENGATIVÁ">LOS LAURELES-SABANAS EL DORADO</option><option data-upz="74 ENGATIVÁ">MARANDÚ</option>
+                    <option data-upz="74 ENGATIVÁ">PORVENIR</option><option data-upz="74 ENGATIVÁ">PUERTO AMOR-PLAYAS DEL JABOQUE</option>
+                    <option data-upz="74 ENGATIVÁ">SAN ANTONIO NORTE</option><option data-upz="74 ENGATIVÁ">SAN BASILIO</option>
+                    <option data-upz="74 ENGATIVÁ">SAN JOSÉ OBRERO</option><option data-upz="74 ENGATIVÁ">SANTA LIBRADA</option>
+                    <option data-upz="74 ENGATIVÁ">VILLA CLAVER I Y II</option><option data-upz="74 ENGATIVÁ">VILLA CONSTANZA</option>
+                    <option data-upz="74 ENGATIVÁ">VILLAS DEL DORADO NORTE</option><option data-upz="74 ENGATIVÁ">VILLA GLADYS</option>
+                    <option data-upz="74 ENGATIVÁ">VILLA MARY</option><option data-upz="74 ENGATIVÁ">VILLA SANDRA</option>
+                    <option data-upz="74 ENGATIVÁ">VILLA TERESITA</option><option data-upz="74 ENGATIVÁ">VIÑA DEL MAR</option>
                   </optgroup>
                   <optgroup label="UPZ 105 · Jardín Botánico">
-                    <option data-upz="105 JARDIN BOTANICO">EL SALITRE LUIS MARIA FERNANDEZ</option>
-                    <option data-upz="105 JARDIN BOTANICO">JARDIN BOTANICO</option>
-                    <option data-upz="105 JARDIN BOTANICO">COMPENSAR I</option>
+                    <option data-upz="105 JARDÍN BOTÁNICO">EL SALITRE-LUIS MARÍA FERNÁNDEZ</option>
                   </optgroup>
                   <optgroup label="UPZ 116 · Álamos">
-                    <option data-upz="116 ALAMOS">LOS ALAMOS</option><option data-upz="116 ALAMOS">SAN IGNACIO</option>
-                    <option data-upz="116 ALAMOS">PARQUE INDUSTRIAL EL DORADO</option><option data-upz="116 ALAMOS">EL DORADO INDUSTRIAL</option>
+                    <option data-upz="116 ÁLAMOS">SAN IGNACIO-LOS ÁLAMOS</option>
                   </optgroup>
                 </select>
               </div>
@@ -2123,14 +2236,10 @@ body { overflow-x: hidden; }
           </div>
         </div>
 
-        <!-- 04 OBSERVACIONES Y ACTA -->
+        <!-- 04 ACTA -->
         <div id="regid-s4">
-          <div class="stitle">04 · Observaciones y Acta</div>
+          <div class="stitle">04 · Acta</div>
           <div class="card">
-            <div class="f mb">
-              <label>Observaciones generales</label>
-              <textarea id="regid-obs" placeholder="Observaciones del operativo en esta dirección..."></textarea>
-            </div>
             <div class="f">
               <label>Link del acta (Google Drive)</label>
               <input type="url" id="regid-actaLink" placeholder="https://drive.google.com/...">
@@ -2184,11 +2293,11 @@ body { overflow-x: hidden; }
             <!-- UPZ -->
             <div style="display:flex;flex-direction:column;gap:2px">
               <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#a0b4c8">UPZ</div>
-              <select id="dash-upz" onchange="renderDash()" style="background:#0a1628;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:4px 8px;font-family:'Inter',sans-serif;font-size:.72rem;min-width:120px">
+              <select id="dash-upz" onchange="populateDashBarrioFilter();renderDash()" style="background:#0a1628;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:4px 8px;font-family:'Inter',sans-serif;font-size:.72rem;min-width:120px">
                 <option value="">All</option>
-                <option>26 LAS FERIAS</option><option>29 MINUTO DE DIOS</option><option>30 BOYACA REAL</option>
-                <option>31 SANTA CECILIA</option><option>72 BOLIVIA</option><option>73 GARCES NAVAS</option>
-                <option>74 ENGATIVA</option><option>105 JARDIN BOTANICO</option><option>116 ALAMOS</option>
+                <option>26 LAS FERIAS</option><option>29 MINUTO DE DIOS</option><option>30 BOYACÁ REAL</option>
+                <option>31 SANTA CECILIA</option><option>72 BOLIVIA</option><option>73 GARCÉS NAVAS</option>
+                <option>74 ENGATIVÁ</option><option>105 JARDÍN BOTÁNICO</option><option>116 ÁLAMOS</option>
               </select>
             </div>
             <!-- BARRIO -->
@@ -2453,10 +2562,6 @@ body { overflow-x: hidden; }
         <div class="f"><label>Suspensiones</label><input type="number" id="eTotSusp" placeholder="0" min="0"></div>
       </div>
 
-      <!-- Observaciones -->
-      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Observaciones</div>
-      <div class="f mb"><label>Observaciones generales</label><textarea id="eObs" placeholder="Observaciones..." style="min-height:60px"></textarea></div>
-
       <!-- Acta soporte -->
       <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Acta soporte</div>
       <div class="f">
@@ -2628,7 +2733,17 @@ function publicarPuenteOperativos() {
 // LISTAS DINÁMICAS — cargadas desde Firebase listas_admin
 // ══════════════════════════════════════════════════════════════════════
 const LISTAS_DEFAULT = {
-  barrios:     {"26 LAS FERIAS": ["LAS FERIAS", "BONANZA", "LAS FERIAS OCCIDENTAL", "SAN JOAQUIN", "CATALUÑA", "LA CABAÑA", "BELLAVISTA OCCIDENTAL", "LA ESTRADA", "DORADO NORTE", "EL LAUREL", "PALO BLANCO", "BOSQUE POPULAR", "JARDIN BOTANICO", "SANTA ROSA"], "29 MINUTO DE DIOS": ["LA SERENA", "PARIS GAITAN", "BOCHICA", "LOS CEREZOS", "QUIRIGUA", "QUIRIGUA ORIENTAL", "LUIS CARLOS GALAN", "MINUTO DE DIOS", "VILLA CRISTINA", "VILLAS DE GRANADA", "VILLA GLADYS", "EL CEDRO", "VILLA SAGRARIO", "FLORENCIA"], "30 BOYACA REAL": ["FLORIDA BLANCA", "BOYACA", "ZARZAMORA", "SANTA HELENITA", "LOS PINOS FLORENCIA", "TABORA", "SANTA MARIA DEL LAGO", "LA SOLEDAD NORTE", "PARIS", "EL REAL", "LA ALMERIA", "LA GRANJA", "LAS FERIAS", "VILLA LUZ"], "31 SANTA CECILIA": ["SAN MARCOS", "VILLA LUZ", "EL SALITRE", "NORMANDIA OCCIDENTAL", "NORMANDIA", "LOS MONJES", "SAN IGNACIO", "SANTA CECILIA", "EL ENCANTO", "EL LUJAN"], "72 BOLIVIA": ["BOCHICA II", "EL CORTIJO", "BOLIVIA ORIENTAL", "BOLIVIA", "CIUDADELA COLSUBSIDIO", "BOCHICA"], "73 GARCES NAVAS": ["ALAMOS NORTE", "LOS ANGELES", "EL CEDRO", "ALAMOS", "VILLAS DE GRANADA", "GARCES NAVAS", "VILLA AMALIA", "LA PERLA", "VILLAS DE ALCALA", "GRAN GRANADA I Y II", "VILLAS DE MADRIGAL", "VILLA DEL MAR", "SANTA MONICA"], "74 ENGATIVA": ["EL CEDRO", "SAN ANTONIO NORTE", "VILLA TERESITA", "ENGATIVA CENTRO", "SABANAS EL DORADO", "MARANDU", "EL MUELLE", "SAN ANTONIO", "EL PALMAR", "LA RIVIERA", "VIÑA DEL MAR", "EL GACO", "VILLA GLADYS", "VILLAS DEL PALMAR"], "105 JARDIN BOTANICO": ["EL SALITRE LUIS MARIA FERNANDEZ", "JARDIN BOTANICO", "COMPENSAR I"], "116 ALAMOS": ["LOS ALAMOS", "SAN IGNACIO", "PARQUE INDUSTRIAL EL DORADO", "EL DORADO INDUSTRIAL"]},
+  barrios:     {
+    "26 LAS FERIAS": ["ACAPULCO", "BELLAVISTA OCCIDENTAL", "LA BONANZA", "BOSQUE POPULAR", "CATALUÑA", "CIUDAD DE HONDA", "EL DORADO-SAN JOAQUÍN", "EL GUALI", "EL LAUREL", "EL PASEO", "ESTRADA", "LA CABAÑA", "LA ESTRADITA", "LA EUROPA", "LA MARCELA", "LA RELIQUIA", "LAS FERIAS", "METRÓPOLIS", "PALO BLANCO", "SANTO DOMINGO"],
+    "29 MINUTO DE DIOS": ["ANDALUCÍA", "CIUDAD BACHUÉ", "COPETROCO LA TROPICAL", "EL PORTAL DEL RÍO", "LA PALESTINA", "TISQUESUSA", "ANDALUCÍA", "LA ESPAÑOLA", "LA SERENA", "LOS CEREZOS", "LUIS CARLOS GALÁN", "MEISSEN-SIDAUTO", "MINUTO DE DIOS", "MORISCO", "PARÍS GAITÁN", "PRIMAVERA NORTE", "QUIRIGUA"],
+    "30 BOYACÁ REAL": ["BOYACÁ", "EL CARMELO", "EL REFUGIO", "FLORENCIA", "FLORIDA BLANCA", "LA ALMERÍA", "LA GRANJA", "LA SOLEDAD NORTE", "LA SALINA", "LOS PINOS FLORENCIA", "MARATU", "PARÍS", "SANTA HELENITA", "SANTA MARÍA DEL LAGO", "SANTA ROSITA", "TABORA", "VERACRUZ", "ZARZAMORA"],
+    "31 SANTA CECILIA": ["EL ENCANTO", "EL LUJÁN", "EL REAL", "LOS MONJES", "NORMANDÍA", "NORMANDÍA OCCIDENTAL", "SAN IGNACIO", "SAN MARCOS", "SANTA CECILIA", "VILLA LUZ"],
+    "72 BOLIVIA": ["BOCHICA", "BOCHICA COMPARTIR", "BOLIVIA", "CIUDADELA COLSUBSIDIO", "CORTIJO"],
+    "73 GARCÉS NAVAS": ["GARCÉS NAVAS", "ÁLAMOS", "ÁLAMOS NORTE", "BOSQUES DE MARIANA", "EL CEDRO", "GARCÉS NAVAS", "LOS ÁNGELES", "MOLINOS DE VIENTO", "PLAZUELAS DEL VIRREY", "SAN BASILIO", "SANTA MÓNICA", "VILLA AMALIA", "VILLA SAGRARIO", "VILLAS DE GRANADA", "VILLAS DEL MADRIGAL", "VILLAS DEL DORADO-SAN ANTONIO", "BOSQUES DE GRANADA", "PARQUES DE GRANADA", "ANDALUCÍA PARQUES DE GRANADA", "PORTAL DE GRANADA", "RINCÓN DE GRANADA", "GRANADA CLUB RESIDENCIAL", "LA ROTANA", "MIRADOR DE LOS CEREZOS"],
+    "74 ENGATIVÁ": ["ALAMEDA", "CENTAUROS DEL DANUBIO", "EL CEDRO", "EL MIRADOR", "EL MUELLE", "EL PALMAR", "EL TRIÁNGULO", "EL VERDÚN", "ENGATIVÁ-CENTRO", "GRANJAS EL DORADO", "LA CABAÑA", "LA ESPERANZA", "LA FAENA", "LA RIVIERA", "LA TORQUIGUA", "SANTA LUCÍA NORTE", "LAS MERCEDES", "LAS PALMAS", "LINTERAMA", "LOS LAURELES", "LOS LAURELES-SABANAS EL DORADO", "MARANDÚ", "PORVENIR", "PUERTO AMOR-PLAYAS DEL JABOQUE", "SAN ANTONIO NORTE", "SAN BASILIO", "SAN JOSÉ OBRERO", "SANTA LIBRADA", "VILLA CLAVER I Y II", "VILLA CONSTANZA", "VILLAS DEL DORADO NORTE", "VILLA GLADYS", "VILLA MARY", "VILLA SANDRA", "VILLA TERESITA", "VIÑA DEL MAR"],
+    "105 JARDÍN BOTÁNICO": ["EL SALITRE-LUIS MARÍA FERNÁNDEZ"],
+    "116 ÁLAMOS": ["SAN IGNACIO-LOS ÁLAMOS"]
+  },
   responsables:{"Profesionales": ["JOHANA GARZÓN", "ANDRÉS ARIAS", "ANLLY ROJAS", "MAURICIO GÓMEZ", "YAMILE ESPITIA", "DAVID ALBA", "JOSE GONZALEZ", "HECTOR RAMIREZ", "SAMUEL URBINA", "MIGUEL PEREZ", "JENNY ARROYO", "ADRIANA FORERO", "JENIFER NIETO", "JHON LADINO", "MARIA ÁLVAREZ", "HENRY FORIGUA"], "Gestores": ["LEONARDO PIÑA", "JAIRO LOZANO", "LILIANA CHARRY", "WILDEMAR CARVAJAL", "JENIFER ESPINOSA", "GIOVANNY GAVIRIA", "NICOLAS GALEANO", "DANIELA QUINTERO", "CAROL FORERO", "ANDRÉS PALACIO"], "Técnicos": ["JEISSON RODRÍGUEZ", "EFREN SIERRA", "CAMILO VARGAS", "LADY MARTINEZ", "JHON MONCADA", "WILSON PULIDO", "ALEXANDRA MONTENEGRO", "JUAN CAMPO"]},
   tipos_ae:    [{"value": "AUTOPARTES", "label": "Autopartes"}, {"value": "BARES DE ALTO IMPACTO", "label": "Bares de alto impacto"}, {"value": "BICICLETAS", "label": "Bicicletas"}, {"value": "BODEGAS DE RECICLAJE", "label": "Bodegas de reciclaje"}, {"value": "CASAS DEL LENOCINIO", "label": "Casas del lenocinio"}, {"value": "ESTABLECIMIENTOS DE COMERCIO", "label": "Establecimientos de comercio"}, {"value": "HOTELES Y MOTELES", "label": "Hoteles y moteles"}, {"value": "METROLOGIA LEGAL", "label": "Metrología legal"}, {"value": "PARQUEADEROS", "label": "Parqueaderos"}, {"value": "POLVORA Y PIROTECNIA", "label": "Pólvora y pirotecnia"}, {"value": "TELEFONOS MOVILES CELULARES", "label": "Teléfonos móviles celulares"}],
   lineas_amb:  [{"value": "RECUPERACION EP RONDA", "label": "RECUPERACIÓN DE ESPACIO PÚBLICO Y ZONA DE RONDA CUERPOS DE AGUA POR DISPOSICIÓN INADECUADA DE RESIDUOS"}, {"value": "ESTRATEGIA RESIDUOS CARRETEROS CAMBUCHES", "label": "ESTRATEGIA DE RESIDUOS (BASURAS), CARRETEROS Y CAMBUCHES"}, {"value": "SENTENCIA RIO BOGOTA", "label": "SENTENCIA RIO BOGOTÁ"}, {"value": "CONEXIONES ILEGALES", "label": "CONEXIONES ILEGALES"}],
@@ -2639,7 +2754,9 @@ const LISTAS_DEFAULT = {
 };
 
 function poblarSelects(listas) {
-  // ── Barrios ──
+  console.log('🔄 Poblando selects con listas:', listas);
+  
+  // ── Barrios (formulario principal) ──
   const selBarrio = document.getElementById('barrio');
   if (selBarrio) {
     const cur = selBarrio.value;
@@ -2656,6 +2773,25 @@ function poblarSelects(listas) {
       selBarrio.appendChild(grp);
     });
     if (cur) selBarrio.value = cur;
+  }
+
+  // ── Barrios (regid) ──
+  const regidBarrio = document.getElementById('regid-barrio');
+  if (regidBarrio) {
+    const cur = regidBarrio.value;
+    regidBarrio.innerHTML = '<option value="">— Seleccionar barrio —</option>';
+    Object.entries(listas.barrios || {}).sort().forEach(([upz, barrs]) => {
+      const grp = document.createElement('optgroup');
+      grp.label = upz;
+      (barrs || []).sort().forEach(b => {
+        const opt = document.createElement('option');
+        opt.value = b; opt.textContent = b;
+        opt.dataset.upz = upz;
+        grp.appendChild(opt);
+      });
+      regidBarrio.appendChild(grp);
+    });
+    if (cur) regidBarrio.value = cur;
   }
 
   // ── Responsables (form principal) ──
@@ -2676,6 +2812,27 @@ function poblarSelects(listas) {
     });
     if (cur) sel.value = cur;
   });
+
+  // ── Responsables (regid) ──
+  const regidResp = document.getElementById('regid-resp');
+  if (regidResp) {
+    const cur = regidResp.value;
+    regidResp.innerHTML = '<option value="">— Seleccionar responsable —</option>';
+    Object.entries(listas.responsables || {}).forEach(([grupo, nombres]) => {
+      const grp = document.createElement('optgroup');
+      grp.label = grupo;
+      (nombres || []).forEach(n => {
+        const opt = document.createElement('option');
+        opt.value = n; opt.textContent = n;
+        grp.appendChild(opt);
+      });
+      regidResp.appendChild(grp);
+    });
+    const optOtro = document.createElement('option');
+    optOtro.value = '__OTRO__'; optOtro.textContent = 'OTRO (especificar)';
+    regidResp.appendChild(optOtro);
+    if (cur) regidResp.value = cur;
+  }
 
   // ── Responsables (modal editar) ──
   const eResp = document.getElementById('eResp');
@@ -2698,7 +2855,7 @@ function poblarSelects(listas) {
     if (cur) eResp.value = cur;
   }
 
-  // ── Tipo AE ──
+  // ── Tipo AE (formulario principal) ──
   const selAE = document.getElementById('tipoAE');
   if (selAE) {
     const cur = selAE.value;
@@ -2711,7 +2868,20 @@ function poblarSelects(listas) {
     if (cur) selAE.value = cur;
   }
 
-  // ── Línea Ambiente ──
+  // ── Tipo AE (regid) ──
+  const regidTipoAE = document.getElementById('regid-tipoAE');
+  if (regidTipoAE) {
+    const cur = regidTipoAE.value;
+    regidTipoAE.innerHTML = '<option value="">— Seleccionar —</option>';
+    (listas.tipos_ae || []).forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t.value || t; opt.textContent = t.label || t;
+      regidTipoAE.appendChild(opt);
+    });
+    if (cur) regidTipoAE.value = cur;
+  }
+
+  // ── Línea Ambiente (formulario principal) ──
   const selAmb = document.getElementById('lineaAmb');
   if (selAmb) {
     const cur = selAmb.value;
@@ -2722,6 +2892,19 @@ function poblarSelects(listas) {
       selAmb.appendChild(opt);
     });
     if (cur) selAmb.value = cur;
+  }
+
+  // ── Línea Ambiente (regid) ──
+  const regidLineaAmb = document.getElementById('regid-lineaAmb');
+  if (regidLineaAmb) {
+    const cur = regidLineaAmb.value;
+    regidLineaAmb.innerHTML = '<option value="">— Seleccionar línea de acción —</option>';
+    (listas.lineas_amb || []).forEach(l => {
+      const opt = document.createElement('option');
+      opt.value = l.value || l; opt.textContent = l.label || l;
+      regidLineaAmb.appendChild(opt);
+    });
+    if (cur) regidLineaAmb.value = cur;
   }
 
   // ── Colegios (datalist) ──
@@ -2751,7 +2934,7 @@ function poblarSelects(listas) {
     });
   }
 
-  // ── Polígonos EP ──
+  // ── Polígonos EP (formulario principal) ──
   const selPol = document.getElementById('poligono');
   if (selPol) {
     const curPol = selPol.value;
@@ -2762,6 +2945,19 @@ function poblarSelects(listas) {
       selPol.appendChild(opt);
     });
     if (curPol) selPol.value = curPol;
+  }
+
+  // ── Polígonos EP (regid) ──
+  const regidPoligono = document.getElementById('regid-poligono');
+  if (regidPoligono) {
+    const curPol = regidPoligono.value;
+    regidPoligono.innerHTML = '<option value="">— Seleccionar polígono —</option>';
+    (listas.poligonos_ep || []).forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p; opt.textContent = p;
+      regidPoligono.appendChild(opt);
+    });
+    if (curPol) regidPoligono.value = curPol;
   }
 
   // ── Tipos OBR (select si existe, sino chips) ──
@@ -2779,10 +2975,11 @@ function poblarSelects(listas) {
 }
 
 // Cargar listas desde Firebase (con fallback a LISTAS_DEFAULT)
-LISTAS_REF.once('value', function(snap) {
+// Usar .on('value') para actualizar en tiempo real cuando cambien las listas
+LISTAS_REF.on('value', function(snap) {
   if (snap.exists()) {
     _listas = snap.val();
-    console.log('📥 Listas cargadas desde Firebase:', _listas);
+    console.log('📥 Listas cargadas/actualizadas desde Firebase:', _listas);
     // Inicializar SOLO si faltan claves (undefined o null)
     if (!_listas.barrios || Object.keys(_listas.barrios).length === 0) {
       _listas.barrios = LISTAS_DEFAULT.barrios;
@@ -2909,31 +3106,105 @@ function setDashTab(tab) {
 }
 
 function getDashRecs() {
-  const upzF  = document.getElementById('dash-upz')?.value || '';
-  const barF  = document.getElementById('dash-barrio')?.value || '';
-  const dirF  = (document.getElementById('dash-dir')?.value || '').toLowerCase();
+  const upzF  = (document.getElementById('dash-upz')?.value || '').trim();
+  const barF  = (document.getElementById('dash-barrio')?.value || '').trim();
+  const dirF  = (document.getElementById('dash-dir')?.value || '').toLowerCase().trim();
   const desde = document.getElementById('dash-desde')?.value || '';
   const hasta = document.getElementById('dash-hasta')?.value || '';
-  const tipoEstF = document.getElementById('dash-tipo-est')?.value || '';
-  return recs.filter(r => {
+  const tipoEstF = (document.getElementById('dash-tipo-est')?.value || '').trim();
+  
+  console.log('🔍 Filtrando dashboard:', { upzF, barF, dirF, desde, hasta, tipoEstF, dashTab });
+  console.log('📋 Barrio seleccionado:', `"${barF}"`, 'length:', barF.length);
+  
+  let loggedFirst = false;
+  
+  const filtered = recs.filter(r => {
+    // Log del primer registro para debug
+    if (!loggedFirst) {
+      console.log('🔬 Primer registro evaluado:', {
+        cc: r.cc,
+        upz: r.ub?.upz,
+        barrio: `"${r.ub?.barrio}"`,
+        dir: r.ub?.dir
+      });
+      loggedFirst = true;
+    }
+    
     if (r.cc !== dashTab) return false;
-    if (upzF  && (r.ub?.upz||'')    !== upzF)  return false;
-    if (barF  && (r.ub?.barrio||'') !== barF)   return false;
+    if (upzF  && (r.ub?.upz||'').trim() !== upzF)  return false;
+    if (barF  && (r.ub?.barrio||'').trim() !== barF) return false;
     if (dirF  && !(r.ub?.dir||'').toLowerCase().includes(dirF)) return false;
     if (desde && (r.meta?.fecha||'') < desde)   return false;
     if (hasta && (r.meta?.fecha||'') > hasta)   return false;
     // Filtro de tipo de establecimiento (solo para AE)
-    if (tipoEstF && dashTab === 'AE' && (r.ae?.tipo||'') !== tipoEstF) return false;
+    if (tipoEstF && dashTab === 'AE' && (r.ae?.tipo||'').trim() !== tipoEstF) return false;
     return true;
   });
+  
+  console.log(`✅ Filtrado: ${filtered.length} de ${recs.length} registros`);
+  if (barF && filtered.length === 0) {
+    console.log('⚠️ No se encontraron registros con barrio:', barF);
+    console.log('📝 Barrios disponibles:', [...new Set(recs.filter(r => r.cc === dashTab).map(r => `"${r.ub?.barrio}"`))])
+  }
+  return filtered;
 }
 
 function populateDashBarrioFilter() {
-  const upzF = document.getElementById('dash-upz')?.value || '';
+  const upzF = (document.getElementById('dash-upz')?.value || '').trim();
   const sel = document.getElementById('dash-barrio');
   if (!sel) return;
-  const barrios = [...new Set(recs.filter(r => !upzF || r.ub?.upz === upzF).map(r => r.ub?.barrio||'').filter(Boolean))].sort();
-  sel.innerHTML = '<option value="">All</option>' + barrios.map(b => `<option>${b}</option>`).join('');
+  
+  const currentValue = sel.value;
+  
+  // Filtrar por UPZ si hay uno seleccionado, y solo incluir registros del tab actual
+  const barrios = [...new Set(
+    recs
+      .filter(r => r.cc === dashTab && (!upzF || (r.ub?.upz||'').trim() === upzF))
+      .map(r => (r.ub?.barrio||'').trim())
+      .filter(Boolean)
+  )].sort();
+  
+  console.log('🏘️ Poblando filtro de barrios:', {
+    upzSeleccionada: upzF || 'Todas',
+    tabActivo: dashTab,
+    barriosEncontrados: barrios.length,
+    barrios: barrios
+  });
+  
+  sel.innerHTML = '<option value="">All</option>' + barrios.map(b => `<option value="${b}">${b}</option>`).join('');
+  
+  // Restaurar valor si todavía existe en la lista
+  if (currentValue && barrios.includes(currentValue)) {
+    sel.value = currentValue;
+  }
+}
+
+function populateDashUPZFilter() {
+  const sel = document.getElementById('dash-upz');
+  if (!sel) return;
+  
+  const currentValue = sel.value;
+  
+  // Obtener UPZs únicas del tab actual
+  const upzs = [...new Set(
+    recs
+      .filter(r => r.cc === dashTab)
+      .map(r => (r.ub?.upz||'').trim())
+      .filter(Boolean)
+  )].sort();
+  
+  console.log('🗺️ Poblando filtro de UPZs:', {
+    tabActivo: dashTab,
+    upzsEncontradas: upzs.length,
+    upzs: upzs
+  });
+  
+  sel.innerHTML = '<option value="">All</option>' + upzs.map(u => `<option value="${u}">${u}</option>`).join('');
+  
+  // Restaurar valor si todavía existe
+  if (currentValue && upzs.includes(currentValue)) {
+    sel.value = currentValue;
+  }
 }
 
 function populateDashTipoEstFilter() {
@@ -3116,15 +3387,24 @@ function renderDashSidebar(rs) {
 function renderDash() {
   const d = document.getElementById('dash-content');
   if (!d) return;
+  populateDashUPZFilter();
   populateDashBarrioFilter();
   const rs = getDashRecs();
   renderDashSidebar(rs);
   
   console.log('=== DEBUG DASHBOARD ===');
-  console.log('Total recs:', recs.length);
-  console.log('dashTab:', dashTab);
-  console.log('Filtered recs:', rs.length);
-  console.log('Sample rec:', recs[0]);
+  console.log('Total recs en DB:', recs.length);
+  console.log('dashTab activo:', dashTab);
+  console.log('Filtros aplicados:', {
+    upz: document.getElementById('dash-upz')?.value || '(todos)',
+    barrio: document.getElementById('dash-barrio')?.value || '(todos)',
+    dir: document.getElementById('dash-dir')?.value || '(todas)',
+    desde: document.getElementById('dash-desde')?.value || '(sin límite)',
+    hasta: document.getElementById('dash-hasta')?.value || '(sin límite)',
+    tipoEst: document.getElementById('dash-tipo-est')?.value || '(todos)'
+  });
+  console.log('Registros filtrados:', rs.length);
+  if (recs.length > 0) console.log('Registro de muestra:', recs[0]);
 
   if (rs.length === 0) {
     d.innerHTML = `<div style="text-align:center;padding:60px;color:#4a7fa5">
@@ -4561,8 +4841,7 @@ function abrirEditar(){
   document.getElementById('eTotComp').value = t.comp || '';
   document.getElementById('eTotSusp').value = t.susp || '';
   
-  // OBSERVACIONES Y ACTA
-  document.getElementById('eObs').value    = r.gen?.obs     || '';
+  // ACTA
   document.getElementById('eActaLink').value = r.acta?.link  || '';
   
   // Scroll al inicio del modal
@@ -4738,9 +5017,6 @@ function guardarYNavegar(direction) {
   updates['tot/dosis'] = gn('eTotDosis');
   updates['tot/comp'] = gn('eTotComp');
   updates['tot/susp'] = gn('eTotSusp');
-  
-  // GENERAL
-  updates['gen/obs'] = document.getElementById('eObs').value;
   
   // ACTA
   const link = document.getElementById('eActaLink').value.trim();
@@ -5058,9 +5334,6 @@ function guardarEdicion(){
   updates['tot/dosis'] = gn('eTotDosis');
   updates['tot/comp'] = gn('eTotComp');
   updates['tot/susp'] = gn('eTotSusp');
-  
-  // GENERAL
-  updates['gen/obs'] = document.getElementById('eObs').value;
   
   // ACTA
   const link = document.getElementById('eActaLink').value.trim();
@@ -5409,7 +5682,7 @@ function adminSave() {
   LISTAS_REF.set(listasLimpias)
     .then(() => { 
       console.log('✅ Listas guardadas exitosamente en Firebase');
-      poblarSelects(_listas); 
+      // No necesitamos llamar poblarSelects aquí porque el listener .on('value') lo hará automáticamente
       toast('✅ Lista actualizada','ok'); 
     })
     .catch(err => { 
@@ -6403,7 +6676,6 @@ function regidCargarDatosOperativo(data) {
     const direccionesArray = Object.entries(data.direcciones);
     lista.innerHTML = direccionesArray.map(([key, d], i) => {
       const tieneActa = d.actaLink && d.actaLink.trim() !== '';
-      const tieneObs = d.obs && d.obs.trim() !== '';
       
       return `
       <div style="background:white;border:1.5px solid #86efac;border-radius:10px;padding:12px 16px;transition:all .2s">
@@ -6416,7 +6688,6 @@ function regidCargarDatosOperativo(data) {
               <span>•</span>
               <span><strong>UPZ:</strong> ${d.upz || 'N/A'}</span>
             </div>
-            ${tieneObs ? `<div style="font-size:.7rem;color:#059669;margin-top:6px;padding:6px 10px;background:#f0fdf4;border-radius:6px;border-left:3px solid #86efac"><strong>Obs:</strong> ${d.obs}</div>` : ''}
           </div>
           <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
             ${tieneActa ? '<div style="font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:4px;background:#dcfce7;color:#166534">📎 Con acta</div>' : '<div style="font-size:.65rem;font-weight:600;padding:3px 10px;border-radius:4px;background:#fef3c7;color:#92400e">⚠️ Sin acta</div>'}
@@ -6454,7 +6725,6 @@ function regidGuardarDireccion(continuarRegistrando) {
     dir: document.getElementById('regid-dir').value.trim(),
     barrio: document.getElementById('regid-barrio').value,
     upz: document.getElementById('regid-upz').value,
-    obs: document.getElementById('regid-obs').value.trim(),
     actaLink: document.getElementById('regid-actaLink').value.trim(),
     timestamp: Date.now()
   };
@@ -6552,7 +6822,6 @@ function regidLimpiarFormularioDireccion() {
   document.getElementById('regid-dir').value = '';
   document.getElementById('regid-barrio').value = '';
   document.getElementById('regid-upz').value = '';
-  document.getElementById('regid-obs').value = '';
   document.getElementById('regid-actaLink').value = '';
   
   const prev = document.getElementById('regid-abPrev');
@@ -6658,8 +6927,7 @@ function regidEditarDireccion(direccionKey) {
   document.getElementById('regid-barrio').value = direccion.barrio || '';
   document.getElementById('regid-upz').value = direccion.upz || '';
   
-  // Llenar observaciones y acta
-  document.getElementById('regid-obs').value = direccion.obs || '';
+  // Llenar acta
   document.getElementById('regid-actaLink').value = direccion.actaLink || '';
   
   // Guardar la key para saber que estamos editando
