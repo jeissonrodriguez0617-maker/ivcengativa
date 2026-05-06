@@ -2655,6 +2655,10 @@ updateCompBlocks();
 // Listener en tiempo real → mantiene recs sincronizado con Firebase
 RESULTADOS_REF.orderByChild('meta/fecha').on('value', function(snap){
   const fbStatus = document.getElementById('fbStatus');
+  console.log('🔥 Firebase listener activado');
+  console.log('📊 Snapshot exists:', snap.exists());
+  console.log('📊 Snapshot numChildren:', snap.numChildren());
+  
   recs = [];
   recsMap = {};
   if(snap.exists()){
@@ -2665,6 +2669,12 @@ RESULTADOS_REF.orderByChild('meta/fecha').on('value', function(snap){
       recs.unshift(rec);   // más reciente primero
     });
   }
+  
+  console.log('✅ Total registros cargados:', recs.length);
+  if (recs.length > 0) {
+    console.log('📝 Primer registro:', recs[0]);
+  }
+  
   updateRecsList();
   publicarPuenteOperativos();
 // ══════════════════════════════════════════════════════════
@@ -3878,20 +3888,32 @@ function collect(){
 // ── SAVE ───────────────────────────────────────────────
 function saveRec(){
   const rec = collect();
+  console.log('💾 Intentando guardar registro:', rec);
+  
   // Validación mínima
   const missing = REQS.filter(f => !document.getElementById(f.id)?.value?.trim());
-  if(missing.length > 0){ buildAudit(); toast('Completa los campos obligatorios','err'); return; }
+  console.log('🔍 Campos faltantes:', missing);
+  
+  if(missing.length > 0){ 
+    console.error('❌ Faltan campos obligatorios:', missing.map(f => f.lbl));
+    buildAudit(); 
+    toast('Completa los campos obligatorios','err'); 
+    return; 
+  }
 
   const btnSave = document.getElementById('btnSave');
   if(btnSave){ btnSave.disabled = true; btnSave.textContent = 'Guardando...'; }
 
+  console.log('✅ Guardando en Firebase...');
   RESULTADOS_REF.push(rec)
     .then(function(){
+      console.log('✅ Guardado exitoso en Firebase');
       toast('✓ Operativo guardado en Firebase','ok');
       resetForm();
       window.scrollTo({top:0, behavior:'smooth'});
     })
     .catch(function(err){
+      console.error('❌ Error al guardar:', err);
       toast('Error al guardar: ' + err.message, 'err');
       console.error(err);
     })
@@ -4172,9 +4194,14 @@ function clearFilters(){
 }
 
 function updateRecsList(){
+  console.log('📋 updateRecsList llamado, total recs:', recs.length);
+  
   const filtered = getFilteredRecs();
   const total = recs.length;
   const n = filtered.length;
+  
+  console.log('🔍 Filtrados:', n, 'de', total);
+  
   document.getElementById('rcnt').textContent = total;
   document.getElementById('rcntLbl').textContent =
     n === total
@@ -4194,11 +4221,13 @@ function updateRecsList(){
   if (elPct) elPct.textContent = pct + '%';
   const list = document.getElementById('recsList');
   if(n===0){
+    console.log('⚠️ No hay registros para mostrar');
     list.innerHTML = total===0
       ? '<div class="empty-s"><div style="font-size:2.5rem;margin-bottom:10px">&#9633;</div><div>Aun no hay operativos registrados</div></div>'
       : '<div class="empty-s"><div style="font-size:2rem;margin-bottom:10px">&#128269;</div><div>Ningún registro coincide con los filtros aplicados</div></div>';
     return;
   }
+  console.log('✅ Renderizando', n, 'registros en la lista');
   list.innerHTML=filtered.map((r,i)=>{
     const globalIdx = recs.indexOf(r);
     const t=r.tot||{};
@@ -6767,13 +6796,64 @@ function regidGuardarDireccion(continuarRegistrando) {
       var mensajeExito = '✓ Dirección guardada exitosamente';
     }
     
-    // Guardar en Firebase
-    OPERATIVOS_REF.child(idOp).set(operativo)
-      .then(() => {
-        toast(mensajeExito, 'ok');
+    // Guardar en Firebase (dos rutas: operativos_por_id y resultados_operativos)
+    const updates = {};
+    updates[`operativos_por_id/${idOp}`] = operativo;
+    
+    // Convertir direcciones a formato resultados_operativos
+    // Primero, buscar registros existentes en resultados_operativos con este idOp
+    RESULTADOS_REF.orderByChild('meta/idOp').equalTo(idOp).once('value', snapResultados => {
+      const registrosExistentes = {};
+      snapResultados.forEach(child => {
+        const reg = child.val();
+        if (reg._dirKey) {
+          registrosExistentes[reg._dirKey] = child.key;
+        }
+      });
+      
+      // Procesar cada dirección
+      Object.entries(operativo.direcciones).forEach(([dirKey, dirData]) => {
+        const resultado = {
+          meta: {
+            idOp: idOp,
+            fecha: operativo.meta.fecha,
+            h1: operativo.meta.h1,
+            h2: operativo.meta.h2,
+            resp: operativo.meta.resp,
+            megatoma: operativo.meta.megatoma,
+            opConjunto: operativo.meta.opConjunto,
+            entidadesConjunto: operativo.meta.entidadesConjunto
+          },
+          tipoIVC: operativo.tipoIVC,
+          cc: operativo.tipoIVC && operativo.tipoIVC.length > 0 ? operativo.tipoIVC[0] : '',
+          ub: {
+            dir: dirData.dir,
+            barrio: dirData.barrio,
+            upz: dirData.upz
+          },
+          acta: {
+            link: dirData.actaLink
+          },
+          tot: {},
+          _dirKey: dirKey,
+          _timestamp: dirData.timestamp || Date.now()
+        };
         
-        // Actualizar lista de direcciones guardadas
-        regidDireccionesGuardadas = operativo.direcciones;
+        // Si ya existe un registro para esta dirección, actualizarlo; si no, crear uno nuevo
+        if (registrosExistentes[dirKey]) {
+          updates[`resultados_operativos/${registrosExistentes[dirKey]}`] = resultado;
+        } else {
+          const nuevoKey = db.ref().push().key;
+          updates[`resultados_operativos/${nuevoKey}`] = resultado;
+        }
+      });
+      
+      db.ref().update(updates)
+        .then(() => {
+          toast(mensajeExito, 'ok');
+          
+          // Actualizar lista de direcciones guardadas
+          regidDireccionesGuardadas = operativo.direcciones;
         
         // Mostrar el panel actualizado con todas las direcciones
         regidCargarDatosOperativo(operativo);
@@ -6807,7 +6887,8 @@ function regidGuardarDireccion(continuarRegistrando) {
         btnGuardarYSalir.textContent = '💾 Guardar y finalizar';
         btnGuardarYContinuar.textContent = '➕ Seguir registrando en este ID';
       });
-  });
+    }); // Cierre de snapResultados
+  }); // Cierre de snap OPERATIVOS_REF
 }
 
 function regidLimpiarFormularioDireccion() {
@@ -7028,6 +7109,136 @@ function regidSelMedida(el, val) {
   tc('regid-cdCierreDef', val === 'CIERRE DEFINITIVO');
   tc('regid-cdCierrePrev', val === 'CIERRE PREVENTIVO');
 }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FUNCIÓN DE SINCRONIZACIÓN MANUAL
+// Ejecuta en consola: sincronizarOperativosAResultados()
+// ═══════════════════════════════════════════════════════════════════════════
+window.sincronizarOperativosAResultados = function() {
+  if (!confirm('⚠️ SINCRONIZACIÓN DE DATOS\n\nEsta operación sincronizará todos los operativos de REGID a RESULTADOS.\n\n¿Continuar?')) {
+    return;
+  }
+  
+  console.log('🔄 Iniciando sincronización...');
+  const startTime = Date.now();
+  
+  if (!OPERATIVOS_REF) {
+    OPERATIVOS_REF = db.ref('operativos_por_id');
+  }
+  
+  OPERATIVOS_REF.once('value', snapOperativos => {
+    if (!snapOperativos.exists()) {
+      console.log('❌ No hay operativos en operativos_por_id');
+      alert('No se encontraron operativos para sincronizar');
+      return;
+    }
+    
+    const updates = {};
+    let totalDirecciones = 0;
+    let totalOperativos = 0;
+    
+    // Primero obtener todos los registros existentes en resultados_operativos para evitar duplicados
+    RESULTADOS_REF.once('value', snapResultados => {
+      const registrosExistentes = new Map(); // Map de idOp_dirKey -> firebaseKey
+      
+      snapResultados.forEach(child => {
+        const reg = child.val();
+        if (reg.meta?.idOp && reg._dirKey) {
+          const clave = `${reg.meta.idOp}_${reg._dirKey}`;
+          registrosExistentes.set(clave, child.key);
+        }
+      });
+      
+      console.log(`📊 Registros existentes en resultados_operativos: ${registrosExistentes.size}`);
+      
+      // Procesar cada operativo
+      snapOperativos.forEach(childOp => {
+        const idOp = childOp.key;
+        const operativo = childOp.val();
+        totalOperativos++;
+        
+        if (!operativo.direcciones || Object.keys(operativo.direcciones).length === 0) {
+          console.log(`⚠️ Operativo ${idOp} no tiene direcciones`);
+          return;
+        }
+        
+        // Convertir cada dirección a formato resultados_operativos
+        Object.entries(operativo.direcciones).forEach(([dirKey, dirData]) => {
+          totalDirecciones++;
+          
+          const resultado = {
+            meta: {
+              idOp: idOp,
+              fecha: operativo.meta?.fecha || '',
+              h1: operativo.meta?.h1 || '',
+              h2: operativo.meta?.h2 || '',
+              resp: operativo.meta?.resp || '',
+              megatoma: operativo.meta?.megatoma || 'NO',
+              opConjunto: operativo.meta?.opConjunto || 'NO',
+              entidadesConjunto: operativo.meta?.entidadesConjunto || ''
+            },
+            tipoIVC: operativo.tipoIVC || [],
+            cc: (operativo.tipoIVC && operativo.tipoIVC.length > 0) ? operativo.tipoIVC[0] : '',
+            ub: {
+              dir: dirData.dir || '',
+              barrio: dirData.barrio || '',
+              upz: dirData.upz || ''
+            },
+            acta: {
+              link: dirData.actaLink || ''
+            },
+            tot: {},
+            _dirKey: dirKey,
+            _timestamp: dirData.timestamp || Date.now(),
+            _sincronizado: true
+          };
+          
+          // Verificar si ya existe este registro
+          const clave = `${idOp}_${dirKey}`;
+          if (registrosExistentes.has(clave)) {
+            // Actualizar registro existente
+            const firebaseKey = registrosExistentes.get(clave);
+            updates[`resultados_operativos/${firebaseKey}`] = resultado;
+            console.log(`✏️ Actualizando: ${idOp} / ${dirKey}`);
+          } else {
+            // Crear nuevo registro
+            const nuevoKey = db.ref().push().key;
+            updates[`resultados_operativos/${nuevoKey}`] = resultado;
+            console.log(`➕ Creando: ${idOp} / ${dirKey}`);
+          }
+        });
+      });
+      
+      console.log(`📦 Total operativos procesados: ${totalOperativos}`);
+      console.log(`📍 Total direcciones a sincronizar: ${totalDirecciones}`);
+      
+      if (Object.keys(updates).length === 0) {
+        console.log('✅ No hay nada que sincronizar');
+        alert('✅ No hay registros nuevos que sincronizar');
+        return;
+      }
+      
+      // Ejecutar actualización masiva
+      db.ref().update(updates)
+        .then(() => {
+          const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+          console.log(`✅ Sincronización completada en ${duration}s`);
+          console.log(`📊 Registros sincronizados: ${Object.keys(updates).length}`);
+          alert(`✅ SINCRONIZACIÓN EXITOSA\n\n` +
+                `Operativos procesados: ${totalOperativos}\n` +
+                `Direcciones sincronizadas: ${totalDirecciones}\n` +
+                `Tiempo: ${duration}s\n\n` +
+                `Los registros ya están disponibles en Resultados y Dashboard`);
+        })
+        .catch(err => {
+          console.error('❌ Error en sincronización:', err);
+          alert('❌ Error al sincronizar: ' + err.message);
+        });
+    });
+  });
+};
+
+console.log('💡 Función de sincronización disponible. Ejecuta: sincronizarOperativosAResultados()');
 </script>
 
 </div>
