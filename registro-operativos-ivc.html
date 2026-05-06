@@ -649,7 +649,7 @@ body { overflow-x: hidden; }
 </div>
 
 <!-- ══ FAB NUEVO REGISTRO ══ -->
-<button id="fab-nuevo" onclick="switchMain('form',document.getElementById('sidebtn-form'))" title="Nuevo registro">✦</button>
+<button id="fab-nuevo" onclick="switchMain('regid',document.getElementById('sidebtn-regid'))" title="Nuevo registro">✦</button>
 
 <!-- ══ NAV BAR INFERIOR MÓVIL ══ -->
 <div id="mobile-nav">
@@ -662,7 +662,7 @@ body { overflow-x: hidden; }
       <div class="mnav-icon-wrap"><div class="mnav-icon">📊</div></div>
       <span>Dashboard</span>
     </button>
-    <button class="mnav-btn" id="mnav-form" onclick="mnavSwitch('form',this)">
+    <button class="mnav-btn" id="mnav-regid" onclick="mnavSwitch('regid',this)">
       <div class="mnav-icon-wrap"><div class="mnav-icon">✦</div></div>
       <span>Nuevo</span>
     </button>
@@ -690,10 +690,11 @@ body { overflow-x: hidden; }
       <span>Dashboard</span>
     </button>
 
-    <button class="sidebar-nav-btn" id="sidebtn-form" onclick="switchMain('form',this)">
+    <button class="sidebar-nav-btn" id="sidebtn-regid" onclick="switchMain('regid',this)">
       <span class="btn-icon">✦</span>
       <span>Nuevo registro</span>
     </button>
+    
     <button class="sidebar-nav-btn" id="sidebtn-reporte" onclick="switchMain('reporte',this)">
       <span class="btn-icon">📄</span>
       <span>Reporte PDF</span>
@@ -879,7 +880,7 @@ body { overflow-x: hidden; }
 
 
     <!-- VISTA: NUEVO REGISTRO -->
-    <div class="mview" id="mview-form">
+    <div class="mview" id="mview-form" style="display:none !important">
       <div class="ca">
 
     <!-- 01 IDENTIFICACION -->
@@ -1522,7 +1523,7 @@ body { overflow-x: hidden; }
         </div>
 
         <!-- Filtro rápido dentro del reporte -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;margin-bottom:14px;align-items:end" id="reporte-filtros">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px" id="reporte-filtros-row1">
           <div class="f"><label style="font-size:.7rem">Buscar dirección</label>
             <input type="text" id="rpt-dir" placeholder="Ej. CR 95G" oninput="reporteRenderLista()"></div>
           <div class="f"><label style="font-size:.7rem">Componente</label>
@@ -1542,6 +1543,32 @@ body { overflow-x: hidden; }
               <option value="sin">⬜ Sin acta</option>
             </select>
           </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:10px;margin-bottom:14px;align-items:end" id="reporte-filtros-row2">
+          <div class="f"><label style="font-size:.7rem">Barrio</label>
+            <select id="rpt-barrio" onchange="reporteRenderLista()">
+              <option value="">— Todos —</option>
+            </select>
+          </div>
+          <div class="f"><label style="font-size:.7rem">UPZ</label>
+            <select id="rpt-upz" onchange="reporteRenderLista()">
+              <option value="">— Todas —</option>
+            </select>
+          </div>
+          <div class="f"><label style="font-size:.7rem">Megatoma</label>
+            <select id="rpt-megatoma" onchange="reporteRenderLista()">
+              <option value="">— Todos —</option>
+              <option value="SI">✅ Sí</option>
+              <option value="NO">⬜ No</option>
+            </select>
+          </div>
+          <div class="f"><label style="font-size:.7rem">Op. Conjunto</label>
+            <select id="rpt-conjunto" onchange="reporteRenderLista()">
+              <option value="">— Todos —</option>
+              <option value="SI">✅ Sí</option>
+              <option value="NO">⬜ No</option>
+            </select>
+          </div>
           <button onclick="reporteLimpiarFiltros()"
             style="padding:8px 12px;background:#f1f5f9;color:#64748b;border:1.5px solid #e2e8f0;border-radius:8px;font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;white-space:nowrap">
             ✕ Limpiar
@@ -1558,6 +1585,273 @@ body { overflow-x: hidden; }
 
       </div>
     </div><!-- /mview-reporte -->
+
+    <!-- ████████████████████████████████████████████████████████████████████
+         VISTA: REGISTRO POR ID (MULTI-DIRECCIÓN)
+         ████████████████████████████████████████████████████████████████████ -->
+    <div class="mview" id="mview-regid">
+      <div class="ca">
+        
+        <!-- BANNER INFORMATIVO -->
+        <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1.5px solid #93c5fd;border-radius:12px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:12px">
+          <div style="font-size:1.6rem;flex-shrink:0">🔢</div>
+          <div style="flex:1">
+            <div style="font-size:.82rem;font-weight:800;color:#1e40af;margin-bottom:3px">Registro multi-dirección por ID</div>
+            <div style="font-size:.7rem;color:#1e40af;line-height:1.5">
+              Completa la información general del operativo. Después de guardar cada dirección podrás <strong>seguir registrando en este mismo ID</strong> sin repetir datos.
+            </div>
+          </div>
+        </div>
+
+        <!-- 01 IDENTIFICACIÓN -->
+        <div id="regid-s1">
+          <div class="stitle">01 · Identificación del Operativo</div>
+          <div class="card">
+            <div class="g2 mb">
+              <div class="f">
+                <label>ID del Operativo <span class="req">*</span></label>
+                <input type="text" id="regid-idOp" placeholder="Ej: 001" oninput="regidCheckIdExists()">
+                <div class="hint">Si el ID ya existe, se cargarán sus datos automáticamente</div>
+              </div>
+              <div class="f">
+                <label>Fecha de la visita <span class="req">*</span></label>
+                <input type="date" id="regid-fecha">
+              </div>
+            </div>
+            
+            <div class="g2 mb">
+              <div class="f"><label>Hora de inicio</label><input type="time" id="regid-h1"></div>
+              <div class="f"><label>Hora de finalización</label><input type="time" id="regid-h2"></div>
+            </div>
+            
+            <div class="f">
+              <label>Responsable del operativo <span class="req">*</span></label>
+              <select id="regid-resp" onchange="regidToggleOtroResp()">
+                <option value="">— Seleccionar responsable —</option>
+                <optgroup label="────── Profesionales ──────">
+                  <option>JOHANA GARZÓN</option><option>ANDRÉS ARIAS</option><option>ANLLY ROJAS</option>
+                  <option>MAURICIO GÓMEZ</option><option>YAMILE ESPITIA</option><option>DAVID ALBA</option>
+                </optgroup>
+                <optgroup label="────── Gestores ──────">
+                  <option>LEONARDO PIÑA</option><option>JAIRO LOZANO</option><option>LILIANA CHARRY</option>
+                </optgroup>
+                <optgroup label="────── Técnicos ──────">
+                  <option>JEISSON RODRÍGUEZ</option><option>EFREN SIERRA</option><option>CAMILO VARGAS</option>
+                </optgroup>
+                <option value="__OTRO__">OTRO (especificar)</option>
+              </select>
+            </div>
+            
+            <div class="f mt" id="regid-respOtroDiv" style="display:none">
+              <label>Especificar responsable</label>
+              <input type="text" id="regid-respOtro" placeholder="Nombre completo del responsable">
+            </div>
+            
+            <!-- Megatoma / Operativo Conjunto -->
+            <div class="g2 mb mt">
+              <div class="f">
+                <label>¿Aplica para Megatoma - Comando Situacional?</label>
+                <div style="display:flex;gap:10px;margin-top:4px">
+                  <label class="chk-row" style="cursor:pointer;padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;flex:1;justify-content:center;transition:all .15s" id="regid-lbl-megatoma-si">
+                    <input type="radio" name="regid-megatoma" id="regid-megatoma-si" value="SI" onchange="regidToggleMegatomaStyle()"> Sí
+                  </label>
+                  <label class="chk-row" style="cursor:pointer;padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;flex:1;justify-content:center;transition:all .15s;background:#f0fdf4;border-color:#86efac" id="regid-lbl-megatoma-no">
+                    <input type="radio" name="regid-megatoma" id="regid-megatoma-no" value="NO" checked onchange="regidToggleMegatomaStyle()"> No
+                  </label>
+                </div>
+              </div>
+              <div class="f">
+                <label>¿Es operativo conjunto?</label>
+                <div style="display:flex;gap:10px;margin-top:4px">
+                  <label class="chk-row" style="cursor:pointer;padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;flex:1;justify-content:center;transition:all .15s" id="regid-lbl-conjunto-si">
+                    <input type="radio" name="regid-opconjunto" id="regid-conjunto-si" value="SI" onchange="regidToggleConjuntoStyle()"> Sí
+                  </label>
+                  <label class="chk-row" style="cursor:pointer;padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;flex:1;justify-content:center;transition:all .15s;background:#f0fdf4;border-color:#86efac" id="regid-lbl-conjunto-no">
+                    <input type="radio" name="regid-opconjunto" id="regid-conjunto-no" value="NO" checked onchange="regidToggleConjuntoStyle()"> No
+                  </label>
+                </div>
+                <!-- Entidades (visible solo si es conjunto) -->
+                <div id="regid-blk-entidades-conjunto" style="display:none;margin-top:8px">
+                  <input type="text" id="regid-entidades-conjunto" placeholder="Ej: Policía, IPES, Tránsito..." style="font-size:.8rem">
+                  <div class="hint">Entidades participantes</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL DE DIRECCIONES REGISTRADAS PREVIAMENTE -->
+        <div id="regid-existingPanel" style="display:none">
+          <div class="stitle" style="color:#166534">✓ Direcciones ya registradas en este ID</div>
+          <div class="card" style="background:#f0fdf4;border:2px solid #86efac">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid #86efac">
+              <span style="font-size:2rem">📍</span>
+              <div style="flex:1">
+                <div style="font-size:.88rem;font-weight:800;color:#166534;margin-bottom:3px">Operativo encontrado</div>
+                <div style="font-size:.75rem;color:#15803d">
+                  Este ID ya tiene <strong id="regid-countDirs" style="font-size:.85rem">0</strong> dirección(es) registrada(s). Puedes agregar más direcciones a continuación.
+                </div>
+              </div>
+            </div>
+            <div id="regid-listExisting" style="display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto"></div>
+          </div>
+        </div>
+
+        <!-- 02 UBICACIÓN -->
+        <div id="regid-s2">
+          <div class="stitle">02 · Ubicación del Operativo</div>
+          <div class="card">
+            <div class="f mb">
+              <label>Dirección del lugar intervenido <span class="req">*</span></label>
+              <div class="ab">
+                <div class="ab-title">Constructor de dirección — Formato: [Sigla] [Núm][Letra] # [Núm][Letra] [BIS] - [Núm]</div>
+                <div class="ab-row">
+                  <select id="regid-aSigla" onchange="regidBuildAddr()" style="max-width:90px">
+                    <option value="">Sigla</option>
+                    <option>CL</option><option>CR</option><option>AV CL</option><option>AV CR</option><option>TV</option><option>DG</option>
+                  </select>
+                  <input type="text" id="regid-aN1" placeholder="73" maxlength="5" oninput="regidBuildAddr()" style="max-width:65px">
+                  <input type="text" id="regid-aL1" placeholder="A" maxlength="3" oninput="regidBuildAddr()" style="max-width:50px">
+                  <span class="ab-sep">#</span>
+                  <input type="text" id="regid-aN2" placeholder="65" maxlength="5" oninput="regidBuildAddr()" style="max-width:65px">
+                  <input type="text" id="regid-aL2" placeholder="B" maxlength="3" oninput="regidBuildAddr()" style="max-width:50px">
+                  <select id="regid-aBis" onchange="regidBuildAddr()" style="max-width:70px"><option value="">—</option><option>BIS</option></select>
+                  <span class="ab-sep">-</span>
+                  <input type="text" id="regid-aN3" placeholder="43" maxlength="5" oninput="regidBuildAddr()" style="max-width:65px">
+                </div>
+                <div style="font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">Vista previa:</div>
+                <div class="ab-prev empty" id="regid-abPrev">Completa los campos para ver la dirección</div>
+              </div>
+              <input type="text" id="regid-dir" placeholder="O escribe manualmente: CR 73A # 65B BIS - 43" style="margin-top:6px">
+              <div class="hint">Usa el constructor o escribe directamente. Formato oficial: CR 73A # 65B BIS - 43</div>
+            </div>
+            <div class="g2">
+              <div class="f">
+                <label>Barrio <span class="req">*</span></label>
+                <select id="regid-barrio" onchange="regidAutoFillUPZ()">
+                  <option value="">— Seleccionar barrio —</option>
+                  <optgroup label="UPZ 26 · Las Ferias">
+                    <option data-upz="26 LAS FERIAS">LAS FERIAS</option><option data-upz="26 LAS FERIAS">BONANZA</option>
+                    <option data-upz="26 LAS FERIAS">LAS FERIAS OCCIDENTAL</option><option data-upz="26 LAS FERIAS">SAN JOAQUIN</option>
+                    <option data-upz="26 LAS FERIAS">CATALUÑA</option><option data-upz="26 LAS FERIAS">LA CABAÑA</option>
+                    <option data-upz="26 LAS FERIAS">BELLAVISTA OCCIDENTAL</option><option data-upz="26 LAS FERIAS">LA ESTRADA</option>
+                    <option data-upz="26 LAS FERIAS">DORADO NORTE</option><option data-upz="26 LAS FERIAS">EL LAUREL</option>
+                    <option data-upz="26 LAS FERIAS">PALO BLANCO</option><option data-upz="26 LAS FERIAS">BOSQUE POPULAR</option>
+                    <option data-upz="26 LAS FERIAS">JARDIN BOTANICO</option><option data-upz="26 LAS FERIAS">SANTA ROSA</option>
+                  </optgroup>
+                  <optgroup label="UPZ 29 · Minuto de Dios">
+                    <option data-upz="29 MINUTO DE DIOS">LA SERENA</option><option data-upz="29 MINUTO DE DIOS">PARIS GAITAN</option>
+                    <option data-upz="29 MINUTO DE DIOS">BOCHICA</option><option data-upz="29 MINUTO DE DIOS">LOS CEREZOS</option>
+                    <option data-upz="29 MINUTO DE DIOS">QUIRIGUA</option><option data-upz="29 MINUTO DE DIOS">QUIRIGUA ORIENTAL</option>
+                    <option data-upz="29 MINUTO DE DIOS">LUIS CARLOS GALAN</option><option data-upz="29 MINUTO DE DIOS">MINUTO DE DIOS</option>
+                    <option data-upz="29 MINUTO DE DIOS">VILLA CRISTINA</option><option data-upz="29 MINUTO DE DIOS">VILLAS DE GRANADA</option>
+                    <option data-upz="29 MINUTO DE DIOS">VILLA GLADYS</option><option data-upz="29 MINUTO DE DIOS">EL CEDRO</option>
+                    <option data-upz="29 MINUTO DE DIOS">VILLA SAGRARIO</option><option data-upz="29 MINUTO DE DIOS">FLORENCIA</option>
+                  </optgroup>
+                  <optgroup label="UPZ 30 · Boyacá Real">
+                    <option data-upz="30 BOYACA REAL">FLORIDA BLANCA</option><option data-upz="30 BOYACA REAL">BOYACA</option>
+                    <option data-upz="30 BOYACA REAL">ZARZAMORA</option><option data-upz="30 BOYACA REAL">SANTA HELENITA</option>
+                    <option data-upz="30 BOYACA REAL">LOS PINOS FLORENCIA</option><option data-upz="30 BOYACA REAL">TABORA</option>
+                    <option data-upz="30 BOYACA REAL">SANTA MARIA DEL LAGO</option><option data-upz="30 BOYACA REAL">LA SOLEDAD NORTE</option>
+                    <option data-upz="30 BOYACA REAL">PARIS</option><option data-upz="30 BOYACA REAL">EL REAL</option>
+                    <option data-upz="30 BOYACA REAL">LA ALMERIA</option><option data-upz="30 BOYACA REAL">LA GRANJA</option>
+                    <option data-upz="30 BOYACA REAL">LAS FERIAS</option><option data-upz="30 BOYACA REAL">VILLA LUZ</option>
+                  </optgroup>
+                  <optgroup label="UPZ 31 · Santa Cecilia">
+                    <option data-upz="31 SANTA CECILIA">SAN MARCOS</option><option data-upz="31 SANTA CECILIA">VILLA LUZ</option>
+                    <option data-upz="31 SANTA CECILIA">EL SALITRE</option><option data-upz="31 SANTA CECILIA">NORMANDIA OCCIDENTAL</option>
+                    <option data-upz="31 SANTA CECILIA">NORMANDIA</option><option data-upz="31 SANTA CECILIA">LOS MONJES</option>
+                    <option data-upz="31 SANTA CECILIA">SAN IGNACIO</option><option data-upz="31 SANTA CECILIA">SANTA CECILIA</option>
+                    <option data-upz="31 SANTA CECILIA">EL ENCANTO</option><option data-upz="31 SANTA CECILIA">EL LUJAN</option>
+                  </optgroup>
+                  <optgroup label="UPZ 72 · Bolivia">
+                    <option data-upz="72 BOLIVIA">BOCHICA II</option><option data-upz="72 BOLIVIA">EL CORTIJO</option>
+                    <option data-upz="72 BOLIVIA">BOLIVIA ORIENTAL</option><option data-upz="72 BOLIVIA">BOLIVIA</option>
+                    <option data-upz="72 BOLIVIA">CIUDADELA COLSUBSIDIO</option><option data-upz="72 BOLIVIA">BOCHICA</option>
+                  </optgroup>
+                  <optgroup label="UPZ 73 · Garcés Navas">
+                    <option data-upz="73 GARCES NAVAS">ALAMOS NORTE</option><option data-upz="73 GARCES NAVAS">LOS ANGELES</option>
+                    <option data-upz="73 GARCES NAVAS">EL CEDRO</option><option data-upz="73 GARCES NAVAS">ALAMOS</option>
+                    <option data-upz="73 GARCES NAVAS">VILLAS DE GRANADA</option><option data-upz="73 GARCES NAVAS">GARCES NAVAS</option>
+                    <option data-upz="73 GARCES NAVAS">VILLA AMALIA</option><option data-upz="73 GARCES NAVAS">LA PERLA</option>
+                    <option data-upz="73 GARCES NAVAS">VILLAS DE ALCALA</option><option data-upz="73 GARCES NAVAS">GRAN GRANADA I Y II</option>
+                    <option data-upz="73 GARCES NAVAS">VILLAS DE MADRIGAL</option><option data-upz="73 GARCES NAVAS">VILLA DEL MAR</option>
+                    <option data-upz="73 GARCES NAVAS">SANTA MONICA</option>
+                  </optgroup>
+                  <optgroup label="UPZ 74 · Engativá">
+                    <option data-upz="74 ENGATIVA">EL CEDRO</option><option data-upz="74 ENGATIVA">SAN ANTONIO NORTE</option>
+                    <option data-upz="74 ENGATIVA">VILLA TERESITA</option><option data-upz="74 ENGATIVA">ENGATIVA CENTRO</option>
+                    <option data-upz="74 ENGATIVA">SABANAS EL DORADO</option><option data-upz="74 ENGATIVA">MARANDU</option>
+                    <option data-upz="74 ENGATIVA">EL MUELLE</option><option data-upz="74 ENGATIVA">SAN ANTONIO</option>
+                    <option data-upz="74 ENGATIVA">EL PALMAR</option><option data-upz="74 ENGATIVA">LA RIVIERA</option>
+                    <option data-upz="74 ENGATIVA">VIÑA DEL MAR</option><option data-upz="74 ENGATIVA">EL GACO</option>
+                    <option data-upz="74 ENGATIVA">VILLA GLADYS</option><option data-upz="74 ENGATIVA">VILLAS DEL PALMAR</option>
+                  </optgroup>
+                  <optgroup label="UPZ 105 · Jardín Botánico">
+                    <option data-upz="105 JARDIN BOTANICO">EL SALITRE LUIS MARIA FERNANDEZ</option>
+                    <option data-upz="105 JARDIN BOTANICO">JARDIN BOTANICO</option>
+                    <option data-upz="105 JARDIN BOTANICO">COMPENSAR I</option>
+                  </optgroup>
+                  <optgroup label="UPZ 116 · Álamos">
+                    <option data-upz="116 ALAMOS">LOS ALAMOS</option><option data-upz="116 ALAMOS">SAN IGNACIO</option>
+                    <option data-upz="116 ALAMOS">PARQUE INDUSTRIAL EL DORADO</option><option data-upz="116 ALAMOS">EL DORADO INDUSTRIAL</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="f">
+                <label>UPZ <span class="req">*</span></label>
+                <input type="text" id="regid-upz" placeholder="Se completa al elegir barrio" readonly style="background:#f8fafc;cursor:default;color:var(--primary);font-weight:600">
+                <div class="hint">Se llena automáticamente al seleccionar el barrio</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 TIPO IVC -->
+        <div id="regid-s1b">
+          <div class="stitle">03 · Tipo de IVC</div>
+          <div class="card">
+            <div class="f mb">
+              <label>Tipo de IVC <span class="req">*</span></label>
+              <div class="chips" id="regid-tipoIVC">
+                <div class="chip" data-comp="AE" onclick="selChip(this)">ACTIVIDAD ECONÓMICA</div>
+                <div class="chip" data-comp="EP" onclick="selChip(this)">ESPACIO PÚBLICO</div>
+                <div class="chip" data-comp="AMB" onclick="selChip(this)">AMBIENTE</div>
+                <div class="chip" data-comp="MOV" onclick="selChip(this)">MOVILIDAD</div>
+                <div class="chip" data-comp="OBR" onclick="selChip(this)">OBRAS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 OBSERVACIONES Y ACTA -->
+        <div id="regid-s4">
+          <div class="stitle">04 · Observaciones y Acta</div>
+          <div class="card">
+            <div class="f mb">
+              <label>Observaciones generales</label>
+              <textarea id="regid-obs" placeholder="Observaciones del operativo en esta dirección..."></textarea>
+            </div>
+            <div class="f">
+              <label>Link del acta (Google Drive)</label>
+              <input type="url" id="regid-actaLink" placeholder="https://drive.google.com/...">
+              <div class="hint">Opcional: enlace al documento del acta</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOTONES DE ACCIÓN -->
+        <div style="display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;padding-top:10px">
+          <button class="btn btn-save" onclick="regidGuardarDireccion(false)" id="regid-btnGuardarYSalir">
+            💾 Guardar y finalizar
+          </button>
+          <button class="btn btn-p" onclick="regidGuardarDireccion(true)" id="regid-btnGuardarYContinuar" style="background:linear-gradient(135deg,#065f46,#10b981)">
+            ➕ Seguir registrando en este ID
+          </button>
+        </div>
+
+      </div>
+    </div><!-- /mview-regid -->
 
 
     <!-- VISTA: DASHBOARD -->
@@ -5296,9 +5590,17 @@ function reporteGetFiltrados() {
   var dir  = (document.getElementById('rpt-dir')?.value  || '').toLowerCase().trim();
   var cc   = document.getElementById('rpt-cc')?.value   || '';
   var acta = document.getElementById('rpt-acta')?.value || '';
+  var barrio = document.getElementById('rpt-barrio')?.value || '';
+  var upz  = document.getElementById('rpt-upz')?.value  || '';
+  var megatoma = document.getElementById('rpt-megatoma')?.value || '';
+  var conjunto = document.getElementById('rpt-conjunto')?.value || '';
   return recs.filter(function(r) {
     if (dir  && !(r.ub?.dir||'').toLowerCase().includes(dir)) return false;
     if (cc   && r.cc !== cc)                                   return false;
+    if (barrio && (r.ub?.barrio || '') !== barrio)             return false;
+    if (upz  && (r.ub?.upz || '') !== upz)                     return false;
+    if (megatoma && (r.meta?.megatoma || 'NO') !== megatoma)   return false;
+    if (conjunto && (r.meta?.opConjunto || 'NO') !== conjunto) return false;
     if (acta === 'con' && !(r.acta?.link))                    return false;
     if (acta === 'sin' && r.acta?.link)                       return false;
     return true;
@@ -5384,7 +5686,7 @@ function reporteDeseleccionarTodos() {
 }
 
 function reporteLimpiarFiltros() {
-  var ids = ['rpt-dir','rpt-cc','rpt-acta'];
+  var ids = ['rpt-dir','rpt-cc','rpt-barrio','rpt-upz','rpt-megatoma','rpt-conjunto','rpt-acta'];
   ids.forEach(function(id) { var el=document.getElementById(id); if(el) el.value=''; });
   reporteRenderLista();
 }
@@ -5420,14 +5722,624 @@ function reporteDescargarPDF() {
   generarPDFReporte(lista, 'Selección manual · ' + lista.length + ' registro(s)');
 }
 
+// Poblar selectores de barrio y UPZ para filtros de reporte
+function reportePopularBarrios() {
+  var sel = document.getElementById('rpt-barrio');
+  if (!sel) return;
+  var barrios = [...new Set(recs.map(r => r.ub?.barrio || '').filter(Boolean))].sort();
+  sel.innerHTML = '<option value="">— Todos —</option>' + barrios.map(b => `<option value="${b}">${b}</option>`).join('');
+}
+
+function reportePopularUPZs() {
+  var sel = document.getElementById('rpt-upz');
+  if (!sel) return;
+  var upzs = [...new Set(recs.map(r => r.ub?.upz || '').filter(Boolean))].sort();
+  sel.innerHTML = '<option value="">— Todas —</option>' + upzs.map(u => `<option value="${u}">${u}</option>`).join('');
+}
+
 // Renderizar lista cuando se entra a la vista reporte
 var _origSwitchMain2 = switchMain;
 switchMain = function(v, btn) {
   _origSwitchMain2(v, btn);
   if (v === 'reporte') {
+    reportePopularBarrios();
+    reportePopularUPZs();
     setTimeout(reporteRenderLista, 100);
   }
+  if (v === 'regid') {
+    regidInicializar();
+  }
 };
+
+// ████████████████████████████████████████████████████████████████████████████████
+// ██ REGISTRO POR ID - SISTEMA MULTI-DIRECCIÓN ███████████████████████████████████
+// ████████████████████████████████████████████████████████████████████████████████
+
+const OPERATIVOS_REF = db.ref('operativos_por_id');
+let regidOperativoActual = null;
+let regidDireccionesGuardadas = [];
+
+function regidInicializar() {
+  regidOperativoActual = null;
+  regidDireccionesGuardadas = [];
+  
+  // Fecha actual
+  const hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('regid-fecha').value = hoy;
+  
+  // Ocultar panel de existentes
+  document.getElementById('regid-existingPanel').style.display = 'none';
+}
+
+function regidValidarFormulario() {
+  const idOp = document.getElementById('regid-idOp').value.trim();
+  const fecha = document.getElementById('regid-fecha').value;
+  const resp = document.getElementById('regid-resp').value;
+  const dir = document.getElementById('regid-dir').value.trim();
+  const barrio = document.getElementById('regid-barrio').value;
+  const upz = document.getElementById('regid-upz').value;
+  const tipoIVC = document.querySelectorAll('#regid-tipoIVC .chip.on').length;
+  
+  if (!idOp) {
+    toast('Debes ingresar un ID de operativo', 'err');
+    return false;
+  }
+  if (!fecha) {
+    toast('Debes ingresar la fecha', 'err');
+    return false;
+  }
+  if (!resp) {
+    toast('Debes seleccionar un responsable', 'err');
+    return false;
+  }
+  if (resp === '__OTRO__' && !document.getElementById('regid-respOtro').value.trim()) {
+    toast('Debes especificar el responsable', 'err');
+    return false;
+  }
+  if (!dir) {
+    toast('Debes ingresar una dirección', 'err');
+    return false;
+  }
+  if (!barrio) {
+    toast('Debes seleccionar un barrio', 'err');
+    return false;
+  }
+  if (!upz) {
+    toast('La UPZ no se ha completado', 'err');
+    return false;
+  }
+  if (tipoIVC === 0) {
+    toast('Debes seleccionar al menos un tipo de IVC', 'err');
+    return false;
+  }
+  
+  return true;
+}
+
+function regidCheckIdExists() {
+  const idOp = document.getElementById('regid-idOp').value.trim();
+  if (!idOp) {
+    // Si el ID está vacío, limpiar los campos autocompletados
+    document.getElementById('regid-fecha').value = new Date().toISOString().split('T')[0];
+    document.getElementById('regid-h1').value = '';
+    document.getElementById('regid-h2').value = '';
+    document.getElementById('regid-resp').value = '';
+    document.getElementById('regid-respOtro').value = '';
+    document.getElementById('regid-respOtroDiv').style.display = 'none';
+    document.getElementById('regid-megatoma-no').checked = true;
+    document.getElementById('regid-conjunto-no').checked = true;
+    document.getElementById('regid-entidades-conjunto').value = '';
+    regidToggleMegatomaStyle();
+    regidToggleConjuntoStyle();
+    document.getElementById('regid-existingPanel').style.display = 'none';
+    return;
+  }
+  
+  // Convertir a número si es posible
+  const idNum = parseInt(idOp);
+  const idStr = idOp;
+  
+  console.log('Buscando ID:', idOp, 'como número:', idNum, 'como string:', idStr);
+  
+  // Primero buscar en operativos_por_id (nueva estructura)
+  OPERATIVOS_REF.child(idStr).once('value', snap => {
+    if (snap.exists()) {
+      const data = snap.val();
+      console.log('Encontrado en operativos_por_id:', data);
+      regidCargarDatosOperativo(data);
+      toast('✓ ID encontrado - Datos cargados', 'ok');
+    } else {
+      // Si no existe, buscar en resultados (estructura antigua)
+      console.log('No encontrado en operativos_por_id, buscando en resultados...');
+      
+      // Buscar por ID como número
+      RESULTADOS_REF.orderByChild('meta/idOp').equalTo(idNum).once('value', snapNum => {
+        if (snapNum.exists()) {
+          console.log('Encontrado en resultados como número:', snapNum.val());
+          procesarResultadosAntiguos(snapNum);
+        } else {
+          // Buscar por ID como string
+          RESULTADOS_REF.orderByChild('meta/idOp').equalTo(idStr).once('value', snapStr => {
+            if (snapStr.exists()) {
+              console.log('Encontrado en resultados como string:', snapStr.val());
+              procesarResultadosAntiguos(snapStr);
+            } else {
+              console.log('ID no encontrado en ninguna parte');
+              document.getElementById('regid-existingPanel').style.display = 'none';
+            }
+          });
+        }
+      });
+    }
+  });
+}
+
+function procesarResultadosAntiguos(snapshot) {
+  const records = [];
+  snapshot.forEach(childSnap => {
+    records.push(childSnap.val());
+  });
+  
+  if (records.length === 0) {
+    document.getElementById('regid-existingPanel').style.display = 'none';
+    return;
+  }
+  
+  // Tomar el primer registro para los datos generales
+  const firstRecord = records[0];
+  
+  // Convertir al formato de operativos_por_id
+  const data = {
+    meta: {
+      idOp: firstRecord.meta?.idOp || '',
+      fecha: firstRecord.meta?.fecha || '',
+      h1: firstRecord.meta?.h1 || '',
+      h2: firstRecord.meta?.h2 || '',
+      resp: firstRecord.meta?.resp || '',
+      respOtro: firstRecord.meta?.respOtro || '',
+      megatoma: firstRecord.meta?.megatoma || 'NO',
+      opConjunto: firstRecord.meta?.opConjunto || 'NO',
+      entidadesConjunto: firstRecord.meta?.entidadesConjunto || ''
+    },
+    tipoIVC: [],
+    direcciones: {}
+  };
+  
+  // Determinar tipo de IVC
+  if (firstRecord.tipoIVC && Array.isArray(firstRecord.tipoIVC)) {
+    data.tipoIVC = firstRecord.tipoIVC;
+  } else if (firstRecord.cc) {
+    data.tipoIVC = [firstRecord.cc];
+  }
+  
+  // Convertir todas las direcciones
+  records.forEach((rec, idx) => {
+    const key = 'dir_' + idx;
+    data.direcciones[key] = {
+      dir: rec.ub?.dir || '',
+      barrio: rec.ub?.barrio || '',
+      upz: rec.ub?.upz || '',
+      obs: rec.gen?.obs || '',
+      actaLink: rec.acta?.link || '',
+      timestamp: Date.now()
+    };
+  });
+  
+  console.log('Datos procesados:', data);
+  regidCargarDatosOperativo(data);
+  toast('✓ ID encontrado - Datos cargados (' + records.length + ' dirección' + (records.length > 1 ? 'es' : '') + ')', 'ok');
+}
+
+function regidCargarDatosOperativo(data) {
+  regidOperativoActual = data;
+  
+  console.log('Cargando datos del operativo:', data);
+  
+  // Cargar datos generales
+  if (data.meta) {
+    // Fecha
+    if (data.meta.fecha) {
+      document.getElementById('regid-fecha').value = data.meta.fecha;
+      console.log('Fecha cargada:', data.meta.fecha);
+    }
+    
+    // Horas
+    if (data.meta.h1) {
+      document.getElementById('regid-h1').value = data.meta.h1;
+      console.log('Hora inicio cargada:', data.meta.h1);
+    }
+    if (data.meta.h2) {
+      document.getElementById('regid-h2').value = data.meta.h2;
+      console.log('Hora fin cargada:', data.meta.h2);
+    }
+    
+    // Responsable
+    const respVal = data.meta.resp || '';
+    console.log('Responsable:', respVal);
+    
+    // Lista de responsables predefinidos
+    const responsablesPredefinidos = [
+      'JOHANA GARZÓN','ANDRÉS ARIAS','ANLLY ROJAS','MAURICIO GÓMEZ','YAMILE ESPITIA','DAVID ALBA',
+      'LEONARDO PIÑA','JAIRO LOZANO','LILIANA CHARRY',
+      'JEISSON RODRÍGUEZ','EFREN SIERRA','CAMILO VARGAS'
+    ];
+    
+    if (respVal && responsablesPredefinidos.includes(respVal.toUpperCase())) {
+      document.getElementById('regid-resp').value = respVal.toUpperCase();
+    } else if (respVal) {
+      // Es un responsable "OTRO"
+      document.getElementById('regid-resp').value = '__OTRO__';
+      document.getElementById('regid-respOtroDiv').style.display = 'block';
+      document.getElementById('regid-respOtro').value = respVal;
+    }
+    
+    // Megatoma
+    const megatoma = data.meta.megatoma || 'NO';
+    console.log('Megatoma:', megatoma);
+    if (megatoma === 'SI') {
+      document.getElementById('regid-megatoma-si').checked = true;
+    } else {
+      document.getElementById('regid-megatoma-no').checked = true;
+    }
+    regidToggleMegatomaStyle();
+    
+    // Operativo Conjunto
+    const opConjunto = data.meta.opConjunto || 'NO';
+    console.log('Operativo Conjunto:', opConjunto);
+    if (opConjunto === 'SI') {
+      document.getElementById('regid-conjunto-si').checked = true;
+      if (data.meta.entidadesConjunto) {
+        document.getElementById('regid-entidades-conjunto').value = data.meta.entidadesConjunto;
+      }
+    } else {
+      document.getElementById('regid-conjunto-no').checked = true;
+    }
+    regidToggleConjuntoStyle();
+  }
+  
+  // Cargar tipo IVC
+  if (data.tipoIVC && Array.isArray(data.tipoIVC)) {
+    console.log('Tipos IVC:', data.tipoIVC);
+    document.querySelectorAll('#regid-tipoIVC .chip').forEach(chip => chip.classList.remove('on'));
+    data.tipoIVC.forEach(tipo => {
+      const chip = document.querySelector(`#regid-tipoIVC .chip[data-comp="${tipo}"]`);
+      if (chip) {
+        chip.classList.add('on');
+        console.log('Tipo IVC activado:', tipo);
+      }
+    });
+  }
+  
+  // Mostrar direcciones existentes
+  if (data.direcciones && Object.keys(data.direcciones).length > 0) {
+    regidDireccionesGuardadas = data.direcciones; // Guardar con keys
+    const panel = document.getElementById('regid-existingPanel');
+    panel.style.display = 'block';
+    
+    const numDirs = Object.keys(data.direcciones).length;
+    document.getElementById('regid-countDirs').textContent = numDirs;
+    console.log('Direcciones encontradas:', numDirs);
+    
+    const lista = document.getElementById('regid-listExisting');
+    const direccionesArray = Object.entries(data.direcciones);
+    lista.innerHTML = direccionesArray.map(([key, d], i) => {
+      const tieneActa = d.actaLink && d.actaLink.trim() !== '';
+      const tieneObs = d.obs && d.obs.trim() !== '';
+      
+      return `
+      <div style="background:white;border:1.5px solid #86efac;border-radius:10px;padding:12px 16px;transition:all .2s">
+        <div style="display:flex;align-items:start;gap:12px">
+          <div style="font-size:1.1rem;font-weight:800;color:#166534;min-width:35px;text-align:center;background:#dcfce7;border-radius:6px;padding:4px 8px">#${i + 1}</div>
+          <div style="flex:1">
+            <div style="font-size:.85rem;font-weight:700;color:#166534;margin-bottom:4px">📍 ${d.dir || 'Sin dirección'}</div>
+            <div style="font-size:.72rem;color:#15803d;display:flex;gap:8px;flex-wrap:wrap">
+              <span><strong>Barrio:</strong> ${d.barrio || 'N/A'}</span>
+              <span>•</span>
+              <span><strong>UPZ:</strong> ${d.upz || 'N/A'}</span>
+            </div>
+            ${tieneObs ? `<div style="font-size:.7rem;color:#059669;margin-top:6px;padding:6px 10px;background:#f0fdf4;border-radius:6px;border-left:3px solid #86efac"><strong>Obs:</strong> ${d.obs}</div>` : ''}
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+            ${tieneActa ? '<div style="font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:4px;background:#dcfce7;color:#166534">📎 Con acta</div>' : '<div style="font-size:.65rem;font-weight:600;padding:3px 10px;border-radius:4px;background:#fef3c7;color:#92400e">⚠️ Sin acta</div>'}
+            <button onclick="regidEditarDireccion('${key}')" style="margin-top:6px;padding:5px 12px;background:#3b82f6;color:white;border:none;border-radius:6px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif" onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">✏️ Editar</button>
+          </div>
+        </div>
+      </div>
+      `;
+    }).join('');
+    
+    // Scroll suave al panel de direcciones existentes
+    setTimeout(() => {
+      panel.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+    }, 300);
+  } else {
+    document.getElementById('regid-existingPanel').style.display = 'none';
+  }
+}
+
+function regidGuardarDireccion(continuarRegistrando) {
+  if (!regidValidarFormulario()) return;
+  
+  const idOp = document.getElementById('regid-idOp').value.trim();
+  const btnGuardarYSalir = document.getElementById('regid-btnGuardarYSalir');
+  const btnGuardarYContinuar = document.getElementById('regid-btnGuardarYContinuar');
+  
+  // Deshabilitar botones
+  btnGuardarYSalir.disabled = true;
+  btnGuardarYContinuar.disabled = true;
+  btnGuardarYSalir.textContent = 'Guardando...';
+  btnGuardarYContinuar.textContent = 'Guardando...';
+  
+  // Construir objeto de dirección
+  const direccion = {
+    dir: document.getElementById('regid-dir').value.trim(),
+    barrio: document.getElementById('regid-barrio').value,
+    upz: document.getElementById('regid-upz').value,
+    obs: document.getElementById('regid-obs').value.trim(),
+    actaLink: document.getElementById('regid-actaLink').value.trim(),
+    timestamp: Date.now()
+  };
+  
+  // Construir objeto de operativo completo
+  const resp = document.getElementById('regid-resp').value;
+  const operativo = {
+    meta: {
+      idOp: idOp,
+      fecha: document.getElementById('regid-fecha').value,
+      h1: document.getElementById('regid-h1').value,
+      h2: document.getElementById('regid-h2').value,
+      resp: resp === '__OTRO__' ? document.getElementById('regid-respOtro').value.trim().toUpperCase() : resp,
+      respOtro: resp === '__OTRO__' ? document.getElementById('regid-respOtro').value.trim() : '',
+      megatoma: document.querySelector('input[name="regid-megatoma"]:checked')?.value || 'NO',
+      opConjunto: document.querySelector('input[name="regid-opconjunto"]:checked')?.value || 'NO',
+      entidadesConjunto: document.getElementById('regid-entidades-conjunto')?.value.trim() || ''
+    },
+    tipoIVC: Array.from(document.querySelectorAll('#regid-tipoIVC .chip.on')).map(c => c.dataset.comp),
+    direcciones: {}
+  };
+  
+  // Obtener direcciones existentes y agregar/actualizar
+  OPERATIVOS_REF.child(idOp).once('value', snap => {
+    if (snap.exists() && snap.val().direcciones) {
+      operativo.direcciones = snap.val().direcciones;
+    }
+    
+    // Verificar si estamos editando o creando nueva
+    if (window.regidDireccionEditandoKey) {
+      // MODO EDICIÓN: Actualizar dirección existente
+      operativo.direcciones[window.regidDireccionEditandoKey] = direccion;
+      var mensajeExito = '✓ Dirección actualizada exitosamente';
+      // Limpiar flag de edición
+      delete window.regidDireccionEditandoKey;
+    } else {
+      // MODO CREACIÓN: Agregar nueva dirección
+      const nuevaKey = db.ref().push().key;
+      operativo.direcciones[nuevaKey] = direccion;
+      var mensajeExito = '✓ Dirección guardada exitosamente';
+    }
+    
+    // Guardar en Firebase
+    OPERATIVOS_REF.child(idOp).set(operativo)
+      .then(() => {
+        toast(mensajeExito, 'ok');
+        
+        // Actualizar lista de direcciones guardadas
+        regidDireccionesGuardadas = operativo.direcciones;
+        
+        // Mostrar el panel actualizado con todas las direcciones
+        regidCargarDatosOperativo(operativo);
+        
+        if (continuarRegistrando) {
+          // Limpiar solo el formulario de ubicación
+          regidLimpiarFormularioDireccion();
+          // Scroll al inicio de la sección de ubicación
+          setTimeout(() => {
+            document.getElementById('regid-s2').scrollIntoView({behavior:'smooth',block:'start'});
+          }, 500);
+        } else {
+          // Finalizar y resetear todo
+          setTimeout(() => {
+            if (confirm('✓ Registro completado\n\n¿Deseas registrar un nuevo operativo?')) {
+              regidResetearFormulario();
+            } else {
+              switchMain('recs', document.getElementById('sidebtn-recs'));
+            }
+          }, 800);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        toast('Error al guardar: ' + err.message, 'err');
+      })
+      .finally(() => {
+        // Rehabilitar botones
+        btnGuardarYSalir.disabled = false;
+        btnGuardarYContinuar.disabled = false;
+        btnGuardarYSalir.textContent = '💾 Guardar y finalizar';
+        btnGuardarYContinuar.textContent = '➕ Seguir registrando en este ID';
+      });
+  });
+}
+
+function regidLimpiarFormularioDireccion() {
+  // Limpiar constructor de dirección
+  document.getElementById('regid-aSigla').value = '';
+  document.getElementById('regid-aN1').value = '';
+  document.getElementById('regid-aL1').value = '';
+  document.getElementById('regid-aN2').value = '';
+  document.getElementById('regid-aL2').value = '';
+  document.getElementById('regid-aBis').value = '';
+  document.getElementById('regid-aN3').value = '';
+  document.getElementById('regid-dir').value = '';
+  document.getElementById('regid-barrio').value = '';
+  document.getElementById('regid-upz').value = '';
+  document.getElementById('regid-obs').value = '';
+  document.getElementById('regid-actaLink').value = '';
+  
+  const prev = document.getElementById('regid-abPrev');
+  prev.textContent = 'Completa los campos para ver la dirección';
+  prev.classList.add('empty');
+  
+  // Limpiar flag de edición
+  delete window.regidDireccionEditandoKey;
+}
+
+function regidResetearFormulario() {
+  // Resetear todo
+  document.getElementById('regid-idOp').value = '';
+  document.getElementById('regid-fecha').value = new Date().toISOString().split('T')[0];
+  document.getElementById('regid-h1').value = '';
+  document.getElementById('regid-h2').value = '';
+  document.getElementById('regid-resp').value = '';
+  document.getElementById('regid-respOtro').value = '';
+  document.getElementById('regid-respOtroDiv').style.display = 'none';
+  document.querySelectorAll('#regid-tipoIVC .chip').forEach(chip => chip.classList.remove('on'));
+  
+  // Resetear megatoma y opconjunto
+  document.getElementById('regid-megatoma-no').checked = true;
+  document.getElementById('regid-conjunto-no').checked = true;
+  document.getElementById('regid-entidades-conjunto').value = '';
+  regidToggleMegatomaStyle();
+  regidToggleConjuntoStyle();
+  
+  regidLimpiarFormularioDireccion();
+  
+  regidOperativoActual = null;
+  regidDireccionesGuardadas = [];
+  document.getElementById('regid-existingPanel').style.display = 'none';
+  
+  // Scroll al inicio
+  window.scrollTo({top:0, behavior:'smooth'});
+  
+  toast('Formulario reiniciado', 'ok');
+}
+
+function regidBuildAddr() {
+  const sigla = document.getElementById('regid-aSigla').value;
+  const n1 = document.getElementById('regid-aN1').value.trim();
+  const l1 = document.getElementById('regid-aL1').value.trim();
+  const n2 = document.getElementById('regid-aN2').value.trim();
+  const l2 = document.getElementById('regid-aL2').value.trim();
+  const bis = document.getElementById('regid-aBis').value;
+  const n3 = document.getElementById('regid-aN3').value.trim();
+  const prev = document.getElementById('regid-abPrev');
+  
+  if (!sigla || !n1 || !n2 || !n3) {
+    prev.textContent = 'Completa los campos para ver la dirección';
+    prev.classList.add('empty');
+    return;
+  }
+  
+  let addr = `${sigla} ${n1}${l1} # ${n2}${l2}`;
+  if (bis) addr += ` ${bis}`;
+  addr += ` - ${n3}`;
+  
+  prev.textContent = addr;
+  prev.classList.remove('empty');
+  document.getElementById('regid-dir').value = addr;
+}
+
+function regidAutoFillUPZ() {
+  const sel = document.getElementById('regid-barrio');
+  const opt = sel.options[sel.selectedIndex];
+  const upz = opt ? opt.dataset.upz : '';
+  document.getElementById('regid-upz').value = upz || '';
+}
+
+function regidToggleOtroResp() {
+  const div = document.getElementById('regid-respOtroDiv');
+  const sel = document.getElementById('regid-resp');
+  div.style.display = sel.value === '__OTRO__' ? 'block' : 'none';
+}
+
+function regidEditarDireccion(direccionKey) {
+  // Obtener la dirección desde regidDireccionesGuardadas
+  const direccion = regidDireccionesGuardadas[direccionKey];
+  
+  if (!direccion) {
+    toast('Error: No se encontró la dirección', 'err');
+    return;
+  }
+  
+  // Cargar datos en el formulario
+  // Parsear la dirección para llenar el constructor
+  const dir = direccion.dir || '';
+  
+  // Opción 1: Llenar directamente el campo de texto
+  document.getElementById('regid-dir').value = dir;
+  
+  // Actualizar la vista previa del constructor
+  const prev = document.getElementById('regid-abPrev');
+  if (dir) {
+    prev.textContent = dir;
+    prev.classList.remove('empty');
+  }
+  
+  // Llenar barrio y UPZ
+  document.getElementById('regid-barrio').value = direccion.barrio || '';
+  document.getElementById('regid-upz').value = direccion.upz || '';
+  
+  // Llenar observaciones y acta
+  document.getElementById('regid-obs').value = direccion.obs || '';
+  document.getElementById('regid-actaLink').value = direccion.actaLink || '';
+  
+  // Guardar la key para saber que estamos editando
+  window.regidDireccionEditandoKey = direccionKey;
+  
+  // Scroll a la sección de ubicación
+  setTimeout(() => {
+    document.getElementById('regid-s2').scrollIntoView({behavior:'smooth',block:'start'});
+  }, 100);
+  
+  toast('Dirección cargada para edición', 'ok');
+}
+
+function regidToggleMegatomaStyle() {
+  const si = document.getElementById('regid-megatoma-si').checked;
+  const lblSi = document.getElementById('regid-lbl-megatoma-si');
+  const lblNo = document.getElementById('regid-lbl-megatoma-no');
+  
+  if (si) {
+    lblSi.style.background = '#dbeafe';
+    lblSi.style.borderColor = '#3b82f6';
+    lblSi.style.color = '#1e40af';
+    lblNo.style.background = '';
+    lblNo.style.borderColor = '';
+    lblNo.style.color = '';
+  } else {
+    lblSi.style.background = '';
+    lblSi.style.borderColor = '';
+    lblSi.style.color = '';
+    lblNo.style.background = '#f0fdf4';
+    lblNo.style.borderColor = '#86efac';
+    lblNo.style.color = '#166534';
+  }
+}
+
+function regidToggleConjuntoStyle() {
+  const si = document.getElementById('regid-conjunto-si').checked;
+  const lblSi = document.getElementById('regid-lbl-conjunto-si');
+  const lblNo = document.getElementById('regid-lbl-conjunto-no');
+  const blkEntidades = document.getElementById('regid-blk-entidades-conjunto');
+  
+  if (si) {
+    lblSi.style.background = '#dbeafe';
+    lblSi.style.borderColor = '#3b82f6';
+    lblSi.style.color = '#1e40af';
+    lblNo.style.background = '';
+    lblNo.style.borderColor = '';
+    lblNo.style.color = '';
+    blkEntidades.style.display = 'block';
+  } else {
+    lblSi.style.background = '';
+    lblSi.style.borderColor = '';
+    lblSi.style.color = '';
+    lblNo.style.background = '#f0fdf4';
+    lblNo.style.borderColor = '#86efac';
+    lblNo.style.color = '#166534';
+    blkEntidades.style.display = 'none';
+  }
+}
 
 </script>
 
