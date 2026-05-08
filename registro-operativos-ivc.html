@@ -3721,6 +3721,56 @@ function regidUpdateCompBlocks() {
   }
 }
 
+// CORRECCIÓN 3: Versión SÍNCRONA que garantiza visibilidad inmediata
+function regidUpdateCompBlocksSincrono() {
+  console.log('🔄 regidUpdateCompBlocksSincrono - Forzando visibilidad de bloques');
+  
+  const selectedChip = document.querySelector('#regid-tipoIVC .chip.on');
+  const selectedComp = selectedChip ? selectedChip.dataset.comp : null;
+  
+  console.log('   Componente seleccionado:', selectedComp);
+  
+  if (!selectedComp) {
+    console.warn('⚠️ No hay componente seleccionado');
+    return;
+  }
+  
+  // Mapa de componentes a bloques
+  const map = {
+    AE: 'regid-blkAE', 
+    EP: 'regid-blkEP', 
+    AMB: 'regid-blkAmb', 
+    MOV: 'regid-blkMov', 
+    OBR: 'regid-blkObr'
+  };
+  
+  // Forzar display en todos los bloques
+  ['AE', 'EP', 'AMB', 'MOV', 'OBR'].forEach(k => {
+    const blockId = map[k];
+    const block = document.getElementById(blockId);
+    if (block) {
+      if (k === selectedComp) {
+        block.style.display = 'block';
+        block.style.visibility = 'visible';
+        block.style.opacity = '1';
+        console.log(`   ✅ ${blockId} → display:block`);
+      } else {
+        block.style.display = 'none';
+      }
+    } else {
+      console.warn(`   ⚠️ Bloque ${blockId} no encontrado`);
+    }
+  });
+  
+  // Ocultar mensaje de "sin componente"
+  const noComp = document.getElementById('regid-noComp');
+  if (noComp) {
+    noComp.style.display = 'none';
+  }
+  
+  console.log('✅ Bloques actualizados síncronamente');
+}
+
 
 function updateCompBlocks(){
   const a = document.querySelector('#tipoIVC .chip.on');
@@ -4339,7 +4389,8 @@ function openMo(idx){
   h += sec('Identificación','var(--primary)',
     M('ID Operativo', r.meta?.idOp||r.id) +
     M('Fecha', r.meta?.fecha) +
-    M('Hora', r.meta?.h1?(r.meta.h1+(r.meta?.h2?' → '+r.meta.h2:'')):'') +
+    M('Hora inicio', r.meta?.h1) +
+    M('Hora fin', r.meta?.h2) +
     M('Responsable', r.meta?.resp||r.meta?.responsable) +
     M('Tipo IVC', tipos[0]) +
     M('Personas/HC', r.pHC||t.pers||'')
@@ -4352,22 +4403,30 @@ function openMo(idx){
     M('UPZ', r.ub?.upz)
   );
 
-  // ── Componente ──
+  // ── Componente Actividad Económica ──
   if(cc==='AE'&&r.ae){
     const ae=r.ae;
     h += sec('Actividad Económica','#7c3aed',
       M('Tipo de establecimiento', ae.tipo) +
-      M('Nombre', ae.nom) +
+      M('Nombre establecimiento', ae.nom) +
       M('Entorno escolar', ae.entEsc) +
       M('Colegio', ae.colegio) +
-      M('Armas incautadas', ae.armas||ae.nArmas) +
+      M('Personas intervenidas', ae.pers) +
       M('Bebidas destruidas', ae.beb||ae.bebidas) +
+      M('Armas incautadas', ae.armas||ae.nArmas) +
       M('Dosis incautadas', ae.dosis) +
+      M('¿Aplicó medida?', ae.aplico) +
       M('Medida correctiva', ae.medida) +
+      M('Días suspensión', ae.dias) +
       M('N° Comparendo', ae.comp||ae.comparendo) +
+      M('N° Comparendo preventivo', ae.compPrev) +
+      M('Motivo suspensión', ae.motivoSusp) +
+      M('Motivo cierre definitivo', ae.motivoCDef) +
       M('Resultados', ae.res||ae.resultados)
     );
   }
+  
+  // ── Componente Espacio Público ──
   if(cc==='EP'&&r.ep){
     const ep=r.ep;
     h += sec('Espacio Público','#0369a1',
@@ -4381,6 +4440,8 @@ function openMo(idx){
       M('Resultados', ep.res||ep.resultados)
     );
   }
+  
+  // ── Componente Ambiente ──
   if(cc==='AMB'&&r.amb){
     const a=r.amb;
     h += sec('Ambiente','#166534',
@@ -4389,37 +4450,44 @@ function openMo(idx){
       M('Residuos recolectados m³', a.m3) +
       M('Llantas recuperadas', a.llantas) +
       M('HC identificados', a.hc) +
+      M('Registros de persona', a.regPers) +
+      M('Capturas', a.capturas) +
       M('Cambuches retirados', a.camb) +
       M('Carretas retiradas', a.car||a.carretas) +
       M('Dosis incautadas', a.dosis) +
-      M('Armas incautadas', a.nArmas) +
+      M('¿Armas incautadas?', a.armasB) +
+      M('N° Armas', a.nArmas) +
       M('Tipo de arma', a.tipoArma) +
       M('Resultados', a.res||a.resultados)
     );
   }
+  
+  // ── Componente Movilidad ──
   if(cc==='MOV'&&r.mov){
     const m=r.mov;
     h += sec('Movilidad','#1e40af',
       M('Acción', m.accion||m.obj) +
       M('Vehículos inmovilizados', m.veh) +
       M('Comparendos', m.comp||m.nComp) +
-      M('Espacio m²', m.m2) +
+      M('Espacio recuperado m²', m.m2) +
       M('Observaciones', m.obs)
     );
   }
+  
+  // ── Componente Obras ──
   if(cc==='OBR'&&r.obr){
     const o=r.obr;
     h += sec('Obras','#92400e',
       M('Tipo', o.tipo) +
       M('Obra en operación', o.enOp) +
-      M('Ocupa EP', o.ocupaEP) +
+      M('¿Ocupa EP?', o.ocupaEP) +
       M('m² ocupación EP', o.m2Ocupa) +
       M('Persona que atiende', o.persona||o.personaAtiende) +
       M('Observaciones', o.obs||o.obsObr)
     );
   }
 
-  // ── Totales ──
+  // ── Totales consolidados ──
   const hasTotals = Object.values(t).some(v=>v>0);
   if(hasTotals){
     h += sec('Totales consolidados','var(--muted)',
@@ -4440,19 +4508,36 @@ function openMo(idx){
 
   // ── Establecimiento ──
   const est=r.est||{};
-  if(est.nom||est.nit||est.admin){
+  if(est.nom||est.nit||est.admin||est.ced||est.rep||est.tel){
     h += sec('Establecimiento','var(--muted)',
-      M('Nombre', est.nom) + M('NIT', est.nit) +
-      M('Administrador', est.admin) + M('Cédula', est.ced) +
-      M('Rep. legal', est.rep) + M('Teléfono', est.tel)
+      M('Nombre', est.nom) + 
+      M('NIT', est.nit) +
+      M('Administrador', est.admin) + 
+      M('Cédula', est.ced) +
+      M('Rep. legal', est.rep) + 
+      M('Teléfono', est.tel)
     );
   }
 
-  // ── General ──
+  // ── Parqueaderos (si aplica) ──
+  const parq=r.parq||{};
+  if(parq.cupos||parq.area||parq.tarifa||parq.horario||parq.infra||parq.reqs){
+    h += sec('Información Parqueadero','var(--muted)',
+      M('Cupos', parq.cupos) +
+      M('Área m²', parq.area) +
+      M('Tarifa', parq.tarifa) +
+      M('Horario', parq.horario) +
+      M('Infraestructura', parq.infra) +
+      M('Requisitos', parq.reqs)
+    );
+  }
+
+  // ── General (Objetivo y Observaciones) ──
   const gen=r.gen||{};
   if(gen.obj||gen.obs){
     h += sec('General','var(--muted)',
-      M('Objetivo', gen.obj) + M('Observaciones', gen.obs)
+      M('Objetivo', gen.obj) + 
+      M('Observaciones', gen.obs)
     );
   }
 
@@ -4799,6 +4884,13 @@ function abrirEditar(){
   if(selIdx===null) return;
   const r = recs[selIdx];
   
+  console.log('=== abrirEditar DEBUG ===');
+  console.log('selIdx:', selIdx);
+  console.log('Registro (r):', r);
+  console.log('r.cc:', r.cc);
+  console.log('r.ae:', r.ae);
+  console.log('r.ep:', r.ep);
+  
   // Actualizar info de navegación
   updateEditNavInfo();
   
@@ -5000,12 +5092,28 @@ function guardarYNavegar(direction) {
   if (cc === 'AE') {
     updates['ae/tipo'] = gv('eAE_tipo');
     updates['ae/nom'] = gv('eAE_nom');
+    updates['ae/entEsc'] = gv('eAE_entEsc');
+    updates['ae/colegio'] = gv('eAE_colegio');
+    updates['ae/pers'] = gn('eAE_pers');
+    updates['ae/beb'] = gn('eAE_beb');
+    updates['ae/armas'] = gn('eAE_armas');
+    updates['ae/dosis'] = gn('eAE_dosis');
+    updates['ae/aplico'] = gv('eAE_aplico');
     updates['ae/medida'] = gv('eAE_medida');
+    updates['ae/dias'] = gn('eAE_dias');
+    updates['ae/comp'] = gv('eAE_comp');
+    updates['ae/compPrev'] = gv('eAE_compPrev');
+    updates['ae/motivoSusp'] = gv('eAE_motivoSusp');
+    updates['ae/motivoCDef'] = gv('eAE_motivoCDef');
     updates['ae/res'] = gv('eAE_res');
   } else if (cc === 'EP') {
     updates['ep/pol'] = gv('eEP_pol');
     updates['ep/secMon'] = gv('eEP_secMon');
+    updates['ep/elemHN'] = gv('eEP_elemHN');
+    updates['ep/numElemHN'] = gn('eEP_numElemHN');
     updates['ep/ft'] = gn('eEP_ft');
+    updates['ep/m2Rec'] = gn('eEP_m2Rec');
+    updates['ep/vendRet'] = gn('eEP_vendRet');
     updates['ep/res'] = gv('eEP_res');
   } else if (cc === 'AMB') {
     updates['amb/linea'] = gv('eAMB_linea');
@@ -5013,9 +5121,12 @@ function guardarYNavegar(direction) {
     updates['amb/m3'] = gn('eAMB_m3');
     updates['amb/llantas'] = gn('eAMB_llantas');
     updates['amb/hc'] = gn('eAMB_hc');
+    updates['amb/regPers'] = gn('eAMB_regPers');
+    updates['amb/capturas'] = gn('eAMB_capturas');
     updates['amb/camb'] = gn('eAMB_camb');
     updates['amb/car'] = gn('eAMB_car');
     updates['amb/dosis'] = gn('eAMB_dosis');
+    updates['amb/armasB'] = gv('eAMB_armasB');
     updates['amb/nArmas'] = gn('eAMB_nArmas');
     updates['amb/tipoArma'] = gv('eAMB_tipoArma');
     updates['amb/res'] = gv('eAMB_res');
@@ -5181,74 +5292,160 @@ function renderEditComponente(r) {
   if (!container) return;
   
   const cc = r.cc || '';
-  let html = '';
   
-  if (cc === 'AE') {
-    const ae = r.ae || {};
-    html = `
-      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ae);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Actividad Económica</div>
-      <div class="f mb"><label>Tipo de establecimiento</label><input type="text" id="eAE_tipo" value="${ae.tipo||''}" placeholder="Tipo"></div>
-      <div class="f mb"><label>Nombre del establecimiento</label><input type="text" id="eAE_nom" value="${ae.nom||''}" placeholder="Nombre"></div>
-      <div class="f mb"><label>Medida preventiva</label><input type="text" id="eAE_medida" value="${ae.medida||''}" placeholder="Medida"></div>
-      <div class="f mb"><label>Resultados</label><textarea id="eAE_res" style="min-height:50px">${ae.res||''}</textarea></div>
-    `;
-  } else if (cc === 'EP') {
-    const ep = r.ep || {};
-    html = `
-      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ep);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Espacio Público</div>
-      <div class="f mb"><label>Polígono de monitoreo</label><input type="text" id="eEP_pol" value="${ep.pol||''}" placeholder="Polígono"></div>
-      <div class="f mb"><label>Sector monitoreo</label><input type="text" id="eEP_secMon" value="${ep.secMon||''}" placeholder="Sector"></div>
-      <div class="f mb"><label>Food Trucks</label><input type="number" id="eEP_ft" value="${ep.ft||''}" min="0"></div>
-      <div class="f mb"><label>Resultados</label><textarea id="eEP_res" style="min-height:50px">${ep.res||''}</textarea></div>
-    `;
-  } else if (cc === 'AMB') {
-    const amb = r.amb || {};
-    html = `
-      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amb);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Ambiente</div>
-      <div class="f mb"><label>Línea de acción</label><input type="text" id="eAMB_linea" value="${amb.linea||''}" placeholder="Línea"></div>
-      <div class="g3 mb">
-        <div class="f"><label>m²</label><input type="number" id="eAMB_m2" value="${amb.m2||''}" min="0"></div>
-        <div class="f"><label>m³</label><input type="number" id="eAMB_m3" value="${amb.m3||''}" min="0"></div>
-        <div class="f"><label>Llantas</label><input type="number" id="eAMB_llantas" value="${amb.llantas||''}" min="0"></div>
-      </div>
-      <div class="g3 mb">
-        <div class="f"><label>HC</label><input type="number" id="eAMB_hc" value="${amb.hc||''}" min="0"></div>
-        <div class="f"><label>Cambuches</label><input type="number" id="eAMB_camb" value="${amb.camb||''}" min="0"></div>
-        <div class="f"><label>Carretas</label><input type="number" id="eAMB_car" value="${amb.car||''}" min="0"></div>
-      </div>
-      <div class="g3 mb">
-        <div class="f"><label>Dosis</label><input type="number" id="eAMB_dosis" value="${amb.dosis||''}" min="0"></div>
-        <div class="f"><label>Armas</label><input type="number" id="eAMB_nArmas" value="${amb.nArmas||''}" min="0"></div>
-        <div class="f"><label>Tipo arma</label><input type="text" id="eAMB_tipoArma" value="${amb.tipoArma||''}"></div>
-      </div>
-      <div class="f mb"><label>Resultados</label><textarea id="eAMB_res" style="min-height:50px">${amb.res||''}</textarea></div>
-    `;
-  } else if (cc === 'MOV') {
-    const mov = r.mov || {};
-    html = `
-      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mov);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Movilidad</div>
-      <div class="f mb"><label>Acción</label><input type="text" id="eMOV_accion" value="${mov.accion||''}" placeholder="Acción"></div>
-      <div class="g3 mb">
-        <div class="f"><label>Vehículos</label><input type="number" id="eMOV_veh" value="${mov.veh||''}" min="0"></div>
-        <div class="f"><label>Comparendos</label><input type="number" id="eMOV_comp" value="${mov.comp||''}" min="0"></div>
-        <div class="f"><label>m²</label><input type="number" id="eMOV_m2" value="${mov.m2||''}" min="0"></div>
-      </div>
-      <div class="f mb"><label>Observaciones</label><textarea id="eMOV_obs" style="min-height:50px">${mov.obs||''}</textarea></div>
-    `;
-  } else if (cc === 'OBR') {
-    const obr = r.obr || {};
-    html = `
-      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--obr);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Obras</div>
-      <div class="f mb"><label>Obra en operación</label><input type="text" id="eOBR_enOp" value="${obr.enOp||''}" placeholder="Sí/No"></div>
-      <div class="f mb"><label>Ocupa EP</label><input type="text" id="eOBR_ocupaEP" value="${obr.ocupaEP||''}" placeholder="Sí/No"></div>
-      <div class="f mb"><label>m² ocupados</label><input type="number" id="eOBR_m2Ocupa" value="${obr.m2Ocupa||''}" min="0"></div>
-      <div class="f mb"><label>Persona atiende</label><input type="text" id="eOBR_persona" value="${obr.persona||''}"></div>
-      <div class="f mb"><label>Observaciones</label><textarea id="eOBR_obs" style="min-height:50px">${obr.obs||''}</textarea></div>
-    `;
+  // DEBUG: Ver qué datos tiene el registro
+  console.log('=== renderEditComponente DEBUG ===');
+  console.log('Componente (cc):', cc);
+  console.log('Registro completo (r):', r);
+  console.log('r.ae:', r.ae);
+  console.log('r.ep:', r.ep);
+  console.log('r.amb:', r.amb);
+  console.log('r.mov:', r.mov);
+  console.log('r.obr:', r.obr);
+  
+  // INFERIR componente si cc está vacío (para registros antiguos)
+  let ccFinal = cc;
+  if (!ccFinal) {
+    if (r.ae && Object.keys(r.ae).length > 0) ccFinal = 'AE';
+    else if (r.ep && Object.keys(r.ep).length > 0) ccFinal = 'EP';
+    else if (r.amb && Object.keys(r.amb).length > 0) ccFinal = 'AMB';
+    else if (r.mov && Object.keys(r.mov).length > 0) ccFinal = 'MOV';
+    else if (r.obr && Object.keys(r.obr).length > 0) ccFinal = 'OBR';
+    console.log('⚠️ cc estaba vacío. Inferido desde datos: ' + ccFinal);
   }
   
+  // Helper para escapar HTML y prevenir errores con comillas y caracteres especiales
+  const escapeHtml = (str) => {
+    if (str === null || str === undefined) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  };
+  
+  // Helper para obtener valor seguro (para inputs text y textarea)
+  const sv = (val) => escapeHtml(val || '');
+  
+  let html = '';
+  
+  if (ccFinal === 'AE') {
+    const ae = r.ae || {};
+    console.log('📋 Datos de AE:', ae);
+    html = `
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ae);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Actividad Económica</div>
+      <div class="f mb"><label>Tipo de establecimiento</label><input type="text" id="eAE_tipo" value="${sv(ae.tipo)}" placeholder="Tipo"></div>
+      <div class="f mb"><label>Nombre del establecimiento</label><input type="text" id="eAE_nom" value="${sv(ae.nom)}" placeholder="Nombre"></div>
+      <div class="f mb"><label>¿Entorno escolar?</label><input type="text" id="eAE_entEsc" value="${sv(ae.entEsc)}" placeholder="SI/NO"></div>
+      <div class="f mb"><label>Nombre del colegio</label><input type="text" id="eAE_colegio" value="${sv(ae.colegio)}" placeholder="Colegio"></div>
+      <div class="f mb"><label>Personas intervenidas</label><input type="number" id="eAE_pers" value="${ae.pers||''}" min="0"></div>
+      <div class="f mb"><label>Bebidas alcohólicas destruidas</label><input type="number" id="eAE_beb" value="${ae.beb||ae.bebidas||''}" min="0"></div>
+      <div class="g2 mb">
+        <div class="f"><label>Armas incautadas</label><input type="number" id="eAE_armas" value="${ae.armas||ae.nArmas||''}" min="0"></div>
+        <div class="f"><label>Dosis incautadas</label><input type="number" id="eAE_dosis" value="${ae.dosis||''}" min="0"></div>
+      </div>
+      <div class="f mb"><label>¿Aplicó medida correctiva?</label><input type="text" id="eAE_aplico" value="${sv(ae.aplico)}" placeholder="SI/NO"></div>
+      <div class="f mb"><label>Tipo de medida correctiva</label><input type="text" id="eAE_medida" value="${sv(ae.medida)}" placeholder="Suspensión/Cierre"></div>
+      <div class="g2 mb">
+        <div class="f"><label>Días de suspensión</label><input type="number" id="eAE_dias" value="${ae.dias||''}" min="0"></div>
+        <div class="f"><label>N° Comparendo</label><input type="text" id="eAE_comp" value="${sv(ae.comp||ae.comparendo)}"></div>
+      </div>
+      <div class="f mb"><label>N° Comparendo preventivo</label><input type="text" id="eAE_compPrev" value="${sv(ae.compPrev)}"></div>
+      <div class="f mb"><label>Motivo suspensión</label><textarea id="eAE_motivoSusp" rows="2">${sv(ae.motivoSusp)}</textarea></div>
+      <div class="f mb"><label>Motivo cierre definitivo</label><textarea id="eAE_motivoCDef" rows="2">${sv(ae.motivoCDef)}</textarea></div>
+      <div class="f mb"><label>Resultados</label><textarea id="eAE_res" rows="3">${sv(ae.res||ae.resultados)}</textarea></div>
+    `;
+  } else if (ccFinal === 'EP') {
+    const ep = r.ep || {};
+    console.log('📋 Datos de EP:', ep);
+    html = `
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ep);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Espacio Público</div>
+      <div class="f mb"><label>Sección de monitoreo</label><input type="text" id="eEP_secMon" value="${sv(ep.secMon||ep.tipo)}" placeholder="Sección"></div>
+      <div class="f mb"><label>Polígono</label><input type="text" id="eEP_pol" value="${sv(ep.pol||ep.poligono)}" placeholder="Polígono"></div>
+      <div class="g2 mb">
+        <div class="f"><label>Elementos encontrados</label><input type="text" id="eEP_elemHN" value="${sv(ep.elemHN)}"></div>
+        <div class="f"><label>N° elementos</label><input type="number" id="eEP_numElemHN" value="${ep.numElemHN||''}" min="0"></div>
+      </div>
+      <div class="f mb"><label>Food trucks intervenidos</label><input type="number" id="eEP_ft" value="${ep.ft||''}" min="0"></div>
+      <div class="g2 mb">
+        <div class="f"><label>Espacio recuperado m²</label><input type="number" id="eEP_m2Rec" value="${ep.m2Rec||''}" min="0"></div>
+        <div class="f"><label>Vendedores retirados</label><input type="number" id="eEP_vendRet" value="${ep.vendRet||''}" min="0"></div>
+      </div>
+      <div class="f mb"><label>Resultados</label><textarea id="eEP_res" rows="3">${sv(ep.res||ep.resultados)}</textarea></div>
+    `;
+  } else if (ccFinal === 'AMB') {
+    const a = r.amb || {};
+    console.log('📋 Datos de AMB:', a);
+    html = `
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amb);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Ambiente</div>
+      <div class="f mb"><label>Línea de acción</label><input type="text" id="eAMB_linea" value="${sv(a.linea)}" placeholder="Línea"></div>
+      <div class="g3 mb">
+        <div class="f"><label>m²</label><input type="number" id="eAMB_m2" value="${a.m2||''}" min="0"></div>
+        <div class="f"><label>m³</label><input type="number" id="eAMB_m3" value="${a.m3||''}" min="0"></div>
+        <div class="f"><label>Llantas</label><input type="number" id="eAMB_llantas" value="${a.llantas||''}" min="0"></div>
+      </div>
+      <div class="g3 mb">
+        <div class="f"><label>HC identificados</label><input type="number" id="eAMB_hc" value="${a.hc||''}" min="0"></div>
+        <div class="f"><label>Registros personas</label><input type="number" id="eAMB_regPers" value="${a.regPers||''}" min="0"></div>
+        <div class="f"><label>Capturas</label><input type="number" id="eAMB_capturas" value="${a.capturas||''}" min="0"></div>
+      </div>
+      <div class="g3 mb">
+        <div class="f"><label>Cambuches</label><input type="number" id="eAMB_camb" value="${a.camb||''}" min="0"></div>
+        <div class="f"><label>Carretas</label><input type="number" id="eAMB_car" value="${a.car||a.carretas||''}" min="0"></div>
+        <div class="f"><label>Dosis</label><input type="number" id="eAMB_dosis" value="${a.dosis||''}" min="0"></div>
+      </div>
+      <div class="g3 mb">
+        <div class="f"><label>¿Armas?</label><input type="text" id="eAMB_armasB" value="${sv(a.armasB)}" placeholder="SI/NO"></div>
+        <div class="f"><label>N° Armas</label><input type="number" id="eAMB_nArmas" value="${a.nArmas||''}" min="0"></div>
+        <div class="f"><label>Tipo arma</label><input type="text" id="eAMB_tipoArma" value="${sv(a.tipoArma)}"></div>
+      </div>
+      <div class="f mb"><label>Resultados</label><textarea id="eAMB_res" rows="3">${sv(a.res||a.resultados)}</textarea></div>
+    `;
+  } else if (ccFinal === 'MOV') {
+    const m = r.mov || {};
+    console.log('📋 Datos de MOV:', m);
+    html = `
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mov);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Movilidad</div>
+      <div class="f mb"><label>Acción del operativo</label><input type="text" id="eMOV_accion" value="${sv(m.accion||m.obj)}" placeholder="Acción"></div>
+      <div class="g3 mb">
+        <div class="f"><label>Vehículos inmovilizados</label><input type="number" id="eMOV_veh" value="${m.veh||''}" min="0"></div>
+        <div class="f"><label>Comparendos</label><input type="number" id="eMOV_comp" value="${m.comp||m.nComp||''}" min="0"></div>
+        <div class="f"><label>m² espacio público</label><input type="number" id="eMOV_m2" value="${m.m2||''}" min="0"></div>
+      </div>
+      <div class="f mb"><label>Observaciones</label><textarea id="eMOV_obs" rows="3">${sv(m.obs)}</textarea></div>
+    `;
+  } else if (ccFinal === 'OBR') {
+    const o = r.obr || {};
+    console.log('📋 Datos de OBR:', o);
+    html = `
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--obr);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Obras</div>
+      <div class="f mb"><label>¿Obra en operación?</label><input type="text" id="eOBR_enOp" value="${sv(o.enOp)}" placeholder="SI/NO"></div>
+      <div class="f mb"><label>¿Ocupa espacio público?</label><input type="text" id="eOBR_ocupaEP" value="${sv(o.ocupaEP)}" placeholder="SI/NO"></div>
+      <div class="f mb"><label>m² ocupados</label><input type="number" id="eOBR_m2Ocupa" value="${o.m2Ocupa||''}" min="0"></div>
+      <div class="f mb"><label>Persona que atiende</label><input type="text" id="eOBR_persona" value="${sv(o.persona||o.personaAtiende)}"></div>
+      <div class="f mb"><label>Observaciones</label><textarea id="eOBR_obs" rows="3">${sv(o.obs||o.obsObr)}</textarea></div>
+    `;
+  } else {
+    // Caso por defecto: el cc no coincide con ningún componente conocido
+    console.log('⚠️ Componente no reconocido o vacío. ccFinal:', ccFinal);
+    html = `<div style="padding:40px;text-align:center;color:#ef4444;font-size:.9rem">
+      <strong>⚠️ Error:</strong> Componente "${ccFinal}" no reconocido.<br>
+      Valores válidos: AE, EP, AMB, MOV, OBR
+    </div>`;
+  }
+  
+  console.log('📝 HTML generado (primeros 200 chars):', html.substring(0, 200));
   container.innerHTML = html;
+  console.log('✅ HTML inyectado al contenedor');
+  
+  // Verificación post-inyección para debugging
+  setTimeout(() => {
+    console.log('🔍 Verificando campos después de inyección:');
+    if (ccFinal === 'AE') {
+      const tipoEl = document.getElementById('eAE_tipo');
+      const nomEl = document.getElementById('eAE_nom');
+      console.log('  - eAE_tipo:', tipoEl ? `✓ valor="${tipoEl.value}"` : '✗ NO EXISTE');
+      console.log('  - eAE_nom:', nomEl ? `✓ valor="${nomEl.value}"` : '✗ NO EXISTE');
+    }
+  }, 10);
 }
+
 
 function cerrarEditar(){
   document.getElementById('moEditEl').classList.remove('on');
@@ -5317,12 +5514,28 @@ function guardarEdicion(){
   if (cc === 'AE') {
     updates['ae/tipo'] = gv('eAE_tipo');
     updates['ae/nom'] = gv('eAE_nom');
+    updates['ae/entEsc'] = gv('eAE_entEsc');
+    updates['ae/colegio'] = gv('eAE_colegio');
+    updates['ae/pers'] = gn('eAE_pers');
+    updates['ae/beb'] = gn('eAE_beb');
+    updates['ae/armas'] = gn('eAE_armas');
+    updates['ae/dosis'] = gn('eAE_dosis');
+    updates['ae/aplico'] = gv('eAE_aplico');
     updates['ae/medida'] = gv('eAE_medida');
+    updates['ae/dias'] = gn('eAE_dias');
+    updates['ae/comp'] = gv('eAE_comp');
+    updates['ae/compPrev'] = gv('eAE_compPrev');
+    updates['ae/motivoSusp'] = gv('eAE_motivoSusp');
+    updates['ae/motivoCDef'] = gv('eAE_motivoCDef');
     updates['ae/res'] = gv('eAE_res');
   } else if (cc === 'EP') {
     updates['ep/pol'] = gv('eEP_pol');
     updates['ep/secMon'] = gv('eEP_secMon');
+    updates['ep/elemHN'] = gv('eEP_elemHN');
+    updates['ep/numElemHN'] = gn('eEP_numElemHN');
     updates['ep/ft'] = gn('eEP_ft');
+    updates['ep/m2Rec'] = gn('eEP_m2Rec');
+    updates['ep/vendRet'] = gn('eEP_vendRet');
     updates['ep/res'] = gv('eEP_res');
   } else if (cc === 'AMB') {
     updates['amb/linea'] = gv('eAMB_linea');
@@ -5330,9 +5543,12 @@ function guardarEdicion(){
     updates['amb/m3'] = gn('eAMB_m3');
     updates['amb/llantas'] = gn('eAMB_llantas');
     updates['amb/hc'] = gn('eAMB_hc');
+    updates['amb/regPers'] = gn('eAMB_regPers');
+    updates['amb/capturas'] = gn('eAMB_capturas');
     updates['amb/camb'] = gn('eAMB_camb');
     updates['amb/car'] = gn('eAMB_car');
     updates['amb/dosis'] = gn('eAMB_dosis');
+    updates['amb/armasB'] = gv('eAMB_armasB');
     updates['amb/nArmas'] = gn('eAMB_nArmas');
     updates['amb/tipoArma'] = gv('eAMB_tipoArma');
     updates['amb/res'] = gv('eAMB_res');
@@ -6527,8 +6743,39 @@ function regidCheckIdExists() {
     if (snap.exists()) {
       const data = snap.val();
       console.log('Encontrado en operativos_por_id:', data);
-      regidCargarDatosOperativo(data);
-      toast('✓ ID encontrado - Datos cargados', 'ok');
+      
+      // NUEVO: Cargar registros completos desde resultados_operativos
+      RESULTADOS_REF.orderByChild('meta/idOp').equalTo(idStr).once('value', snapResultados => {
+        const regidRegistrosCompletos = {};
+        const registrosPorDirKey = {};
+        
+        // Mapear registros por su _dirKey
+        snapResultados.forEach(childSnap => {
+          const rec = childSnap.val();
+          const dirKey = rec._dirKey;
+          if (dirKey) {
+            registrosPorDirKey[dirKey] = rec;
+          }
+        });
+        
+        // Asignar registros completos usando las keys de data.direcciones
+        if (data.direcciones) {
+          Object.keys(data.direcciones).forEach(key => {
+            if (registrosPorDirKey[key]) {
+              regidRegistrosCompletos[key] = registrosPorDirKey[key];
+              console.log(`✅ Registro completo cargado ${key}:`, registrosPorDirKey[key]);
+            }
+          });
+        }
+        
+        // Guardar globalmente
+        window.regidRegistrosCompletos = regidRegistrosCompletos;
+        console.log('📦 TOTAL Registros completos guardados:', Object.keys(regidRegistrosCompletos).length);
+        console.log('📦 Contenido:', regidRegistrosCompletos);
+        
+        regidCargarDatosOperativo(data);
+        toast('✓ ID encontrado - Datos cargados', 'ok');
+      });
     } else {
       // Si no existe, buscar en resultados (estructura antigua)
       console.log('No encontrado en operativos_por_id, buscando en resultados...');
@@ -6593,9 +6840,13 @@ function procesarResultadosAntiguos(snapshot) {
     data.tipoIVC = [firstRecord.cc];
   }
   
-  // Convertir todas las direcciones
+  // Convertir todas las direcciones Y guardar registros completos
+  const regidRegistrosCompletos = {}; // NUEVO: Guardar registros completos
+  
   records.forEach((rec, idx) => {
     const key = 'dir_' + idx;
+    
+    // Guardar dirección procesada (como antes)
     data.direcciones[key] = {
       dir: rec.ub?.dir || '',
       barrio: rec.ub?.barrio || '',
@@ -6604,8 +6855,17 @@ function procesarResultadosAntiguos(snapshot) {
       actaLink: rec.acta?.link || '',
       timestamp: Date.now()
     };
+    
+    // NUEVO: Guardar registro completo
+    regidRegistrosCompletos[key] = rec;
+    console.log(`✅ Guardado registro completo ${key}:`, rec);
   });
   
+  // NUEVO: Guardar globalmente para acceso desde regidEditarDireccion
+  window.regidRegistrosCompletos = regidRegistrosCompletos;
+  
+  console.log('📦 TOTAL Registros completos guardados en window.regidRegistrosCompletos:', Object.keys(regidRegistrosCompletos).length);
+  console.log('📦 Contenido completo:', regidRegistrosCompletos);
   console.log('Datos procesados:', data);
   regidCargarDatosOperativo(data);
   toast('✓ ID encontrado - Datos cargados (' + records.length + ' dirección' + (records.length > 1 ? 'es' : '') + ')', 'ok');
@@ -6813,6 +7073,9 @@ function regidGuardarDireccion(continuarRegistrando) {
       
       // Procesar cada dirección
       Object.entries(operativo.direcciones).forEach(([dirKey, dirData]) => {
+        // Determinar componente activo
+        const cc = operativo.tipoIVC && operativo.tipoIVC.length > 0 ? operativo.tipoIVC[0] : '';
+        
         const resultado = {
           meta: {
             idOp: idOp,
@@ -6825,7 +7088,7 @@ function regidGuardarDireccion(continuarRegistrando) {
             entidadesConjunto: operativo.meta.entidadesConjunto
           },
           tipoIVC: operativo.tipoIVC,
-          cc: operativo.tipoIVC && operativo.tipoIVC.length > 0 ? operativo.tipoIVC[0] : '',
+          cc: cc,
           ub: {
             dir: dirData.dir,
             barrio: dirData.barrio,
@@ -6838,6 +7101,75 @@ function regidGuardarDireccion(continuarRegistrando) {
           _dirKey: dirKey,
           _timestamp: dirData.timestamp || Date.now()
         };
+        
+        // NUEVO: Capturar datos del componente según el tipo
+        const gv = id => document.getElementById(id)?.value || '';
+        const gn = id => Number(document.getElementById(id)?.value || 0);
+        
+        if (cc === 'AE') {
+          resultado.ae = {
+            tipo: gv('regid-tipoAE'),
+            nom: gv('regid-nomAE'),
+            entEsc: gv('regid-entEscAE'),
+            colegio: gv('regid-colegioAE'),
+            pers: gn('regid-persAE'),
+            beb: gn('regid-bebAE'),
+            armas: gn('regid-armasAE'),
+            dosis: gn('regid-dosisAE'),
+            aplico: document.querySelector('input[name="regid-aplicoMedida"]:checked')?.value || 'NO',
+            medida: gv('regid-medidaAE'),
+            dias: gn('regid-diasAE'),
+            comp: gv('regid-compAE'),
+            motivoSusp: gv('regid-motivoSuspAE'),
+            motivoCDef: gv('regid-motivoCDefAE'),
+            compPrev: gv('regid-compPrevAE'),
+            res: gv('regid-resAE')
+          };
+        } else if (cc === 'EP') {
+          resultado.ep = {
+            secMon: gv('regid-secMonEP'),
+            pol: gv('regid-polEP'),
+            ft: gn('regid-ftEP'),
+            m2Rec: gn('regid-m2RecEP'),
+            vendRet: gn('regid-vendRetEP'),
+            res: gv('regid-resEP')
+          };
+        } else if (cc === 'AMB') {
+          resultado.amb = {
+            linea: gv('regid-lineaAmb'),
+            m2: gn('regid-m2Amb'),
+            m3: gn('regid-m3Amb'),
+            llantas: gn('regid-llantasAmb'),
+            hc: gn('regid-hcAmb'),
+            regPers: gn('regid-regPersAmb'),
+            capturas: gn('regid-capturasAmb'),
+            camb: gn('regid-cambAmb'),
+            car: gn('regid-carAmb'),
+            dosis: gn('regid-dosisAmb'),
+            armasB: document.querySelector('input[name="regid-armasAmb"]:checked')?.value || 'NO',
+            nArmas: gn('regid-nArmasAmb'),
+            tipoArma: gv('regid-tipoArmaAmb'),
+            res: gv('regid-resAmb')
+          };
+        } else if (cc === 'MOV') {
+          resultado.mov = {
+            accion: gv('regid-accionMov'),
+            veh: gn('regid-vehMov'),
+            comp: gn('regid-compMov'),
+            m2: gn('regid-m2Mov'),
+            obs: gv('regid-obsMov')
+          };
+        } else if (cc === 'OBR') {
+          resultado.obr = {
+            enOp: document.querySelector('input[name="regid-enOpObr"]:checked')?.value || 'NO',
+            ocupaEP: document.querySelector('input[name="regid-ocupaEPObr"]:checked')?.value || 'NO',
+            m2Ocupa: gn('regid-m2OcupaObr'),
+            persona: gv('regid-personaObr'),
+            obs: gv('regid-obsObr')
+          };
+        }
+        
+        console.log(`💾 Guardando registro para dirKey ${dirKey} con componente ${cc}:`, resultado);
         
         // Si ya existe un registro para esta dirección, actualizarlo; si no, crear uno nuevo
         if (registrosExistentes[dirKey]) {
@@ -6982,36 +7314,321 @@ function regidToggleOtroResp() {
 }
 
 function regidEditarDireccion(direccionKey) {
-  // Obtener la dirección desde regidDireccionesGuardadas
-  const direccion = regidDireccionesGuardadas[direccionKey];
+  console.log('🔍 regidEditarDireccion llamado con key:', direccionKey);
+  console.log('🔍 window.regidRegistrosCompletos existe?', !!window.regidRegistrosCompletos);
+  console.log('🔍 Keys disponibles:', window.regidRegistrosCompletos ? Object.keys(window.regidRegistrosCompletos) : 'NO EXISTE');
   
-  if (!direccion) {
-    toast('Error: No se encontró la dirección', 'err');
+  // Obtener el registro completo desde memoria
+  let r = window.regidRegistrosCompletos?.[direccionKey];
+  
+  if (!r) {
+    console.error('❌ No se encontró el registro en memoria. Key:', direccionKey);
+    console.log('❌ Registros disponibles:', window.regidRegistrosCompletos);
+    toast('Error: No se encontró el registro', 'err');
     return;
   }
   
-  // Cargar datos en el formulario
-  // Parsear la dirección para llenar el constructor
-  const dir = direccion.dir || '';
+  console.log('✅ Registro encontrado:', r);
   
-  // Opción 1: Llenar directamente el campo de texto
-  document.getElementById('regid-dir').value = dir;
+  // NUEVO: Si el registro NO tiene datos de componente, buscar en resultados_operativos
+  const tieneComponente = r.ae || r.ep || r.amb || r.mov || r.obr;
   
-  // Actualizar la vista previa del constructor
+  if (!tieneComponente) {
+    console.log('⚠️ Registro antiguo sin datos de componente. Buscando datos completos en Firebase...');
+    const idOp = document.getElementById('regid-idOp').value.trim();
+    
+    // Buscar en resultados_operativos por idOp y dirección
+    RESULTADOS_REF.orderByChild('meta/idOp').equalTo(idOp).once('value', snapResultados => {
+      let registroCompleto = null;
+      
+      snapResultados.forEach(childSnap => {
+        const rec = childSnap.val();
+        // Buscar por dirección exacta
+        if (rec.ub?.dir === r.ub?.dir && rec.ub?.barrio === r.ub?.barrio) {
+          registroCompleto = rec;
+          console.log('✅ Registro completo encontrado en Firebase:', rec);
+        }
+      });
+      
+      if (registroCompleto) {
+        // Reemplazar el registro incompleto con el completo
+        r = registroCompleto;
+        window.regidRegistrosCompletos[direccionKey] = r; // Actualizar en memoria
+        console.log('✅ Registro actualizado con datos completos');
+        cargarDatosEnFormulario(r, direccionKey);
+      } else {
+        console.warn('⚠️ No se encontraron datos completos en Firebase. Continuando con datos parciales.');
+        cargarDatosEnFormulario(r, direccionKey);
+      }
+    });
+  } else {
+    console.log('✅ Registro tiene datos de componente. Cargando directamente.');
+    
+    // CORRECCIÓN 1: IDENTIFICAR Y MARCAR EL CHIP DEL COMPONENTE ANTES DE TODO
+    let cc = r.cc || '';
+    if (!cc) {
+      // Inferir componente desde los datos
+      if (r.ae && Object.keys(r.ae).length > 0) cc = 'AE';
+      else if (r.ep && Object.keys(r.ep).length > 0) cc = 'EP';
+      else if (r.amb && Object.keys(r.amb).length > 0) cc = 'AMB';
+      else if (r.mov && Object.keys(r.mov).length > 0) cc = 'MOV';
+      else if (r.obr && Object.keys(r.obr).length > 0) cc = 'OBR';
+      console.log('⚠️ cc inferido:', cc);
+    }
+    
+    // Marcar el chip del componente INMEDIATAMENTE
+    if (cc) {
+      console.log('🎯 Marcando chip del componente:', cc);
+      document.querySelectorAll('#regid-tipoIVC .chip').forEach(chip => {
+        chip.classList.remove('on');
+        if (chip.dataset.comp === cc) {
+          chip.classList.add('on');
+          console.log('✅ Chip marcado:', chip.textContent);
+        }
+      });
+      
+      // CORRECCIÓN 3: FORZAR REFRESCO SÍNCRONO de bloques
+      regidUpdateCompBlocksSincrono();
+    }
+    
+    // Ahora sí, cargar los datos
+    cargarDatosEnFormulario(r, direccionKey);
+  }
+}
+
+function cargarDatosEnFormulario(r, direccionKey) {
+  console.log('📝 Cargando registro completo para edición');
+  
+  // 01 - IDENTIFICACIÓN
+  document.getElementById('regid-h1').value = r.meta?.h1 || '';
+  document.getElementById('regid-h2').value = r.meta?.h2 || '';
+  document.getElementById('regid-resp').value = r.meta?.resp || '';
+  
+  // Megatoma
+  const esMega = r.meta?.megatoma === 'SI';
+  document.getElementById('regid-megatoma-si').checked = esMega;
+  document.getElementById('regid-megatoma-no').checked = !esMega;
+  regidToggleMegatomaStyle();
+  
+  // Operativo conjunto
+  const esConj = r.meta?.opConjunto === 'SI';
+  document.getElementById('regid-conjunto-si').checked = esConj;
+  document.getElementById('regid-conjunto-no').checked = !esConj;
+  document.getElementById('regid-entidades-conjunto').value = r.meta?.entidadesConjunto || '';
+  regidToggleConjuntoStyle();
+  
+  // 02 - UBICACIÓN
+  document.getElementById('regid-dir').value = r.ub?.dir || '';
+  document.getElementById('regid-barrio').value = r.ub?.barrio || '';
+  document.getElementById('regid-upz').value = r.ub?.upz || '';
+  
+  // Actualizar preview del constructor
   const prev = document.getElementById('regid-abPrev');
-  if (dir) {
-    prev.textContent = dir;
+  if (r.ub?.dir) {
+    prev.textContent = r.ub.dir;
     prev.classList.remove('empty');
   }
   
-  // Llenar barrio y UPZ
-  document.getElementById('regid-barrio').value = direccion.barrio || '';
-  document.getElementById('regid-upz').value = direccion.upz || '';
+  // 03 - COMPONENTE (inferir si no existe)
+  let cc = r.cc || '';
+  if (!cc) {
+    if (r.ae && Object.keys(r.ae).length > 0) cc = 'AE';
+    else if (r.ep && Object.keys(r.ep).length > 0) cc = 'EP';
+    else if (r.amb && Object.keys(r.amb).length > 0) cc = 'AMB';
+    else if (r.mov && Object.keys(r.mov).length > 0) cc = 'MOV';
+    else if (r.obr && Object.keys(r.obr).length > 0) cc = 'OBR';
+    console.log('⚠️ cc inferido:', cc);
+  }
   
-  // Llenar acta
-  document.getElementById('regid-actaLink').value = direccion.actaLink || '';
+  // CORRECCIÓN 4: Función ROBUSTA de asignación con retry
+  const setValRobust = (id, val, retry = true) => {
+    const el = document.getElementById(id);
+    if (el) {
+      // Forzar visibilidad del contenedor padre si está oculto
+      let parent = el.closest('.cond');
+      if (parent && parent.style.display === 'none') {
+        parent.style.display = 'block';
+        parent.classList.add('on');
+        console.log(`   🔓 Contenedor condicional mostrado: ${parent.id}`);
+      }
+      
+      el.value = val || '';
+      console.log(`   ✓ ${id} = "${val}"`);
+      return true;
+    } else {
+      console.warn(`   ⚠️ Campo ${id} no encontrado`);
+      if (retry) {
+        // Retry después de un frame
+        requestAnimationFrame(() => {
+          console.log(`   🔁 Reintentando: ${id}`);
+          setValRobust(id, val, false);
+        });
+      }
+      return false;
+    }
+  };
   
-  // Guardar la key para saber que estamos editando
+  // Ahora cargar los datos del componente
+  if (cc === 'AE' && r.ae) {
+    console.log('✅ Cargando campos de AE');
+    const ae = r.ae;
+    
+    setValRobust('regid-tipoAE', ae.tipo);
+    setValRobust('regid-nomAE', ae.nom);
+    setValRobust('regid-persAE', ae.pers);
+    setValRobust('regid-armasAE', ae.armas);
+    setValRobust('regid-dosisAE', ae.dosis);
+    setValRobust('regid-resAE', ae.res);
+    
+    // Entorno escolar (mostrar bloque si aplica)
+    if (ae.entEsc) {
+      const cdEntEsc = document.getElementById('regid-cdEntEsc');
+      if (cdEntEsc) {
+        cdEntEsc.style.display = 'block';
+        cdEntEsc.classList.add('on');
+      }
+      setValRobust('regid-entEsc', ae.entEsc);
+      
+      if (ae.colegio) {
+        const cdColegio = document.getElementById('regid-cdColegio');
+        if (cdColegio) {
+          cdColegio.style.display = 'block';
+          cdColegio.classList.add('on');
+        }
+        setValRobust('regid-nomColegio', ae.colegio);
+      }
+    }
+    
+    // Bebidas (mostrar bloque si aplica)
+    if (ae.beb) {
+      const cdBebidas = document.getElementById('regid-cdBebidas');
+      if (cdBebidas) {
+        cdBebidas.style.display = 'block';
+        cdBebidas.classList.add('on');
+      }
+      setValRobust('regid-bebAE', ae.beb);
+    }
+    
+    // Medida correctiva
+    if (ae.aplico === 'SI') {
+      setValRobust('regid-aplicoMedida', 'SI');
+      const cdMedida = document.getElementById('regid-cdMedida');
+      if (cdMedida) {
+        cdMedida.style.display = 'block';
+        cdMedida.classList.add('on');
+      }
+      
+      setValRobust('regid-medidaAE', ae.medida);
+      
+      // Mostrar bloque específico según tipo de medida
+      if (ae.medida === 'SUSPENSION TEMPORAL') {
+        const cdSusp = document.getElementById('regid-cdSusp');
+        if (cdSusp) {
+          cdSusp.style.display = 'block';
+          cdSusp.classList.add('on');
+        }
+        setValRobust('regid-diasAE', ae.dias);
+        setValRobust('regid-compAE', ae.comp);
+        setValRobust('regid-motivoSusp', ae.motivoSusp);
+      } else if (ae.medida === 'CIERRE DEFINITIVO') {
+        const cdCierreDef = document.getElementById('regid-cdCierreDef');
+        if (cdCierreDef) {
+          cdCierreDef.style.display = 'block';
+          cdCierreDef.classList.add('on');
+        }
+        setValRobust('regid-motivoCierreDef', ae.motivoCDef);
+      } else if (ae.medida === 'CIERRE PREVENTIVO') {
+        const cdCierrePrev = document.getElementById('regid-cdCierrePrev');
+        if (cdCierrePrev) {
+          cdCierrePrev.style.display = 'block';
+          cdCierrePrev.classList.add('on');
+        }
+        setValRobust('regid-compPrev', ae.compPrev);
+      }
+    }
+    
+    console.log('✅ Campos de AE cargados');
+    
+  } else if (cc === 'EP' && r.ep) {
+    console.log('✅ Cargando campos de EP');
+    const ep = r.ep;
+    
+    setValRobust('regid-secMonEPVal', ep.secMon);
+    setValRobust('regid-ftEP', ep.ft);
+    setValRobust('regid-m2RecEP', ep.m2Rec);
+    setValRobust('regid-vendRetEP', ep.vendRet);
+    setValRobust('regid-resEP', ep.res);
+    
+    // Polígonos
+    if (ep.poligono) {
+      const cdPoligonos = document.getElementById('regid-cdPoligonos');
+      if (cdPoligonos) {
+        cdPoligonos.style.display = 'block';
+        cdPoligonos.classList.add('on');
+      }
+      setValRobust('regid-poligono', ep.poligono);
+    }
+    
+    // Hechos notorios
+    if (ep.elemHN || ep.numElemHN) {
+      const cdHechosNot = document.getElementById('regid-cdHechosNot');
+      if (cdHechosNot) {
+        cdHechosNot.style.display = 'block';
+        cdHechosNot.classList.add('on');
+      }
+      setValRobust('regid-elemHN', ep.elemHN);
+      setValRobust('regid-numElemHN', ep.numElemHN);
+    }
+    
+    console.log('✅ Campos de EP cargados');
+    
+  } else if (cc === 'AMB' && r.amb) {
+    console.log('✅ Cargando campos de AMB');
+    const a = r.amb;
+    
+    setValRobust('regid-lineaAmb', a.linea);
+    setValRobust('regid-m2Amb', a.m2);
+    setValRobust('regid-m3Amb', a.m3);
+    setValRobust('regid-llantasAmb', a.llantas);
+    setValRobust('regid-hcAmb', a.hc);
+    setValRobust('regid-regPersAmb', a.regPers);
+    setValRobust('regid-capturasAmb', a.capturas);
+    setValRobust('regid-cambAmb', a.camb);
+    setValRobust('regid-carAmb', a.car);
+    setValRobust('regid-dosisAmb', a.dosis);
+    setValRobust('regid-nArmasAmb', a.nArmas);
+    setValRobust('regid-tipoArmaAmb', a.tipoArma);
+    setValRobust('regid-resAmb', a.res);
+    
+    console.log('✅ Campos de AMB cargados');
+    
+  } else if (cc === 'MOV' && r.mov) {
+    console.log('✅ Cargando campos de MOV');
+    const m = r.mov;
+    
+    setValRobust('regid-accionMovVal', m.accion);
+    setValRobust('regid-vehMov', m.veh);
+    setValRobust('regid-nCompMov', m.comp);
+    setValRobust('regid-m2Mov', m.m2);
+    setValRobust('regid-obsMov', m.obs);
+    
+    console.log('✅ Campos de MOV cargados');
+    
+  } else if (cc === 'OBR' && r.obr) {
+    console.log('✅ Cargando campos de OBR');
+    const o = r.obr;
+    
+    setValRobust('regid-m2OcupaObr', o.m2Ocupa);
+    setValRobust('regid-personaAtiende', o.persona);
+    setValRobust('regid-obsObr', o.obs);
+    
+    console.log('✅ Campos de OBR cargados');
+  }
+  
+  // 04 - ACTA
+  document.getElementById('regid-actaLink').value = r.acta?.link || '';
+  
+  // PERSISTENCIA DEL ID ÚNICO DE DIRECCIÓN (CRÍTICO PARA MODO EDICIÓN)
   window.regidDireccionEditandoKey = direccionKey;
   
   // Scroll a la sección de ubicación
@@ -7019,7 +7636,7 @@ function regidEditarDireccion(direccionKey) {
     document.getElementById('regid-s2').scrollIntoView({behavior:'smooth',block:'start'});
   }, 100);
   
-  toast('Dirección cargada para edición', 'ok');
+  toast('Registro cargado para edición', 'ok');
 }
 
 function regidToggleMegatomaStyle() {
