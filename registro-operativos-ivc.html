@@ -4972,6 +4972,22 @@ function abrirEditar(){
   // Cerrar modal de detalle y abrir edición
   document.getElementById('moEl').classList.remove('on');
   document.getElementById('moEditEl').classList.add('on');
+  
+  // ✅ FIX: Restaurar botones a su estado normal
+  const btnGuardar = document.getElementById('btnGuardarEdit');
+  const btnGuardarYAnt = document.getElementById('btnGuardarYAnterior');
+  const btnGuardarYSig = document.getElementById('btnGuardarYSiguiente');
+  
+  if (btnGuardar) {
+    btnGuardar.disabled = false;
+    btnGuardar.textContent = '✓ Guardar';
+  }
+  if (btnGuardarYAnt) {
+    btnGuardarYAnt.innerHTML = '<span>←</span> Guardar y Anterior';
+  }
+  if (btnGuardarYSig) {
+    btnGuardarYSig.innerHTML = 'Guardar y Siguiente <span>→</span>';
+  }
 }
 
 // Actualizar información de navegación en el header del modal
@@ -5051,10 +5067,20 @@ function guardarYNavegar(direction) {
   }
   
   const r = recs[selIdx];
-  const cc = r.cc || '';
+  
+  // ✅ FIX: Leer el componente del chip seleccionado, NO del registro original
+  const chipCC = document.querySelector('#eChipsComponente .chip.on');
+  const cc = chipCC ? chipCC.dataset.comp : (r.cc || '');
+  
+  console.log('=== guardarYNavegar ===');
+  console.log('Componente seleccionado en chip:', cc);
+  console.log('Componente en registro original:', r.cc);
   
   // Construir objeto actualizado (mismo código que guardarEdicion)
   const updates = {};
+  
+  // ✅ FIX: Guardar el componente actual
+  updates['cc'] = cc;
   
   // META
   updates['meta/idOp'] = document.getElementById('eIdop').value;
@@ -5089,6 +5115,14 @@ function guardarYNavegar(direction) {
   const gv = id => document.getElementById(id)?.value || '';
   const gn = id => Number(document.getElementById(id)?.value || 0);
   
+  // ✅ FIX: Limpiar todos los componentes no seleccionados
+  updates['ae'] = null;
+  updates['ep'] = null;
+  updates['amb'] = null;
+  updates['mov'] = null;
+  updates['obr'] = null;
+  
+  // Guardar solo el componente seleccionado
   if (cc === 'AE') {
     updates['ae/tipo'] = gv('eAE_tipo');
     updates['ae/nom'] = gv('eAE_nom');
@@ -6744,38 +6778,43 @@ function regidCheckIdExists() {
       const data = snap.val();
       console.log('Encontrado en operativos_por_id:', data);
       
-      // NUEVO: Cargar registros completos desde resultados_operativos
-      RESULTADOS_REF.orderByChild('meta/idOp').equalTo(idStr).once('value', snapResultados => {
-        const regidRegistrosCompletos = {};
-        const registrosPorDirKey = {};
-        
-        // Mapear registros por su _dirKey
-        snapResultados.forEach(childSnap => {
-          const rec = childSnap.val();
-          const dirKey = rec._dirKey;
-          if (dirKey) {
-            registrosPorDirKey[dirKey] = rec;
-          }
+      // ACTUALIZADO: Las direcciones en operativos_por_id ahora contienen toda la información
+      // Usar directamente data.direcciones para window.regidRegistrosCompletos
+      const regidRegistrosCompletos = {};
+      
+      if (data.direcciones) {
+        Object.entries(data.direcciones).forEach(([key, dirData]) => {
+          // Construir registro completo desde dirData (que ya tiene todo)
+          regidRegistrosCompletos[key] = {
+            meta: data.meta,
+            tipoIVC: dirData.tipoIVC || [],
+            cc: dirData.cc || '',
+            ub: {
+              dir: dirData.dir || '',
+              barrio: dirData.barrio || '',
+              upz: dirData.upz || ''
+            },
+            acta: {
+              link: dirData.actaLink || ''
+            },
+            ae: dirData.ae || null,
+            ep: dirData.ep || null,
+            amb: dirData.amb || null,
+            mov: dirData.mov || null,
+            obr: dirData.obr || null,
+            _dirKey: key
+          };
+          console.log(`✅ Registro completo construido desde operativos_por_id ${key}:`, regidRegistrosCompletos[key]);
         });
-        
-        // Asignar registros completos usando las keys de data.direcciones
-        if (data.direcciones) {
-          Object.keys(data.direcciones).forEach(key => {
-            if (registrosPorDirKey[key]) {
-              regidRegistrosCompletos[key] = registrosPorDirKey[key];
-              console.log(`✅ Registro completo cargado ${key}:`, registrosPorDirKey[key]);
-            }
-          });
-        }
-        
-        // Guardar globalmente
-        window.regidRegistrosCompletos = regidRegistrosCompletos;
-        console.log('📦 TOTAL Registros completos guardados:', Object.keys(regidRegistrosCompletos).length);
-        console.log('📦 Contenido:', regidRegistrosCompletos);
-        
-        regidCargarDatosOperativo(data);
-        toast('✓ ID encontrado - Datos cargados', 'ok');
-      });
+      }
+      
+      // Guardar globalmente
+      window.regidRegistrosCompletos = regidRegistrosCompletos;
+      console.log('📦 TOTAL Registros completos guardados:', Object.keys(regidRegistrosCompletos).length);
+      console.log('📦 Contenido:', regidRegistrosCompletos);
+      
+      regidCargarDatosOperativo(data);
+      toast('✓ ID encontrado - Datos cargados', 'ok');
     } else {
       // Si no existe, buscar en resultados (estructura antigua)
       console.log('No encontrado en operativos_por_id, buscando en resultados...');
@@ -6938,18 +6977,8 @@ function regidCargarDatosOperativo(data) {
     regidToggleConjuntoStyle();
   }
   
-  // Cargar tipo IVC
-  if (data.tipoIVC && Array.isArray(data.tipoIVC)) {
-    console.log('Tipos IVC:', data.tipoIVC);
-    document.querySelectorAll('#regid-tipoIVC .chip').forEach(chip => chip.classList.remove('on'));
-    data.tipoIVC.forEach(tipo => {
-      const chip = document.querySelector(`#regid-tipoIVC .chip[data-comp="${tipo}"]`);
-      if (chip) {
-        chip.classList.add('on');
-        console.log('Tipo IVC activado:', tipo);
-      }
-    });
-  }
+  // NOTA: Ya no cargamos tipoIVC a nivel de operativo porque ahora
+  // cada dirección tiene su propio tipoIVC específico
   
   // Mostrar direcciones existentes
   if (data.direcciones && Object.keys(data.direcciones).length > 0) {
@@ -6966,17 +6995,25 @@ function regidCargarDatosOperativo(data) {
     lista.innerHTML = direccionesArray.map(([key, d], i) => {
       const tieneActa = d.actaLink && d.actaLink.trim() !== '';
       
+      // Determinar el tipo de componente de esta dirección
+      const cc = d.cc || '';
+      const ccLabels = {AE: 'Actividad Económica', EP: 'Espacio Público', AMB: 'Ambiente', MOV: 'Movilidad', OBR: 'Obras'};
+      const ccColors = {AE: '#7c3aed', EP: '#0369a1', AMB: '#166534', MOV: '#1e40af', OBR: '#92400e'};
+      const ccLabel = ccLabels[cc] || 'Sin componente';
+      const ccColor = ccColors[cc] || '#64748b';
+      
       return `
       <div style="background:white;border:1.5px solid #86efac;border-radius:10px;padding:12px 16px;transition:all .2s">
         <div style="display:flex;align-items:start;gap:12px">
           <div style="font-size:1.1rem;font-weight:800;color:#166534;min-width:35px;text-align:center;background:#dcfce7;border-radius:6px;padding:4px 8px">#${i + 1}</div>
           <div style="flex:1">
             <div style="font-size:.85rem;font-weight:700;color:#166534;margin-bottom:4px">📍 ${d.dir || 'Sin dirección'}</div>
-            <div style="font-size:.72rem;color:#15803d;display:flex;gap:8px;flex-wrap:wrap">
+            <div style="font-size:.72rem;color:#15803d;display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px">
               <span><strong>Barrio:</strong> ${d.barrio || 'N/A'}</span>
               <span>•</span>
               <span><strong>UPZ:</strong> ${d.upz || 'N/A'}</span>
             </div>
+            ${cc ? `<div style="font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:4px;background:${ccColor}22;color:${ccColor};display:inline-block">${ccLabel}</div>` : ''}
           </div>
           <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
             ${tieneActa ? '<div style="font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:4px;background:#dcfce7;color:#166534">📎 Con acta</div>' : '<div style="font-size:.65rem;font-weight:600;padding:3px 10px;border-radius:4px;background:#fef3c7;color:#92400e">⚠️ Sin acta</div>'}
@@ -7009,13 +7046,16 @@ function regidGuardarDireccion(continuarRegistrando) {
   btnGuardarYSalir.textContent = 'Guardando...';
   btnGuardarYContinuar.textContent = 'Guardando...';
   
-  // Construir objeto de dirección
+  // Construir objeto de dirección con su tipo IVC y componente específico
   const direccion = {
     dir: document.getElementById('regid-dir').value.trim(),
     barrio: document.getElementById('regid-barrio').value,
     upz: document.getElementById('regid-upz').value,
     actaLink: document.getElementById('regid-actaLink').value.trim(),
-    timestamp: Date.now()
+    timestamp: Date.now(),
+    // CRÍTICO: Cada dirección tiene su propio tipoIVC y componente
+    tipoIVC: Array.from(document.querySelectorAll('#regid-tipoIVC .chip.on')).map(c => c.dataset.comp),
+    cc: '' // se llenará después
   };
   
   // Construir objeto de operativo completo
@@ -7036,29 +7076,118 @@ function regidGuardarDireccion(continuarRegistrando) {
     direcciones: {}
   };
   
+  // Capturar los datos del componente AHORA (antes de leer Firebase)
+  // Esto evita que se sobrescriban datos de direcciones anteriores
+  const cc = direccion.tipoIVC && direccion.tipoIVC.length > 0 ? direccion.tipoIVC[0] : '';
+  direccion.cc = cc; // Asignar el componente a la dirección
+  
+  const gv = id => document.getElementById(id)?.value || '';
+  const gn = id => Number(document.getElementById(id)?.value || 0);
+  
+  const datosComponenteActual = {};
+  
+  if (cc === 'AE') {
+    datosComponenteActual.ae = {
+      tipo: gv('regid-tipoAE'),
+      nom: gv('regid-nomAE'),
+      entEsc: gv('regid-entEsc'),
+      colegio: gv('regid-nomColegio'),
+      pers: gn('regid-persAE'),
+      beb: gn('regid-bebAE'),
+      armas: gn('regid-armasAE'),
+      dosis: gn('regid-dosisAE'),
+      aplico: gv('regid-aplicoMedida') || 'NO',
+      medida: gv('regid-medidaAE'),
+      dias: gn('regid-diasAE'),
+      comp: gv('regid-compAE'),
+      motivoSusp: gv('regid-motivoSusp'),
+      motivoCDef: gv('regid-motivoCierreDef'),
+      compPrev: gv('regid-compPrev'),
+      res: gv('regid-resAE')
+    };
+    console.log('📊 Datos AE capturados - armas:', datosComponenteActual.ae.armas, 'dosis:', datosComponenteActual.ae.dosis);
+    // Agregar datos del componente a la dirección
+    direccion.ae = datosComponenteActual.ae;
+  } else if (cc === 'EP') {
+    datosComponenteActual.ep = {
+      secMon: gv('regid-secMonEPVal'),
+      pol: gv('regid-poligono'),
+      ft: gn('regid-ftEP'),
+      m2Rec: gn('regid-m2RecEP'),
+      vendRet: gn('regid-vendRetEP'),
+      res: gv('regid-resEP')
+    };
+    direccion.ep = datosComponenteActual.ep;
+  } else if (cc === 'AMB') {
+    datosComponenteActual.amb = {
+      linea: gv('regid-lineaAmb'),
+      m2: gn('regid-m2Amb'),
+      m3: gn('regid-m3Amb'),
+      llantas: gn('regid-llantasAmb'),
+      hc: gn('regid-hcAmb'),
+      regPers: gn('regid-regPersAmb'),
+      capturas: gn('regid-capturasAmb'),
+      camb: gn('regid-cambAmb'),
+      car: gn('regid-carAmb'),
+      dosis: gn('regid-dosisAmb'),
+      armasB: document.querySelector('input[name="regid-armasAmb"]:checked')?.value || 'NO',
+      nArmas: gn('regid-nArmasAmb'),
+      tipoArma: gv('regid-tipoArmaAmb'),
+      res: gv('regid-resAmb')
+    };
+    direccion.amb = datosComponenteActual.amb;
+  } else if (cc === 'MOV') {
+    datosComponenteActual.mov = {
+      accion: gv('regid-accionMovVal'),
+      veh: gn('regid-vehMov'),
+      comp: gn('regid-nCompMov'),
+      m2: gn('regid-m2Mov'),
+      obs: gv('regid-obsMov')
+    };
+    direccion.mov = datosComponenteActual.mov;
+  } else if (cc === 'OBR') {
+    datosComponenteActual.obr = {
+      enOp: gv('regid-obraEnOp'),
+      ocupaEP: gv('regid-ocupaEPObr'),
+      m2Ocupa: gn('regid-m2OcupaObr'),
+      persona: gv('regid-personaAtiende'),
+      obs: gv('regid-obsObr')
+    };
+    direccion.obr = datosComponenteActual.obr;
+  }
+  
   // Obtener direcciones existentes y agregar/actualizar
   OPERATIVOS_REF.child(idOp).once('value', snap => {
-    if (snap.exists() && snap.val().direcciones) {
-      operativo.direcciones = snap.val().direcciones;
-    }
+    // Determinar la clave de la dirección que estamos guardando
+    let direccionActualKey;
+    let modoEdicion = false;
     
     // Verificar si estamos editando o creando nueva
     if (window.regidDireccionEditandoKey) {
       // MODO EDICIÓN: Actualizar dirección existente
-      operativo.direcciones[window.regidDireccionEditandoKey] = direccion;
+      direccionActualKey = window.regidDireccionEditandoKey;
+      modoEdicion = true;
       var mensajeExito = '✓ Dirección actualizada exitosamente';
       // Limpiar flag de edición
       delete window.regidDireccionEditandoKey;
     } else {
       // MODO CREACIÓN: Agregar nueva dirección
-      const nuevaKey = db.ref().push().key;
-      operativo.direcciones[nuevaKey] = direccion;
+      direccionActualKey = db.ref().push().key;
       var mensajeExito = '✓ Dirección guardada exitosamente';
     }
     
     // Guardar en Firebase (dos rutas: operativos_por_id y resultados_operativos)
     const updates = {};
-    updates[`operativos_por_id/${idOp}`] = operativo;
+    
+    // CAMBIO CRÍTICO: No sobrescribir todo el operativo, solo actualizar la dirección específica
+    // Actualizar solo los datos generales del operativo (meta) si es necesario
+    if (!snap.exists()) {
+      // Si no existe el operativo, crear la estructura completa
+      updates[`operativos_por_id/${idOp}/meta`] = operativo.meta;
+    }
+    
+    // Actualizar solo esta dirección específica
+    updates[`operativos_por_id/${idOp}/direcciones/${direccionActualKey}`] = direccion;
     
     // Convertir direcciones a formato resultados_operativos
     // Primero, buscar registros existentes en resultados_operativos con este idOp
@@ -7071,142 +7200,95 @@ function regidGuardarDireccion(continuarRegistrando) {
         }
       });
       
-      // Procesar cada dirección
-      Object.entries(operativo.direcciones).forEach(([dirKey, dirData]) => {
-        // Determinar componente activo
-        const cc = operativo.tipoIVC && operativo.tipoIVC.length > 0 ? operativo.tipoIVC[0] : '';
-        
-        const resultado = {
-          meta: {
-            idOp: idOp,
-            fecha: operativo.meta.fecha,
-            h1: operativo.meta.h1,
-            h2: operativo.meta.h2,
-            resp: operativo.meta.resp,
-            megatoma: operativo.meta.megatoma,
-            opConjunto: operativo.meta.opConjunto,
-            entidadesConjunto: operativo.meta.entidadesConjunto
-          },
-          tipoIVC: operativo.tipoIVC,
-          cc: cc,
-          ub: {
-            dir: dirData.dir,
-            barrio: dirData.barrio,
-            upz: dirData.upz
-          },
-          acta: {
-            link: dirData.actaLink
-          },
-          tot: {},
-          _dirKey: dirKey,
-          _timestamp: dirData.timestamp || Date.now()
-        };
-        
-        // NUEVO: Capturar datos del componente según el tipo
-        const gv = id => document.getElementById(id)?.value || '';
-        const gn = id => Number(document.getElementById(id)?.value || 0);
-        
-        if (cc === 'AE') {
-          resultado.ae = {
-            tipo: gv('regid-tipoAE'),
-            nom: gv('regid-nomAE'),
-            entEsc: gv('regid-entEscAE'),
-            colegio: gv('regid-colegioAE'),
-            pers: gn('regid-persAE'),
-            beb: gn('regid-bebAE'),
-            armas: gn('regid-armasAE'),
-            dosis: gn('regid-dosisAE'),
-            aplico: document.querySelector('input[name="regid-aplicoMedida"]:checked')?.value || 'NO',
-            medida: gv('regid-medidaAE'),
-            dias: gn('regid-diasAE'),
-            comp: gv('regid-compAE'),
-            motivoSusp: gv('regid-motivoSuspAE'),
-            motivoCDef: gv('regid-motivoCDefAE'),
-            compPrev: gv('regid-compPrevAE'),
-            res: gv('regid-resAE')
-          };
-        } else if (cc === 'EP') {
-          resultado.ep = {
-            secMon: gv('regid-secMonEP'),
-            pol: gv('regid-polEP'),
-            ft: gn('regid-ftEP'),
-            m2Rec: gn('regid-m2RecEP'),
-            vendRet: gn('regid-vendRetEP'),
-            res: gv('regid-resEP')
-          };
-        } else if (cc === 'AMB') {
-          resultado.amb = {
-            linea: gv('regid-lineaAmb'),
-            m2: gn('regid-m2Amb'),
-            m3: gn('regid-m3Amb'),
-            llantas: gn('regid-llantasAmb'),
-            hc: gn('regid-hcAmb'),
-            regPers: gn('regid-regPersAmb'),
-            capturas: gn('regid-capturasAmb'),
-            camb: gn('regid-cambAmb'),
-            car: gn('regid-carAmb'),
-            dosis: gn('regid-dosisAmb'),
-            armasB: document.querySelector('input[name="regid-armasAmb"]:checked')?.value || 'NO',
-            nArmas: gn('regid-nArmasAmb'),
-            tipoArma: gv('regid-tipoArmaAmb'),
-            res: gv('regid-resAmb')
-          };
-        } else if (cc === 'MOV') {
-          resultado.mov = {
-            accion: gv('regid-accionMov'),
-            veh: gn('regid-vehMov'),
-            comp: gn('regid-compMov'),
-            m2: gn('regid-m2Mov'),
-            obs: gv('regid-obsMov')
-          };
-        } else if (cc === 'OBR') {
-          resultado.obr = {
-            enOp: document.querySelector('input[name="regid-enOpObr"]:checked')?.value || 'NO',
-            ocupaEP: document.querySelector('input[name="regid-ocupaEPObr"]:checked')?.value || 'NO',
-            m2Ocupa: gn('regid-m2OcupaObr'),
-            persona: gv('regid-personaObr'),
-            obs: gv('regid-obsObr')
-          };
-        }
-        
-        console.log(`💾 Guardando registro para dirKey ${dirKey} con componente ${cc}:`, resultado);
-        
-        // Si ya existe un registro para esta dirección, actualizarlo; si no, crear uno nuevo
-        if (registrosExistentes[dirKey]) {
-          updates[`resultados_operativos/${registrosExistentes[dirKey]}`] = resultado;
-        } else {
-          const nuevoKey = db.ref().push().key;
-          updates[`resultados_operativos/${nuevoKey}`] = resultado;
-        }
-      });
+      // CRÍTICO: Solo procesar la dirección que estamos guardando AHORA
+      // No tocar las direcciones que ya existían anteriormente
+      const dirKey = direccionActualKey;
+      const dirData = direccion; // dirData ahora contiene tipoIVC, cc, y datos del componente
+      
+      const resultado = {
+        meta: {
+          idOp: idOp,
+          fecha: operativo.meta.fecha,
+          h1: operativo.meta.h1,
+          h2: operativo.meta.h2,
+          resp: operativo.meta.resp,
+          megatoma: operativo.meta.megatoma,
+          opConjunto: operativo.meta.opConjunto,
+          entidadesConjunto: operativo.meta.entidadesConjunto
+        },
+        tipoIVC: dirData.tipoIVC,
+        cc: dirData.cc,
+        ub: {
+          dir: dirData.dir,
+          barrio: dirData.barrio,
+          upz: dirData.upz
+        },
+        acta: {
+          link: dirData.actaLink
+        },
+        tot: {},
+        _dirKey: dirKey,
+        _timestamp: dirData.timestamp || Date.now()
+      };
+      
+      // Agregar datos del componente específico de esta dirección
+      if (dirData.ae) resultado.ae = dirData.ae;
+      if (dirData.ep) resultado.ep = dirData.ep;
+      if (dirData.amb) resultado.amb = dirData.amb;
+      if (dirData.mov) resultado.mov = dirData.mov;
+      if (dirData.obr) resultado.obr = dirData.obr;
+      
+      console.log(`💾 Guardando registro para dirKey ${dirKey} con componente ${dirData.cc}:`, resultado);
+      
+      // Si ya existe un registro para esta dirección, actualizarlo; si no, crear uno nuevo
+      if (registrosExistentes[dirKey]) {
+        updates[`resultados_operativos/${registrosExistentes[dirKey]}`] = resultado;
+      } else {
+        const nuevoKey = db.ref().push().key;
+        updates[`resultados_operativos/${nuevoKey}`] = resultado;
+      }
       
       db.ref().update(updates)
         .then(() => {
           toast(mensajeExito, 'ok');
           
-          // Actualizar lista de direcciones guardadas
-          regidDireccionesGuardadas = operativo.direcciones;
-        
-        // Mostrar el panel actualizado con todas las direcciones
-        regidCargarDatosOperativo(operativo);
-        
-        if (continuarRegistrando) {
-          // Limpiar solo el formulario de ubicación
-          regidLimpiarFormularioDireccion();
-          // Scroll al inicio de la sección de ubicación
-          setTimeout(() => {
-            document.getElementById('regid-s2').scrollIntoView({behavior:'smooth',block:'start'});
-          }, 500);
-        } else {
-          // Finalizar y resetear todo
-          setTimeout(() => {
-            if (confirm('✓ Registro completado\n\n¿Deseas registrar un nuevo operativo?')) {
-              regidResetearFormulario();
-            } else {
-              switchMain('recs', document.getElementById('sidebtn-recs'));
+          // CRÍTICO: Actualizar window.regidRegistrosCompletos con el registro que acabamos de guardar
+          if (!window.regidRegistrosCompletos) {
+            window.regidRegistrosCompletos = {};
+          }
+          window.regidRegistrosCompletos[direccionActualKey] = resultado;
+          console.log(`✅ window.regidRegistrosCompletos actualizado con key ${direccionActualKey}:`, resultado);
+          
+          // Recargar el operativo completo desde Firebase para mostrar todas las direcciones
+          OPERATIVOS_REF.child(idOp).once('value', snapReload => {
+            if (snapReload.exists()) {
+              const operativoCompleto = snapReload.val();
+              
+              // Actualizar lista de direcciones guardadas
+              regidDireccionesGuardadas = operativoCompleto.direcciones || {};
+              
+              // Mostrar el panel actualizado con todas las direcciones
+              regidCargarDatosOperativo(operativoCompleto);
+              
+              if (continuarRegistrando) {
+                // Limpiar solo el formulario de ubicación y componente
+                regidLimpiarFormularioDireccion();
+                // Scroll al inicio de la sección de ubicación
+                setTimeout(() => {
+                  document.getElementById('regid-s2').scrollIntoView({behavior:'smooth',block:'start'});
+                }, 500);
+              } else {
+                // Finalizar y resetear todo
+                setTimeout(() => {
+                  if (confirm('✓ Registro completado\n\n¿Deseas registrar un nuevo operativo?')) {
+                    regidResetearFormulario();
+                  } else {
+                    switchMain('recs', document.getElementById('sidebtn-recs'));
+                  }
+                }, 800);
+              }
             }
-          }, 800);
-        }
+          });
       })
       .catch(err => {
         console.error(err);
@@ -7240,6 +7322,79 @@ function regidLimpiarFormularioDireccion() {
   const prev = document.getElementById('regid-abPrev');
   prev.textContent = 'Completa los campos para ver la dirección';
   prev.classList.add('empty');
+  
+  // CRÍTICO: Limpiar TODOS los campos de componentes
+  
+  // Limpiar Actividad Económica
+  document.getElementById('regid-tipoAE').value = '';
+  document.getElementById('regid-nomAE').value = '';
+  document.getElementById('regid-entEsc').value = '';
+  document.getElementById('regid-nomColegio').value = '';
+  document.getElementById('regid-persAE').value = '';
+  document.getElementById('regid-bebAE').value = '';
+  document.getElementById('regid-armasAE').value = '';
+  document.getElementById('regid-dosisAE').value = '';
+  document.getElementById('regid-aplicoMedida').value = '';
+  document.getElementById('regid-medidaAE').value = '';
+  document.getElementById('regid-diasAE').value = '';
+  document.getElementById('regid-compAE').value = '';
+  document.getElementById('regid-motivoSusp').value = '';
+  document.getElementById('regid-motivoCierreDef').value = '';
+  document.getElementById('regid-compPrev').value = '';
+  document.getElementById('regid-resAE').value = '';
+  
+  // Limpiar Espacio Público
+  document.getElementById('regid-secMonEPVal').value = '';
+  document.getElementById('regid-poligono').value = '';
+  document.getElementById('regid-elemHN').value = '';
+  document.getElementById('regid-numElemHN').value = '';
+  document.getElementById('regid-ftEP').value = '';
+  document.getElementById('regid-m2RecEP').value = '';
+  document.getElementById('regid-vendRetEP').value = '';
+  document.getElementById('regid-resEP').value = '';
+  
+  // Limpiar Ambiente
+  document.getElementById('regid-lineaAmb').value = '';
+  document.getElementById('regid-m2Amb').value = '';
+  document.getElementById('regid-m3Amb').value = '';
+  document.getElementById('regid-llantasAmb').value = '';
+  document.getElementById('regid-hcAmb').value = '';
+  document.getElementById('regid-regPersAmb').value = '';
+  document.getElementById('regid-capturasAmb').value = '';
+  document.getElementById('regid-cambAmb').value = '';
+  document.getElementById('regid-carAmb').value = '';
+  document.getElementById('regid-dosisAmb').value = '';
+  document.getElementById('regid-nArmasAmb').value = '';
+  document.getElementById('regid-tipoArmaAmb').value = '';
+  document.getElementById('regid-resAmb').value = '';
+  
+  // Limpiar Movilidad
+  document.getElementById('regid-accionMovVal').value = '';
+  document.getElementById('regid-vehMov').value = '';
+  document.getElementById('regid-nCompMov').value = '';
+  document.getElementById('regid-m2Mov').value = '';
+  document.getElementById('regid-obsMov').value = '';
+  
+  // Limpiar Obras
+  document.getElementById('regid-obraEnOp').value = '';
+  document.getElementById('regid-ocupaEPObr').value = '';
+  document.getElementById('regid-m2OcupaObr').value = '';
+  document.getElementById('regid-personaAtiende').value = '';
+  document.getElementById('regid-obsObr').value = '';
+  
+  // Ocultar bloques condicionales usando tc() para consistencia
+  const bloquesCond = ['regid-cdEntEsc', 'regid-cdColegio', 'regid-cdBebidas', 'regid-cdMedida', 
+                       'regid-cdSusp', 'regid-cdCierreDef', 'regid-cdCierrePrev',
+                       'regid-cdPoligonos', 'regid-cdHechosNot', 'regid-cdFoodTrucks',
+                       'regid-cdOcupaEP'];
+  bloquesCond.forEach(id => {
+    tc(id, false); // Usar tc() para consistencia
+  });
+  
+  // Desmarcar chips de medidas y acciones
+  document.querySelectorAll('#regid-medidaChips .chip').forEach(chip => chip.classList.remove('on'));
+  document.querySelectorAll('#regid-secMonEP .chip').forEach(chip => chip.classList.remove('on'));
+  document.querySelectorAll('#regid-accionMov .chip').forEach(chip => chip.classList.remove('on'));
   
   // Limpiar flag de edición
   delete window.regidDireccionEditandoKey;
@@ -7363,41 +7518,13 @@ function regidEditarDireccion(direccionKey) {
     });
   } else {
     console.log('✅ Registro tiene datos de componente. Cargando directamente.');
-    
-    // CORRECCIÓN 1: IDENTIFICAR Y MARCAR EL CHIP DEL COMPONENTE ANTES DE TODO
-    let cc = r.cc || '';
-    if (!cc) {
-      // Inferir componente desde los datos
-      if (r.ae && Object.keys(r.ae).length > 0) cc = 'AE';
-      else if (r.ep && Object.keys(r.ep).length > 0) cc = 'EP';
-      else if (r.amb && Object.keys(r.amb).length > 0) cc = 'AMB';
-      else if (r.mov && Object.keys(r.mov).length > 0) cc = 'MOV';
-      else if (r.obr && Object.keys(r.obr).length > 0) cc = 'OBR';
-      console.log('⚠️ cc inferido:', cc);
-    }
-    
-    // Marcar el chip del componente INMEDIATAMENTE
-    if (cc) {
-      console.log('🎯 Marcando chip del componente:', cc);
-      document.querySelectorAll('#regid-tipoIVC .chip').forEach(chip => {
-        chip.classList.remove('on');
-        if (chip.dataset.comp === cc) {
-          chip.classList.add('on');
-          console.log('✅ Chip marcado:', chip.textContent);
-        }
-      });
-      
-      // CORRECCIÓN 3: FORZAR REFRESCO SÍNCRONO de bloques
-      regidUpdateCompBlocksSincrono();
-    }
-    
-    // Ahora sí, cargar los datos
     cargarDatosEnFormulario(r, direccionKey);
   }
 }
 
 function cargarDatosEnFormulario(r, direccionKey) {
   console.log('📝 Cargando registro completo para edición');
+  console.log('📦 Registro recibido:', r);
   
   // 01 - IDENTIFICACIÓN
   document.getElementById('regid-h1').value = r.meta?.h1 || '';
@@ -7437,7 +7564,25 @@ function cargarDatosEnFormulario(r, direccionKey) {
     else if (r.amb && Object.keys(r.amb).length > 0) cc = 'AMB';
     else if (r.mov && Object.keys(r.mov).length > 0) cc = 'MOV';
     else if (r.obr && Object.keys(r.obr).length > 0) cc = 'OBR';
-    console.log('⚠️ cc inferido:', cc);
+    console.log('⚠️ cc inferido desde datos:', cc);
+  }
+  
+  // CRÍTICO: Marcar el chip del componente ANTES de cargar los datos
+  if (cc) {
+    console.log('🎯 Marcando chip del componente:', cc);
+    document.querySelectorAll('#regid-tipoIVC .chip').forEach(chip => {
+      chip.classList.remove('on');
+      if (chip.dataset.comp === cc) {
+        chip.classList.add('on');
+        console.log('✅ Chip marcado:', chip.textContent);
+      }
+    });
+    
+    // FORZAR mostrar el bloque del componente SÍNCRONAMENTE
+    console.log('🔄 Forzando visibilidad del bloque del componente');
+    regidUpdateCompBlocksSincrono();
+  } else {
+    console.warn('⚠️ No se pudo determinar el componente del registro');
   }
   
   // CORRECCIÓN 4: Función ROBUSTA de asignación con retry
@@ -7482,68 +7627,110 @@ function cargarDatosEnFormulario(r, direccionKey) {
     
     // Entorno escolar (mostrar bloque si aplica)
     if (ae.entEsc) {
-      const cdEntEsc = document.getElementById('regid-cdEntEsc');
-      if (cdEntEsc) {
-        cdEntEsc.style.display = 'block';
-        cdEntEsc.classList.add('on');
-      }
       setValRobust('regid-entEsc', ae.entEsc);
       
-      if (ae.colegio) {
-        const cdColegio = document.getElementById('regid-cdColegio');
-        if (cdColegio) {
-          cdColegio.style.display = 'block';
-          cdColegio.classList.add('on');
+      // CRÍTICO: Marcar visualmente el botón Y/N de entorno escolar
+      const entEscContainer = document.querySelector('#regid-entEsc').closest('.f').querySelector('.yn');
+      if (entEscContainer) {
+        const botones = entEscContainer.querySelectorAll('.yn-btn');
+        botones.forEach(btn => {
+          btn.className = 'yn-btn';
+          if (ae.entEsc === 'SI' && btn.textContent.trim() === 'SÍ') {
+            btn.classList.add('y');
+            console.log('✅ Botón "SÍ" de entorno escolar marcado');
+          } else if (ae.entEsc === 'NO' && btn.textContent.trim() === 'NO') {
+            btn.classList.add('n');
+            console.log('✅ Botón "NO" de entorno escolar marcado');
+          }
+        });
+      }
+      
+      if (ae.entEsc === 'SI') {
+        tc('regid-cdEntEsc', true);
+        
+        if (ae.colegio) {
+          tc('regid-cdColegio', true);
+          setValRobust('regid-nomColegio', ae.colegio);
         }
-        setValRobust('regid-nomColegio', ae.colegio);
       }
     }
     
     // Bebidas (mostrar bloque si aplica)
     if (ae.beb) {
-      const cdBebidas = document.getElementById('regid-cdBebidas');
-      if (cdBebidas) {
-        cdBebidas.style.display = 'block';
-        cdBebidas.classList.add('on');
-      }
+      tc('regid-cdBebidas', true);
       setValRobust('regid-bebAE', ae.beb);
     }
     
     // Medida correctiva
     if (ae.aplico === 'SI') {
       setValRobust('regid-aplicoMedida', 'SI');
-      const cdMedida = document.getElementById('regid-cdMedida');
-      if (cdMedida) {
-        cdMedida.style.display = 'block';
-        cdMedida.classList.add('on');
+      
+      // PASO 1: Mostrar el bloque de medida correctiva PRIMERO
+      tc('regid-cdMedida', true);
+      
+      // PASO 2: Marcar visualmente el botón "SÍ"
+      const aplicoMedidaContainer = document.querySelector('#regid-aplicoMedida').closest('.f').querySelector('.yn');
+      if (aplicoMedidaContainer) {
+        const botones = aplicoMedidaContainer.querySelectorAll('.yn-btn');
+        botones.forEach(btn => {
+          btn.className = 'yn-btn'; // Limpiar clases
+          if (btn.textContent.trim() === 'SÍ') {
+            btn.classList.add('y'); // Marcar el botón SÍ
+            console.log('✅ Botón "SÍ" de medida correctiva marcado');
+          }
+        });
       }
       
+      // PASO 3: Cargar el tipo de medida en el campo hidden
       setValRobust('regid-medidaAE', ae.medida);
       
-      // Mostrar bloque específico según tipo de medida
+      // PASO 4: Marcar el chip visual de la medida DESPUÉS de que el bloque sea visible
+      if (ae.medida) {
+        console.log(`🎯 Marcando chip de medida: ${ae.medida}`);
+        // Usar setTimeout para asegurar que el DOM esté actualizado
+        setTimeout(() => {
+          document.querySelectorAll('#regid-medidaChips .chip').forEach(chip => {
+            chip.classList.remove('on');
+            const chipText = chip.textContent.trim();
+            // Comparar el texto del chip con el valor de la medida
+            if (
+              (ae.medida === 'SUSPENSION TEMPORAL' && chipText === 'Suspensión temporal') ||
+              (ae.medida === 'CIERRE DEFINITIVO' && chipText === 'Cierre definitivo') ||
+              (ae.medida === 'CIERRE PREVENTIVO' && chipText === 'Cierre preventivo')
+            ) {
+              chip.classList.add('on');
+              console.log(`✅ Chip marcado: ${chipText}`);
+            }
+          });
+        }, 50);
+      }
+      
+      // PASO 5: Mostrar bloque específico según tipo de medida
       if (ae.medida === 'SUSPENSION TEMPORAL') {
-        const cdSusp = document.getElementById('regid-cdSusp');
-        if (cdSusp) {
-          cdSusp.style.display = 'block';
-          cdSusp.classList.add('on');
-        }
+        tc('regid-cdSusp', true);
         setValRobust('regid-diasAE', ae.dias);
         setValRobust('regid-compAE', ae.comp);
         setValRobust('regid-motivoSusp', ae.motivoSusp);
       } else if (ae.medida === 'CIERRE DEFINITIVO') {
-        const cdCierreDef = document.getElementById('regid-cdCierreDef');
-        if (cdCierreDef) {
-          cdCierreDef.style.display = 'block';
-          cdCierreDef.classList.add('on');
-        }
+        tc('regid-cdCierreDef', true);
         setValRobust('regid-motivoCierreDef', ae.motivoCDef);
       } else if (ae.medida === 'CIERRE PREVENTIVO') {
-        const cdCierrePrev = document.getElementById('regid-cdCierrePrev');
-        if (cdCierrePrev) {
-          cdCierrePrev.style.display = 'block';
-          cdCierrePrev.classList.add('on');
-        }
+        tc('regid-cdCierrePrev', true);
         setValRobust('regid-compPrev', ae.compPrev);
+      }
+    } else if (ae.aplico === 'NO') {
+      // Marcar el botón "NO"
+      setValRobust('regid-aplicoMedida', 'NO');
+      const aplicoMedidaContainer = document.querySelector('#regid-aplicoMedida').closest('.f').querySelector('.yn');
+      if (aplicoMedidaContainer) {
+        const botones = aplicoMedidaContainer.querySelectorAll('.yn-btn');
+        botones.forEach(btn => {
+          btn.className = 'yn-btn';
+          if (btn.textContent.trim() === 'NO') {
+            btn.classList.add('n'); // Marcar el botón NO
+            console.log('✅ Botón "NO" de medida correctiva marcado');
+          }
+        });
       }
     }
     
@@ -7554,6 +7741,21 @@ function cargarDatosEnFormulario(r, direccionKey) {
     const ep = r.ep;
     
     setValRobust('regid-secMonEPVal', ep.secMon);
+    
+    // CRÍTICO: Marcar el chip visual de la sección de monitoreo
+    if (ep.secMon) {
+      console.log(`🎯 Marcando chip de sección: ${ep.secMon}`);
+      document.querySelectorAll('#regid-secMonEP .chip').forEach(chip => {
+        chip.classList.remove('on');
+        // El chip tiene un onclick con el valor, buscar por el valor en el onclick
+        const onclickAttr = chip.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes(`'${ep.secMon}'`)) {
+          chip.classList.add('on');
+          console.log(`✅ Chip de sección marcado: ${chip.textContent}`);
+        }
+      });
+    }
+    
     setValRobust('regid-ftEP', ep.ft);
     setValRobust('regid-m2RecEP', ep.m2Rec);
     setValRobust('regid-vendRetEP', ep.vendRet);
@@ -7561,21 +7763,13 @@ function cargarDatosEnFormulario(r, direccionKey) {
     
     // Polígonos
     if (ep.poligono) {
-      const cdPoligonos = document.getElementById('regid-cdPoligonos');
-      if (cdPoligonos) {
-        cdPoligonos.style.display = 'block';
-        cdPoligonos.classList.add('on');
-      }
+      tc('regid-cdPoligonos', true);
       setValRobust('regid-poligono', ep.poligono);
     }
     
     // Hechos notorios
     if (ep.elemHN || ep.numElemHN) {
-      const cdHechosNot = document.getElementById('regid-cdHechosNot');
-      if (cdHechosNot) {
-        cdHechosNot.style.display = 'block';
-        cdHechosNot.classList.add('on');
-      }
+      tc('regid-cdHechosNot', true);
       setValRobust('regid-elemHN', ep.elemHN);
       setValRobust('regid-numElemHN', ep.numElemHN);
     }
@@ -7607,6 +7801,20 @@ function cargarDatosEnFormulario(r, direccionKey) {
     const m = r.mov;
     
     setValRobust('regid-accionMovVal', m.accion);
+    
+    // CRÍTICO: Marcar el chip visual de la acción
+    if (m.accion) {
+      console.log(`🎯 Marcando chip de acción: ${m.accion}`);
+      document.querySelectorAll('#regid-accionMov .chip').forEach(chip => {
+        chip.classList.remove('on');
+        const onclickAttr = chip.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes(`'${m.accion}'`)) {
+          chip.classList.add('on');
+          console.log(`✅ Chip de acción marcado: ${chip.textContent}`);
+        }
+      });
+    }
+    
     setValRobust('regid-vehMov', m.veh);
     setValRobust('regid-nCompMov', m.comp);
     setValRobust('regid-m2Mov', m.m2);
@@ -7617,6 +7825,49 @@ function cargarDatosEnFormulario(r, direccionKey) {
   } else if (cc === 'OBR' && r.obr) {
     console.log('✅ Cargando campos de OBR');
     const o = r.obr;
+    
+    // Campo: ¿Se encuentra en operación la obra?
+    if (o.enOp) {
+      setValRobust('regid-obraEnOp', o.enOp);
+      const enOpContainer = document.querySelector('#regid-obraEnOp').closest('.f').querySelector('.yn');
+      if (enOpContainer) {
+        const botones = enOpContainer.querySelectorAll('.yn-btn');
+        botones.forEach(btn => {
+          btn.className = 'yn-btn';
+          if (o.enOp === 'SI' && btn.textContent.trim() === 'SÍ') {
+            btn.classList.add('y');
+            console.log('✅ Botón "SÍ" de obra en operación marcado');
+          } else if (o.enOp === 'NO' && btn.textContent.trim() === 'NO') {
+            btn.classList.add('n');
+            console.log('✅ Botón "NO" de obra en operación marcado');
+          }
+        });
+      }
+    }
+    
+    // Campo: ¿Ocupa espacio público?
+    if (o.ocupaEP) {
+      setValRobust('regid-ocupaEPObr', o.ocupaEP);
+      const ocupaEPContainer = document.querySelector('#regid-ocupaEPObr').closest('.f').querySelector('.yn');
+      if (ocupaEPContainer) {
+        const botones = ocupaEPContainer.querySelectorAll('.yn-btn');
+        botones.forEach(btn => {
+          btn.className = 'yn-btn';
+          if (o.ocupaEP === 'SI' && btn.textContent.trim() === 'SÍ') {
+            btn.classList.add('y');
+            console.log('✅ Botón "SÍ" de ocupa EP marcado');
+          } else if (o.ocupaEP === 'NO' && btn.textContent.trim() === 'NO') {
+            btn.classList.add('n');
+            console.log('✅ Botón "NO" de ocupa EP marcado');
+          }
+        });
+      }
+      
+      // Mostrar bloque de m² si ocupa EP
+      if (o.ocupaEP === 'SI' && o.m2Ocupa) {
+        tc('regid-cdOcupaEP', true);
+      }
+    }
     
     setValRobust('regid-m2OcupaObr', o.m2Ocupa);
     setValRobust('regid-personaAtiende', o.persona);
