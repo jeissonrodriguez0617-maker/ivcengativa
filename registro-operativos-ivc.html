@@ -4289,7 +4289,8 @@ function updateRecsList(){
     const resp=r.meta?.resp||r.meta?.responsable||'';
     const fecha=r.meta?.fecha||'';
     const h1=r.meta?.h1||''; const h2=r.meta?.h2||'';
-    const idOp=r.meta?.idOp||r.id||'';
+    const idOp = r.meta?.idOp || r.id || '';
+    const idOpDisplay = cleanId(idOp);
     let compDetail='';
     if(cc==='AE'&&r.ae){
       const ae=r.ae;
@@ -4333,12 +4334,12 @@ function updateRecsList(){
     const ccStyle = ccStyles[cc] || 'background:#f1f5f9;color:#475569';
     
     return `<div class="rrow" onclick="openMo(${globalIdx})">
-      <div class="rnum">${idOp||String(n-i).padStart(2,'0')}</div>
+      <div class="rnum">${idOpDisplay||String(n-i).padStart(2,'0')}</div>
       <div style="min-width:0">
         <div class="rmain" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
           ${ccLabel?`<span style="font-size:.68rem;font-weight:800;${ccStyle};padding:1px 7px;border-radius:4px">${ccLabel}</span>`:''}
           <span>${barrio||upz||'Sin ubicación'}</span>
-          ${idOp?`<span style="font-size:.65rem;color:var(--muted);font-weight:400">#${idOp}</span>`:''}
+          ${idOpDisplay?`<span style="font-size:.65rem;color:var(--muted);font-weight:400">#${idOpDisplay}</span>`:''}
         </div>
         <div class="rsub" style="margin-top:3px">
           ${fecha?`<span>${fecha}</span>`:''}
@@ -4371,6 +4372,10 @@ function openMo(idx){
   selIdx=idx; const r=recs[idx];
   selKey = r?._fbKey || null;
   const t=r.tot||{}; const tipos=(r.tipoIVC||[]); const cc=r.cc||'';
+  
+  // Limpiar ID para quitar .0
+  const idOp = cleanId(r.meta?.idOp || r.id);
+  
   document.getElementById('moTitle').textContent=
     (tipos[0]||'Operativo') + (r.ub?.barrio?' — '+r.ub.barrio:'');
 
@@ -4387,7 +4392,7 @@ function openMo(idx){
 
   // ── Identificación ──
   h += sec('Identificación','var(--primary)',
-    M('ID Operativo', r.meta?.idOp||r.id) +
+    M('ID Operativo', idOp) +
     M('Fecha', r.meta?.fecha) +
     M('Hora inicio', r.meta?.h1) +
     M('Hora fin', r.meta?.h2) +
@@ -4588,7 +4593,7 @@ function delRec(){
 function exportJSON(){dl(new Blob([JSON.stringify(recs,null,2)],{type:'application/json'}),'operativos-ivc-'+today()+'.json');}
 function exportCSV(){
   const rows=[['ID','Fecha','Responsable','UPZ','Barrio','Direccion','Tipo IVC','m2','m3','Comparendos','Personas','Armas','Obs']];
-  recs.forEach(r=>{const t=r.tot||{};rows.push([r.meta?.idOp||r.id,r.meta?.fecha,r.meta?.resp,r.ub?.upz,r.ub?.barrio,r.ub?.dir,(r.tipoIVC||[]).join(';'),t.m2||0,t.m3||0,t.comp||0,t.pers||0,t.armas||0,r.gen?.obs||'']);});
+  recs.forEach(r=>{const t=r.tot||{};rows.push([cleanId(r.meta?.idOp||r.id),r.meta?.fecha,r.meta?.resp,r.ub?.upz,r.ub?.barrio,r.ub?.dir,(r.tipoIVC||[]).join(';'),t.m2||0,t.m3||0,t.comp||0,t.pers||0,t.armas||0,r.gen?.obs||'']);});
   dl(new Blob(['\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(',')).join('\n')],{type:'text/csv;charset=utf-8'}),'operativos-ivc-'+today()+'.csv');
 }
 function dl(b,n){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;a.click();}
@@ -5000,7 +5005,7 @@ function updateEditNavInfo() {
   
   if (info && selIdx !== null) {
     const r = recs[selIdx];
-    const idOp = r.meta?.idOp || 'S/N';
+    const idOp = cleanId(r.meta?.idOp || 'S/N');
     const fecha = r.meta?.fecha || '';
     const pos = selIdx + 1;
     const total = recs.length;
@@ -5115,15 +5120,14 @@ function guardarYNavegar(direction) {
   const gv = id => document.getElementById(id)?.value || '';
   const gn = id => Number(document.getElementById(id)?.value || 0);
   
-  // ✅ FIX: Limpiar todos los componentes no seleccionados
-  updates['ae'] = null;
-  updates['ep'] = null;
-  updates['amb'] = null;
-  updates['mov'] = null;
-  updates['obr'] = null;
-  
-  // Guardar solo el componente seleccionado
+  // Limpiar componentes NO seleccionados y guardar el seleccionado
   if (cc === 'AE') {
+    // Limpiar otros componentes
+    updates['ep'] = null;
+    updates['amb'] = null;
+    updates['mov'] = null;
+    updates['obr'] = null;
+    // Guardar AE
     updates['ae/tipo'] = gv('eAE_tipo');
     updates['ae/nom'] = gv('eAE_nom');
     updates['ae/entEsc'] = gv('eAE_entEsc');
@@ -5141,6 +5145,12 @@ function guardarYNavegar(direction) {
     updates['ae/motivoCDef'] = gv('eAE_motivoCDef');
     updates['ae/res'] = gv('eAE_res');
   } else if (cc === 'EP') {
+    // Limpiar otros componentes
+    updates['ae'] = null;
+    updates['amb'] = null;
+    updates['mov'] = null;
+    updates['obr'] = null;
+    // Guardar EP
     updates['ep/pol'] = gv('eEP_pol');
     updates['ep/secMon'] = gv('eEP_secMon');
     updates['ep/elemHN'] = gv('eEP_elemHN');
@@ -5150,6 +5160,12 @@ function guardarYNavegar(direction) {
     updates['ep/vendRet'] = gn('eEP_vendRet');
     updates['ep/res'] = gv('eEP_res');
   } else if (cc === 'AMB') {
+    // Limpiar otros componentes
+    updates['ae'] = null;
+    updates['ep'] = null;
+    updates['mov'] = null;
+    updates['obr'] = null;
+    // Guardar AMB
     updates['amb/linea'] = gv('eAMB_linea');
     updates['amb/m2'] = gn('eAMB_m2');
     updates['amb/m3'] = gn('eAMB_m3');
@@ -5165,12 +5181,24 @@ function guardarYNavegar(direction) {
     updates['amb/tipoArma'] = gv('eAMB_tipoArma');
     updates['amb/res'] = gv('eAMB_res');
   } else if (cc === 'MOV') {
+    // Limpiar otros componentes
+    updates['ae'] = null;
+    updates['ep'] = null;
+    updates['amb'] = null;
+    updates['obr'] = null;
+    // Guardar MOV
     updates['mov/accion'] = gv('eMOV_accion');
     updates['mov/veh'] = gn('eMOV_veh');
     updates['mov/comp'] = gn('eMOV_comp');
     updates['mov/m2'] = gn('eMOV_m2');
     updates['mov/obs'] = gv('eMOV_obs');
   } else if (cc === 'OBR') {
+    // Limpiar otros componentes
+    updates['ae'] = null;
+    updates['ep'] = null;
+    updates['amb'] = null;
+    updates['mov'] = null;
+    // Guardar OBR
     updates['obr/enOp'] = gv('eOBR_enOp');
     updates['obr/ocupaEP'] = gv('eOBR_ocupaEP');
     updates['obr/m2Ocupa'] = gn('eOBR_m2Ocupa');
@@ -5491,150 +5519,181 @@ function guardarEdicion(){
   if(!key){ toast('No se encontró la clave del registro','err'); return; }
   const r = recs[selIdx];
   
-  // Obtener el componente seleccionado del chip
-  const chipCC = document.querySelector('#eChipsComponente .chip.on');
-  const cc = chipCC ? chipCC.dataset.comp : (r.cc || '');
-  
-  console.log('=== Guardando edición ===');
-  console.log('Componente seleccionado:', cc);
-  
-  // Construir objeto actualizado con estructura anidada correcta
-  const updates = {};
-  
-  // COMPONENTE (cc)
-  updates['cc'] = cc;
-  
-  // META
-  updates['meta/idOp'] = document.getElementById('eIdop').value;
-  updates['meta/fecha'] = document.getElementById('eFecha').value;
-  updates['meta/h1'] = document.getElementById('eH1').value;
-  updates['meta/h2'] = document.getElementById('eH2').value;
-  
-  const selResp = document.getElementById('eResp');
-  if (selResp.value === '__OTRO__') {
-    updates['meta/resp'] = document.getElementById('eResp-otro').value.trim().toUpperCase() || '';
-  } else {
-    updates['meta/resp'] = selResp.value;
-  }
-  
-  updates['meta/megatoma'] = document.querySelector('input[name="eMegatoma"]:checked')?.value || 'NO';
-  updates['meta/opConjunto'] = document.querySelector('input[name="eConjunto"]:checked')?.value || 'NO';
-  updates['meta/entidadesConjunto'] = document.getElementById('eEntidadesConjunto').value.trim();
-  
-  // TIPO IVC - recolectar chips seleccionados
-  const tipoIVC = [];
-  document.querySelectorAll('#eChipsTipoIVC .chip.on').forEach(chip => {
-    tipoIVC.push(chip.dataset.val);
-  });
-  updates['tipoIVC'] = tipoIVC;
-  
-  // UBICACIÓN
-  updates['ub/dir'] = document.getElementById('eDir').value;
-  updates['ub/barrio'] = document.getElementById('eBarrio').value;
-  updates['ub/upz'] = document.getElementById('eUpz').value;
-  
-  // COMPONENTE ESPECÍFICO - Limpiar componentes no seleccionados
-  const gv = id => document.getElementById(id)?.value || '';
-  const gn = id => Number(document.getElementById(id)?.value || 0);
-  
-  // Limpiar todos los componentes primero
-  updates['ae'] = null;
-  updates['ep'] = null;
-  updates['amb'] = null;
-  updates['mov'] = null;
-  updates['obr'] = null;
-  
-  // Guardar solo el componente seleccionado
-  if (cc === 'AE') {
-    updates['ae/tipo'] = gv('eAE_tipo');
-    updates['ae/nom'] = gv('eAE_nom');
-    updates['ae/entEsc'] = gv('eAE_entEsc');
-    updates['ae/colegio'] = gv('eAE_colegio');
-    updates['ae/pers'] = gn('eAE_pers');
-    updates['ae/beb'] = gn('eAE_beb');
-    updates['ae/armas'] = gn('eAE_armas');
-    updates['ae/dosis'] = gn('eAE_dosis');
-    updates['ae/aplico'] = gv('eAE_aplico');
-    updates['ae/medida'] = gv('eAE_medida');
-    updates['ae/dias'] = gn('eAE_dias');
-    updates['ae/comp'] = gv('eAE_comp');
-    updates['ae/compPrev'] = gv('eAE_compPrev');
-    updates['ae/motivoSusp'] = gv('eAE_motivoSusp');
-    updates['ae/motivoCDef'] = gv('eAE_motivoCDef');
-    updates['ae/res'] = gv('eAE_res');
-  } else if (cc === 'EP') {
-    updates['ep/pol'] = gv('eEP_pol');
-    updates['ep/secMon'] = gv('eEP_secMon');
-    updates['ep/elemHN'] = gv('eEP_elemHN');
-    updates['ep/numElemHN'] = gn('eEP_numElemHN');
-    updates['ep/ft'] = gn('eEP_ft');
-    updates['ep/m2Rec'] = gn('eEP_m2Rec');
-    updates['ep/vendRet'] = gn('eEP_vendRet');
-    updates['ep/res'] = gv('eEP_res');
-  } else if (cc === 'AMB') {
-    updates['amb/linea'] = gv('eAMB_linea');
-    updates['amb/m2'] = gn('eAMB_m2');
-    updates['amb/m3'] = gn('eAMB_m3');
-    updates['amb/llantas'] = gn('eAMB_llantas');
-    updates['amb/hc'] = gn('eAMB_hc');
-    updates['amb/regPers'] = gn('eAMB_regPers');
-    updates['amb/capturas'] = gn('eAMB_capturas');
-    updates['amb/camb'] = gn('eAMB_camb');
-    updates['amb/car'] = gn('eAMB_car');
-    updates['amb/dosis'] = gn('eAMB_dosis');
-    updates['amb/armasB'] = gv('eAMB_armasB');
-    updates['amb/nArmas'] = gn('eAMB_nArmas');
-    updates['amb/tipoArma'] = gv('eAMB_tipoArma');
-    updates['amb/res'] = gv('eAMB_res');
-  } else if (cc === 'MOV') {
-    updates['mov/accion'] = gv('eMOV_accion');
-    updates['mov/veh'] = gn('eMOV_veh');
-    updates['mov/comp'] = gn('eMOV_comp');
-    updates['mov/m2'] = gn('eMOV_m2');
-    updates['mov/obs'] = gv('eMOV_obs');
-  } else if (cc === 'OBR') {
-    updates['obr/enOp'] = gv('eOBR_enOp');
-    updates['obr/ocupaEP'] = gv('eOBR_ocupaEP');
-    updates['obr/m2Ocupa'] = gn('eOBR_m2Ocupa');
-    updates['obr/persona'] = gv('eOBR_persona');
-    updates['obr/obs'] = gv('eOBR_obs');
-  }
-  
-  // TOTALES
-  updates['tot/m2'] = gn('eTotM2');
-  updates['tot/m3'] = gn('eTotM3');
-  updates['tot/veh'] = gn('eTotVeh');
-  updates['tot/camb'] = gn('eTotCamb');
-  updates['tot/car'] = gn('eTotCar');
-  updates['tot/vend'] = gn('eTotVend');
-  updates['tot/ft'] = gn('eTotFT');
-  updates['tot/pers'] = gn('eTotPers');
-  updates['tot/armas'] = gn('eTotArmas');
-  updates['tot/dosis'] = gn('eTotDosis');
-  updates['tot/comp'] = gn('eTotComp');
-  updates['tot/susp'] = gn('eTotSusp');
-  
-  // ACTA
-  const link = document.getElementById('eActaLink').value.trim();
-  if (link) {
-    updates['acta/link'] = link;
-  } else {
-    updates['acta'] = null;
-  }
-  
   const btn = document.getElementById('btnGuardarEdit');
-  btn.disabled = true; btn.textContent = 'Guardando...';
+  if(!btn){ toast('Error: botón no encontrado','err'); return; }
   
-  RESULTADOS_REF.child(key).update(updates)
-    .then(()=>{
-      toast('✓ Registro actualizado en Firebase','ok');
-      cerrarEditar();
-    })
-    .catch(err=>{ 
-      console.error('Error al guardar:', err);
-      toast('Error: '+err.message,'err'); 
-    })
-    .finally(()=>{ btn.disabled=false; btn.textContent='✓ Guardar cambios'; });
+  try {
+    // Obtener el componente seleccionado del chip
+    const chipCC = document.querySelector('#eChipsComponente .chip.on');
+    const cc = chipCC ? chipCC.dataset.comp : (r.cc || '');
+    
+    // Construir objeto actualizado con estructura anidada correcta
+    const updates = {};
+    
+    // COMPONENTE (cc)
+    updates['cc'] = cc;
+    
+    // META
+    updates['meta/idOp'] = document.getElementById('eIdop').value;
+    updates['meta/fecha'] = document.getElementById('eFecha').value;
+    updates['meta/h1'] = document.getElementById('eH1').value;
+    updates['meta/h2'] = document.getElementById('eH2').value;
+    
+    const selResp = document.getElementById('eResp');
+    if (selResp.value === '__OTRO__') {
+      updates['meta/resp'] = document.getElementById('eResp-otro').value.trim().toUpperCase() || '';
+    } else {
+      updates['meta/resp'] = selResp.value;
+    }
+    
+    updates['meta/megatoma'] = document.querySelector('input[name="eMegatoma"]:checked')?.value || 'NO';
+    updates['meta/opConjunto'] = document.querySelector('input[name="eConjunto"]:checked')?.value || 'NO';
+    updates['meta/entidadesConjunto'] = document.getElementById('eEntidadesConjunto').value.trim();
+    
+    // TIPO IVC - recolectar chips seleccionados
+    const tipoIVC = [];
+    document.querySelectorAll('#eChipsTipoIVC .chip.on').forEach(chip => {
+      tipoIVC.push(chip.dataset.val);
+    });
+    updates['tipoIVC'] = tipoIVC;
+    
+    // UBICACIÓN
+    updates['ub/dir'] = document.getElementById('eDir').value;
+    updates['ub/barrio'] = document.getElementById('eBarrio').value;
+    updates['ub/upz'] = document.getElementById('eUpz').value;
+    
+    // COMPONENTE ESPECÍFICO
+    const gv = id => document.getElementById(id)?.value || '';
+    const gn = id => Number(document.getElementById(id)?.value || 0);
+    
+    // Limpiar componentes NO seleccionados y guardar el seleccionado
+    if (cc === 'AE') {
+      // Limpiar otros componentes
+      updates['ep'] = null;
+      updates['amb'] = null;
+      updates['mov'] = null;
+      updates['obr'] = null;
+      // Guardar AE
+      updates['ae/tipo'] = gv('eAE_tipo');
+      updates['ae/nom'] = gv('eAE_nom');
+      updates['ae/entEsc'] = gv('eAE_entEsc');
+      updates['ae/colegio'] = gv('eAE_colegio');
+      updates['ae/pers'] = gn('eAE_pers');
+      updates['ae/beb'] = gn('eAE_beb');
+      updates['ae/armas'] = gn('eAE_armas');
+      updates['ae/dosis'] = gn('eAE_dosis');
+      updates['ae/aplico'] = gv('eAE_aplico');
+      updates['ae/medida'] = gv('eAE_medida');
+      updates['ae/dias'] = gn('eAE_dias');
+      updates['ae/comp'] = gv('eAE_comp');
+      updates['ae/compPrev'] = gv('eAE_compPrev');
+      updates['ae/motivoSusp'] = gv('eAE_motivoSusp');
+      updates['ae/motivoCDef'] = gv('eAE_motivoCDef');
+      updates['ae/res'] = gv('eAE_res');
+    } else if (cc === 'EP') {
+      // Limpiar otros componentes
+      updates['ae'] = null;
+      updates['amb'] = null;
+      updates['mov'] = null;
+      updates['obr'] = null;
+      // Guardar EP
+      updates['ep/pol'] = gv('eEP_pol');
+      updates['ep/secMon'] = gv('eEP_secMon');
+      updates['ep/elemHN'] = gv('eEP_elemHN');
+      updates['ep/numElemHN'] = gn('eEP_numElemHN');
+      updates['ep/ft'] = gn('eEP_ft');
+      updates['ep/m2Rec'] = gn('eEP_m2Rec');
+      updates['ep/vendRet'] = gn('eEP_vendRet');
+      updates['ep/res'] = gv('eEP_res');
+    } else if (cc === 'AMB') {
+      // Limpiar otros componentes
+      updates['ae'] = null;
+      updates['ep'] = null;
+      updates['mov'] = null;
+      updates['obr'] = null;
+      // Guardar AMB
+      updates['amb/linea'] = gv('eAMB_linea');
+      updates['amb/m2'] = gn('eAMB_m2');
+      updates['amb/m3'] = gn('eAMB_m3');
+      updates['amb/llantas'] = gn('eAMB_llantas');
+      updates['amb/hc'] = gn('eAMB_hc');
+      updates['amb/regPers'] = gn('eAMB_regPers');
+      updates['amb/capturas'] = gn('eAMB_capturas');
+      updates['amb/camb'] = gn('eAMB_camb');
+      updates['amb/car'] = gn('eAMB_car');
+      updates['amb/dosis'] = gn('eAMB_dosis');
+      updates['amb/armasB'] = gv('eAMB_armasB');
+      updates['amb/nArmas'] = gn('eAMB_nArmas');
+      updates['amb/tipoArma'] = gv('eAMB_tipoArma');
+      updates['amb/res'] = gv('eAMB_res');
+    } else if (cc === 'MOV') {
+      // Limpiar otros componentes
+      updates['ae'] = null;
+      updates['ep'] = null;
+      updates['amb'] = null;
+      updates['obr'] = null;
+      // Guardar MOV
+      updates['mov/accion'] = gv('eMOV_accion');
+      updates['mov/veh'] = gn('eMOV_veh');
+      updates['mov/comp'] = gn('eMOV_comp');
+      updates['mov/m2'] = gn('eMOV_m2');
+      updates['mov/obs'] = gv('eMOV_obs');
+    } else if (cc === 'OBR') {
+      // Limpiar otros componentes
+      updates['ae'] = null;
+      updates['ep'] = null;
+      updates['amb'] = null;
+      updates['mov'] = null;
+      // Guardar OBR
+      updates['obr/enOp'] = gv('eOBR_enOp');
+      updates['obr/ocupaEP'] = gv('eOBR_ocupaEP');
+      updates['obr/m2Ocupa'] = gn('eOBR_m2Ocupa');
+      updates['obr/persona'] = gv('eOBR_persona');
+      updates['obr/obs'] = gv('eOBR_obs');
+    }
+    
+    // TOTALES
+    updates['tot/m2'] = gn('eTotM2');
+    updates['tot/m3'] = gn('eTotM3');
+    updates['tot/veh'] = gn('eTotVeh');
+    updates['tot/camb'] = gn('eTotCamb');
+    updates['tot/car'] = gn('eTotCar');
+    updates['tot/vend'] = gn('eTotVend');
+    updates['tot/ft'] = gn('eTotFT');
+    updates['tot/pers'] = gn('eTotPers');
+    updates['tot/armas'] = gn('eTotArmas');
+    updates['tot/dosis'] = gn('eTotDosis');
+    updates['tot/comp'] = gn('eTotComp');
+    updates['tot/susp'] = gn('eTotSusp');
+    
+    // ACTA
+    const link = document.getElementById('eActaLink').value.trim();
+    if (link) {
+      updates['acta/link'] = link;
+    } else {
+      updates['acta'] = null;
+    }
+    
+    // Cerrar modal INMEDIATAMENTE (optimización UX)
+    cerrarEditar();
+    toast('Guardando...','ok');
+    
+    // Guardar en Firebase en segundo plano
+    RESULTADOS_REF.child(key).update(updates)
+      .then(()=>{
+        // Firebase se encargará de actualizar la lista automáticamente por el listener
+      })
+      .catch(err=>{ 
+        console.error('❌ Error al guardar:', err);
+        toast('Error al guardar: '+err.message,'err'); 
+      });
+      
+  } catch(error) {
+    console.error('❌ Error en guardarEdicion:', error);
+    toast('Error: ' + error.message, 'err');
+    btn.disabled = false;
+    btn.innerHTML = '&#10003; Guardar';
+  }
 }
 
 // ── PDF / ARCHIVO VISOR ────────────────────────────────
