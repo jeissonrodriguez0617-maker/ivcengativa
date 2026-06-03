@@ -19,7 +19,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#f8fafc,#e0f2fe);min-height:100vh;color:var(--text);overflow-x:hidden}
 .app{max-width:960px;margin:0 auto;padding-bottom:80px}
-.hdr{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:white;padding:1.4rem 1.5rem 1.2rem;position:relative;overflow:hidden}
+.hdr{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:white;padding:1.4rem 1.5rem 1.2rem;position:sticky;top:0;z-index:30;overflow:hidden}
 .hdr::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;background:rgba(255,255,255,.05);border-radius:50%}
 .hdr-inner{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between}
 .tag{display:inline-flex;align-items:center;gap:6px;font-size:.67rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.75);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:3px 10px;margin-bottom:8px}
@@ -179,7 +179,7 @@ input[type=checkbox]{width:auto;margin-right:6px;accent-color:var(--primary)}
 body { overflow-x: hidden; }
 .layout-wrap {
   display: flex;
-  min-height: calc(100vh - 90px);
+  min-height: 100vh;
 }
 .sidebar {
   width: 200px;
@@ -192,8 +192,9 @@ body { overflow-x: hidden; }
   gap: 6px;
   position: sticky;
   top: 0;
-  height: calc(100vh - 90px);
+  max-height: 100vh;
   overflow-y: auto;
+  align-self: flex-start;
 }
 .sidebar-label {
   font-size: .58rem;
@@ -333,7 +334,7 @@ body { overflow-x: hidden; }
   min-width: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  height: calc(100vh - 90px);
+  min-height: 100vh;
 }
 /* Ocultar tabs originales */
 .main-tabs-wrap { display: none !important; }
@@ -679,7 +680,7 @@ body { overflow-x: hidden; }
   <div class="sidebar">
     <div class="sidebar-label">Navegación</div>
 
-    <button class="sidebar-nav-btn" id="sidebtn-recs" onclick="switchMain('recs',this)">
+    <button class="sidebar-nav-btn active" id="sidebtn-recs" onclick="switchMain('recs',this)">
       <span class="btn-icon">📋</span>
       <span>Resultados</span>
       <span class="btn-badge" id="rcnt">0</span>
@@ -943,58 +944,24 @@ body { overflow-x: hidden; }
           <label>Responsable del operativo <span class="req">*</span></label>
           <select id="resp" data-req data-lbl="Responsable del operativo" data-sec="s1">
             <option value="">&#8212; Seleccionar responsable &#8212;</option>
-            <optgroup label="&#8212;&#8212; APOYO A LA SUPERVISIÓN &#8212;&#8212;">
-              <option>CORONEL WILSON VERGARA</option>
-              <option>RODRIGO MANCERA</option>
-              <option>ALEJANDRO FERNANDEZ</option>
+            <optgroup label="&#8212;&#8212; Profesionales &#8212;&#8212;">
+              <option>JOHANA GARZ&Oacute;N</option><option>ANDR&Eacute;S ARIAS</option><option>ANLLY ROJAS</option>
+              <option>MAURICIO G&Oacute;MEZ</option><option>YAMILE ESPITIA</option><option>DAVID ALBA</option>
+              <option>JOSE GONZALEZ</option><option>HECTOR RAMIREZ</option><option>SAMUEL URBINA</option>
+              <option>MIGUEL PEREZ</option><option>JENNY ARROYO</option><option>ADRIANA FORERO</option>
+              <option>JENIFER NIETO</option><option>JHON LADINO</option><option>MARIA &Aacute;LVAREZ</option>
+              <option>HENRY FORIGUA</option>
             </optgroup>
-            <optgroup label="&#8212;&#8212; REFERENTES &#8212;&#8212;">
-              <option>MILTON RINCÓN - 3017258748</option>
-              <option>ANGIEE ÁVILA - 3007631225</option>
-              <option>GERMAN ARDILA - 3133482779</option>
-              <option>FUAD CHADID - 3004901451</option>
+            <optgroup label="&#8212;&#8212; Gestores &#8212;&#8212;">
+              <option>LEONARDO PI&Ntilde;A</option><option>JAIRO LOZANO</option><option>LILIANA CHARRY</option>
+              <option>WILDEMAR CARVAJAL</option><option>JENIFER ESPINOSA</option><option>GIOVANNY GAVIRIA</option>
+              <option>NICOLAS GALEANO</option><option>DANIELA QUINTERO</option><option>CAROL FORERO</option>
+              <option>ANDR&Eacute;S PALACIO</option>
             </optgroup>
-            <optgroup label="&#8212;&#8212; PROFESIONALES &#8212;&#8212;">
-              <option>ANDRÉS ARIAS - 3105719200</option>
-              <option>DAVID ALBA - 3008039955</option>
-              <option>JOHANA GARZÓN - 3105871496</option>
-              <option>YAMILE ESPITIA - 3124528651</option>
-              <option>SAMUEL URBINA - 3228141143</option>
-              <option>MARÍA ÁLVAREZ - 3007783612</option>
-              <option>JENNY ARROYO - 3174243338</option>
-              <option>JENIFER NIETO - 3115340677</option>
-              <option>MIGUEL PEREZ - 3012780788</option>
-              <option>HECTOR RAMIREZ - 3112815970</option>
-              <option>DORIS MARTÍNEZ - 3162228971</option>
-              <option>MAURICIO GÓMEZ - 3183456671</option>
-              <option>HENRY FORIGUA - 3114655036</option>
-              <option>JHON LADINO - 3138933502</option>
-              <option>ADRIANA FORERO - 3166170141</option>
-              <option>ANLLY ROJAS - 3042440129</option>
-              <option>JOSE GONZALEZ - 3023390803</option>
-            </optgroup>
-            <optgroup label="&#8212;&#8212; GESTORES &#8212;&#8212;">
-              <option>LILIANA CHARRY - 3219530793</option>
-              <option>GIOVANNY GAVIRIA - 3132712060</option>
-              <option>NICOLAS GALEANO - 3008456610</option>
-              <option>JENIFER ESPINOSA - 3224117123</option>
-              <option>ANDRÉS PALACIO - 3226520394</option>
-              <option>JAIRO LOZANO - 3124002302</option>
-              <option>WILDEMAR CARVAJAL - 3208358546</option>
-              <option>CAROL FORERO - 3202548199</option>
-              <option>DANIELA QUINTERO - 3203595343</option>
-              <option>LEONARDO PIÑA - 3009022021</option>
-              <option>VIVIANA CASTILLO - 3102561296</option>
-            </optgroup>
-            <optgroup label="&#8212;&#8212; TÉCNICOS &#8212;&#8212;">
-              <option>WILSON PULIDO - 3227497891</option>
-              <option>JEISSON RODRÍGUEZ - 3124082466</option>
-              <option>EFREN SIERRA - 3133489940</option>
-              <option>JUAN CAMPO - 3134998898</option>
-              <option>JHON MONCADA - 3023407768</option>
-              <option>ALEXANDRA MONTENEGRO - 3227651213</option>
-              <option>CAMILO VARGAS - 3142249434</option>
-              <option>LADY MARTINEZ - 3175367781</option>
+            <optgroup label="&#8212;&#8212; T&eacute;cnicos &#8212;&#8212;">
+              <option>JEISSON RODR&Iacute;GUEZ</option><option>EFREN SIERRA</option><option>CAMILO VARGAS</option>
+              <option>LADY MARTINEZ</option><option>JHON MONCADA</option><option>WILSON PULIDO</option>
+              <option>ALEXANDRA MONTENEGRO</option><option>JUAN CAMPO</option>
             </optgroup>
           </select>
         </div>
@@ -1026,7 +993,8 @@ body { overflow-x: hidden; }
             <div style="font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">Vista previa:</div>
             <div class="ab-prev empty" id="abPrev">Completa los campos para ver la direcci&oacute;n</div>
           </div>
-          <input type="hidden" id="dir" data-req data-lbl="Direcci&oacute;n" data-sec="s2">
+          <input type="text" id="dir" data-req data-lbl="Direcci&oacute;n" data-sec="s2" placeholder="O escribe manualmente: CR 73A # 65B BIS - 43" style="margin-top:6px">
+          <div class="hint">Usa el constructor o escribe directamente. Formato oficial: CR 73A # 65B BIS - 43</div>
         </div>
         <div class="g2">
           <div class="f">
@@ -1034,89 +1002,70 @@ body { overflow-x: hidden; }
             <select id="barrio" data-req data-lbl="Barrio" data-sec="s2" onchange="autoFillUPZ()">
               <option value="">&#8212; Seleccionar barrio &#8212;</option>
               <optgroup label="UPZ 26 &middot; Las Ferias">
-                <option data-upz="26 LAS FERIAS">ACAPULCO</option><option data-upz="26 LAS FERIAS">BELLAVISTA OCCIDENTAL</option>
-                <option data-upz="26 LAS FERIAS">LA BONANZA</option><option data-upz="26 LAS FERIAS">BOSQUE POPULAR</option>
-                <option data-upz="26 LAS FERIAS">CATALU&Ntilde;A</option><option data-upz="26 LAS FERIAS">CIUDAD DE HONDA</option>
-                <option data-upz="26 LAS FERIAS">EL DORADO-SAN JOAQU&Iacute;N</option><option data-upz="26 LAS FERIAS">EL GUALI</option>
-                <option data-upz="26 LAS FERIAS">EL LAUREL</option><option data-upz="26 LAS FERIAS">EL PASEO</option>
-                <option data-upz="26 LAS FERIAS">ESTRADA</option><option data-upz="26 LAS FERIAS">LA CABA&Ntilde;A</option>
-                <option data-upz="26 LAS FERIAS">LA ESTRADITA</option><option data-upz="26 LAS FERIAS">LA EUROPA</option>
-                <option data-upz="26 LAS FERIAS">LA MARCELA</option><option data-upz="26 LAS FERIAS">LA RELIQUIA</option>
-                <option data-upz="26 LAS FERIAS">LAS FERIAS</option><option data-upz="26 LAS FERIAS">METR&Oacute;POLIS</option>
-                <option data-upz="26 LAS FERIAS">PALO BLANCO</option><option data-upz="26 LAS FERIAS">SANTO DOMINGO</option>
+                <option data-upz="26 LAS FERIAS">LAS FERIAS</option><option data-upz="26 LAS FERIAS">BONANZA</option>
+                <option data-upz="26 LAS FERIAS">LAS FERIAS OCCIDENTAL</option><option data-upz="26 LAS FERIAS">SAN JOAQUIN</option>
+                <option data-upz="26 LAS FERIAS">CATALU&Ntilde;A</option><option data-upz="26 LAS FERIAS">LA CABA&Ntilde;A</option>
+                <option data-upz="26 LAS FERIAS">BELLAVISTA OCCIDENTAL</option><option data-upz="26 LAS FERIAS">LA ESTRADA</option>
+                <option data-upz="26 LAS FERIAS">DORADO NORTE</option><option data-upz="26 LAS FERIAS">EL LAUREL</option>
+                <option data-upz="26 LAS FERIAS">PALO BLANCO</option><option data-upz="26 LAS FERIAS">BOSQUE POPULAR</option>
+                <option data-upz="26 LAS FERIAS">JARDIN BOTANICO</option><option data-upz="26 LAS FERIAS">SANTA ROSA</option>
               </optgroup>
               <optgroup label="UPZ 29 &middot; Minuto de Dios">
-                <option data-upz="29 MINUTO DE DIOS">ANDALUC&Iacute;A</option><option data-upz="29 MINUTO DE DIOS">CIUDAD BACH&Uacute;&Eacute;</option>
-                <option data-upz="29 MINUTO DE DIOS">COPETROCO LA TROPICAL</option><option data-upz="29 MINUTO DE DIOS">EL PORTAL DEL R&Iacute;O</option>
-                <option data-upz="29 MINUTO DE DIOS">LA PALESTINA</option><option data-upz="29 MINUTO DE DIOS">TISQUESUSA</option>
-                <option data-upz="29 MINUTO DE DIOS">LA ESPA&Ntilde;OLA</option><option data-upz="29 MINUTO DE DIOS">LA SERENA</option>
-                <option data-upz="29 MINUTO DE DIOS">LOS CEREZOS</option><option data-upz="29 MINUTO DE DIOS">LUIS CARLOS GAL&Aacute;N</option>
-                <option data-upz="29 MINUTO DE DIOS">MEISSEN-SIDAUTO</option><option data-upz="29 MINUTO DE DIOS">MINUTO DE DIOS</option>
-                <option data-upz="29 MINUTO DE DIOS">MORISCO</option><option data-upz="29 MINUTO DE DIOS">PAR&Iacute;S GAIT&Aacute;N</option>
-                <option data-upz="29 MINUTO DE DIOS">PRIMAVERA NORTE</option><option data-upz="29 MINUTO DE DIOS">QUIRIGUA</option>
+                <option data-upz="29 MINUTO DE DIOS">LA SERENA</option><option data-upz="29 MINUTO DE DIOS">PARIS GAITAN</option>
+                <option data-upz="29 MINUTO DE DIOS">BOCHICA</option><option data-upz="29 MINUTO DE DIOS">LOS CEREZOS</option>
+                <option data-upz="29 MINUTO DE DIOS">QUIRIGUA</option><option data-upz="29 MINUTO DE DIOS">QUIRIGUA ORIENTAL</option>
+                <option data-upz="29 MINUTO DE DIOS">LUIS CARLOS GALAN</option><option data-upz="29 MINUTO DE DIOS">MINUTO DE DIOS</option>
+                <option data-upz="29 MINUTO DE DIOS">VILLA CRISTINA</option><option data-upz="29 MINUTO DE DIOS">VILLAS DE GRANADA</option>
+                <option data-upz="29 MINUTO DE DIOS">VILLA GLADYS</option><option data-upz="29 MINUTO DE DIOS">EL CEDRO</option>
+                <option data-upz="29 MINUTO DE DIOS">VILLA SAGRARIO</option><option data-upz="29 MINUTO DE DIOS">FLORENCIA</option>
               </optgroup>
               <optgroup label="UPZ 30 &middot; Boyac&aacute; Real">
-                <option data-upz="30 BOYACÁ REAL">BOYAC&Aacute;</option><option data-upz="30 BOYACÁ REAL">EL CARMELO</option>
-                <option data-upz="30 BOYACÁ REAL">EL REFUGIO</option><option data-upz="30 BOYACÁ REAL">FLORENCIA</option>
-                <option data-upz="30 BOYACÁ REAL">FLORIDA BLANCA</option><option data-upz="30 BOYACÁ REAL">LA ALMER&Iacute;A</option>
-                <option data-upz="30 BOYACÁ REAL">LA GRANJA</option><option data-upz="30 BOYACÁ REAL">LA SOLEDAD NORTE</option>
-                <option data-upz="30 BOYACÁ REAL">LA SALINA</option><option data-upz="30 BOYACÁ REAL">LOS PINOS FLORENCIA</option>
-                <option data-upz="30 BOYACÁ REAL">MARATU</option><option data-upz="30 BOYACÁ REAL">PAR&Iacute;S</option>
-                <option data-upz="30 BOYACÁ REAL">SANTA HELENITA</option><option data-upz="30 BOYACÁ REAL">SANTA MAR&Iacute;A DEL LAGO</option>
-                <option data-upz="30 BOYACÁ REAL">SANTA ROSITA</option><option data-upz="30 BOYACÁ REAL">TABORA</option>
-                <option data-upz="30 BOYACÁ REAL">VERACRUZ</option><option data-upz="30 BOYACÁ REAL">ZARZAMORA</option>
+                <option data-upz="30 BOYACA REAL">FLORIDA BLANCA</option><option data-upz="30 BOYACA REAL">BOYACA</option>
+                <option data-upz="30 BOYACA REAL">ZARZAMORA</option><option data-upz="30 BOYACA REAL">SANTA HELENITA</option>
+                <option data-upz="30 BOYACA REAL">LOS PINOS FLORENCIA</option><option data-upz="30 BOYACA REAL">TABORA</option>
+                <option data-upz="30 BOYACA REAL">SANTA MARIA DEL LAGO</option><option data-upz="30 BOYACA REAL">LA SOLEDAD NORTE</option>
+                <option data-upz="30 BOYACA REAL">PARIS</option><option data-upz="30 BOYACA REAL">EL REAL</option>
+                <option data-upz="30 BOYACA REAL">LA ALMERIA</option><option data-upz="30 BOYACA REAL">LA GRANJA</option>
+                <option data-upz="30 BOYACA REAL">LAS FERIAS</option><option data-upz="30 BOYACA REAL">VILLA LUZ</option>
               </optgroup>
               <optgroup label="UPZ 31 &middot; Santa Cecilia">
-                <option data-upz="31 SANTA CECILIA">EL ENCANTO</option><option data-upz="31 SANTA CECILIA">EL LUJ&Aacute;N</option>
-                <option data-upz="31 SANTA CECILIA">EL REAL</option><option data-upz="31 SANTA CECILIA">LOS MONJES</option>
-                <option data-upz="31 SANTA CECILIA">NORMAND&Iacute;A</option><option data-upz="31 SANTA CECILIA">NORMAND&Iacute;A OCCIDENTAL</option>
-                <option data-upz="31 SANTA CECILIA">SAN IGNACIO</option><option data-upz="31 SANTA CECILIA">SAN MARCOS</option>
-                <option data-upz="31 SANTA CECILIA">SANTA CECILIA</option><option data-upz="31 SANTA CECILIA">VILLA LUZ</option>
+                <option data-upz="31 SANTA CECILIA">SAN MARCOS</option><option data-upz="31 SANTA CECILIA">VILLA LUZ</option>
+                <option data-upz="31 SANTA CECILIA">EL SALITRE</option><option data-upz="31 SANTA CECILIA">NORMANDIA OCCIDENTAL</option>
+                <option data-upz="31 SANTA CECILIA">NORMANDIA</option><option data-upz="31 SANTA CECILIA">LOS MONJES</option>
+                <option data-upz="31 SANTA CECILIA">SAN IGNACIO</option><option data-upz="31 SANTA CECILIA">SANTA CECILIA</option>
+                <option data-upz="31 SANTA CECILIA">EL ENCANTO</option><option data-upz="31 SANTA CECILIA">EL LUJAN</option>
               </optgroup>
               <optgroup label="UPZ 72 &middot; Bolivia">
-                <option data-upz="72 BOLIVIA">BOCHICA</option><option data-upz="72 BOLIVIA">BOCHICA COMPARTIR</option>
-                <option data-upz="72 BOLIVIA">BOLIVIA</option><option data-upz="72 BOLIVIA">CIUDADELA COLSUBSIDIO</option>
-                <option data-upz="72 BOLIVIA">CORTIJO</option>
+                <option data-upz="72 BOLIVIA">BOCHICA II</option><option data-upz="72 BOLIVIA">EL CORTIJO</option>
+                <option data-upz="72 BOLIVIA">BOLIVIA ORIENTAL</option><option data-upz="72 BOLIVIA">BOLIVIA</option>
+                <option data-upz="72 BOLIVIA">CIUDADELA COLSUBSIDIO</option><option data-upz="72 BOLIVIA">BOCHICA</option>
               </optgroup>
               <optgroup label="UPZ 73 &middot; Garc&eacute;s Navas">
-                <option data-upz="73 GARCÉS NAVAS">GARC&Eacute;S NAVAS</option><option data-upz="73 GARCÉS NAVAS">&Aacute;LAMOS</option>
-                <option data-upz="73 GARCÉS NAVAS">&Aacute;LAMOS NORTE</option><option data-upz="73 GARCÉS NAVAS">BOSQUES DE MARIANA</option>
-                <option data-upz="73 GARCÉS NAVAS">EL CEDRO</option><option data-upz="73 GARCÉS NAVAS">LOS &Aacute;NGELES</option>
-                <option data-upz="73 GARCÉS NAVAS">MOLINOS DE VIENTO</option><option data-upz="73 GARCÉS NAVAS">PLAZUELAS DEL VIRREY</option>
-                <option data-upz="73 GARCÉS NAVAS">SAN BASILIO</option><option data-upz="73 GARCÉS NAVAS">SANTA M&Oacute;NICA</option>
-                <option data-upz="73 GARCÉS NAVAS">VILLA AMALIA</option><option data-upz="73 GARCÉS NAVAS">VILLA SAGRARIO</option>
-                <option data-upz="73 GARCÉS NAVAS">VILLAS DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">VILLAS DEL MADRIGAL</option>
-                <option data-upz="73 GARCÉS NAVAS">VILLAS DEL DORADO-SAN ANTONIO</option><option data-upz="73 GARCÉS NAVAS">BOSQUES DE GRANADA</option>
-                <option data-upz="73 GARCÉS NAVAS">PARQUES DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">ANDALUC&Iacute;A PARQUES DE GRANADA</option>
-                <option data-upz="73 GARCÉS NAVAS">PORTAL DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">RINC&Oacute;N DE GRANADA</option>
-                <option data-upz="73 GARCÉS NAVAS">GRANADA CLUB RESIDENCIAL</option><option data-upz="73 GARCÉS NAVAS">LA ROTANA</option>
-                <option data-upz="73 GARCÉS NAVAS">MIRADOR DE LOS CEREZOS</option>
+                <option data-upz="73 GARCES NAVAS">ALAMOS NORTE</option><option data-upz="73 GARCES NAVAS">LOS ANGELES</option>
+                <option data-upz="73 GARCES NAVAS">EL CEDRO</option><option data-upz="73 GARCES NAVAS">ALAMOS</option>
+                <option data-upz="73 GARCES NAVAS">VILLAS DE GRANADA</option><option data-upz="73 GARCES NAVAS">GARCES NAVAS</option>
+                <option data-upz="73 GARCES NAVAS">VILLA AMALIA</option><option data-upz="73 GARCES NAVAS">LA PERLA</option>
+                <option data-upz="73 GARCES NAVAS">VILLAS DE ALCALA</option><option data-upz="73 GARCES NAVAS">GRAN GRANADA I Y II</option>
+                <option data-upz="73 GARCES NAVAS">VILLAS DE MADRIGAL</option><option data-upz="73 GARCES NAVAS">VILLA DEL MAR</option>
+                <option data-upz="73 GARCES NAVAS">SANTA MONICA</option>
               </optgroup>
               <optgroup label="UPZ 74 &middot; Engativ&aacute;">
-                <option data-upz="74 ENGATIVÁ">ALAMEDA</option><option data-upz="74 ENGATIVÁ">CENTAUROS DEL DANUBIO</option>
-                <option data-upz="74 ENGATIVÁ">EL CEDRO</option><option data-upz="74 ENGATIVÁ">EL MIRADOR</option>
-                <option data-upz="74 ENGATIVÁ">EL MUELLE</option><option data-upz="74 ENGATIVÁ">EL PALMAR</option>
-                <option data-upz="74 ENGATIVÁ">EL TRI&Aacute;NGULO</option><option data-upz="74 ENGATIVÁ">EL VERD&Uacute;N</option>
-                <option data-upz="74 ENGATIVÁ">ENGATIV&Aacute;-CENTRO</option><option data-upz="74 ENGATIVÁ">GRANJAS EL DORADO</option>
-                <option data-upz="74 ENGATIVÁ">LA CABA&Ntilde;A</option><option data-upz="74 ENGATIVÁ">LA ESPERANZA</option>
-                <option data-upz="74 ENGATIVÁ">LA FAENA</option><option data-upz="74 ENGATIVÁ">LA RIVIERA</option>
-                <option data-upz="74 ENGATIVÁ">LA TORQUIGUA</option><option data-upz="74 ENGATIVÁ">SANTA LUC&Iacute;A NORTE</option>
-                <option data-upz="74 ENGATIVÁ">LAS MERCEDES</option><option data-upz="74 ENGATIVÁ">LAS PALMAS</option>
-                <option data-upz="74 ENGATIVÁ">LINTERAMA</option><option data-upz="74 ENGATIVÁ">LOS LAURELES</option>
-                <option data-upz="74 ENGATIVÁ">LOS LAURELES-SABANAS EL DORADO</option><option data-upz="74 ENGATIVÁ">MARAND&Uacute;</option>
-                <option data-upz="74 ENGATIVÁ">PORVENIR</option><option data-upz="74 ENGATIVÁ">PUERTO AMOR-PLAYAS DEL JABOQUE</option>
-                <option data-upz="74 ENGATIVÁ">SAN ANTONIO NORTE</option><option data-upz="74 ENGATIVÁ">SAN BASILIO</option>
-                <option data-upz="74 ENGATIVÁ">SAN JOS&Eacute; OBRERO</option><option data-upz="74 ENGATIVÁ">SANTA LIBRADA</option>
-                <option data-upz="74 ENGATIVÁ">VILLA CLAVER I Y II</option><option data-upz="74 ENGATIVÁ">VILLA CONSTANZA</option>
-                <option data-upz="74 ENGATIVÁ">VILLAS DEL DORADO NORTE</option><option data-upz="74 ENGATIVÁ">VILLA GLADYS</option>
-                <option data-upz="74 ENGATIVÁ">VILLA MARY</option><option data-upz="74 ENGATIVÁ">VILLA SANDRA</option>
-                <option data-upz="74 ENGATIVÁ">VILLA TERESITA</option><option data-upz="74 ENGATIVÁ">VI&Ntilde;A DEL MAR</option>
+                <option data-upz="74 ENGATIVA">EL CEDRO</option><option data-upz="74 ENGATIVA">SAN ANTONIO NORTE</option>
+                <option data-upz="74 ENGATIVA">VILLA TERESITA</option><option data-upz="74 ENGATIVA">ENGATIVA CENTRO</option>
+                <option data-upz="74 ENGATIVA">SABANAS EL DORADO</option><option data-upz="74 ENGATIVA">MARANDU</option>
+                <option data-upz="74 ENGATIVA">EL MUELLE</option><option data-upz="74 ENGATIVA">SAN ANTONIO</option>
+                <option data-upz="74 ENGATIVA">EL PALMAR</option><option data-upz="74 ENGATIVA">LA RIVIERA</option>
+                <option data-upz="74 ENGATIVA">VI&Ntilde;A DEL MAR</option><option data-upz="74 ENGATIVA">EL GACO</option>
+                <option data-upz="74 ENGATIVA">VILLA GLADYS</option><option data-upz="74 ENGATIVA">VILLAS DEL PALMAR</option>
               </optgroup>
               <optgroup label="UPZ 105 &middot; Jard&iacute;n Bot&aacute;nico">
-                <option data-upz="105 JARDÍN BOTÁNICO">EL SALITRE-LUIS MAR&Iacute;A FERN&Aacute;NDEZ</option>
+                <option data-upz="105 JARDIN BOTANICO">EL SALITRE LUIS MARIA FERNANDEZ</option>
+                <option data-upz="105 JARDIN BOTANICO">JARDIN BOTANICO</option>
+                <option data-upz="105 JARDIN BOTANICO">COMPENSAR I</option>
               </optgroup>
               <optgroup label="UPZ 116 &middot; &Aacute;lamos">
-                <option data-upz="116 ÁLAMOS">SAN IGNACIO-LOS &Aacute;LAMOS</option>
+                <option data-upz="116 ALAMOS">LOS ALAMOS</option><option data-upz="116 ALAMOS">SAN IGNACIO</option>
+                <option data-upz="116 ALAMOS">PARQUE INDUSTRIAL EL DORADO</option><option data-upz="116 ALAMOS">EL DORADO INDUSTRIAL</option>
               </optgroup>
             </select>
           </div>
@@ -1680,58 +1629,15 @@ body { overflow-x: hidden; }
               <label>Responsable del operativo <span class="req">*</span></label>
               <select id="regid-resp" onchange="regidToggleOtroResp()">
                 <option value="">— Seleccionar responsable —</option>
-                <optgroup label="────── APOYO A LA SUPERVISIÓN ──────">
-                  <option>CORONEL WILSON VERGARA</option>
-                  <option>RODRIGO MANCERA</option>
-                  <option>ALEJANDRO FERNANDEZ</option>
+                <optgroup label="────── Profesionales ──────">
+                  <option>JOHANA GARZÓN</option><option>ANDRÉS ARIAS</option><option>ANLLY ROJAS</option>
+                  <option>MAURICIO GÓMEZ</option><option>YAMILE ESPITIA</option><option>DAVID ALBA</option>
                 </optgroup>
-                <optgroup label="────── REFERENTES ──────">
-                  <option>MILTON RINCÓN - 3017258748</option>
-                  <option>ANGIEE ÁVILA - 3007631225</option>
-                  <option>GERMAN ARDILA - 3133482779</option>
-                  <option>FUAD CHADID - 3004901451</option>
+                <optgroup label="────── Gestores ──────">
+                  <option>LEONARDO PIÑA</option><option>JAIRO LOZANO</option><option>LILIANA CHARRY</option>
                 </optgroup>
-                <optgroup label="────── PROFESIONALES ──────">
-                  <option>ANDRÉS ARIAS - 3105719200</option>
-                  <option>DAVID ALBA - 3008039955</option>
-                  <option>JOHANA GARZÓN - 3105871496</option>
-                  <option>YAMILE ESPITIA - 3124528651</option>
-                  <option>SAMUEL URBINA - 3228141143</option>
-                  <option>MARÍA ÁLVAREZ - 3007783612</option>
-                  <option>JENNY ARROYO - 3174243338</option>
-                  <option>JENIFER NIETO - 3115340677</option>
-                  <option>MIGUEL PEREZ - 3012780788</option>
-                  <option>HECTOR RAMIREZ - 3112815970</option>
-                  <option>DORIS MARTÍNEZ - 3162228971</option>
-                  <option>MAURICIO GÓMEZ - 3183456671</option>
-                  <option>HENRY FORIGUA - 3114655036</option>
-                  <option>JHON LADINO - 3138933502</option>
-                  <option>ADRIANA FORERO - 3166170141</option>
-                  <option>ANLLY ROJAS - 3042440129</option>
-                  <option>JOSE GONZALEZ - 3023390803</option>
-                </optgroup>
-                <optgroup label="────── GESTORES ──────">
-                  <option>LILIANA CHARRY - 3219530793</option>
-                  <option>GIOVANNY GAVIRIA - 3132712060</option>
-                  <option>NICOLAS GALEANO - 3008456610</option>
-                  <option>JENIFER ESPINOSA - 3224117123</option>
-                  <option>ANDRÉS PALACIO - 3226520394</option>
-                  <option>JAIRO LOZANO - 3124002302</option>
-                  <option>WILDEMAR CARVAJAL - 3208358546</option>
-                  <option>CAROL FORERO - 3202548199</option>
-                  <option>DANIELA QUINTERO - 3203595343</option>
-                  <option>LEONARDO PIÑA - 3009022021</option>
-                  <option>VIVIANA CASTILLO - 3102561296</option>
-                </optgroup>
-                <optgroup label="────── TÉCNICOS ──────">
-                  <option>WILSON PULIDO - 3227497891</option>
-                  <option>JEISSON RODRÍGUEZ - 3124082466</option>
-                  <option>EFREN SIERRA - 3133489940</option>
-                  <option>JUAN CAMPO - 3134998898</option>
-                  <option>JHON MONCADA - 3023407768</option>
-                  <option>ALEXANDRA MONTENEGRO - 3227651213</option>
-                  <option>CAMILO VARGAS - 3142249434</option>
-                  <option>LADY MARTINEZ - 3175367781</option>
+                <optgroup label="────── Técnicos ──────">
+                  <option>JEISSON RODRÍGUEZ</option><option>EFREN SIERRA</option><option>CAMILO VARGAS</option>
                 </optgroup>
                 <option value="__OTRO__">OTRO (especificar)</option>
               </select>
@@ -1817,7 +1723,8 @@ body { overflow-x: hidden; }
                 <div style="font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">Vista previa:</div>
                 <div class="ab-prev empty" id="regid-abPrev">Completa los campos para ver la dirección</div>
               </div>
-              <input type="hidden" id="regid-dir">
+              <input type="text" id="regid-dir" placeholder="O escribe manualmente: CR 73A # 65B BIS - 43" style="margin-top:6px">
+              <div class="hint">Usa el constructor o escribe directamente. Formato oficial: CR 73A # 65B BIS - 43</div>
             </div>
             <div class="g2">
               <div class="f">
@@ -1825,89 +1732,70 @@ body { overflow-x: hidden; }
                 <select id="regid-barrio" onchange="regidAutoFillUPZ()">
                   <option value="">— Seleccionar barrio —</option>
                   <optgroup label="UPZ 26 · Las Ferias">
-                    <option data-upz="26 LAS FERIAS">ACAPULCO</option><option data-upz="26 LAS FERIAS">BELLAVISTA OCCIDENTAL</option>
-                    <option data-upz="26 LAS FERIAS">LA BONANZA</option><option data-upz="26 LAS FERIAS">BOSQUE POPULAR</option>
-                    <option data-upz="26 LAS FERIAS">CATALUÑA</option><option data-upz="26 LAS FERIAS">CIUDAD DE HONDA</option>
-                    <option data-upz="26 LAS FERIAS">EL DORADO-SAN JOAQUÍN</option><option data-upz="26 LAS FERIAS">EL GUALI</option>
-                    <option data-upz="26 LAS FERIAS">EL LAUREL</option><option data-upz="26 LAS FERIAS">EL PASEO</option>
-                    <option data-upz="26 LAS FERIAS">ESTRADA</option><option data-upz="26 LAS FERIAS">LA CABAÑA</option>
-                    <option data-upz="26 LAS FERIAS">LA ESTRADITA</option><option data-upz="26 LAS FERIAS">LA EUROPA</option>
-                    <option data-upz="26 LAS FERIAS">LA MARCELA</option><option data-upz="26 LAS FERIAS">LA RELIQUIA</option>
-                    <option data-upz="26 LAS FERIAS">LAS FERIAS</option><option data-upz="26 LAS FERIAS">METRÓPOLIS</option>
-                    <option data-upz="26 LAS FERIAS">PALO BLANCO</option><option data-upz="26 LAS FERIAS">SANTO DOMINGO</option>
+                    <option data-upz="26 LAS FERIAS">LAS FERIAS</option><option data-upz="26 LAS FERIAS">BONANZA</option>
+                    <option data-upz="26 LAS FERIAS">LAS FERIAS OCCIDENTAL</option><option data-upz="26 LAS FERIAS">SAN JOAQUIN</option>
+                    <option data-upz="26 LAS FERIAS">CATALUÑA</option><option data-upz="26 LAS FERIAS">LA CABAÑA</option>
+                    <option data-upz="26 LAS FERIAS">BELLAVISTA OCCIDENTAL</option><option data-upz="26 LAS FERIAS">LA ESTRADA</option>
+                    <option data-upz="26 LAS FERIAS">DORADO NORTE</option><option data-upz="26 LAS FERIAS">EL LAUREL</option>
+                    <option data-upz="26 LAS FERIAS">PALO BLANCO</option><option data-upz="26 LAS FERIAS">BOSQUE POPULAR</option>
+                    <option data-upz="26 LAS FERIAS">JARDIN BOTANICO</option><option data-upz="26 LAS FERIAS">SANTA ROSA</option>
                   </optgroup>
                   <optgroup label="UPZ 29 · Minuto de Dios">
-                    <option data-upz="29 MINUTO DE DIOS">ANDALUCÍA</option><option data-upz="29 MINUTO DE DIOS">CIUDAD BACHUÉ</option>
-                    <option data-upz="29 MINUTO DE DIOS">COPETROCO LA TROPICAL</option><option data-upz="29 MINUTO DE DIOS">EL PORTAL DEL RÍO</option>
-                    <option data-upz="29 MINUTO DE DIOS">LA PALESTINA</option><option data-upz="29 MINUTO DE DIOS">TISQUESUSA</option>
-                    <option data-upz="29 MINUTO DE DIOS">LA ESPAÑOLA</option><option data-upz="29 MINUTO DE DIOS">LA SERENA</option>
-                    <option data-upz="29 MINUTO DE DIOS">LOS CEREZOS</option><option data-upz="29 MINUTO DE DIOS">LUIS CARLOS GALÁN</option>
-                    <option data-upz="29 MINUTO DE DIOS">MEISSEN-SIDAUTO</option><option data-upz="29 MINUTO DE DIOS">MINUTO DE DIOS</option>
-                    <option data-upz="29 MINUTO DE DIOS">MORISCO</option><option data-upz="29 MINUTO DE DIOS">PARÍS GAITÁN</option>
-                    <option data-upz="29 MINUTO DE DIOS">PRIMAVERA NORTE</option><option data-upz="29 MINUTO DE DIOS">QUIRIGUA</option>
+                    <option data-upz="29 MINUTO DE DIOS">LA SERENA</option><option data-upz="29 MINUTO DE DIOS">PARIS GAITAN</option>
+                    <option data-upz="29 MINUTO DE DIOS">BOCHICA</option><option data-upz="29 MINUTO DE DIOS">LOS CEREZOS</option>
+                    <option data-upz="29 MINUTO DE DIOS">QUIRIGUA</option><option data-upz="29 MINUTO DE DIOS">QUIRIGUA ORIENTAL</option>
+                    <option data-upz="29 MINUTO DE DIOS">LUIS CARLOS GALAN</option><option data-upz="29 MINUTO DE DIOS">MINUTO DE DIOS</option>
+                    <option data-upz="29 MINUTO DE DIOS">VILLA CRISTINA</option><option data-upz="29 MINUTO DE DIOS">VILLAS DE GRANADA</option>
+                    <option data-upz="29 MINUTO DE DIOS">VILLA GLADYS</option><option data-upz="29 MINUTO DE DIOS">EL CEDRO</option>
+                    <option data-upz="29 MINUTO DE DIOS">VILLA SAGRARIO</option><option data-upz="29 MINUTO DE DIOS">FLORENCIA</option>
                   </optgroup>
                   <optgroup label="UPZ 30 · Boyacá Real">
-                    <option data-upz="30 BOYACÁ REAL">BOYACÁ</option><option data-upz="30 BOYACÁ REAL">EL CARMELO</option>
-                    <option data-upz="30 BOYACÁ REAL">EL REFUGIO</option><option data-upz="30 BOYACÁ REAL">FLORENCIA</option>
-                    <option data-upz="30 BOYACÁ REAL">FLORIDA BLANCA</option><option data-upz="30 BOYACÁ REAL">LA ALMERÍA</option>
-                    <option data-upz="30 BOYACÁ REAL">LA GRANJA</option><option data-upz="30 BOYACÁ REAL">LA SOLEDAD NORTE</option>
-                    <option data-upz="30 BOYACÁ REAL">LA SALINA</option><option data-upz="30 BOYACÁ REAL">LOS PINOS FLORENCIA</option>
-                    <option data-upz="30 BOYACÁ REAL">MARATU</option><option data-upz="30 BOYACÁ REAL">PARÍS</option>
-                    <option data-upz="30 BOYACÁ REAL">SANTA HELENITA</option><option data-upz="30 BOYACÁ REAL">SANTA MARÍA DEL LAGO</option>
-                    <option data-upz="30 BOYACÁ REAL">SANTA ROSITA</option><option data-upz="30 BOYACÁ REAL">TABORA</option>
-                    <option data-upz="30 BOYACÁ REAL">VERACRUZ</option><option data-upz="30 BOYACÁ REAL">ZARZAMORA</option>
+                    <option data-upz="30 BOYACA REAL">FLORIDA BLANCA</option><option data-upz="30 BOYACA REAL">BOYACA</option>
+                    <option data-upz="30 BOYACA REAL">ZARZAMORA</option><option data-upz="30 BOYACA REAL">SANTA HELENITA</option>
+                    <option data-upz="30 BOYACA REAL">LOS PINOS FLORENCIA</option><option data-upz="30 BOYACA REAL">TABORA</option>
+                    <option data-upz="30 BOYACA REAL">SANTA MARIA DEL LAGO</option><option data-upz="30 BOYACA REAL">LA SOLEDAD NORTE</option>
+                    <option data-upz="30 BOYACA REAL">PARIS</option><option data-upz="30 BOYACA REAL">EL REAL</option>
+                    <option data-upz="30 BOYACA REAL">LA ALMERIA</option><option data-upz="30 BOYACA REAL">LA GRANJA</option>
+                    <option data-upz="30 BOYACA REAL">LAS FERIAS</option><option data-upz="30 BOYACA REAL">VILLA LUZ</option>
                   </optgroup>
                   <optgroup label="UPZ 31 · Santa Cecilia">
-                    <option data-upz="31 SANTA CECILIA">EL ENCANTO</option><option data-upz="31 SANTA CECILIA">EL LUJÁN</option>
-                    <option data-upz="31 SANTA CECILIA">EL REAL</option><option data-upz="31 SANTA CECILIA">LOS MONJES</option>
-                    <option data-upz="31 SANTA CECILIA">NORMANDÍA</option><option data-upz="31 SANTA CECILIA">NORMANDÍA OCCIDENTAL</option>
-                    <option data-upz="31 SANTA CECILIA">SAN IGNACIO</option><option data-upz="31 SANTA CECILIA">SAN MARCOS</option>
-                    <option data-upz="31 SANTA CECILIA">SANTA CECILIA</option><option data-upz="31 SANTA CECILIA">VILLA LUZ</option>
+                    <option data-upz="31 SANTA CECILIA">SAN MARCOS</option><option data-upz="31 SANTA CECILIA">VILLA LUZ</option>
+                    <option data-upz="31 SANTA CECILIA">EL SALITRE</option><option data-upz="31 SANTA CECILIA">NORMANDIA OCCIDENTAL</option>
+                    <option data-upz="31 SANTA CECILIA">NORMANDIA</option><option data-upz="31 SANTA CECILIA">LOS MONJES</option>
+                    <option data-upz="31 SANTA CECILIA">SAN IGNACIO</option><option data-upz="31 SANTA CECILIA">SANTA CECILIA</option>
+                    <option data-upz="31 SANTA CECILIA">EL ENCANTO</option><option data-upz="31 SANTA CECILIA">EL LUJAN</option>
                   </optgroup>
                   <optgroup label="UPZ 72 · Bolivia">
-                    <option data-upz="72 BOLIVIA">BOCHICA</option><option data-upz="72 BOLIVIA">BOCHICA COMPARTIR</option>
-                    <option data-upz="72 BOLIVIA">BOLIVIA</option><option data-upz="72 BOLIVIA">CIUDADELA COLSUBSIDIO</option>
-                    <option data-upz="72 BOLIVIA">CORTIJO</option>
+                    <option data-upz="72 BOLIVIA">BOCHICA II</option><option data-upz="72 BOLIVIA">EL CORTIJO</option>
+                    <option data-upz="72 BOLIVIA">BOLIVIA ORIENTAL</option><option data-upz="72 BOLIVIA">BOLIVIA</option>
+                    <option data-upz="72 BOLIVIA">CIUDADELA COLSUBSIDIO</option><option data-upz="72 BOLIVIA">BOCHICA</option>
                   </optgroup>
                   <optgroup label="UPZ 73 · Garcés Navas">
-                    <option data-upz="73 GARCÉS NAVAS">GARCÉS NAVAS</option><option data-upz="73 GARCÉS NAVAS">ÁLAMOS</option>
-                    <option data-upz="73 GARCÉS NAVAS">ÁLAMOS NORTE</option><option data-upz="73 GARCÉS NAVAS">BOSQUES DE MARIANA</option>
-                    <option data-upz="73 GARCÉS NAVAS">EL CEDRO</option><option data-upz="73 GARCÉS NAVAS">LOS ÁNGELES</option>
-                    <option data-upz="73 GARCÉS NAVAS">MOLINOS DE VIENTO</option><option data-upz="73 GARCÉS NAVAS">PLAZUELAS DEL VIRREY</option>
-                    <option data-upz="73 GARCÉS NAVAS">SAN BASILIO</option><option data-upz="73 GARCÉS NAVAS">SANTA MÓNICA</option>
-                    <option data-upz="73 GARCÉS NAVAS">VILLA AMALIA</option><option data-upz="73 GARCÉS NAVAS">VILLA SAGRARIO</option>
-                    <option data-upz="73 GARCÉS NAVAS">VILLAS DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">VILLAS DEL MADRIGAL</option>
-                    <option data-upz="73 GARCÉS NAVAS">VILLAS DEL DORADO-SAN ANTONIO</option><option data-upz="73 GARCÉS NAVAS">BOSQUES DE GRANADA</option>
-                    <option data-upz="73 GARCÉS NAVAS">PARQUES DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">ANDALUCÍA PARQUES DE GRANADA</option>
-                    <option data-upz="73 GARCÉS NAVAS">PORTAL DE GRANADA</option><option data-upz="73 GARCÉS NAVAS">RINCÓN DE GRANADA</option>
-                    <option data-upz="73 GARCÉS NAVAS">GRANADA CLUB RESIDENCIAL</option><option data-upz="73 GARCÉS NAVAS">LA ROTANA</option>
-                    <option data-upz="73 GARCÉS NAVAS">MIRADOR DE LOS CEREZOS</option>
+                    <option data-upz="73 GARCES NAVAS">ALAMOS NORTE</option><option data-upz="73 GARCES NAVAS">LOS ANGELES</option>
+                    <option data-upz="73 GARCES NAVAS">EL CEDRO</option><option data-upz="73 GARCES NAVAS">ALAMOS</option>
+                    <option data-upz="73 GARCES NAVAS">VILLAS DE GRANADA</option><option data-upz="73 GARCES NAVAS">GARCES NAVAS</option>
+                    <option data-upz="73 GARCES NAVAS">VILLA AMALIA</option><option data-upz="73 GARCES NAVAS">LA PERLA</option>
+                    <option data-upz="73 GARCES NAVAS">VILLAS DE ALCALA</option><option data-upz="73 GARCES NAVAS">GRAN GRANADA I Y II</option>
+                    <option data-upz="73 GARCES NAVAS">VILLAS DE MADRIGAL</option><option data-upz="73 GARCES NAVAS">VILLA DEL MAR</option>
+                    <option data-upz="73 GARCES NAVAS">SANTA MONICA</option>
                   </optgroup>
                   <optgroup label="UPZ 74 · Engativá">
-                    <option data-upz="74 ENGATIVÁ">ALAMEDA</option><option data-upz="74 ENGATIVÁ">CENTAUROS DEL DANUBIO</option>
-                    <option data-upz="74 ENGATIVÁ">EL CEDRO</option><option data-upz="74 ENGATIVÁ">EL MIRADOR</option>
-                    <option data-upz="74 ENGATIVÁ">EL MUELLE</option><option data-upz="74 ENGATIVÁ">EL PALMAR</option>
-                    <option data-upz="74 ENGATIVÁ">EL TRIÁNGULO</option><option data-upz="74 ENGATIVÁ">EL VERDÚN</option>
-                    <option data-upz="74 ENGATIVÁ">ENGATIVÁ-CENTRO</option><option data-upz="74 ENGATIVÁ">GRANJAS EL DORADO</option>
-                    <option data-upz="74 ENGATIVÁ">LA CABAÑA</option><option data-upz="74 ENGATIVÁ">LA ESPERANZA</option>
-                    <option data-upz="74 ENGATIVÁ">LA FAENA</option><option data-upz="74 ENGATIVÁ">LA RIVIERA</option>
-                    <option data-upz="74 ENGATIVÁ">LA TORQUIGUA</option><option data-upz="74 ENGATIVÁ">SANTA LUCÍA NORTE</option>
-                    <option data-upz="74 ENGATIVÁ">LAS MERCEDES</option><option data-upz="74 ENGATIVÁ">LAS PALMAS</option>
-                    <option data-upz="74 ENGATIVÁ">LINTERAMA</option><option data-upz="74 ENGATIVÁ">LOS LAURELES</option>
-                    <option data-upz="74 ENGATIVÁ">LOS LAURELES-SABANAS EL DORADO</option><option data-upz="74 ENGATIVÁ">MARANDÚ</option>
-                    <option data-upz="74 ENGATIVÁ">PORVENIR</option><option data-upz="74 ENGATIVÁ">PUERTO AMOR-PLAYAS DEL JABOQUE</option>
-                    <option data-upz="74 ENGATIVÁ">SAN ANTONIO NORTE</option><option data-upz="74 ENGATIVÁ">SAN BASILIO</option>
-                    <option data-upz="74 ENGATIVÁ">SAN JOSÉ OBRERO</option><option data-upz="74 ENGATIVÁ">SANTA LIBRADA</option>
-                    <option data-upz="74 ENGATIVÁ">VILLA CLAVER I Y II</option><option data-upz="74 ENGATIVÁ">VILLA CONSTANZA</option>
-                    <option data-upz="74 ENGATIVÁ">VILLAS DEL DORADO NORTE</option><option data-upz="74 ENGATIVÁ">VILLA GLADYS</option>
-                    <option data-upz="74 ENGATIVÁ">VILLA MARY</option><option data-upz="74 ENGATIVÁ">VILLA SANDRA</option>
-                    <option data-upz="74 ENGATIVÁ">VILLA TERESITA</option><option data-upz="74 ENGATIVÁ">VIÑA DEL MAR</option>
+                    <option data-upz="74 ENGATIVA">EL CEDRO</option><option data-upz="74 ENGATIVA">SAN ANTONIO NORTE</option>
+                    <option data-upz="74 ENGATIVA">VILLA TERESITA</option><option data-upz="74 ENGATIVA">ENGATIVA CENTRO</option>
+                    <option data-upz="74 ENGATIVA">SABANAS EL DORADO</option><option data-upz="74 ENGATIVA">MARANDU</option>
+                    <option data-upz="74 ENGATIVA">EL MUELLE</option><option data-upz="74 ENGATIVA">SAN ANTONIO</option>
+                    <option data-upz="74 ENGATIVA">EL PALMAR</option><option data-upz="74 ENGATIVA">LA RIVIERA</option>
+                    <option data-upz="74 ENGATIVA">VIÑA DEL MAR</option><option data-upz="74 ENGATIVA">EL GACO</option>
+                    <option data-upz="74 ENGATIVA">VILLA GLADYS</option><option data-upz="74 ENGATIVA">VILLAS DEL PALMAR</option>
                   </optgroup>
                   <optgroup label="UPZ 105 · Jardín Botánico">
-                    <option data-upz="105 JARDÍN BOTÁNICO">EL SALITRE-LUIS MARÍA FERNÁNDEZ</option>
+                    <option data-upz="105 JARDIN BOTANICO">EL SALITRE LUIS MARIA FERNANDEZ</option>
+                    <option data-upz="105 JARDIN BOTANICO">JARDIN BOTANICO</option>
+                    <option data-upz="105 JARDIN BOTANICO">COMPENSAR I</option>
                   </optgroup>
                   <optgroup label="UPZ 116 · Álamos">
-                    <option data-upz="116 ÁLAMOS">SAN IGNACIO-LOS ÁLAMOS</option>
+                    <option data-upz="116 ALAMOS">LOS ALAMOS</option><option data-upz="116 ALAMOS">SAN IGNACIO</option>
+                    <option data-upz="116 ALAMOS">PARQUE INDUSTRIAL EL DORADO</option><option data-upz="116 ALAMOS">EL DORADO INDUSTRIAL</option>
                   </optgroup>
                 </select>
               </div>
@@ -1937,309 +1825,14 @@ body { overflow-x: hidden; }
           </div>
         </div>
 
-        <!-- 03.5 PREGUNTAS DINÁMICAS POR COMPONENTE -->
-        <div id="regid-s3">
-          <div class="stitle">03.5 · Detalle por Componente</div>
-
-          <!-- AE -->
-          <div id="regid-blkAE" style="display:none">
-            <div class="card">
-              <div class="ch ch-ae">🏪 Actividad Económica</div>
-              <div class="f mb">
-                <label>Tipo de establecimiento <span class="req">*</span></label>
-                <select id="regid-tipoAE" onchange="regidOnTipoAEChange()">
-                  <option value="">— Seleccionar —</option>
-                  <option value="AUTOPARTES">Autopartes</option>
-                  <option value="BARES DE ALTO IMPACTO">Bares de alto impacto</option>
-                  <option value="BICICLETAS">Bicicletas</option>
-                  <option value="BODEGAS DE RECICLAJE">Bodegas de reciclaje</option>
-                  <option value="CASAS DEL LENOCINIO">Casas del lenocinio</option>
-                  <option value="ESTABLECIMIENTOS DE COMERCIO">Establecimientos de comercio</option>
-                  <option value="HOTELES Y MOTELES">Hoteles y moteles</option>
-                  <option value="METROLOGIA LEGAL">Metrología legal</option>
-                  <option value="PARQUEADEROS">Parqueaderos</option>
-                  <option value="POLVORA Y PIROTECNIA">Pólvora y pirotecnia</option>
-                  <option value="TELEFONOS MOVILES CELULARES">Teléfonos móviles celulares</option>
-                </select>
-              </div>
-              <div class="f mb"><label>Nombre del establecimiento</label><input type="text" id="regid-nomAE" placeholder="Nombre del establecimiento"></div>
-              <!-- Entorno escolar solo bar/lenocinio -->
-              <div class="cond" id="regid-cdEntEsc">
-                <div class="f mb">
-                  <label>¿Está en un entorno escolar?</label>
-                  <div class="yn">
-                    <button class="yn-btn" onclick="ynf(this,'regid-entEsc','SI');tc('regid-cdColegio',true)">SÍ</button>
-                    <button class="yn-btn" onclick="ynf(this,'regid-entEsc','NO');tc('regid-cdColegio',false)">NO</button>
-                  </div>
-                  <input type="hidden" id="regid-entEsc">
-                </div>
-                <div class="cond" id="regid-cdColegio">
-                  <div class="f mb">
-                    <label>Nombre del colegio</label>
-                    <input type="text" id="regid-nomColegio" list="lstColegios" placeholder="Buscar colegio...">
-                  </div>
-                </div>
-              </div>
-              <div class="f mb"><label>Personas intervenidas</label><input type="number" id="regid-persAE" placeholder="0" min="0"></div>
-              <!-- Bebidas — solo bar -->
-              <div class="cond" id="regid-cdBebidas">
-                <div class="f mb"><label>Nº de bebidas alcohólicas destruidas</label><input type="number" id="regid-bebAE" placeholder="0" min="0"></div>
-              </div>
-              <div class="g2 mb">
-                <div class="f"><label>Nº de armas incautadas</label><input type="number" id="regid-armasAE" placeholder="0" min="0"></div>
-                <div class="f"><label>Nº de dosis incautadas</label><input type="number" id="regid-dosisAE" placeholder="0" min="0"></div>
-              </div>
-              <!-- Medida correctiva -->
-              <div class="f mb">
-                <label>¿Se aplicó medida correctiva?</label>
-                <div class="yn">
-                  <button class="yn-btn" onclick="ynf(this,'regid-aplicoMedida','SI');tc('regid-cdMedida',true)">SÍ</button>
-                  <button class="yn-btn" onclick="ynf(this,'regid-aplicoMedida','NO');tc('regid-cdMedida',false)">NO</button>
-                </div>
-                <input type="hidden" id="regid-aplicoMedida">
-              </div>
-              <div class="cond" id="regid-cdMedida">
-                <div class="f mb">
-                  <label>Tipo de medida correctiva</label>
-                  <div class="chips" id="regid-medidaChips">
-                    <div class="chip" onclick="regidSelMedida(this,'SUSPENSION TEMPORAL')">Suspensión temporal</div>
-                    <div class="chip" onclick="regidSelMedida(this,'CIERRE DEFINITIVO')">Cierre definitivo</div>
-                    <div class="chip" onclick="regidSelMedida(this,'CIERRE PREVENTIVO')">Cierre preventivo</div>
-                  </div>
-                  <input type="hidden" id="regid-medidaAE">
-                </div>
-                <div class="cond" id="regid-cdSusp">
-                  <div class="g2 mb">
-                    <div class="f"><label>Días de suspensión</label><input type="number" id="regid-diasAE" placeholder="0" min="1"></div>
-                    <div class="f"><label>Nº del comparendo</label><input type="text" id="regid-compAE" placeholder="Nº comparendo"></div>
-                  </div>
-                  <div class="f mb"><label>Motivo de la suspensión</label><textarea id="regid-motivoSusp" placeholder="Describa el motivo..."></textarea></div>
-                </div>
-                <div class="cond" id="regid-cdCierreDef">
-                  <div class="f mb"><label>Motivo del cierre definitivo</label><textarea id="regid-motivoCierreDef" placeholder="Describa el motivo..."></textarea></div>
-                </div>
-                <div class="cond" id="regid-cdCierrePrev">
-                  <div class="f mb"><label>Nº del comparendo</label><input type="text" id="regid-compPrev" placeholder="Nº comparendo"></div>
-                </div>
-              </div>
-              <div class="f mt"><label>Resultados – Actividad Económica</label><textarea id="regid-resAE" placeholder="Resumen de resultados..."></textarea></div>
-            </div>
-          </div>
-
-          <!-- EP -->
-          <div id="regid-blkEP" style="display:none">
-            <div class="card">
-              <div class="ch ch-ep">🏗️ Espacio Público</div>
-              <div class="f mb">
-                <label>Sección de monitoreo <span class="req">*</span></label>
-                <div class="chips" id="regid-secMonEP">
-                  <!-- Se llena dinámicamente desde Firebase -->
-                </div>
-                <input type="hidden" id="regid-secMonEPVal">
-              </div>
-              
-              <!-- Polígonos -->
-              <div class="cond" id="regid-cdPoligonos">
-                <div class="sil">Polígono intervenido</div>
-                <div class="f mb">
-                  <label>Nombre del polígono</label>
-                  <select id="regid-poligono">
-                    <option value="">— Seleccionar polígono —</option>
-                    <option>COLINDANCIA QUIRIGUA CENTRAL</option>
-                    <option>HUMEDAL JUAN AMARRILLO</option>
-                    <option>RONDA HUMEDAL SANTA MARIA DEL LAGO</option>
-                    <option>HUMEDAL JABOQUE</option>
-                    <option>CANAL BONANZA</option>
-                  </select>
-                </div>
-              </div>
-              
-              <!-- Hechos notorios -->
-              <div class="cond" id="regid-cdHechosNot">
-                <div class="sil">Detalle de hechos notorios</div>
-                <div class="g2 mb">
-                  <div class="f"><label>Elementos encontrados</label><input type="text" id="regid-elemHN" placeholder="Describa los elementos encontrados"></div>
-                  <div class="f"><label>Número de elementos encontrados</label><input type="number" id="regid-numElemHN" placeholder="0" min="0"></div>
-                </div>
-              </div>
-              
-              <!-- Food trucks -->
-              <div class="cond" id="regid-cdFoodTrucks">
-                <div class="sil">Food trucks / trailers</div>
-                <div class="f mb">
-                  <label>Número de food trucks intervenidos</label>
-                  <input type="number" id="regid-ftEP" placeholder="0" min="0">
-                </div>
-              </div>
-              
-              <!-- Indicadores comunes -->
-              <div class="sil">Indicadores</div>
-              <div class="g2 mb">
-                <div class="f">
-                  <label>Espacio público recuperado (m²)</label>
-                  <div class="iu"><input type="number" id="regid-m2RecEP" placeholder="0" min="0"><span class="ub">m²</span></div>
-                </div>
-                <div class="f">
-                  <label>Vendedores informales retirados</label>
-                  <input type="number" id="regid-vendRetEP" placeholder="0" min="0">
-                </div>
-              </div>
-              
-              <div class="f"><label>Resultados – Espacio Público</label><textarea id="regid-resEP" placeholder="Resumen de resultados..."></textarea></div>
-            </div>
-          </div>
-
-          <!-- AMB -->
-          <div id="regid-blkAmb" style="display:none">
-            <div class="card">
-              <div class="ch ch-amb">🌳 Ambiente</div>
-              
-              <!-- Línea de acción -->
-              <div class="f mb">
-                <label>Línea de acción <span class="req">*</span></label>
-                <select id="regid-lineaAmb">
-                  <option value="">— Seleccionar línea de acción —</option>
-                  <option value="RECUPERACION EP RONDA">RECUPERACIÓN DE ESPACIO PÚBLICO Y ZONA DE RONDA CUERPOS DE AGUA POR DISPOSICIÓN INADECUADA DE RESIDUOS</option>
-                  <option value="ESTRATEGIA RESIDUOS CARRETEROS CAMBUCHES">ESTRATEGIA DE RESIDUOS (BASURAS), CARRETEROS Y CAMBUCHES</option>
-                  <option value="SENTENCIA RIO BOGOTA">SENTENCIA RIO BOGOTÁ</option>
-                  <option value="CONEXIONES ILEGALES">CONEXIONES ILEGALES</option>
-                </select>
-              </div>
-              
-              <!-- Indicadores cuantitativos -->
-              <div class="sil">Indicadores cuantitativos</div>
-              <div class="g3 mb">
-                <div class="f">
-                  <label>Espacio público recuperado (m²)</label>
-                  <div class="iu"><input type="number" id="regid-m2Amb" placeholder="0" min="0"><span class="ub">m²</span></div>
-                </div>
-                <div class="f">
-                  <label>Residuos recolectados (m³)</label>
-                  <div class="iu"><input type="number" id="regid-m3Amb" placeholder="0" min="0"><span class="ub">m³</span></div>
-                </div>
-                <div class="f">
-                  <label>Llantas recuperadas de espacio público</label>
-                  <input type="number" id="regid-llantasAmb" placeholder="0" min="0">
-                </div>
-              </div>
-              
-              <div class="g3 mb">
-                <div class="f">
-                  <label>Habitantes de calle identificados</label>
-                  <input type="number" id="regid-hcAmb" placeholder="0" min="0">
-                </div>
-                <div class="f">
-                  <label>Registros a personas</label>
-                  <input type="number" id="regid-regPersAmb" placeholder="0" min="0">
-                </div>
-                <div class="f">
-                  <label>Capturas</label>
-                  <input type="number" id="regid-capturasAmb" placeholder="0" min="0">
-                </div>
-              </div>
-              
-              <div class="g3 mb">
-                <div class="f">
-                  <label>Ocupaciones retiradas (cambuches)</label>
-                  <input type="number" id="regid-cambAmb" placeholder="0" min="0">
-                </div>
-                <div class="f">
-                  <label>Carretas incautadas o retiradas</label>
-                  <input type="number" id="regid-carAmb" placeholder="0" min="0">
-                </div>
-                <div class="f">
-                  <label>Dosis incautadas</label>
-                  <input type="number" id="regid-dosisAmb" placeholder="0" min="0">
-                </div>
-              </div>
-              
-              <!-- Armas -->
-              <div class="f mb">
-                <label>¿Hubo armas incautadas?</label>
-                <div class="yn">
-                  <button class="yn-btn" onclick="ynf(this,'regid-armasAmbB','SI');tc('regid-cdArmasAmb',true)">SÍ</button>
-                  <button class="yn-btn" onclick="ynf(this,'regid-armasAmbB','NO');tc('regid-cdArmasAmb',false)">NO</button>
-                </div>
-                <input type="hidden" id="regid-armasAmbB">
-              </div>
-              <div class="cond" id="regid-cdArmasAmb">
-                <div class="g2 mb">
-                  <div class="f"><label>Número de armas incautadas</label><input type="number" id="regid-nArmasAmb" placeholder="0" min="0"></div>
-                  <div class="f">
-                    <label>Tipo de arma</label>
-                    <select id="regid-tipoArmaAmb">
-                      <option value="">— Seleccionar —</option>
-                      <option>ARMA BLANCA</option>
-                      <option>ARMA DE FUEGO</option>
-                      <option>ARMA BLANCA Y DE FUEGO</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="f"><label>Resultados – Ambiente</label><textarea id="regid-resAmb" placeholder="Resumen de resultados..."></textarea></div>
-            </div>
-          </div>
-
-          <!-- MOV -->
-          <div id="regid-blkMov" style="display:none">
-            <div class="card">
-              <div class="ch ch-mov">🚦 Movilidad</div>
-              <div class="f mb">
-                <label>Acción del operativo <span class="req">*</span></label>
-                <div class="chips" id="regid-accionMov">
-                  <div class="chip" onclick="regidSelAccionMov(this,'CONTROL TRANSITO MAL PARQUEO')">Control tránsito — mal parqueo en vía</div>
-                  <div class="chip" onclick="regidSelAccionMov(this,'PEDAGOGIA')">Pedagogía</div>
-                </div>
-                <input type="hidden" id="regid-accionMovVal">
-              </div>
-              <div class="sil">Indicadores</div>
-              <div class="g2 mb">
-                <div class="f"><label>Cantidad de vehículos inmovilizados</label><input type="number" id="regid-vehMov" placeholder="0" min="0"></div>
-                <div class="f"><label>Cantidad de comparendos</label><input type="number" id="regid-nCompMov" placeholder="0" min="0"></div>
-              </div>
-              <div class="f mb"><label>Espacio público intervenido (m²)</label><div class="iu"><input type="number" id="regid-m2Mov" placeholder="0" min="0"><span class="ub">m²</span></div></div>
-              <div class="f"><label>Observaciones – Movilidad</label><textarea id="regid-obsMov" placeholder="Observaciones del operativo de movilidad..."></textarea></div>
-            </div>
-          </div>
-
-          <!-- OBR -->
-          <div id="regid-blkObr" style="display:none">
-            <div class="card">
-              <div class="ch ch-obr">🏗️ Obras y Urbanismo</div>
-              <div class="f mb">
-                <label>¿Se encuentra en operación la obra? <span class="req">*</span></label>
-                <div class="yn">
-                  <button class="yn-btn" onclick="ynf(this,'regid-obraEnOp','SI')">SÍ</button>
-                  <button class="yn-btn" onclick="ynf(this,'regid-obraEnOp','NO')">NO</button>
-                </div>
-                <input type="hidden" id="regid-obraEnOp">
-              </div>
-              <div class="f mb">
-                <label>¿Ocupa espacio público la obra? <span class="req">*</span></label>
-                <div class="yn">
-                  <button class="yn-btn" onclick="ynf(this,'regid-ocupaEPObr','SI');tc('regid-cdOcupaEP',true)">SÍ</button>
-                  <button class="yn-btn" onclick="ynf(this,'regid-ocupaEPObr','NO');tc('regid-cdOcupaEP',false)">NO</button>
-                </div>
-                <input type="hidden" id="regid-ocupaEPObr">
-              </div>
-              <div class="cond" id="regid-cdOcupaEP">
-                <div class="f mb"><label>Metros cuadrados de ocupación de espacio público</label><div class="iu"><input type="number" id="regid-m2OcupaObr" placeholder="0" min="0"><span class="ub">m²</span></div></div>
-              </div>
-              <div class="f mb"><label>Nombre de la persona que atiende la intervención</label><input type="text" id="regid-personaAtiende" placeholder="Nombre completo"></div>
-              <div class="f"><label>Observaciones – Obras</label><textarea id="regid-obsObr" placeholder="Observaciones del operativo de obras y urbanismo..."></textarea></div>
-            </div>
-          </div>
-
-          <div id="regid-noComp" class="card" style="text-align:center;color:var(--muted);font-size:.82rem;padding:40px">
-            ← Selecciona un Tipo de IVC arriba para ver el formulario del componente
-          </div>
-        </div>
-
-        <!-- 04 ACTA -->
+        <!-- 04 OBSERVACIONES Y ACTA -->
         <div id="regid-s4">
-          <div class="stitle">04 · Acta</div>
+          <div class="stitle">04 · Observaciones y Acta</div>
           <div class="card">
+            <div class="f mb">
+              <label>Observaciones generales</label>
+              <textarea id="regid-obs" placeholder="Observaciones del operativo en esta dirección..."></textarea>
+            </div>
             <div class="f">
               <label>Link del acta (Google Drive)</label>
               <input type="url" id="regid-actaLink" placeholder="https://drive.google.com/...">
@@ -2293,11 +1886,11 @@ body { overflow-x: hidden; }
             <!-- UPZ -->
             <div style="display:flex;flex-direction:column;gap:2px">
               <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#a0b4c8">UPZ</div>
-              <select id="dash-upz" onchange="populateDashBarrioFilter();renderDash()" style="background:#0a1628;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:4px 8px;font-family:'Inter',sans-serif;font-size:.72rem;min-width:120px">
+              <select id="dash-upz" onchange="renderDash()" style="background:#0a1628;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:4px 8px;font-family:'Inter',sans-serif;font-size:.72rem;min-width:120px">
                 <option value="">All</option>
-                <option>26 LAS FERIAS</option><option>29 MINUTO DE DIOS</option><option>30 BOYACÁ REAL</option>
-                <option>31 SANTA CECILIA</option><option>72 BOLIVIA</option><option>73 GARCÉS NAVAS</option>
-                <option>74 ENGATIVÁ</option><option>105 JARDÍN BOTÁNICO</option><option>116 ÁLAMOS</option>
+                <option>26 LAS FERIAS</option><option>29 MINUTO DE DIOS</option><option>30 BOYACA REAL</option>
+                <option>31 SANTA CECILIA</option><option>72 BOLIVIA</option><option>73 GARCES NAVAS</option>
+                <option>74 ENGATIVA</option><option>105 JARDIN BOTANICO</option><option>116 ALAMOS</option>
               </select>
             </div>
             <!-- BARRIO -->
@@ -2562,6 +2155,10 @@ body { overflow-x: hidden; }
         <div class="f"><label>Suspensiones</label><input type="number" id="eTotSusp" placeholder="0" min="0"></div>
       </div>
 
+      <!-- Observaciones -->
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Observaciones</div>
+      <div class="f mb"><label>Observaciones generales</label><textarea id="eObs" placeholder="Observaciones..." style="min-height:60px"></textarea></div>
+
       <!-- Acta soporte -->
       <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Acta soporte</div>
       <div class="f">
@@ -2655,10 +2252,6 @@ updateCompBlocks();
 // Listener en tiempo real → mantiene recs sincronizado con Firebase
 RESULTADOS_REF.orderByChild('meta/fecha').on('value', function(snap){
   const fbStatus = document.getElementById('fbStatus');
-  console.log('🔥 Firebase listener activado');
-  console.log('📊 Snapshot exists:', snap.exists());
-  console.log('📊 Snapshot numChildren:', snap.numChildren());
-  
   recs = [];
   recsMap = {};
   if(snap.exists()){
@@ -2669,12 +2262,6 @@ RESULTADOS_REF.orderByChild('meta/fecha').on('value', function(snap){
       recs.unshift(rec);   // más reciente primero
     });
   }
-  
-  console.log('✅ Total registros cargados:', recs.length);
-  if (recs.length > 0) {
-    console.log('📝 Primer registro:', recs[0]);
-  }
-  
   updateRecsList();
   publicarPuenteOperativos();
 // ══════════════════════════════════════════════════════════
@@ -2743,17 +2330,7 @@ function publicarPuenteOperativos() {
 // LISTAS DINÁMICAS — cargadas desde Firebase listas_admin
 // ══════════════════════════════════════════════════════════════════════
 const LISTAS_DEFAULT = {
-  barrios:     {
-    "26 LAS FERIAS": ["ACAPULCO", "BELLAVISTA OCCIDENTAL", "LA BONANZA", "BOSQUE POPULAR", "CATALUÑA", "CIUDAD DE HONDA", "EL DORADO-SAN JOAQUÍN", "EL GUALI", "EL LAUREL", "EL PASEO", "ESTRADA", "LA CABAÑA", "LA ESTRADITA", "LA EUROPA", "LA MARCELA", "LA RELIQUIA", "LAS FERIAS", "METRÓPOLIS", "PALO BLANCO", "SANTO DOMINGO"],
-    "29 MINUTO DE DIOS": ["ANDALUCÍA", "CIUDAD BACHUÉ", "COPETROCO LA TROPICAL", "EL PORTAL DEL RÍO", "LA PALESTINA", "TISQUESUSA", "ANDALUCÍA", "LA ESPAÑOLA", "LA SERENA", "LOS CEREZOS", "LUIS CARLOS GALÁN", "MEISSEN-SIDAUTO", "MINUTO DE DIOS", "MORISCO", "PARÍS GAITÁN", "PRIMAVERA NORTE", "QUIRIGUA"],
-    "30 BOYACÁ REAL": ["BOYACÁ", "EL CARMELO", "EL REFUGIO", "FLORENCIA", "FLORIDA BLANCA", "LA ALMERÍA", "LA GRANJA", "LA SOLEDAD NORTE", "LA SALINA", "LOS PINOS FLORENCIA", "MARATU", "PARÍS", "SANTA HELENITA", "SANTA MARÍA DEL LAGO", "SANTA ROSITA", "TABORA", "VERACRUZ", "ZARZAMORA"],
-    "31 SANTA CECILIA": ["EL ENCANTO", "EL LUJÁN", "EL REAL", "LOS MONJES", "NORMANDÍA", "NORMANDÍA OCCIDENTAL", "SAN IGNACIO", "SAN MARCOS", "SANTA CECILIA", "VILLA LUZ"],
-    "72 BOLIVIA": ["BOCHICA", "BOCHICA COMPARTIR", "BOLIVIA", "CIUDADELA COLSUBSIDIO", "CORTIJO"],
-    "73 GARCÉS NAVAS": ["GARCÉS NAVAS", "ÁLAMOS", "ÁLAMOS NORTE", "BOSQUES DE MARIANA", "EL CEDRO", "GARCÉS NAVAS", "LOS ÁNGELES", "MOLINOS DE VIENTO", "PLAZUELAS DEL VIRREY", "SAN BASILIO", "SANTA MÓNICA", "VILLA AMALIA", "VILLA SAGRARIO", "VILLAS DE GRANADA", "VILLAS DEL MADRIGAL", "VILLAS DEL DORADO-SAN ANTONIO", "BOSQUES DE GRANADA", "PARQUES DE GRANADA", "ANDALUCÍA PARQUES DE GRANADA", "PORTAL DE GRANADA", "RINCÓN DE GRANADA", "GRANADA CLUB RESIDENCIAL", "LA ROTANA", "MIRADOR DE LOS CEREZOS"],
-    "74 ENGATIVÁ": ["ALAMEDA", "CENTAUROS DEL DANUBIO", "EL CEDRO", "EL MIRADOR", "EL MUELLE", "EL PALMAR", "EL TRIÁNGULO", "EL VERDÚN", "ENGATIVÁ-CENTRO", "GRANJAS EL DORADO", "LA CABAÑA", "LA ESPERANZA", "LA FAENA", "LA RIVIERA", "LA TORQUIGUA", "SANTA LUCÍA NORTE", "LAS MERCEDES", "LAS PALMAS", "LINTERAMA", "LOS LAURELES", "LOS LAURELES-SABANAS EL DORADO", "MARANDÚ", "PORVENIR", "PUERTO AMOR-PLAYAS DEL JABOQUE", "SAN ANTONIO NORTE", "SAN BASILIO", "SAN JOSÉ OBRERO", "SANTA LIBRADA", "VILLA CLAVER I Y II", "VILLA CONSTANZA", "VILLAS DEL DORADO NORTE", "VILLA GLADYS", "VILLA MARY", "VILLA SANDRA", "VILLA TERESITA", "VIÑA DEL MAR"],
-    "105 JARDÍN BOTÁNICO": ["EL SALITRE-LUIS MARÍA FERNÁNDEZ"],
-    "116 ÁLAMOS": ["SAN IGNACIO-LOS ÁLAMOS"]
-  },
+  barrios:     {"26 LAS FERIAS": ["LAS FERIAS", "BONANZA", "LAS FERIAS OCCIDENTAL", "SAN JOAQUIN", "CATALUÑA", "LA CABAÑA", "BELLAVISTA OCCIDENTAL", "LA ESTRADA", "DORADO NORTE", "EL LAUREL", "PALO BLANCO", "BOSQUE POPULAR", "JARDIN BOTANICO", "SANTA ROSA"], "29 MINUTO DE DIOS": ["LA SERENA", "PARIS GAITAN", "BOCHICA", "LOS CEREZOS", "QUIRIGUA", "QUIRIGUA ORIENTAL", "LUIS CARLOS GALAN", "MINUTO DE DIOS", "VILLA CRISTINA", "VILLAS DE GRANADA", "VILLA GLADYS", "EL CEDRO", "VILLA SAGRARIO", "FLORENCIA"], "30 BOYACA REAL": ["FLORIDA BLANCA", "BOYACA", "ZARZAMORA", "SANTA HELENITA", "LOS PINOS FLORENCIA", "TABORA", "SANTA MARIA DEL LAGO", "LA SOLEDAD NORTE", "PARIS", "EL REAL", "LA ALMERIA", "LA GRANJA", "LAS FERIAS", "VILLA LUZ"], "31 SANTA CECILIA": ["SAN MARCOS", "VILLA LUZ", "EL SALITRE", "NORMANDIA OCCIDENTAL", "NORMANDIA", "LOS MONJES", "SAN IGNACIO", "SANTA CECILIA", "EL ENCANTO", "EL LUJAN"], "72 BOLIVIA": ["BOCHICA II", "EL CORTIJO", "BOLIVIA ORIENTAL", "BOLIVIA", "CIUDADELA COLSUBSIDIO", "BOCHICA"], "73 GARCES NAVAS": ["ALAMOS NORTE", "LOS ANGELES", "EL CEDRO", "ALAMOS", "VILLAS DE GRANADA", "GARCES NAVAS", "VILLA AMALIA", "LA PERLA", "VILLAS DE ALCALA", "GRAN GRANADA I Y II", "VILLAS DE MADRIGAL", "VILLA DEL MAR", "SANTA MONICA"], "74 ENGATIVA": ["EL CEDRO", "SAN ANTONIO NORTE", "VILLA TERESITA", "ENGATIVA CENTRO", "SABANAS EL DORADO", "MARANDU", "EL MUELLE", "SAN ANTONIO", "EL PALMAR", "LA RIVIERA", "VIÑA DEL MAR", "EL GACO", "VILLA GLADYS", "VILLAS DEL PALMAR"], "105 JARDIN BOTANICO": ["EL SALITRE LUIS MARIA FERNANDEZ", "JARDIN BOTANICO", "COMPENSAR I"], "116 ALAMOS": ["LOS ALAMOS", "SAN IGNACIO", "PARQUE INDUSTRIAL EL DORADO", "EL DORADO INDUSTRIAL"]},
   responsables:{"Profesionales": ["JOHANA GARZÓN", "ANDRÉS ARIAS", "ANLLY ROJAS", "MAURICIO GÓMEZ", "YAMILE ESPITIA", "DAVID ALBA", "JOSE GONZALEZ", "HECTOR RAMIREZ", "SAMUEL URBINA", "MIGUEL PEREZ", "JENNY ARROYO", "ADRIANA FORERO", "JENIFER NIETO", "JHON LADINO", "MARIA ÁLVAREZ", "HENRY FORIGUA"], "Gestores": ["LEONARDO PIÑA", "JAIRO LOZANO", "LILIANA CHARRY", "WILDEMAR CARVAJAL", "JENIFER ESPINOSA", "GIOVANNY GAVIRIA", "NICOLAS GALEANO", "DANIELA QUINTERO", "CAROL FORERO", "ANDRÉS PALACIO"], "Técnicos": ["JEISSON RODRÍGUEZ", "EFREN SIERRA", "CAMILO VARGAS", "LADY MARTINEZ", "JHON MONCADA", "WILSON PULIDO", "ALEXANDRA MONTENEGRO", "JUAN CAMPO"]},
   tipos_ae:    [{"value": "AUTOPARTES", "label": "Autopartes"}, {"value": "BARES DE ALTO IMPACTO", "label": "Bares de alto impacto"}, {"value": "BICICLETAS", "label": "Bicicletas"}, {"value": "BODEGAS DE RECICLAJE", "label": "Bodegas de reciclaje"}, {"value": "CASAS DEL LENOCINIO", "label": "Casas del lenocinio"}, {"value": "ESTABLECIMIENTOS DE COMERCIO", "label": "Establecimientos de comercio"}, {"value": "HOTELES Y MOTELES", "label": "Hoteles y moteles"}, {"value": "METROLOGIA LEGAL", "label": "Metrología legal"}, {"value": "PARQUEADEROS", "label": "Parqueaderos"}, {"value": "POLVORA Y PIROTECNIA", "label": "Pólvora y pirotecnia"}, {"value": "TELEFONOS MOVILES CELULARES", "label": "Teléfonos móviles celulares"}],
   lineas_amb:  [{"value": "RECUPERACION EP RONDA", "label": "RECUPERACIÓN DE ESPACIO PÚBLICO Y ZONA DE RONDA CUERPOS DE AGUA POR DISPOSICIÓN INADECUADA DE RESIDUOS"}, {"value": "ESTRATEGIA RESIDUOS CARRETEROS CAMBUCHES", "label": "ESTRATEGIA DE RESIDUOS (BASURAS), CARRETEROS Y CAMBUCHES"}, {"value": "SENTENCIA RIO BOGOTA", "label": "SENTENCIA RIO BOGOTÁ"}, {"value": "CONEXIONES ILEGALES", "label": "CONEXIONES ILEGALES"}],
@@ -2764,9 +2341,7 @@ const LISTAS_DEFAULT = {
 };
 
 function poblarSelects(listas) {
-  console.log('🔄 Poblando selects con listas:', listas);
-  
-  // ── Barrios (formulario principal) ──
+  // ── Barrios ──
   const selBarrio = document.getElementById('barrio');
   if (selBarrio) {
     const cur = selBarrio.value;
@@ -2783,25 +2358,6 @@ function poblarSelects(listas) {
       selBarrio.appendChild(grp);
     });
     if (cur) selBarrio.value = cur;
-  }
-
-  // ── Barrios (regid) ──
-  const regidBarrio = document.getElementById('regid-barrio');
-  if (regidBarrio) {
-    const cur = regidBarrio.value;
-    regidBarrio.innerHTML = '<option value="">— Seleccionar barrio —</option>';
-    Object.entries(listas.barrios || {}).sort().forEach(([upz, barrs]) => {
-      const grp = document.createElement('optgroup');
-      grp.label = upz;
-      (barrs || []).sort().forEach(b => {
-        const opt = document.createElement('option');
-        opt.value = b; opt.textContent = b;
-        opt.dataset.upz = upz;
-        grp.appendChild(opt);
-      });
-      regidBarrio.appendChild(grp);
-    });
-    if (cur) regidBarrio.value = cur;
   }
 
   // ── Responsables (form principal) ──
@@ -2822,27 +2378,6 @@ function poblarSelects(listas) {
     });
     if (cur) sel.value = cur;
   });
-
-  // ── Responsables (regid) ──
-  const regidResp = document.getElementById('regid-resp');
-  if (regidResp) {
-    const cur = regidResp.value;
-    regidResp.innerHTML = '<option value="">— Seleccionar responsable —</option>';
-    Object.entries(listas.responsables || {}).forEach(([grupo, nombres]) => {
-      const grp = document.createElement('optgroup');
-      grp.label = grupo;
-      (nombres || []).forEach(n => {
-        const opt = document.createElement('option');
-        opt.value = n; opt.textContent = n;
-        grp.appendChild(opt);
-      });
-      regidResp.appendChild(grp);
-    });
-    const optOtro = document.createElement('option');
-    optOtro.value = '__OTRO__'; optOtro.textContent = 'OTRO (especificar)';
-    regidResp.appendChild(optOtro);
-    if (cur) regidResp.value = cur;
-  }
 
   // ── Responsables (modal editar) ──
   const eResp = document.getElementById('eResp');
@@ -2865,7 +2400,7 @@ function poblarSelects(listas) {
     if (cur) eResp.value = cur;
   }
 
-  // ── Tipo AE (formulario principal) ──
+  // ── Tipo AE ──
   const selAE = document.getElementById('tipoAE');
   if (selAE) {
     const cur = selAE.value;
@@ -2878,20 +2413,7 @@ function poblarSelects(listas) {
     if (cur) selAE.value = cur;
   }
 
-  // ── Tipo AE (regid) ──
-  const regidTipoAE = document.getElementById('regid-tipoAE');
-  if (regidTipoAE) {
-    const cur = regidTipoAE.value;
-    regidTipoAE.innerHTML = '<option value="">— Seleccionar —</option>';
-    (listas.tipos_ae || []).forEach(t => {
-      const opt = document.createElement('option');
-      opt.value = t.value || t; opt.textContent = t.label || t;
-      regidTipoAE.appendChild(opt);
-    });
-    if (cur) regidTipoAE.value = cur;
-  }
-
-  // ── Línea Ambiente (formulario principal) ──
+  // ── Línea Ambiente ──
   const selAmb = document.getElementById('lineaAmb');
   if (selAmb) {
     const cur = selAmb.value;
@@ -2902,19 +2424,6 @@ function poblarSelects(listas) {
       selAmb.appendChild(opt);
     });
     if (cur) selAmb.value = cur;
-  }
-
-  // ── Línea Ambiente (regid) ──
-  const regidLineaAmb = document.getElementById('regid-lineaAmb');
-  if (regidLineaAmb) {
-    const cur = regidLineaAmb.value;
-    regidLineaAmb.innerHTML = '<option value="">— Seleccionar línea de acción —</option>';
-    (listas.lineas_amb || []).forEach(l => {
-      const opt = document.createElement('option');
-      opt.value = l.value || l; opt.textContent = l.label || l;
-      regidLineaAmb.appendChild(opt);
-    });
-    if (cur) regidLineaAmb.value = cur;
   }
 
   // ── Colegios (datalist) ──
@@ -2944,7 +2453,7 @@ function poblarSelects(listas) {
     });
   }
 
-  // ── Polígonos EP (formulario principal) ──
+  // ── Polígonos EP ──
   const selPol = document.getElementById('poligono');
   if (selPol) {
     const curPol = selPol.value;
@@ -2955,19 +2464,6 @@ function poblarSelects(listas) {
       selPol.appendChild(opt);
     });
     if (curPol) selPol.value = curPol;
-  }
-
-  // ── Polígonos EP (regid) ──
-  const regidPoligono = document.getElementById('regid-poligono');
-  if (regidPoligono) {
-    const curPol = regidPoligono.value;
-    regidPoligono.innerHTML = '<option value="">— Seleccionar polígono —</option>';
-    (listas.poligonos_ep || []).forEach(p => {
-      const opt = document.createElement('option');
-      opt.value = p; opt.textContent = p;
-      regidPoligono.appendChild(opt);
-    });
-    if (curPol) regidPoligono.value = curPol;
   }
 
   // ── Tipos OBR (select si existe, sino chips) ──
@@ -2985,11 +2481,10 @@ function poblarSelects(listas) {
 }
 
 // Cargar listas desde Firebase (con fallback a LISTAS_DEFAULT)
-// Usar .on('value') para actualizar en tiempo real cuando cambien las listas
-LISTAS_REF.on('value', function(snap) {
+LISTAS_REF.once('value', function(snap) {
   if (snap.exists()) {
     _listas = snap.val();
-    console.log('📥 Listas cargadas/actualizadas desde Firebase:', _listas);
+    console.log('📥 Listas cargadas desde Firebase:', _listas);
     // Inicializar SOLO si faltan claves (undefined o null)
     if (!_listas.barrios || Object.keys(_listas.barrios).length === 0) {
       _listas.barrios = LISTAS_DEFAULT.barrios;
@@ -3116,105 +2611,31 @@ function setDashTab(tab) {
 }
 
 function getDashRecs() {
-  const upzF  = (document.getElementById('dash-upz')?.value || '').trim();
-  const barF  = (document.getElementById('dash-barrio')?.value || '').trim();
-  const dirF  = (document.getElementById('dash-dir')?.value || '').toLowerCase().trim();
+  const upzF  = document.getElementById('dash-upz')?.value || '';
+  const barF  = document.getElementById('dash-barrio')?.value || '';
+  const dirF  = (document.getElementById('dash-dir')?.value || '').toLowerCase();
   const desde = document.getElementById('dash-desde')?.value || '';
   const hasta = document.getElementById('dash-hasta')?.value || '';
-  const tipoEstF = (document.getElementById('dash-tipo-est')?.value || '').trim();
-  
-  console.log('🔍 Filtrando dashboard:', { upzF, barF, dirF, desde, hasta, tipoEstF, dashTab });
-  console.log('📋 Barrio seleccionado:', `"${barF}"`, 'length:', barF.length);
-  
-  let loggedFirst = false;
-  
-  const filtered = recs.filter(r => {
-    // Log del primer registro para debug
-    if (!loggedFirst) {
-      console.log('🔬 Primer registro evaluado:', {
-        cc: r.cc,
-        upz: r.ub?.upz,
-        barrio: `"${r.ub?.barrio}"`,
-        dir: r.ub?.dir
-      });
-      loggedFirst = true;
-    }
-    
+  const tipoEstF = document.getElementById('dash-tipo-est')?.value || '';
+  return recs.filter(r => {
     if (r.cc !== dashTab) return false;
-    if (upzF  && (r.ub?.upz||'').trim() !== upzF)  return false;
-    if (barF  && (r.ub?.barrio||'').trim() !== barF) return false;
+    if (upzF  && (r.ub?.upz||'')    !== upzF)  return false;
+    if (barF  && (r.ub?.barrio||'') !== barF)   return false;
     if (dirF  && !(r.ub?.dir||'').toLowerCase().includes(dirF)) return false;
     if (desde && (r.meta?.fecha||'') < desde)   return false;
     if (hasta && (r.meta?.fecha||'') > hasta)   return false;
     // Filtro de tipo de establecimiento (solo para AE)
-    if (tipoEstF && dashTab === 'AE' && (r.ae?.tipo||'').trim() !== tipoEstF) return false;
+    if (tipoEstF && dashTab === 'AE' && (r.ae?.tipo||'') !== tipoEstF) return false;
     return true;
   });
-  
-  console.log(`✅ Filtrado: ${filtered.length} de ${recs.length} registros`);
-  if (barF && filtered.length === 0) {
-    console.log('⚠️ No se encontraron registros con barrio:', barF);
-    console.log('📝 Barrios disponibles:', [...new Set(recs.filter(r => r.cc === dashTab).map(r => `"${r.ub?.barrio}"`))])
-  }
-  return filtered;
 }
 
 function populateDashBarrioFilter() {
-  const upzF = (document.getElementById('dash-upz')?.value || '').trim();
+  const upzF = document.getElementById('dash-upz')?.value || '';
   const sel = document.getElementById('dash-barrio');
   if (!sel) return;
-  
-  const currentValue = sel.value;
-  
-  // Filtrar por UPZ si hay uno seleccionado, y solo incluir registros del tab actual
-  const barrios = [...new Set(
-    recs
-      .filter(r => r.cc === dashTab && (!upzF || (r.ub?.upz||'').trim() === upzF))
-      .map(r => (r.ub?.barrio||'').trim())
-      .filter(Boolean)
-  )].sort();
-  
-  console.log('🏘️ Poblando filtro de barrios:', {
-    upzSeleccionada: upzF || 'Todas',
-    tabActivo: dashTab,
-    barriosEncontrados: barrios.length,
-    barrios: barrios
-  });
-  
-  sel.innerHTML = '<option value="">All</option>' + barrios.map(b => `<option value="${b}">${b}</option>`).join('');
-  
-  // Restaurar valor si todavía existe en la lista
-  if (currentValue && barrios.includes(currentValue)) {
-    sel.value = currentValue;
-  }
-}
-
-function populateDashUPZFilter() {
-  const sel = document.getElementById('dash-upz');
-  if (!sel) return;
-  
-  const currentValue = sel.value;
-  
-  // Obtener UPZs únicas del tab actual
-  const upzs = [...new Set(
-    recs
-      .filter(r => r.cc === dashTab)
-      .map(r => (r.ub?.upz||'').trim())
-      .filter(Boolean)
-  )].sort();
-  
-  console.log('🗺️ Poblando filtro de UPZs:', {
-    tabActivo: dashTab,
-    upzsEncontradas: upzs.length,
-    upzs: upzs
-  });
-  
-  sel.innerHTML = '<option value="">All</option>' + upzs.map(u => `<option value="${u}">${u}</option>`).join('');
-  
-  // Restaurar valor si todavía existe
-  if (currentValue && upzs.includes(currentValue)) {
-    sel.value = currentValue;
-  }
+  const barrios = [...new Set(recs.filter(r => !upzF || r.ub?.upz === upzF).map(r => r.ub?.barrio||'').filter(Boolean))].sort();
+  sel.innerHTML = '<option value="">All</option>' + barrios.map(b => `<option>${b}</option>`).join('');
 }
 
 function populateDashTipoEstFilter() {
@@ -3397,24 +2818,15 @@ function renderDashSidebar(rs) {
 function renderDash() {
   const d = document.getElementById('dash-content');
   if (!d) return;
-  populateDashUPZFilter();
   populateDashBarrioFilter();
   const rs = getDashRecs();
   renderDashSidebar(rs);
   
   console.log('=== DEBUG DASHBOARD ===');
-  console.log('Total recs en DB:', recs.length);
-  console.log('dashTab activo:', dashTab);
-  console.log('Filtros aplicados:', {
-    upz: document.getElementById('dash-upz')?.value || '(todos)',
-    barrio: document.getElementById('dash-barrio')?.value || '(todos)',
-    dir: document.getElementById('dash-dir')?.value || '(todas)',
-    desde: document.getElementById('dash-desde')?.value || '(sin límite)',
-    hasta: document.getElementById('dash-hasta')?.value || '(sin límite)',
-    tipoEst: document.getElementById('dash-tipo-est')?.value || '(todos)'
-  });
-  console.log('Registros filtrados:', rs.length);
-  if (recs.length > 0) console.log('Registro de muestra:', recs[0]);
+  console.log('Total recs:', recs.length);
+  console.log('dashTab:', dashTab);
+  console.log('Filtered recs:', rs.length);
+  console.log('Sample rec:', recs[0]);
 
   if (rs.length === 0) {
     d.innerHTML = `<div style="text-align:center;padding:60px;color:#4a7fa5">
@@ -3626,7 +3038,7 @@ function switchMain(v, btn) {
   const sideBtn = document.getElementById('sidebtn-' + v);
   if (sideBtn) sideBtn.classList.add('active');
   // Subtitle
-  const subtitles = { form: 'Nuevo Registro', recs: 'Todos los operativos registrados', dash: 'Dashboard · Inspección Vigilancia y Control 2026', regid: 'Nuevo Registro por ID' };
+  const subtitles = { form: 'Nuevo Registro', recs: 'Todos los operativos registrados', dash: 'Dashboard · Inspección Vigilancia y Control 2026' };
   const subEl = document.getElementById('main-subtitle');
   if (subEl) subEl.textContent = subtitles[v] || '';
   // Scroll al tope del contenido principal
@@ -3636,11 +3048,6 @@ function switchMain(v, btn) {
   // Repoblar selects cuando se cambia al formulario
   if (v === 'form' && _listas) {
     poblarSelects(_listas);
-  }
-  
-  // Inicializar regid cuando se cambia a esa vista
-  if (v === 'regid') {
-    regidInicializar();
   }
   
   if (v === 'dash') {
@@ -3661,116 +3068,18 @@ function goRevision(){
 
 // ── CHIP (single select) ───────────────────────────────
 function selChip(el){
-  // Detectar si estamos en el contexto de regid o sistema antiguo
-  const container = el.closest('#regid-tipoIVC') ? 'regid' : 'old';
-  
-  if (container === 'regid') {
-    // Lógica para regid - SELECCIÓN ÚNICA (como radio button)
-    const was = el.classList.contains('on');
-    
-    // Desmarcar todos los chips primero
-    document.querySelectorAll('#regid-tipoIVC .chip').forEach(c => c.classList.remove('on'));
-    
-    // Si NO estaba seleccionado, marcarlo (si estaba, ya se desmarcó arriba)
-    if (!was) {
-      el.classList.add('on');
-      regidUpdateCompBlocks();
-      // Scroll a la sección de preguntas dinámicas
-      setTimeout(() => {
-        const s3 = document.getElementById('regid-s3');
-        if (s3) s3.scrollIntoView({behavior: 'smooth', block: 'start'});
-      }, 180);
-    } else {
-      // Si estaba seleccionado y se desmarcó, ocultar todos los bloques
-      regidUpdateCompBlocks();
-    }
-  } else {
-    // Lógica original para sistema antiguo
-    const was = el.classList.contains('on');
-    document.querySelectorAll('#tipoIVC .chip').forEach(c => c.classList.remove('on'));
-    if (!was) { el.classList.add('on'); }
-    document.getElementById('tipoIVCVal').value = was ? '' : el.textContent.trim();
-    updateCompBlocks();
-    if (!was) {
-      setTimeout(function(){
-        const s3 = document.getElementById('s3');
-        if (s3) s3.scrollIntoView({behavior: 'smooth', block: 'start'});
-      }, 180);
-    }
+  const was = el.classList.contains('on');
+  document.querySelectorAll('#tipoIVC .chip').forEach(c=>c.classList.remove('on'));
+  if(!was){ el.classList.add('on'); }
+  document.getElementById('tipoIVCVal').value = was?'':el.textContent.trim();
+  updateCompBlocks();
+  if(!was){
+    setTimeout(function(){
+      const s3 = document.getElementById('s3');
+      if(s3) s3.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 180);
   }
 }
-
-function regidUpdateCompBlocks() {
-  // Obtener el chip seleccionado (solo puede haber uno)
-  const selectedChip = document.querySelector('#regid-tipoIVC .chip.on');
-  const selectedComp = selectedChip ? selectedChip.dataset.comp : null;
-  
-  // Mostrar/ocultar bloques según lo seleccionado
-  ['AE', 'EP', 'AMB', 'MOV', 'OBR'].forEach(k => {
-    const map = {AE: 'regid-blkAE', EP: 'regid-blkEP', AMB: 'regid-blkAmb', MOV: 'regid-blkMov', OBR: 'regid-blkObr'};
-    const block = document.getElementById(map[k]);
-    if (block) {
-      block.style.display = selectedComp === k ? 'block' : 'none';
-    }
-  });
-  
-  // Mostrar/ocultar el mensaje de "no hay componente seleccionado"
-  const noComp = document.getElementById('regid-noComp');
-  if (noComp) {
-    noComp.style.display = selectedComp ? 'none' : 'block';
-  }
-}
-
-// CORRECCIÓN 3: Versión SÍNCRONA que garantiza visibilidad inmediata
-function regidUpdateCompBlocksSincrono() {
-  console.log('🔄 regidUpdateCompBlocksSincrono - Forzando visibilidad de bloques');
-  
-  const selectedChip = document.querySelector('#regid-tipoIVC .chip.on');
-  const selectedComp = selectedChip ? selectedChip.dataset.comp : null;
-  
-  console.log('   Componente seleccionado:', selectedComp);
-  
-  if (!selectedComp) {
-    console.warn('⚠️ No hay componente seleccionado');
-    return;
-  }
-  
-  // Mapa de componentes a bloques
-  const map = {
-    AE: 'regid-blkAE', 
-    EP: 'regid-blkEP', 
-    AMB: 'regid-blkAmb', 
-    MOV: 'regid-blkMov', 
-    OBR: 'regid-blkObr'
-  };
-  
-  // Forzar display en todos los bloques
-  ['AE', 'EP', 'AMB', 'MOV', 'OBR'].forEach(k => {
-    const blockId = map[k];
-    const block = document.getElementById(blockId);
-    if (block) {
-      if (k === selectedComp) {
-        block.style.display = 'block';
-        block.style.visibility = 'visible';
-        block.style.opacity = '1';
-        console.log(`   ✅ ${blockId} → display:block`);
-      } else {
-        block.style.display = 'none';
-      }
-    } else {
-      console.warn(`   ⚠️ Bloque ${blockId} no encontrado`);
-    }
-  });
-  
-  // Ocultar mensaje de "sin componente"
-  const noComp = document.getElementById('regid-noComp');
-  if (noComp) {
-    noComp.style.display = 'none';
-  }
-  
-  console.log('✅ Bloques actualizados síncronamente');
-}
-
 
 function updateCompBlocks(){
   const a = document.querySelector('#tipoIVC .chip.on');
@@ -3938,32 +3247,20 @@ function collect(){
 // ── SAVE ───────────────────────────────────────────────
 function saveRec(){
   const rec = collect();
-  console.log('💾 Intentando guardar registro:', rec);
-  
   // Validación mínima
   const missing = REQS.filter(f => !document.getElementById(f.id)?.value?.trim());
-  console.log('🔍 Campos faltantes:', missing);
-  
-  if(missing.length > 0){ 
-    console.error('❌ Faltan campos obligatorios:', missing.map(f => f.lbl));
-    buildAudit(); 
-    toast('Completa los campos obligatorios','err'); 
-    return; 
-  }
+  if(missing.length > 0){ buildAudit(); toast('Completa los campos obligatorios','err'); return; }
 
   const btnSave = document.getElementById('btnSave');
   if(btnSave){ btnSave.disabled = true; btnSave.textContent = 'Guardando...'; }
 
-  console.log('✅ Guardando en Firebase...');
   RESULTADOS_REF.push(rec)
     .then(function(){
-      console.log('✅ Guardado exitoso en Firebase');
       toast('✓ Operativo guardado en Firebase','ok');
       resetForm();
       window.scrollTo({top:0, behavior:'smooth'});
     })
     .catch(function(err){
-      console.error('❌ Error al guardar:', err);
       toast('Error al guardar: ' + err.message, 'err');
       console.error(err);
     })
@@ -4244,14 +3541,9 @@ function clearFilters(){
 }
 
 function updateRecsList(){
-  console.log('📋 updateRecsList llamado, total recs:', recs.length);
-  
   const filtered = getFilteredRecs();
   const total = recs.length;
   const n = filtered.length;
-  
-  console.log('🔍 Filtrados:', n, 'de', total);
-  
   document.getElementById('rcnt').textContent = total;
   document.getElementById('rcntLbl').textContent =
     n === total
@@ -4271,13 +3563,11 @@ function updateRecsList(){
   if (elPct) elPct.textContent = pct + '%';
   const list = document.getElementById('recsList');
   if(n===0){
-    console.log('⚠️ No hay registros para mostrar');
     list.innerHTML = total===0
       ? '<div class="empty-s"><div style="font-size:2.5rem;margin-bottom:10px">&#9633;</div><div>Aun no hay operativos registrados</div></div>'
       : '<div class="empty-s"><div style="font-size:2rem;margin-bottom:10px">&#128269;</div><div>Ningún registro coincide con los filtros aplicados</div></div>';
     return;
   }
-  console.log('✅ Renderizando', n, 'registros en la lista');
   list.innerHTML=filtered.map((r,i)=>{
     const globalIdx = recs.indexOf(r);
     const t=r.tot||{};
@@ -4289,8 +3579,7 @@ function updateRecsList(){
     const resp=r.meta?.resp||r.meta?.responsable||'';
     const fecha=r.meta?.fecha||'';
     const h1=r.meta?.h1||''; const h2=r.meta?.h2||'';
-    const idOp = r.meta?.idOp || r.id || '';
-    const idOpDisplay = cleanId(idOp);
+    const idOp=r.meta?.idOp||r.id||'';
     let compDetail='';
     if(cc==='AE'&&r.ae){
       const ae=r.ae;
@@ -4333,35 +3622,72 @@ function updateRecsList(){
     const ccLabel = ccLabels[cc] || '';
     const ccStyle = ccStyles[cc] || 'background:#f1f5f9;color:#475569';
     
-    return `<div class="rrow" onclick="openMo(${globalIdx})">
-      <div class="rnum">${idOpDisplay||String(n-i).padStart(2,'0')}</div>
-      <div style="min-width:0">
+    // Resultados numéricos — lee tot.* con fallback a campos del componente
+    const _rv = (a,...bs) => { for(const b of [a,...bs]){ const n=Number(b||0); if(n>0) return n; } return 0; };
+    const rv_m2   = _rv(t.m2,   r.ep?.m2Rec, r.amb?.m2,   r.mov?.m2,   r.obr?.m2Ocupa);
+    const rv_m3   = _rv(t.m3,   r.amb?.m3);
+    const rv_comp = _rv(t.comp, r.mov?.comp, r.mov?.nComp, r.ae?.comp, r.ae?.comparendo);
+    const rv_pers = _rv(t.pers, r.ae?.pers,  r.amb?.hc);
+    const rv_armas= _rv(t.armas,r.ae?.armas, r.ae?.nArmas, r.amb?.nArmas);
+    const rv_veh  = _rv(t.veh,  r.mov?.veh);
+    const rv_susp = _rv(t.susp, r.ae?.susp);
+    const rv_vend = _rv(t.vend, r.ep?.vendRet);
+    const rv_camb = _rv(t.camb, r.amb?.camb);
+    const rv_car  = _rv(t.car,  r.amb?.car, r.amb?.carretas);
+    // Chip de medida AE (siempre visible si existe)
+    const aeMedida = r.ae?.medida || '';
+    const aeMedidaStyle = aeMedida.includes('SUSPENSION') ? 'background:#fdf4ff;color:#7e22ce;border:1px solid #d8b4fe'
+      : aeMedida.includes('CIERRE DEF') ? 'background:#fee2e2;color:#991b1b;border:1px solid #fca5a5'
+      : aeMedida.includes('CIERRE PREV') ? 'background:#fff7ed;color:#c2410c;border:1px solid #fdba74'
+      : 'background:#f1f5f9;color:#475569;border:1px solid #cbd5e1';
+    const aeMedidaIcon = aeMedida.includes('SUSPENSION') ? '🚫' : aeMedida.includes('CIERRE') ? '🔒' : '⚠';
+    // Chip de acción MOV (cuando no hay números)
+    const movAccion = (cc==='MOV' && r.mov?.accion) ? r.mov.accion : '';
+    const resultChips = [
+      rv_m2   ? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:#f0fdf4;color:#166534;border:1px solid #86efac;border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">📐 ${rv_m2} m²</span>` : '',
+      rv_m3   ? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:#f0fdf4;color:#166534;border:1px solid #86efac;border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">🪣 ${rv_m3} m³</span>` : '',
+      rv_comp ? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:#fff7ed;color:#c2410c;border:1px solid #fdba74;border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">📋 ${rv_comp} comp.</span>` : '',
+      rv_pers ? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">👤 ${rv_pers} pers.</span>` : '',
+      rv_susp ? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:#fdf4ff;color:#7e22ce;border:1px solid #d8b4fe;border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">🚫 ${rv_susp} susp.</span>` : '',
+      (!rv_susp && aeMedida) ? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;${aeMedidaStyle};border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">${aeMedidaIcon} ${aeMedida}</span>` : '',
+      rv_armas? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">🔫 ${rv_armas} arm.</span>` : '',
+      rv_veh  ? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:#f1f5f9;color:#374151;border:1px solid #cbd5e1;border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">🚗 ${rv_veh} veh.</span>` : '',
+      rv_vend ? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:#ecfdf5;color:#065f46;border:1px solid #6ee7b7;border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">🛒 ${rv_vend} vend.</span>` : '',
+      rv_camb ? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:#fefce8;color:#92400e;border:1px solid #fde68a;border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">⛺ ${rv_camb} camb.</span>` : '',
+      rv_car  ? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:#f8fafc;color:#475569;border:1px solid #e2e8f0;border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">🛒 ${rv_car} carr.</span>` : '',
+      (!rv_comp && !rv_veh && !rv_m2 && movAccion) ? `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:5px;font-size:.62rem;font-weight:700;white-space:nowrap">🚦 ${movAccion}</span>` : '',
+    ].filter(Boolean).join('');
+
+    const actaBtn = r.acta?.link
+      ? `<a href="${r.acta.link}" target="_blank" rel="noopener"
+             onclick="event.stopPropagation()"
+             style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#f0fdf4;color:#15803d;border:1.5px solid #86efac;border-radius:6px;font-family:'Inter',sans-serif;font-size:.62rem;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:filter .15s"
+             onmouseover="this.style.filter='brightness(.93)'" onmouseout="this.style.filter='brightness(1)'">
+            📎 Ver acta
+          </a>`
+      : `<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#fff7ed;color:#c2410c;border:1.5px solid #fdba74;border-radius:6px;font-size:.62rem;font-weight:700;white-space:nowrap;flex-shrink:0">
+            ⚠ Sin acta
+          </span>`;
+
+    return `<div class="rrow" onclick="openMo(${globalIdx})" style="grid-template-columns:auto 1fr auto;align-items:center">
+      <div class="rnum">${idOp||String(n-i).padStart(2,'0')}</div>
+      <div style="min-width:0;display:flex;flex-direction:column;gap:3px">
         <div class="rmain" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
           ${ccLabel?`<span style="font-size:.68rem;font-weight:800;${ccStyle};padding:1px 7px;border-radius:4px">${ccLabel}</span>`:''}
           <span>${barrio||upz||'Sin ubicación'}</span>
-          ${idOpDisplay?`<span style="font-size:.65rem;color:var(--muted);font-weight:400">#${idOpDisplay}</span>`:''}
+          ${idOp?`<span style="font-size:.65rem;color:var(--muted);font-weight:400">#${idOp}</span>`:''}
         </div>
-        <div class="rsub" style="margin-top:3px">
+        <div class="rsub">
           ${fecha?`<span>${fecha}</span>`:''}
-          ${h1?` &bull; ${h1}${h2?' → '+h2:''}`:''}
+          ${h1?` &bull; ${h1}${h2?' → '+h2:''}`:''} 
           ${resp?` &bull; ${resp}`:''}
         </div>
-        ${dir?`<div style="font-size:.68rem;color:var(--muted);margin-top:1px">${dir}</div>`:''}
-        ${compDetail?`<div style="margin-top:3px;display:flex;flex-wrap:wrap;gap:4px">${compDetail}</div>`:''}
+        ${dir?`<div style="font-size:.68rem;color:var(--muted)">${dir}</div>`:''}
+        ${compDetail?`<div style="display:flex;flex-wrap:wrap;gap:4px">${compDetail}</div>`:''}
+        ${resultChips?`<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">${resultChips}</div>`:''}
       </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
-        <div class="rbadges">${badges}</div>
-        ${r.acta?.link
-          ? `<a href="${r.acta.link}" target="_blank" rel="noopener"
-               onclick="event.stopPropagation()"
-               style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;background:#f0fdf4;color:#15803d;border:1.5px solid #86efac;border-radius:6px;font-family:'Inter',sans-serif;font-size:.62rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:filter .15s"
-               onmouseover="this.style.filter='brightness(.93)'" onmouseout="this.style.filter='brightness(1)'">
-              📎 Ver acta
-            </a>`
-          : `<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;background:#fff7ed;color:#c2410c;border:1.5px solid #fdba74;border-radius:6px;font-size:.62rem;font-weight:700;white-space:nowrap">
-              ⚠ Sin acta
-            </span>`
-        }
+      <div style="flex-shrink:0;display:flex;align-items:center">
+        ${actaBtn}
       </div>
     </div>`;
   }).join('');
@@ -4372,10 +3698,6 @@ function openMo(idx){
   selIdx=idx; const r=recs[idx];
   selKey = r?._fbKey || null;
   const t=r.tot||{}; const tipos=(r.tipoIVC||[]); const cc=r.cc||'';
-  
-  // Limpiar ID para quitar .0
-  const idOp = cleanId(r.meta?.idOp || r.id);
-  
   document.getElementById('moTitle').textContent=
     (tipos[0]||'Operativo') + (r.ub?.barrio?' — '+r.ub.barrio:'');
 
@@ -4392,10 +3714,9 @@ function openMo(idx){
 
   // ── Identificación ──
   h += sec('Identificación','var(--primary)',
-    M('ID Operativo', idOp) +
+    M('ID Operativo', r.meta?.idOp||r.id) +
     M('Fecha', r.meta?.fecha) +
-    M('Hora inicio', r.meta?.h1) +
-    M('Hora fin', r.meta?.h2) +
+    M('Hora', r.meta?.h1?(r.meta.h1+(r.meta?.h2?' → '+r.meta.h2:'')):'') +
     M('Responsable', r.meta?.resp||r.meta?.responsable) +
     M('Tipo IVC', tipos[0]) +
     M('Personas/HC', r.pHC||t.pers||'')
@@ -4408,30 +3729,22 @@ function openMo(idx){
     M('UPZ', r.ub?.upz)
   );
 
-  // ── Componente Actividad Económica ──
+  // ── Componente ──
   if(cc==='AE'&&r.ae){
     const ae=r.ae;
     h += sec('Actividad Económica','#7c3aed',
       M('Tipo de establecimiento', ae.tipo) +
-      M('Nombre establecimiento', ae.nom) +
+      M('Nombre', ae.nom) +
       M('Entorno escolar', ae.entEsc) +
       M('Colegio', ae.colegio) +
-      M('Personas intervenidas', ae.pers) +
-      M('Bebidas destruidas', ae.beb||ae.bebidas) +
       M('Armas incautadas', ae.armas||ae.nArmas) +
+      M('Bebidas destruidas', ae.beb||ae.bebidas) +
       M('Dosis incautadas', ae.dosis) +
-      M('¿Aplicó medida?', ae.aplico) +
       M('Medida correctiva', ae.medida) +
-      M('Días suspensión', ae.dias) +
       M('N° Comparendo', ae.comp||ae.comparendo) +
-      M('N° Comparendo preventivo', ae.compPrev) +
-      M('Motivo suspensión', ae.motivoSusp) +
-      M('Motivo cierre definitivo', ae.motivoCDef) +
       M('Resultados', ae.res||ae.resultados)
     );
   }
-  
-  // ── Componente Espacio Público ──
   if(cc==='EP'&&r.ep){
     const ep=r.ep;
     h += sec('Espacio Público','#0369a1',
@@ -4445,8 +3758,6 @@ function openMo(idx){
       M('Resultados', ep.res||ep.resultados)
     );
   }
-  
-  // ── Componente Ambiente ──
   if(cc==='AMB'&&r.amb){
     const a=r.amb;
     h += sec('Ambiente','#166534',
@@ -4455,44 +3766,37 @@ function openMo(idx){
       M('Residuos recolectados m³', a.m3) +
       M('Llantas recuperadas', a.llantas) +
       M('HC identificados', a.hc) +
-      M('Registros de persona', a.regPers) +
-      M('Capturas', a.capturas) +
       M('Cambuches retirados', a.camb) +
       M('Carretas retiradas', a.car||a.carretas) +
       M('Dosis incautadas', a.dosis) +
-      M('¿Armas incautadas?', a.armasB) +
-      M('N° Armas', a.nArmas) +
+      M('Armas incautadas', a.nArmas) +
       M('Tipo de arma', a.tipoArma) +
       M('Resultados', a.res||a.resultados)
     );
   }
-  
-  // ── Componente Movilidad ──
   if(cc==='MOV'&&r.mov){
     const m=r.mov;
     h += sec('Movilidad','#1e40af',
       M('Acción', m.accion||m.obj) +
       M('Vehículos inmovilizados', m.veh) +
       M('Comparendos', m.comp||m.nComp) +
-      M('Espacio recuperado m²', m.m2) +
+      M('Espacio m²', m.m2) +
       M('Observaciones', m.obs)
     );
   }
-  
-  // ── Componente Obras ──
   if(cc==='OBR'&&r.obr){
     const o=r.obr;
     h += sec('Obras','#92400e',
       M('Tipo', o.tipo) +
       M('Obra en operación', o.enOp) +
-      M('¿Ocupa EP?', o.ocupaEP) +
+      M('Ocupa EP', o.ocupaEP) +
       M('m² ocupación EP', o.m2Ocupa) +
       M('Persona que atiende', o.persona||o.personaAtiende) +
       M('Observaciones', o.obs||o.obsObr)
     );
   }
 
-  // ── Totales consolidados ──
+  // ── Totales ──
   const hasTotals = Object.values(t).some(v=>v>0);
   if(hasTotals){
     h += sec('Totales consolidados','var(--muted)',
@@ -4513,36 +3817,19 @@ function openMo(idx){
 
   // ── Establecimiento ──
   const est=r.est||{};
-  if(est.nom||est.nit||est.admin||est.ced||est.rep||est.tel){
+  if(est.nom||est.nit||est.admin){
     h += sec('Establecimiento','var(--muted)',
-      M('Nombre', est.nom) + 
-      M('NIT', est.nit) +
-      M('Administrador', est.admin) + 
-      M('Cédula', est.ced) +
-      M('Rep. legal', est.rep) + 
-      M('Teléfono', est.tel)
+      M('Nombre', est.nom) + M('NIT', est.nit) +
+      M('Administrador', est.admin) + M('Cédula', est.ced) +
+      M('Rep. legal', est.rep) + M('Teléfono', est.tel)
     );
   }
 
-  // ── Parqueaderos (si aplica) ──
-  const parq=r.parq||{};
-  if(parq.cupos||parq.area||parq.tarifa||parq.horario||parq.infra||parq.reqs){
-    h += sec('Información Parqueadero','var(--muted)',
-      M('Cupos', parq.cupos) +
-      M('Área m²', parq.area) +
-      M('Tarifa', parq.tarifa) +
-      M('Horario', parq.horario) +
-      M('Infraestructura', parq.infra) +
-      M('Requisitos', parq.reqs)
-    );
-  }
-
-  // ── General (Objetivo y Observaciones) ──
+  // ── General ──
   const gen=r.gen||{};
   if(gen.obj||gen.obs){
     h += sec('General','var(--muted)',
-      M('Objetivo', gen.obj) + 
-      M('Observaciones', gen.obs)
+      M('Objetivo', gen.obj) + M('Observaciones', gen.obs)
     );
   }
 
@@ -4593,7 +3880,7 @@ function delRec(){
 function exportJSON(){dl(new Blob([JSON.stringify(recs,null,2)],{type:'application/json'}),'operativos-ivc-'+today()+'.json');}
 function exportCSV(){
   const rows=[['ID','Fecha','Responsable','UPZ','Barrio','Direccion','Tipo IVC','m2','m3','Comparendos','Personas','Armas','Obs']];
-  recs.forEach(r=>{const t=r.tot||{};rows.push([cleanId(r.meta?.idOp||r.id),r.meta?.fecha,r.meta?.resp,r.ub?.upz,r.ub?.barrio,r.ub?.dir,(r.tipoIVC||[]).join(';'),t.m2||0,t.m3||0,t.comp||0,t.pers||0,t.armas||0,r.gen?.obs||'']);});
+  recs.forEach(r=>{const t=r.tot||{};rows.push([r.meta?.idOp||r.id,r.meta?.fecha,r.meta?.resp,r.ub?.upz,r.ub?.barrio,r.ub?.dir,(r.tipoIVC||[]).join(';'),t.m2||0,t.m3||0,t.comp||0,t.pers||0,t.armas||0,r.gen?.obs||'']);});
   dl(new Blob(['\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(',')).join('\n')],{type:'text/csv;charset=utf-8'}),'operativos-ivc-'+today()+'.csv');
 }
 function dl(b,n){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;a.click();}
@@ -4889,13 +4176,6 @@ function abrirEditar(){
   if(selIdx===null) return;
   const r = recs[selIdx];
   
-  console.log('=== abrirEditar DEBUG ===');
-  console.log('selIdx:', selIdx);
-  console.log('Registro (r):', r);
-  console.log('r.cc:', r.cc);
-  console.log('r.ae:', r.ae);
-  console.log('r.ep:', r.ep);
-  
   // Actualizar info de navegación
   updateEditNavInfo();
   
@@ -4967,7 +4247,8 @@ function abrirEditar(){
   document.getElementById('eTotComp').value = t.comp || '';
   document.getElementById('eTotSusp').value = t.susp || '';
   
-  // ACTA
+  // OBSERVACIONES Y ACTA
+  document.getElementById('eObs').value    = r.gen?.obs     || '';
   document.getElementById('eActaLink').value = r.acta?.link  || '';
   
   // Scroll al inicio del modal
@@ -4977,22 +4258,6 @@ function abrirEditar(){
   // Cerrar modal de detalle y abrir edición
   document.getElementById('moEl').classList.remove('on');
   document.getElementById('moEditEl').classList.add('on');
-  
-  // ✅ FIX: Restaurar botones a su estado normal
-  const btnGuardar = document.getElementById('btnGuardarEdit');
-  const btnGuardarYAnt = document.getElementById('btnGuardarYAnterior');
-  const btnGuardarYSig = document.getElementById('btnGuardarYSiguiente');
-  
-  if (btnGuardar) {
-    btnGuardar.disabled = false;
-    btnGuardar.textContent = '✓ Guardar';
-  }
-  if (btnGuardarYAnt) {
-    btnGuardarYAnt.innerHTML = '<span>←</span> Guardar y Anterior';
-  }
-  if (btnGuardarYSig) {
-    btnGuardarYSig.innerHTML = 'Guardar y Siguiente <span>→</span>';
-  }
 }
 
 // Actualizar información de navegación en el header del modal
@@ -5005,7 +4270,7 @@ function updateEditNavInfo() {
   
   if (info && selIdx !== null) {
     const r = recs[selIdx];
-    const idOp = cleanId(r.meta?.idOp || 'S/N');
+    const idOp = r.meta?.idOp || 'S/N';
     const fecha = r.meta?.fecha || '';
     const pos = selIdx + 1;
     const total = recs.length;
@@ -5072,20 +4337,10 @@ function guardarYNavegar(direction) {
   }
   
   const r = recs[selIdx];
-  
-  // ✅ FIX: Leer el componente del chip seleccionado, NO del registro original
-  const chipCC = document.querySelector('#eChipsComponente .chip.on');
-  const cc = chipCC ? chipCC.dataset.comp : (r.cc || '');
-  
-  console.log('=== guardarYNavegar ===');
-  console.log('Componente seleccionado en chip:', cc);
-  console.log('Componente en registro original:', r.cc);
+  const cc = r.cc || '';
   
   // Construir objeto actualizado (mismo código que guardarEdicion)
   const updates = {};
-  
-  // ✅ FIX: Guardar el componente actual
-  updates['cc'] = cc;
   
   // META
   updates['meta/idOp'] = document.getElementById('eIdop').value;
@@ -5120,85 +4375,35 @@ function guardarYNavegar(direction) {
   const gv = id => document.getElementById(id)?.value || '';
   const gn = id => Number(document.getElementById(id)?.value || 0);
   
-  // Limpiar componentes NO seleccionados y guardar el seleccionado
   if (cc === 'AE') {
-    // Limpiar otros componentes
-    updates['ep'] = null;
-    updates['amb'] = null;
-    updates['mov'] = null;
-    updates['obr'] = null;
-    // Guardar AE
     updates['ae/tipo'] = gv('eAE_tipo');
     updates['ae/nom'] = gv('eAE_nom');
-    updates['ae/entEsc'] = gv('eAE_entEsc');
-    updates['ae/colegio'] = gv('eAE_colegio');
-    updates['ae/pers'] = gn('eAE_pers');
-    updates['ae/beb'] = gn('eAE_beb');
-    updates['ae/armas'] = gn('eAE_armas');
-    updates['ae/dosis'] = gn('eAE_dosis');
-    updates['ae/aplico'] = gv('eAE_aplico');
     updates['ae/medida'] = gv('eAE_medida');
-    updates['ae/dias'] = gn('eAE_dias');
-    updates['ae/comp'] = gv('eAE_comp');
-    updates['ae/compPrev'] = gv('eAE_compPrev');
-    updates['ae/motivoSusp'] = gv('eAE_motivoSusp');
-    updates['ae/motivoCDef'] = gv('eAE_motivoCDef');
     updates['ae/res'] = gv('eAE_res');
   } else if (cc === 'EP') {
-    // Limpiar otros componentes
-    updates['ae'] = null;
-    updates['amb'] = null;
-    updates['mov'] = null;
-    updates['obr'] = null;
-    // Guardar EP
     updates['ep/pol'] = gv('eEP_pol');
     updates['ep/secMon'] = gv('eEP_secMon');
-    updates['ep/elemHN'] = gv('eEP_elemHN');
-    updates['ep/numElemHN'] = gn('eEP_numElemHN');
     updates['ep/ft'] = gn('eEP_ft');
-    updates['ep/m2Rec'] = gn('eEP_m2Rec');
-    updates['ep/vendRet'] = gn('eEP_vendRet');
     updates['ep/res'] = gv('eEP_res');
   } else if (cc === 'AMB') {
-    // Limpiar otros componentes
-    updates['ae'] = null;
-    updates['ep'] = null;
-    updates['mov'] = null;
-    updates['obr'] = null;
-    // Guardar AMB
     updates['amb/linea'] = gv('eAMB_linea');
     updates['amb/m2'] = gn('eAMB_m2');
     updates['amb/m3'] = gn('eAMB_m3');
     updates['amb/llantas'] = gn('eAMB_llantas');
     updates['amb/hc'] = gn('eAMB_hc');
-    updates['amb/regPers'] = gn('eAMB_regPers');
-    updates['amb/capturas'] = gn('eAMB_capturas');
     updates['amb/camb'] = gn('eAMB_camb');
     updates['amb/car'] = gn('eAMB_car');
     updates['amb/dosis'] = gn('eAMB_dosis');
-    updates['amb/armasB'] = gv('eAMB_armasB');
     updates['amb/nArmas'] = gn('eAMB_nArmas');
     updates['amb/tipoArma'] = gv('eAMB_tipoArma');
     updates['amb/res'] = gv('eAMB_res');
   } else if (cc === 'MOV') {
-    // Limpiar otros componentes
-    updates['ae'] = null;
-    updates['ep'] = null;
-    updates['amb'] = null;
-    updates['obr'] = null;
-    // Guardar MOV
     updates['mov/accion'] = gv('eMOV_accion');
     updates['mov/veh'] = gn('eMOV_veh');
     updates['mov/comp'] = gn('eMOV_comp');
     updates['mov/m2'] = gn('eMOV_m2');
     updates['mov/obs'] = gv('eMOV_obs');
   } else if (cc === 'OBR') {
-    // Limpiar otros componentes
-    updates['ae'] = null;
-    updates['ep'] = null;
-    updates['amb'] = null;
-    updates['mov'] = null;
-    // Guardar OBR
     updates['obr/enOp'] = gv('eOBR_enOp');
     updates['obr/ocupaEP'] = gv('eOBR_ocupaEP');
     updates['obr/m2Ocupa'] = gn('eOBR_m2Ocupa');
@@ -5219,6 +4424,9 @@ function guardarYNavegar(direction) {
   updates['tot/dosis'] = gn('eTotDosis');
   updates['tot/comp'] = gn('eTotComp');
   updates['tot/susp'] = gn('eTotSusp');
+  
+  // GENERAL
+  updates['gen/obs'] = document.getElementById('eObs').value;
   
   // ACTA
   const link = document.getElementById('eActaLink').value.trim();
@@ -5354,160 +4562,74 @@ function renderEditComponente(r) {
   if (!container) return;
   
   const cc = r.cc || '';
-  
-  // DEBUG: Ver qué datos tiene el registro
-  console.log('=== renderEditComponente DEBUG ===');
-  console.log('Componente (cc):', cc);
-  console.log('Registro completo (r):', r);
-  console.log('r.ae:', r.ae);
-  console.log('r.ep:', r.ep);
-  console.log('r.amb:', r.amb);
-  console.log('r.mov:', r.mov);
-  console.log('r.obr:', r.obr);
-  
-  // INFERIR componente si cc está vacío (para registros antiguos)
-  let ccFinal = cc;
-  if (!ccFinal) {
-    if (r.ae && Object.keys(r.ae).length > 0) ccFinal = 'AE';
-    else if (r.ep && Object.keys(r.ep).length > 0) ccFinal = 'EP';
-    else if (r.amb && Object.keys(r.amb).length > 0) ccFinal = 'AMB';
-    else if (r.mov && Object.keys(r.mov).length > 0) ccFinal = 'MOV';
-    else if (r.obr && Object.keys(r.obr).length > 0) ccFinal = 'OBR';
-    console.log('⚠️ cc estaba vacío. Inferido desde datos: ' + ccFinal);
-  }
-  
-  // Helper para escapar HTML y prevenir errores con comillas y caracteres especiales
-  const escapeHtml = (str) => {
-    if (str === null || str === undefined) return '';
-    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  };
-  
-  // Helper para obtener valor seguro (para inputs text y textarea)
-  const sv = (val) => escapeHtml(val || '');
-  
   let html = '';
   
-  if (ccFinal === 'AE') {
+  if (cc === 'AE') {
     const ae = r.ae || {};
-    console.log('📋 Datos de AE:', ae);
     html = `
       <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ae);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Actividad Económica</div>
-      <div class="f mb"><label>Tipo de establecimiento</label><input type="text" id="eAE_tipo" value="${sv(ae.tipo)}" placeholder="Tipo"></div>
-      <div class="f mb"><label>Nombre del establecimiento</label><input type="text" id="eAE_nom" value="${sv(ae.nom)}" placeholder="Nombre"></div>
-      <div class="f mb"><label>¿Entorno escolar?</label><input type="text" id="eAE_entEsc" value="${sv(ae.entEsc)}" placeholder="SI/NO"></div>
-      <div class="f mb"><label>Nombre del colegio</label><input type="text" id="eAE_colegio" value="${sv(ae.colegio)}" placeholder="Colegio"></div>
-      <div class="f mb"><label>Personas intervenidas</label><input type="number" id="eAE_pers" value="${ae.pers||''}" min="0"></div>
-      <div class="f mb"><label>Bebidas alcohólicas destruidas</label><input type="number" id="eAE_beb" value="${ae.beb||ae.bebidas||''}" min="0"></div>
-      <div class="g2 mb">
-        <div class="f"><label>Armas incautadas</label><input type="number" id="eAE_armas" value="${ae.armas||ae.nArmas||''}" min="0"></div>
-        <div class="f"><label>Dosis incautadas</label><input type="number" id="eAE_dosis" value="${ae.dosis||''}" min="0"></div>
-      </div>
-      <div class="f mb"><label>¿Aplicó medida correctiva?</label><input type="text" id="eAE_aplico" value="${sv(ae.aplico)}" placeholder="SI/NO"></div>
-      <div class="f mb"><label>Tipo de medida correctiva</label><input type="text" id="eAE_medida" value="${sv(ae.medida)}" placeholder="Suspensión/Cierre"></div>
-      <div class="g2 mb">
-        <div class="f"><label>Días de suspensión</label><input type="number" id="eAE_dias" value="${ae.dias||''}" min="0"></div>
-        <div class="f"><label>N° Comparendo</label><input type="text" id="eAE_comp" value="${sv(ae.comp||ae.comparendo)}"></div>
-      </div>
-      <div class="f mb"><label>N° Comparendo preventivo</label><input type="text" id="eAE_compPrev" value="${sv(ae.compPrev)}"></div>
-      <div class="f mb"><label>Motivo suspensión</label><textarea id="eAE_motivoSusp" rows="2">${sv(ae.motivoSusp)}</textarea></div>
-      <div class="f mb"><label>Motivo cierre definitivo</label><textarea id="eAE_motivoCDef" rows="2">${sv(ae.motivoCDef)}</textarea></div>
-      <div class="f mb"><label>Resultados</label><textarea id="eAE_res" rows="3">${sv(ae.res||ae.resultados)}</textarea></div>
+      <div class="f mb"><label>Tipo de establecimiento</label><input type="text" id="eAE_tipo" value="${ae.tipo||''}" placeholder="Tipo"></div>
+      <div class="f mb"><label>Nombre del establecimiento</label><input type="text" id="eAE_nom" value="${ae.nom||''}" placeholder="Nombre"></div>
+      <div class="f mb"><label>Medida preventiva</label><input type="text" id="eAE_medida" value="${ae.medida||''}" placeholder="Medida"></div>
+      <div class="f mb"><label>Resultados</label><textarea id="eAE_res" style="min-height:50px">${ae.res||''}</textarea></div>
     `;
-  } else if (ccFinal === 'EP') {
+  } else if (cc === 'EP') {
     const ep = r.ep || {};
-    console.log('📋 Datos de EP:', ep);
     html = `
       <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ep);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Espacio Público</div>
-      <div class="f mb"><label>Sección de monitoreo</label><input type="text" id="eEP_secMon" value="${sv(ep.secMon||ep.tipo)}" placeholder="Sección"></div>
-      <div class="f mb"><label>Polígono</label><input type="text" id="eEP_pol" value="${sv(ep.pol||ep.poligono)}" placeholder="Polígono"></div>
-      <div class="g2 mb">
-        <div class="f"><label>Elementos encontrados</label><input type="text" id="eEP_elemHN" value="${sv(ep.elemHN)}"></div>
-        <div class="f"><label>N° elementos</label><input type="number" id="eEP_numElemHN" value="${ep.numElemHN||''}" min="0"></div>
-      </div>
-      <div class="f mb"><label>Food trucks intervenidos</label><input type="number" id="eEP_ft" value="${ep.ft||''}" min="0"></div>
-      <div class="g2 mb">
-        <div class="f"><label>Espacio recuperado m²</label><input type="number" id="eEP_m2Rec" value="${ep.m2Rec||''}" min="0"></div>
-        <div class="f"><label>Vendedores retirados</label><input type="number" id="eEP_vendRet" value="${ep.vendRet||''}" min="0"></div>
-      </div>
-      <div class="f mb"><label>Resultados</label><textarea id="eEP_res" rows="3">${sv(ep.res||ep.resultados)}</textarea></div>
+      <div class="f mb"><label>Polígono de monitoreo</label><input type="text" id="eEP_pol" value="${ep.pol||''}" placeholder="Polígono"></div>
+      <div class="f mb"><label>Sector monitoreo</label><input type="text" id="eEP_secMon" value="${ep.secMon||''}" placeholder="Sector"></div>
+      <div class="f mb"><label>Food Trucks</label><input type="number" id="eEP_ft" value="${ep.ft||''}" min="0"></div>
+      <div class="f mb"><label>Resultados</label><textarea id="eEP_res" style="min-height:50px">${ep.res||''}</textarea></div>
     `;
-  } else if (ccFinal === 'AMB') {
-    const a = r.amb || {};
-    console.log('📋 Datos de AMB:', a);
+  } else if (cc === 'AMB') {
+    const amb = r.amb || {};
     html = `
       <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amb);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Ambiente</div>
-      <div class="f mb"><label>Línea de acción</label><input type="text" id="eAMB_linea" value="${sv(a.linea)}" placeholder="Línea"></div>
+      <div class="f mb"><label>Línea de acción</label><input type="text" id="eAMB_linea" value="${amb.linea||''}" placeholder="Línea"></div>
       <div class="g3 mb">
-        <div class="f"><label>m²</label><input type="number" id="eAMB_m2" value="${a.m2||''}" min="0"></div>
-        <div class="f"><label>m³</label><input type="number" id="eAMB_m3" value="${a.m3||''}" min="0"></div>
-        <div class="f"><label>Llantas</label><input type="number" id="eAMB_llantas" value="${a.llantas||''}" min="0"></div>
+        <div class="f"><label>m²</label><input type="number" id="eAMB_m2" value="${amb.m2||''}" min="0"></div>
+        <div class="f"><label>m³</label><input type="number" id="eAMB_m3" value="${amb.m3||''}" min="0"></div>
+        <div class="f"><label>Llantas</label><input type="number" id="eAMB_llantas" value="${amb.llantas||''}" min="0"></div>
       </div>
       <div class="g3 mb">
-        <div class="f"><label>HC identificados</label><input type="number" id="eAMB_hc" value="${a.hc||''}" min="0"></div>
-        <div class="f"><label>Registros personas</label><input type="number" id="eAMB_regPers" value="${a.regPers||''}" min="0"></div>
-        <div class="f"><label>Capturas</label><input type="number" id="eAMB_capturas" value="${a.capturas||''}" min="0"></div>
+        <div class="f"><label>HC</label><input type="number" id="eAMB_hc" value="${amb.hc||''}" min="0"></div>
+        <div class="f"><label>Cambuches</label><input type="number" id="eAMB_camb" value="${amb.camb||''}" min="0"></div>
+        <div class="f"><label>Carretas</label><input type="number" id="eAMB_car" value="${amb.car||''}" min="0"></div>
       </div>
       <div class="g3 mb">
-        <div class="f"><label>Cambuches</label><input type="number" id="eAMB_camb" value="${a.camb||''}" min="0"></div>
-        <div class="f"><label>Carretas</label><input type="number" id="eAMB_car" value="${a.car||a.carretas||''}" min="0"></div>
-        <div class="f"><label>Dosis</label><input type="number" id="eAMB_dosis" value="${a.dosis||''}" min="0"></div>
+        <div class="f"><label>Dosis</label><input type="number" id="eAMB_dosis" value="${amb.dosis||''}" min="0"></div>
+        <div class="f"><label>Armas</label><input type="number" id="eAMB_nArmas" value="${amb.nArmas||''}" min="0"></div>
+        <div class="f"><label>Tipo arma</label><input type="text" id="eAMB_tipoArma" value="${amb.tipoArma||''}"></div>
       </div>
-      <div class="g3 mb">
-        <div class="f"><label>¿Armas?</label><input type="text" id="eAMB_armasB" value="${sv(a.armasB)}" placeholder="SI/NO"></div>
-        <div class="f"><label>N° Armas</label><input type="number" id="eAMB_nArmas" value="${a.nArmas||''}" min="0"></div>
-        <div class="f"><label>Tipo arma</label><input type="text" id="eAMB_tipoArma" value="${sv(a.tipoArma)}"></div>
-      </div>
-      <div class="f mb"><label>Resultados</label><textarea id="eAMB_res" rows="3">${sv(a.res||a.resultados)}</textarea></div>
+      <div class="f mb"><label>Resultados</label><textarea id="eAMB_res" style="min-height:50px">${amb.res||''}</textarea></div>
     `;
-  } else if (ccFinal === 'MOV') {
-    const m = r.mov || {};
-    console.log('📋 Datos de MOV:', m);
+  } else if (cc === 'MOV') {
+    const mov = r.mov || {};
     html = `
       <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mov);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Movilidad</div>
-      <div class="f mb"><label>Acción del operativo</label><input type="text" id="eMOV_accion" value="${sv(m.accion||m.obj)}" placeholder="Acción"></div>
+      <div class="f mb"><label>Acción</label><input type="text" id="eMOV_accion" value="${mov.accion||''}" placeholder="Acción"></div>
       <div class="g3 mb">
-        <div class="f"><label>Vehículos inmovilizados</label><input type="number" id="eMOV_veh" value="${m.veh||''}" min="0"></div>
-        <div class="f"><label>Comparendos</label><input type="number" id="eMOV_comp" value="${m.comp||m.nComp||''}" min="0"></div>
-        <div class="f"><label>m² espacio público</label><input type="number" id="eMOV_m2" value="${m.m2||''}" min="0"></div>
+        <div class="f"><label>Vehículos</label><input type="number" id="eMOV_veh" value="${mov.veh||''}" min="0"></div>
+        <div class="f"><label>Comparendos</label><input type="number" id="eMOV_comp" value="${mov.comp||''}" min="0"></div>
+        <div class="f"><label>m²</label><input type="number" id="eMOV_m2" value="${mov.m2||''}" min="0"></div>
       </div>
-      <div class="f mb"><label>Observaciones</label><textarea id="eMOV_obs" rows="3">${sv(m.obs)}</textarea></div>
+      <div class="f mb"><label>Observaciones</label><textarea id="eMOV_obs" style="min-height:50px">${mov.obs||''}</textarea></div>
     `;
-  } else if (ccFinal === 'OBR') {
-    const o = r.obr || {};
-    console.log('📋 Datos de OBR:', o);
+  } else if (cc === 'OBR') {
+    const obr = r.obr || {};
     html = `
       <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--obr);margin:14px 0 10px;padding-top:10px;border-top:1px solid var(--border)">Obras</div>
-      <div class="f mb"><label>¿Obra en operación?</label><input type="text" id="eOBR_enOp" value="${sv(o.enOp)}" placeholder="SI/NO"></div>
-      <div class="f mb"><label>¿Ocupa espacio público?</label><input type="text" id="eOBR_ocupaEP" value="${sv(o.ocupaEP)}" placeholder="SI/NO"></div>
-      <div class="f mb"><label>m² ocupados</label><input type="number" id="eOBR_m2Ocupa" value="${o.m2Ocupa||''}" min="0"></div>
-      <div class="f mb"><label>Persona que atiende</label><input type="text" id="eOBR_persona" value="${sv(o.persona||o.personaAtiende)}"></div>
-      <div class="f mb"><label>Observaciones</label><textarea id="eOBR_obs" rows="3">${sv(o.obs||o.obsObr)}</textarea></div>
+      <div class="f mb"><label>Obra en operación</label><input type="text" id="eOBR_enOp" value="${obr.enOp||''}" placeholder="Sí/No"></div>
+      <div class="f mb"><label>Ocupa EP</label><input type="text" id="eOBR_ocupaEP" value="${obr.ocupaEP||''}" placeholder="Sí/No"></div>
+      <div class="f mb"><label>m² ocupados</label><input type="number" id="eOBR_m2Ocupa" value="${obr.m2Ocupa||''}" min="0"></div>
+      <div class="f mb"><label>Persona atiende</label><input type="text" id="eOBR_persona" value="${obr.persona||''}"></div>
+      <div class="f mb"><label>Observaciones</label><textarea id="eOBR_obs" style="min-height:50px">${obr.obs||''}</textarea></div>
     `;
-  } else {
-    // Caso por defecto: el cc no coincide con ningún componente conocido
-    console.log('⚠️ Componente no reconocido o vacío. ccFinal:', ccFinal);
-    html = `<div style="padding:40px;text-align:center;color:#ef4444;font-size:.9rem">
-      <strong>⚠️ Error:</strong> Componente "${ccFinal}" no reconocido.<br>
-      Valores válidos: AE, EP, AMB, MOV, OBR
-    </div>`;
   }
   
-  console.log('📝 HTML generado (primeros 200 chars):', html.substring(0, 200));
   container.innerHTML = html;
-  console.log('✅ HTML inyectado al contenedor');
-  
-  // Verificación post-inyección para debugging
-  setTimeout(() => {
-    console.log('🔍 Verificando campos después de inyección:');
-    if (ccFinal === 'AE') {
-      const tipoEl = document.getElementById('eAE_tipo');
-      const nomEl = document.getElementById('eAE_nom');
-      console.log('  - eAE_tipo:', tipoEl ? `✓ valor="${tipoEl.value}"` : '✗ NO EXISTE');
-      console.log('  - eAE_nom:', nomEl ? `✓ valor="${nomEl.value}"` : '✗ NO EXISTE');
-    }
-  }, 10);
 }
-
 
 function cerrarEditar(){
   document.getElementById('moEditEl').classList.remove('on');
@@ -5519,181 +4641,134 @@ function guardarEdicion(){
   if(!key){ toast('No se encontró la clave del registro','err'); return; }
   const r = recs[selIdx];
   
-  const btn = document.getElementById('btnGuardarEdit');
-  if(!btn){ toast('Error: botón no encontrado','err'); return; }
+  // Obtener el componente seleccionado del chip
+  const chipCC = document.querySelector('#eChipsComponente .chip.on');
+  const cc = chipCC ? chipCC.dataset.comp : (r.cc || '');
   
-  try {
-    // Obtener el componente seleccionado del chip
-    const chipCC = document.querySelector('#eChipsComponente .chip.on');
-    const cc = chipCC ? chipCC.dataset.comp : (r.cc || '');
-    
-    // Construir objeto actualizado con estructura anidada correcta
-    const updates = {};
-    
-    // COMPONENTE (cc)
-    updates['cc'] = cc;
-    
-    // META
-    updates['meta/idOp'] = document.getElementById('eIdop').value;
-    updates['meta/fecha'] = document.getElementById('eFecha').value;
-    updates['meta/h1'] = document.getElementById('eH1').value;
-    updates['meta/h2'] = document.getElementById('eH2').value;
-    
-    const selResp = document.getElementById('eResp');
-    if (selResp.value === '__OTRO__') {
-      updates['meta/resp'] = document.getElementById('eResp-otro').value.trim().toUpperCase() || '';
-    } else {
-      updates['meta/resp'] = selResp.value;
-    }
-    
-    updates['meta/megatoma'] = document.querySelector('input[name="eMegatoma"]:checked')?.value || 'NO';
-    updates['meta/opConjunto'] = document.querySelector('input[name="eConjunto"]:checked')?.value || 'NO';
-    updates['meta/entidadesConjunto'] = document.getElementById('eEntidadesConjunto').value.trim();
-    
-    // TIPO IVC - recolectar chips seleccionados
-    const tipoIVC = [];
-    document.querySelectorAll('#eChipsTipoIVC .chip.on').forEach(chip => {
-      tipoIVC.push(chip.dataset.val);
-    });
-    updates['tipoIVC'] = tipoIVC;
-    
-    // UBICACIÓN
-    updates['ub/dir'] = document.getElementById('eDir').value;
-    updates['ub/barrio'] = document.getElementById('eBarrio').value;
-    updates['ub/upz'] = document.getElementById('eUpz').value;
-    
-    // COMPONENTE ESPECÍFICO
-    const gv = id => document.getElementById(id)?.value || '';
-    const gn = id => Number(document.getElementById(id)?.value || 0);
-    
-    // Limpiar componentes NO seleccionados y guardar el seleccionado
-    if (cc === 'AE') {
-      // Limpiar otros componentes
-      updates['ep'] = null;
-      updates['amb'] = null;
-      updates['mov'] = null;
-      updates['obr'] = null;
-      // Guardar AE
-      updates['ae/tipo'] = gv('eAE_tipo');
-      updates['ae/nom'] = gv('eAE_nom');
-      updates['ae/entEsc'] = gv('eAE_entEsc');
-      updates['ae/colegio'] = gv('eAE_colegio');
-      updates['ae/pers'] = gn('eAE_pers');
-      updates['ae/beb'] = gn('eAE_beb');
-      updates['ae/armas'] = gn('eAE_armas');
-      updates['ae/dosis'] = gn('eAE_dosis');
-      updates['ae/aplico'] = gv('eAE_aplico');
-      updates['ae/medida'] = gv('eAE_medida');
-      updates['ae/dias'] = gn('eAE_dias');
-      updates['ae/comp'] = gv('eAE_comp');
-      updates['ae/compPrev'] = gv('eAE_compPrev');
-      updates['ae/motivoSusp'] = gv('eAE_motivoSusp');
-      updates['ae/motivoCDef'] = gv('eAE_motivoCDef');
-      updates['ae/res'] = gv('eAE_res');
-    } else if (cc === 'EP') {
-      // Limpiar otros componentes
-      updates['ae'] = null;
-      updates['amb'] = null;
-      updates['mov'] = null;
-      updates['obr'] = null;
-      // Guardar EP
-      updates['ep/pol'] = gv('eEP_pol');
-      updates['ep/secMon'] = gv('eEP_secMon');
-      updates['ep/elemHN'] = gv('eEP_elemHN');
-      updates['ep/numElemHN'] = gn('eEP_numElemHN');
-      updates['ep/ft'] = gn('eEP_ft');
-      updates['ep/m2Rec'] = gn('eEP_m2Rec');
-      updates['ep/vendRet'] = gn('eEP_vendRet');
-      updates['ep/res'] = gv('eEP_res');
-    } else if (cc === 'AMB') {
-      // Limpiar otros componentes
-      updates['ae'] = null;
-      updates['ep'] = null;
-      updates['mov'] = null;
-      updates['obr'] = null;
-      // Guardar AMB
-      updates['amb/linea'] = gv('eAMB_linea');
-      updates['amb/m2'] = gn('eAMB_m2');
-      updates['amb/m3'] = gn('eAMB_m3');
-      updates['amb/llantas'] = gn('eAMB_llantas');
-      updates['amb/hc'] = gn('eAMB_hc');
-      updates['amb/regPers'] = gn('eAMB_regPers');
-      updates['amb/capturas'] = gn('eAMB_capturas');
-      updates['amb/camb'] = gn('eAMB_camb');
-      updates['amb/car'] = gn('eAMB_car');
-      updates['amb/dosis'] = gn('eAMB_dosis');
-      updates['amb/armasB'] = gv('eAMB_armasB');
-      updates['amb/nArmas'] = gn('eAMB_nArmas');
-      updates['amb/tipoArma'] = gv('eAMB_tipoArma');
-      updates['amb/res'] = gv('eAMB_res');
-    } else if (cc === 'MOV') {
-      // Limpiar otros componentes
-      updates['ae'] = null;
-      updates['ep'] = null;
-      updates['amb'] = null;
-      updates['obr'] = null;
-      // Guardar MOV
-      updates['mov/accion'] = gv('eMOV_accion');
-      updates['mov/veh'] = gn('eMOV_veh');
-      updates['mov/comp'] = gn('eMOV_comp');
-      updates['mov/m2'] = gn('eMOV_m2');
-      updates['mov/obs'] = gv('eMOV_obs');
-    } else if (cc === 'OBR') {
-      // Limpiar otros componentes
-      updates['ae'] = null;
-      updates['ep'] = null;
-      updates['amb'] = null;
-      updates['mov'] = null;
-      // Guardar OBR
-      updates['obr/enOp'] = gv('eOBR_enOp');
-      updates['obr/ocupaEP'] = gv('eOBR_ocupaEP');
-      updates['obr/m2Ocupa'] = gn('eOBR_m2Ocupa');
-      updates['obr/persona'] = gv('eOBR_persona');
-      updates['obr/obs'] = gv('eOBR_obs');
-    }
-    
-    // TOTALES
-    updates['tot/m2'] = gn('eTotM2');
-    updates['tot/m3'] = gn('eTotM3');
-    updates['tot/veh'] = gn('eTotVeh');
-    updates['tot/camb'] = gn('eTotCamb');
-    updates['tot/car'] = gn('eTotCar');
-    updates['tot/vend'] = gn('eTotVend');
-    updates['tot/ft'] = gn('eTotFT');
-    updates['tot/pers'] = gn('eTotPers');
-    updates['tot/armas'] = gn('eTotArmas');
-    updates['tot/dosis'] = gn('eTotDosis');
-    updates['tot/comp'] = gn('eTotComp');
-    updates['tot/susp'] = gn('eTotSusp');
-    
-    // ACTA
-    const link = document.getElementById('eActaLink').value.trim();
-    if (link) {
-      updates['acta/link'] = link;
-    } else {
-      updates['acta'] = null;
-    }
-    
-    // Cerrar modal INMEDIATAMENTE (optimización UX)
-    cerrarEditar();
-    toast('Guardando...','ok');
-    
-    // Guardar en Firebase en segundo plano
-    RESULTADOS_REF.child(key).update(updates)
-      .then(()=>{
-        // Firebase se encargará de actualizar la lista automáticamente por el listener
-      })
-      .catch(err=>{ 
-        console.error('❌ Error al guardar:', err);
-        toast('Error al guardar: '+err.message,'err'); 
-      });
-      
-  } catch(error) {
-    console.error('❌ Error en guardarEdicion:', error);
-    toast('Error: ' + error.message, 'err');
-    btn.disabled = false;
-    btn.innerHTML = '&#10003; Guardar';
+  console.log('=== Guardando edición ===');
+  console.log('Componente seleccionado:', cc);
+  
+  // Construir objeto actualizado con estructura anidada correcta
+  const updates = {};
+  
+  // COMPONENTE (cc)
+  updates['cc'] = cc;
+  
+  // META
+  updates['meta/idOp'] = document.getElementById('eIdop').value;
+  updates['meta/fecha'] = document.getElementById('eFecha').value;
+  updates['meta/h1'] = document.getElementById('eH1').value;
+  updates['meta/h2'] = document.getElementById('eH2').value;
+  
+  const selResp = document.getElementById('eResp');
+  if (selResp.value === '__OTRO__') {
+    updates['meta/resp'] = document.getElementById('eResp-otro').value.trim().toUpperCase() || '';
+  } else {
+    updates['meta/resp'] = selResp.value;
   }
+  
+  updates['meta/megatoma'] = document.querySelector('input[name="eMegatoma"]:checked')?.value || 'NO';
+  updates['meta/opConjunto'] = document.querySelector('input[name="eConjunto"]:checked')?.value || 'NO';
+  updates['meta/entidadesConjunto'] = document.getElementById('eEntidadesConjunto').value.trim();
+  
+  // TIPO IVC - recolectar chips seleccionados
+  const tipoIVC = [];
+  document.querySelectorAll('#eChipsTipoIVC .chip.on').forEach(chip => {
+    tipoIVC.push(chip.dataset.val);
+  });
+  updates['tipoIVC'] = tipoIVC;
+  
+  // UBICACIÓN
+  updates['ub/dir'] = document.getElementById('eDir').value;
+  updates['ub/barrio'] = document.getElementById('eBarrio').value;
+  updates['ub/upz'] = document.getElementById('eUpz').value;
+  
+  // COMPONENTE ESPECÍFICO - Limpiar componentes no seleccionados
+  const gv = id => document.getElementById(id)?.value || '';
+  const gn = id => Number(document.getElementById(id)?.value || 0);
+  
+  // Limpiar todos los componentes primero
+  updates['ae'] = null;
+  updates['ep'] = null;
+  updates['amb'] = null;
+  updates['mov'] = null;
+  updates['obr'] = null;
+  
+  // Guardar solo el componente seleccionado
+  if (cc === 'AE') {
+    updates['ae/tipo'] = gv('eAE_tipo');
+    updates['ae/nom'] = gv('eAE_nom');
+    updates['ae/medida'] = gv('eAE_medida');
+    updates['ae/res'] = gv('eAE_res');
+  } else if (cc === 'EP') {
+    updates['ep/pol'] = gv('eEP_pol');
+    updates['ep/secMon'] = gv('eEP_secMon');
+    updates['ep/ft'] = gn('eEP_ft');
+    updates['ep/res'] = gv('eEP_res');
+  } else if (cc === 'AMB') {
+    updates['amb/linea'] = gv('eAMB_linea');
+    updates['amb/m2'] = gn('eAMB_m2');
+    updates['amb/m3'] = gn('eAMB_m3');
+    updates['amb/llantas'] = gn('eAMB_llantas');
+    updates['amb/hc'] = gn('eAMB_hc');
+    updates['amb/camb'] = gn('eAMB_camb');
+    updates['amb/car'] = gn('eAMB_car');
+    updates['amb/dosis'] = gn('eAMB_dosis');
+    updates['amb/nArmas'] = gn('eAMB_nArmas');
+    updates['amb/tipoArma'] = gv('eAMB_tipoArma');
+    updates['amb/res'] = gv('eAMB_res');
+  } else if (cc === 'MOV') {
+    updates['mov/accion'] = gv('eMOV_accion');
+    updates['mov/veh'] = gn('eMOV_veh');
+    updates['mov/comp'] = gn('eMOV_comp');
+    updates['mov/m2'] = gn('eMOV_m2');
+    updates['mov/obs'] = gv('eMOV_obs');
+  } else if (cc === 'OBR') {
+    updates['obr/enOp'] = gv('eOBR_enOp');
+    updates['obr/ocupaEP'] = gv('eOBR_ocupaEP');
+    updates['obr/m2Ocupa'] = gn('eOBR_m2Ocupa');
+    updates['obr/persona'] = gv('eOBR_persona');
+    updates['obr/obs'] = gv('eOBR_obs');
+  }
+  
+  // TOTALES
+  updates['tot/m2'] = gn('eTotM2');
+  updates['tot/m3'] = gn('eTotM3');
+  updates['tot/veh'] = gn('eTotVeh');
+  updates['tot/camb'] = gn('eTotCamb');
+  updates['tot/car'] = gn('eTotCar');
+  updates['tot/vend'] = gn('eTotVend');
+  updates['tot/ft'] = gn('eTotFT');
+  updates['tot/pers'] = gn('eTotPers');
+  updates['tot/armas'] = gn('eTotArmas');
+  updates['tot/dosis'] = gn('eTotDosis');
+  updates['tot/comp'] = gn('eTotComp');
+  updates['tot/susp'] = gn('eTotSusp');
+  
+  // GENERAL
+  updates['gen/obs'] = document.getElementById('eObs').value;
+  
+  // ACTA
+  const link = document.getElementById('eActaLink').value.trim();
+  if (link) {
+    updates['acta/link'] = link;
+  } else {
+    updates['acta'] = null;
+  }
+  
+  const btn = document.getElementById('btnGuardarEdit');
+  btn.disabled = true; btn.textContent = 'Guardando...';
+  
+  RESULTADOS_REF.child(key).update(updates)
+    .then(()=>{
+      toast('✓ Registro actualizado en Firebase','ok');
+      cerrarEditar();
+    })
+    .catch(err=>{ 
+      console.error('Error al guardar:', err);
+      toast('Error: '+err.message,'err'); 
+    })
+    .finally(()=>{ btn.disabled=false; btn.textContent='✓ Guardar cambios'; });
 }
 
 // ── PDF / ARCHIVO VISOR ────────────────────────────────
@@ -6020,7 +5095,7 @@ function adminSave() {
   LISTAS_REF.set(listasLimpias)
     .then(() => { 
       console.log('✅ Listas guardadas exitosamente en Firebase');
-      // No necesitamos llamar poblarSelects aquí porque el listener .on('value') lo hará automáticamente
+      poblarSelects(_listas); 
       toast('✅ Lista actualizada','ok'); 
     })
     .catch(err => { 
@@ -6467,11 +5542,31 @@ function generarPDFReporte(lista, filtrosTexto) {
     var acta_icon = (r.acta && r.acta.link)
       ? '<a href="'+r.acta.link+'" style="color:#1d4ed8;font-size:10px">📎 Ver acta</a>'
       : '<span style="color:#94a3b8;font-size:10px">—</span>';
+    var _rv3=function(a){var args=Array.prototype.slice.call(arguments);for(var i=0;i<args.length;i++){var n=Number(args[i]||0);if(n>0)return n;}return 0;};
     var kpis = [];
-    if (r.cc==='AE'){ if(t.pers)kpis.push('👤 '+t.pers+' pers.'); if(t.susp)kpis.push('🚫 '+t.susp+' susp.'); if(t.m2)kpis.push('📐 '+t.m2+' m²'); }
-    else if(r.cc==='EP'){ if(t.vend)kpis.push('🛒 '+t.vend+' vend.'); if(t.m2)kpis.push('📐 '+t.m2+' m²'); if(t.camb)kpis.push('⛺ '+t.camb+' camb.'); }
-    else if(r.cc==='AMB'){ if(t.m2)kpis.push('📐 '+t.m2+' m²'); if(t.m3)kpis.push('🗑 '+t.m3+' m³'); if(t.camb)kpis.push('⛺ '+t.camb+' camb.'); if(t.car)kpis.push('🛒 '+t.car+' carr.'); }
-    else if(r.cc==='MOV'){ if(t.comp)kpis.push('📋 '+t.comp+' comp.'); if(t.veh)kpis.push('🚗 '+t.veh+' veh.'); if(t.m2)kpis.push('📐 '+t.m2+' m²'); }
+    var p_m2  =_rv3(t.m2,   r.ep&&r.ep.m2Rec, r.amb&&r.amb.m2,  r.mov&&r.mov.m2,  r.obr&&r.obr.m2Ocupa);
+    var p_m3  =_rv3(t.m3,   r.amb&&r.amb.m3);
+    var p_comp=_rv3(t.comp,  r.mov&&(r.mov.comp||r.mov.nComp), r.ae&&(r.ae.comp||r.ae.comparendo));
+    var p_pers=_rv3(t.pers,  r.ae&&r.ae.pers,  r.amb&&r.amb.hc);
+    var p_susp=_rv3(t.susp,  r.ae&&r.ae.susp);
+    var p_arm =_rv3(t.armas, r.ae&&(r.ae.armas||r.ae.nArmas), r.amb&&r.amb.nArmas);
+    var p_veh =_rv3(t.veh,   r.mov&&r.mov.veh);
+    var p_vend=_rv3(t.vend,  r.ep&&r.ep.vendRet);
+    var p_camb=_rv3(t.camb,  r.amb&&r.amb.camb);
+    var p_car =_rv3(t.car,   r.amb&&(r.amb.car||r.amb.carretas));
+    if(p_m2)   kpis.push('📐 '+p_m2+' m²');
+    if(p_m3)   kpis.push('🗑 '+p_m3+' m³');
+    if(p_comp) kpis.push('📋 '+p_comp+' comp.');
+    if(p_pers) kpis.push('👤 '+p_pers+' pers.');
+    if(p_susp) kpis.push('🚫 '+p_susp+' susp.');
+    if(p_arm)  kpis.push('🔫 '+p_arm+' arm.');
+    if(p_veh)  kpis.push('🚗 '+p_veh+' veh.');
+    if(p_vend) kpis.push('🛒 '+p_vend+' vend.');
+    if(p_camb) kpis.push('⛺ '+p_camb+' camb.');
+    if(p_car)  kpis.push('🛒 '+p_car+' carr.');
+    var p_med = r.ae&&r.ae.medida||'';
+    if(!p_susp&&p_med) kpis.push((p_med.includes('SUSPENSION')?'🚫':p_med.includes('CIERRE')?'🔒':'⚠')+' '+p_med);
+    if(!p_comp&&!p_veh&&r.cc==='MOV'&&r.mov&&r.mov.accion) kpis.push('🚦 '+r.mov.accion);
     return '<tr style="background:'+(i%2===0?'#f8fafc':'#fff')+'">'
       +'<td style="padding:6px 8px;font-size:10px;color:#64748b;text-align:center">'+(i+1)+'</td>'
       +'<td style="padding:6px 8px;font-size:10px;font-weight:700;color:#1e293b">'+cleanId(r.meta&&r.meta.idOp)+'</td>'
@@ -6610,6 +5705,35 @@ function reporteRenderLista() {
       +'<div style="font-size:12px;color:#1e40af;font-weight:600">'+(r.ub&&r.ub.dir||'—')+'</div>'
       +(lugar&&lugar!=='—'?'<div style="font-size:11px;color:#475569;margin-top:1px">'+lugar+'</div>':'')
       +'<div style="font-size:11px;color:#94a3b8">'+(r.ub&&r.ub.barrio||'')+(r.ub&&r.ub.upz?' · '+r.ub.upz:'')+'</div>'
+      +(function(){
+          var t2=r.tot||{}; var chips=[];
+          var _rv2=(a,...bs)=>{for(const b of [a,...bs]){const n=Number(b||0);if(n>0)return n;}return 0;};
+          var c_m2  =_rv2(t2.m2,  r.ep?.m2Rec, r.amb?.m2,  r.mov?.m2,  r.obr?.m2Ocupa);
+          var c_m3  =_rv2(t2.m3,  r.amb?.m3);
+          var c_comp=_rv2(t2.comp, r.mov?.comp, r.mov?.nComp, r.ae?.comp, r.ae?.comparendo);
+          var c_pers=_rv2(t2.pers, r.ae?.pers,  r.amb?.hc);
+          var c_susp=_rv2(t2.susp, r.ae?.susp);
+          var c_arm =_rv2(t2.armas,r.ae?.armas, r.ae?.nArmas, r.amb?.nArmas);
+          var c_veh =_rv2(t2.veh,  r.mov?.veh);
+          var c_vend=_rv2(t2.vend, r.ep?.vendRet);
+          var c_camb=_rv2(t2.camb, r.amb?.camb);
+          var c_car =_rv2(t2.car,  r.amb?.car, r.amb?.carretas);
+          if(c_m2)   chips.push('<span style="padding:1px 6px;background:#f0fdf4;color:#166534;border:1px solid #86efac;border-radius:4px;font-size:10px;font-weight:700">📐 '+c_m2+' m²</span>');
+          if(c_m3)   chips.push('<span style="padding:1px 6px;background:#f0fdf4;color:#166534;border:1px solid #86efac;border-radius:4px;font-size:10px;font-weight:700">🗑 '+c_m3+' m³</span>');
+          if(c_comp) chips.push('<span style="padding:1px 6px;background:#fff7ed;color:#c2410c;border:1px solid #fdba74;border-radius:4px;font-size:10px;font-weight:700">📋 '+c_comp+' comp.</span>');
+          if(c_pers) chips.push('<span style="padding:1px 6px;background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:4px;font-size:10px;font-weight:700">👤 '+c_pers+' pers.</span>');
+          if(c_susp) chips.push('<span style="padding:1px 6px;background:#fdf4ff;color:#7e22ce;border:1px solid #d8b4fe;border-radius:4px;font-size:10px;font-weight:700">🚫 '+c_susp+' susp.</span>');
+          if(c_arm)  chips.push('<span style="padding:1px 6px;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:4px;font-size:10px;font-weight:700">🔫 '+c_arm+' arm.</span>');
+          if(c_veh)  chips.push('<span style="padding:1px 6px;background:#f1f5f9;color:#374151;border:1px solid #cbd5e1;border-radius:4px;font-size:10px;font-weight:700">🚗 '+c_veh+' veh.</span>');
+          if(c_vend) chips.push('<span style="padding:1px 6px;background:#ecfdf5;color:#065f46;border:1px solid #6ee7b7;border-radius:4px;font-size:10px;font-weight:700">🛒 '+c_vend+' vend.</span>');
+          if(c_camb) chips.push('<span style="padding:1px 6px;background:#fefce8;color:#92400e;border:1px solid #fde68a;border-radius:4px;font-size:10px;font-weight:700">⛺ '+c_camb+' camb.</span>');
+          if(c_car)  chips.push('<span style="padding:1px 6px;background:#f8fafc;color:#475569;border:1px solid #e2e8f0;border-radius:4px;font-size:10px;font-weight:700">🛒 '+c_car+' carr.</span>');
+          var aeMed2=r.ae&&r.ae.medida||'';
+          var ms2=aeMed2.includes('SUSPENSION')?'background:#fdf4ff;color:#7e22ce;border:1px solid #d8b4fe':aeMed2.includes('CIERRE')?'background:#fee2e2;color:#991b1b;border:1px solid #fca5a5':'background:#f1f5f9;color:#475569;border:1px solid #cbd5e1';
+          if(!c_susp&&aeMed2) chips.push('<span style="padding:1px 6px;'+ms2+';border-radius:4px;font-size:10px;font-weight:700">'+(aeMed2.includes('SUSPENSION')?'🚫':aeMed2.includes('CIERRE')?'🔒':'⚠')+' '+aeMed2+'</span>');
+          if(!c_comp&&!c_veh&&!c_pers&&r.cc==='MOV'&&r.mov&&r.mov.accion) chips.push('<span style="padding:1px 6px;background:#dbeafe;color:#1e40af;border:1px solid #93c5fd;border-radius:4px;font-size:10px;font-weight:700">🚦 '+r.mov.accion+'</span>');
+          return chips.length ? '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:5px">'+chips.join('')+'</div>' : '';
+        })()
       +'</div>'
       +'</div>';
   }).join('');
@@ -6718,16 +5842,11 @@ switchMain = function(v, btn) {
 // ██ REGISTRO POR ID - SISTEMA MULTI-DIRECCIÓN ███████████████████████████████████
 // ████████████████████████████████████████████████████████████████████████████████
 
-let OPERATIVOS_REF;
+const OPERATIVOS_REF = db.ref('operativos_por_id');
 let regidOperativoActual = null;
 let regidDireccionesGuardadas = [];
 
 function regidInicializar() {
-  // Inicializar referencia de Firebase solo si no está inicializada
-  if (!OPERATIVOS_REF) {
-    OPERATIVOS_REF = db.ref('operativos_por_id');
-  }
-  
   regidOperativoActual = null;
   regidDireccionesGuardadas = [];
   
@@ -6737,28 +5856,6 @@ function regidInicializar() {
   
   // Ocultar panel de existentes
   document.getElementById('regid-existingPanel').style.display = 'none';
-  
-  // Poblar chips de Espacio Público desde listas administrables
-  regidPoblarChipsEP();
-}
-
-function regidPoblarChipsEP() {
-  const container = document.getElementById('regid-secMonEP');
-  if (!container) return;
-  
-  // Si no hay listas cargadas, usar valores por defecto
-  const tiposEP = (_listas && _listas.tipos_ep) || [
-    { value: 'POLIGONOS DE MONITOREO', label: 'Polígonos de monitoreo' },
-    { value: 'HECHOS NOTORIOS', label: 'Hechos notorios' },
-    { value: 'RETIRO FOOD TRUCKS', label: 'Retiro food trucks / trailers' },
-    { value: 'VENDEDORES INFORMALES', label: 'Vendedores informales' }
-  ];
-  
-  container.innerHTML = tiposEP.map(tipo => {
-    const val = tipo.value || tipo;
-    const lbl = tipo.label || tipo;
-    return `<div class="chip" onclick="regidSelSecMonEP(this,'${val}')">${lbl}</div>`;
-  }).join('');
 }
 
 function regidValidarFormulario() {
@@ -6836,42 +5933,6 @@ function regidCheckIdExists() {
     if (snap.exists()) {
       const data = snap.val();
       console.log('Encontrado en operativos_por_id:', data);
-      
-      // ACTUALIZADO: Las direcciones en operativos_por_id ahora contienen toda la información
-      // Usar directamente data.direcciones para window.regidRegistrosCompletos
-      const regidRegistrosCompletos = {};
-      
-      if (data.direcciones) {
-        Object.entries(data.direcciones).forEach(([key, dirData]) => {
-          // Construir registro completo desde dirData (que ya tiene todo)
-          regidRegistrosCompletos[key] = {
-            meta: data.meta,
-            tipoIVC: dirData.tipoIVC || [],
-            cc: dirData.cc || '',
-            ub: {
-              dir: dirData.dir || '',
-              barrio: dirData.barrio || '',
-              upz: dirData.upz || ''
-            },
-            acta: {
-              link: dirData.actaLink || ''
-            },
-            ae: dirData.ae || null,
-            ep: dirData.ep || null,
-            amb: dirData.amb || null,
-            mov: dirData.mov || null,
-            obr: dirData.obr || null,
-            _dirKey: key
-          };
-          console.log(`✅ Registro completo construido desde operativos_por_id ${key}:`, regidRegistrosCompletos[key]);
-        });
-      }
-      
-      // Guardar globalmente
-      window.regidRegistrosCompletos = regidRegistrosCompletos;
-      console.log('📦 TOTAL Registros completos guardados:', Object.keys(regidRegistrosCompletos).length);
-      console.log('📦 Contenido:', regidRegistrosCompletos);
-      
       regidCargarDatosOperativo(data);
       toast('✓ ID encontrado - Datos cargados', 'ok');
     } else {
@@ -6938,13 +5999,9 @@ function procesarResultadosAntiguos(snapshot) {
     data.tipoIVC = [firstRecord.cc];
   }
   
-  // Convertir todas las direcciones Y guardar registros completos
-  const regidRegistrosCompletos = {}; // NUEVO: Guardar registros completos
-  
+  // Convertir todas las direcciones
   records.forEach((rec, idx) => {
     const key = 'dir_' + idx;
-    
-    // Guardar dirección procesada (como antes)
     data.direcciones[key] = {
       dir: rec.ub?.dir || '',
       barrio: rec.ub?.barrio || '',
@@ -6953,17 +6010,8 @@ function procesarResultadosAntiguos(snapshot) {
       actaLink: rec.acta?.link || '',
       timestamp: Date.now()
     };
-    
-    // NUEVO: Guardar registro completo
-    regidRegistrosCompletos[key] = rec;
-    console.log(`✅ Guardado registro completo ${key}:`, rec);
   });
   
-  // NUEVO: Guardar globalmente para acceso desde regidEditarDireccion
-  window.regidRegistrosCompletos = regidRegistrosCompletos;
-  
-  console.log('📦 TOTAL Registros completos guardados en window.regidRegistrosCompletos:', Object.keys(regidRegistrosCompletos).length);
-  console.log('📦 Contenido completo:', regidRegistrosCompletos);
   console.log('Datos procesados:', data);
   regidCargarDatosOperativo(data);
   toast('✓ ID encontrado - Datos cargados (' + records.length + ' dirección' + (records.length > 1 ? 'es' : '') + ')', 'ok');
@@ -7036,8 +6084,18 @@ function regidCargarDatosOperativo(data) {
     regidToggleConjuntoStyle();
   }
   
-  // NOTA: Ya no cargamos tipoIVC a nivel de operativo porque ahora
-  // cada dirección tiene su propio tipoIVC específico
+  // Cargar tipo IVC
+  if (data.tipoIVC && Array.isArray(data.tipoIVC)) {
+    console.log('Tipos IVC:', data.tipoIVC);
+    document.querySelectorAll('#regid-tipoIVC .chip').forEach(chip => chip.classList.remove('on'));
+    data.tipoIVC.forEach(tipo => {
+      const chip = document.querySelector(`#regid-tipoIVC .chip[data-comp="${tipo}"]`);
+      if (chip) {
+        chip.classList.add('on');
+        console.log('Tipo IVC activado:', tipo);
+      }
+    });
+  }
   
   // Mostrar direcciones existentes
   if (data.direcciones && Object.keys(data.direcciones).length > 0) {
@@ -7053,13 +6111,7 @@ function regidCargarDatosOperativo(data) {
     const direccionesArray = Object.entries(data.direcciones);
     lista.innerHTML = direccionesArray.map(([key, d], i) => {
       const tieneActa = d.actaLink && d.actaLink.trim() !== '';
-      
-      // Determinar el tipo de componente de esta dirección
-      const cc = d.cc || '';
-      const ccLabels = {AE: 'Actividad Económica', EP: 'Espacio Público', AMB: 'Ambiente', MOV: 'Movilidad', OBR: 'Obras'};
-      const ccColors = {AE: '#7c3aed', EP: '#0369a1', AMB: '#166534', MOV: '#1e40af', OBR: '#92400e'};
-      const ccLabel = ccLabels[cc] || 'Sin componente';
-      const ccColor = ccColors[cc] || '#64748b';
+      const tieneObs = d.obs && d.obs.trim() !== '';
       
       return `
       <div style="background:white;border:1.5px solid #86efac;border-radius:10px;padding:12px 16px;transition:all .2s">
@@ -7067,12 +6119,12 @@ function regidCargarDatosOperativo(data) {
           <div style="font-size:1.1rem;font-weight:800;color:#166534;min-width:35px;text-align:center;background:#dcfce7;border-radius:6px;padding:4px 8px">#${i + 1}</div>
           <div style="flex:1">
             <div style="font-size:.85rem;font-weight:700;color:#166534;margin-bottom:4px">📍 ${d.dir || 'Sin dirección'}</div>
-            <div style="font-size:.72rem;color:#15803d;display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+            <div style="font-size:.72rem;color:#15803d;display:flex;gap:8px;flex-wrap:wrap">
               <span><strong>Barrio:</strong> ${d.barrio || 'N/A'}</span>
               <span>•</span>
               <span><strong>UPZ:</strong> ${d.upz || 'N/A'}</span>
             </div>
-            ${cc ? `<div style="font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:4px;background:${ccColor}22;color:${ccColor};display:inline-block">${ccLabel}</div>` : ''}
+            ${tieneObs ? `<div style="font-size:.7rem;color:#059669;margin-top:6px;padding:6px 10px;background:#f0fdf4;border-radius:6px;border-left:3px solid #86efac"><strong>Obs:</strong> ${d.obs}</div>` : ''}
           </div>
           <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
             ${tieneActa ? '<div style="font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:4px;background:#dcfce7;color:#166534">📎 Con acta</div>' : '<div style="font-size:.65rem;font-weight:600;padding:3px 10px;border-radius:4px;background:#fef3c7;color:#92400e">⚠️ Sin acta</div>'}
@@ -7105,16 +6157,14 @@ function regidGuardarDireccion(continuarRegistrando) {
   btnGuardarYSalir.textContent = 'Guardando...';
   btnGuardarYContinuar.textContent = 'Guardando...';
   
-  // Construir objeto de dirección con su tipo IVC y componente específico
+  // Construir objeto de dirección
   const direccion = {
     dir: document.getElementById('regid-dir').value.trim(),
     barrio: document.getElementById('regid-barrio').value,
     upz: document.getElementById('regid-upz').value,
+    obs: document.getElementById('regid-obs').value.trim(),
     actaLink: document.getElementById('regid-actaLink').value.trim(),
-    timestamp: Date.now(),
-    // CRÍTICO: Cada dirección tiene su propio tipoIVC y componente
-    tipoIVC: Array.from(document.querySelectorAll('#regid-tipoIVC .chip.on')).map(c => c.dataset.comp),
-    cc: '' // se llenará después
+    timestamp: Date.now()
   };
   
   // Construir objeto de operativo completo
@@ -7135,219 +6185,54 @@ function regidGuardarDireccion(continuarRegistrando) {
     direcciones: {}
   };
   
-  // Capturar los datos del componente AHORA (antes de leer Firebase)
-  // Esto evita que se sobrescriban datos de direcciones anteriores
-  const cc = direccion.tipoIVC && direccion.tipoIVC.length > 0 ? direccion.tipoIVC[0] : '';
-  direccion.cc = cc; // Asignar el componente a la dirección
-  
-  const gv = id => document.getElementById(id)?.value || '';
-  const gn = id => Number(document.getElementById(id)?.value || 0);
-  
-  const datosComponenteActual = {};
-  
-  if (cc === 'AE') {
-    datosComponenteActual.ae = {
-      tipo: gv('regid-tipoAE'),
-      nom: gv('regid-nomAE'),
-      entEsc: gv('regid-entEsc'),
-      colegio: gv('regid-nomColegio'),
-      pers: gn('regid-persAE'),
-      beb: gn('regid-bebAE'),
-      armas: gn('regid-armasAE'),
-      dosis: gn('regid-dosisAE'),
-      aplico: gv('regid-aplicoMedida') || 'NO',
-      medida: gv('regid-medidaAE'),
-      dias: gn('regid-diasAE'),
-      comp: gv('regid-compAE'),
-      motivoSusp: gv('regid-motivoSusp'),
-      motivoCDef: gv('regid-motivoCierreDef'),
-      compPrev: gv('regid-compPrev'),
-      res: gv('regid-resAE')
-    };
-    console.log('📊 Datos AE capturados - armas:', datosComponenteActual.ae.armas, 'dosis:', datosComponenteActual.ae.dosis);
-    // Agregar datos del componente a la dirección
-    direccion.ae = datosComponenteActual.ae;
-  } else if (cc === 'EP') {
-    datosComponenteActual.ep = {
-      secMon: gv('regid-secMonEPVal'),
-      pol: gv('regid-poligono'),
-      ft: gn('regid-ftEP'),
-      m2Rec: gn('regid-m2RecEP'),
-      vendRet: gn('regid-vendRetEP'),
-      res: gv('regid-resEP')
-    };
-    direccion.ep = datosComponenteActual.ep;
-  } else if (cc === 'AMB') {
-    datosComponenteActual.amb = {
-      linea: gv('regid-lineaAmb'),
-      m2: gn('regid-m2Amb'),
-      m3: gn('regid-m3Amb'),
-      llantas: gn('regid-llantasAmb'),
-      hc: gn('regid-hcAmb'),
-      regPers: gn('regid-regPersAmb'),
-      capturas: gn('regid-capturasAmb'),
-      camb: gn('regid-cambAmb'),
-      car: gn('regid-carAmb'),
-      dosis: gn('regid-dosisAmb'),
-      armasB: document.querySelector('input[name="regid-armasAmb"]:checked')?.value || 'NO',
-      nArmas: gn('regid-nArmasAmb'),
-      tipoArma: gv('regid-tipoArmaAmb'),
-      res: gv('regid-resAmb')
-    };
-    direccion.amb = datosComponenteActual.amb;
-  } else if (cc === 'MOV') {
-    datosComponenteActual.mov = {
-      accion: gv('regid-accionMovVal'),
-      veh: gn('regid-vehMov'),
-      comp: gn('regid-nCompMov'),
-      m2: gn('regid-m2Mov'),
-      obs: gv('regid-obsMov')
-    };
-    direccion.mov = datosComponenteActual.mov;
-  } else if (cc === 'OBR') {
-    datosComponenteActual.obr = {
-      enOp: gv('regid-obraEnOp'),
-      ocupaEP: gv('regid-ocupaEPObr'),
-      m2Ocupa: gn('regid-m2OcupaObr'),
-      persona: gv('regid-personaAtiende'),
-      obs: gv('regid-obsObr')
-    };
-    direccion.obr = datosComponenteActual.obr;
-  }
-  
   // Obtener direcciones existentes y agregar/actualizar
   OPERATIVOS_REF.child(idOp).once('value', snap => {
-    // Determinar la clave de la dirección que estamos guardando
-    let direccionActualKey;
-    let modoEdicion = false;
+    if (snap.exists() && snap.val().direcciones) {
+      operativo.direcciones = snap.val().direcciones;
+    }
     
     // Verificar si estamos editando o creando nueva
     if (window.regidDireccionEditandoKey) {
       // MODO EDICIÓN: Actualizar dirección existente
-      direccionActualKey = window.regidDireccionEditandoKey;
-      modoEdicion = true;
+      operativo.direcciones[window.regidDireccionEditandoKey] = direccion;
       var mensajeExito = '✓ Dirección actualizada exitosamente';
       // Limpiar flag de edición
       delete window.regidDireccionEditandoKey;
     } else {
       // MODO CREACIÓN: Agregar nueva dirección
-      direccionActualKey = db.ref().push().key;
+      const nuevaKey = db.ref().push().key;
+      operativo.direcciones[nuevaKey] = direccion;
       var mensajeExito = '✓ Dirección guardada exitosamente';
     }
     
-    // Guardar en Firebase (dos rutas: operativos_por_id y resultados_operativos)
-    const updates = {};
-    
-    // CAMBIO CRÍTICO: No sobrescribir todo el operativo, solo actualizar la dirección específica
-    // Actualizar solo los datos generales del operativo (meta) si es necesario
-    if (!snap.exists()) {
-      // Si no existe el operativo, crear la estructura completa
-      updates[`operativos_por_id/${idOp}/meta`] = operativo.meta;
-    }
-    
-    // Actualizar solo esta dirección específica
-    updates[`operativos_por_id/${idOp}/direcciones/${direccionActualKey}`] = direccion;
-    
-    // Convertir direcciones a formato resultados_operativos
-    // Primero, buscar registros existentes en resultados_operativos con este idOp
-    RESULTADOS_REF.orderByChild('meta/idOp').equalTo(idOp).once('value', snapResultados => {
-      const registrosExistentes = {};
-      snapResultados.forEach(child => {
-        const reg = child.val();
-        if (reg._dirKey) {
-          registrosExistentes[reg._dirKey] = child.key;
-        }
-      });
-      
-      // CRÍTICO: Solo procesar la dirección que estamos guardando AHORA
-      // No tocar las direcciones que ya existían anteriormente
-      const dirKey = direccionActualKey;
-      const dirData = direccion; // dirData ahora contiene tipoIVC, cc, y datos del componente
-      
-      const resultado = {
-        meta: {
-          idOp: idOp,
-          fecha: operativo.meta.fecha,
-          h1: operativo.meta.h1,
-          h2: operativo.meta.h2,
-          resp: operativo.meta.resp,
-          megatoma: operativo.meta.megatoma,
-          opConjunto: operativo.meta.opConjunto,
-          entidadesConjunto: operativo.meta.entidadesConjunto
-        },
-        tipoIVC: dirData.tipoIVC,
-        cc: dirData.cc,
-        ub: {
-          dir: dirData.dir,
-          barrio: dirData.barrio,
-          upz: dirData.upz
-        },
-        acta: {
-          link: dirData.actaLink
-        },
-        tot: {},
-        _dirKey: dirKey,
-        _timestamp: dirData.timestamp || Date.now()
-      };
-      
-      // Agregar datos del componente específico de esta dirección
-      if (dirData.ae) resultado.ae = dirData.ae;
-      if (dirData.ep) resultado.ep = dirData.ep;
-      if (dirData.amb) resultado.amb = dirData.amb;
-      if (dirData.mov) resultado.mov = dirData.mov;
-      if (dirData.obr) resultado.obr = dirData.obr;
-      
-      console.log(`💾 Guardando registro para dirKey ${dirKey} con componente ${dirData.cc}:`, resultado);
-      
-      // Si ya existe un registro para esta dirección, actualizarlo; si no, crear uno nuevo
-      if (registrosExistentes[dirKey]) {
-        updates[`resultados_operativos/${registrosExistentes[dirKey]}`] = resultado;
-      } else {
-        const nuevoKey = db.ref().push().key;
-        updates[`resultados_operativos/${nuevoKey}`] = resultado;
-      }
-      
-      db.ref().update(updates)
-        .then(() => {
-          toast(mensajeExito, 'ok');
-          
-          // CRÍTICO: Actualizar window.regidRegistrosCompletos con el registro que acabamos de guardar
-          if (!window.regidRegistrosCompletos) {
-            window.regidRegistrosCompletos = {};
-          }
-          window.regidRegistrosCompletos[direccionActualKey] = resultado;
-          console.log(`✅ window.regidRegistrosCompletos actualizado con key ${direccionActualKey}:`, resultado);
-          
-          // Recargar el operativo completo desde Firebase para mostrar todas las direcciones
-          OPERATIVOS_REF.child(idOp).once('value', snapReload => {
-            if (snapReload.exists()) {
-              const operativoCompleto = snapReload.val();
-              
-              // Actualizar lista de direcciones guardadas
-              regidDireccionesGuardadas = operativoCompleto.direcciones || {};
-              
-              // Mostrar el panel actualizado con todas las direcciones
-              regidCargarDatosOperativo(operativoCompleto);
-              
-              if (continuarRegistrando) {
-                // Limpiar solo el formulario de ubicación y componente
-                regidLimpiarFormularioDireccion();
-                // Scroll al inicio de la sección de ubicación
-                setTimeout(() => {
-                  document.getElementById('regid-s2').scrollIntoView({behavior:'smooth',block:'start'});
-                }, 500);
-              } else {
-                // Finalizar y resetear todo
-                setTimeout(() => {
-                  if (confirm('✓ Registro completado\n\n¿Deseas registrar un nuevo operativo?')) {
-                    regidResetearFormulario();
-                  } else {
-                    switchMain('recs', document.getElementById('sidebtn-recs'));
-                  }
-                }, 800);
-              }
+    // Guardar en Firebase
+    OPERATIVOS_REF.child(idOp).set(operativo)
+      .then(() => {
+        toast(mensajeExito, 'ok');
+        
+        // Actualizar lista de direcciones guardadas
+        regidDireccionesGuardadas = operativo.direcciones;
+        
+        // Mostrar el panel actualizado con todas las direcciones
+        regidCargarDatosOperativo(operativo);
+        
+        if (continuarRegistrando) {
+          // Limpiar solo el formulario de ubicación
+          regidLimpiarFormularioDireccion();
+          // Scroll al inicio de la sección de ubicación
+          setTimeout(() => {
+            document.getElementById('regid-s2').scrollIntoView({behavior:'smooth',block:'start'});
+          }, 500);
+        } else {
+          // Finalizar y resetear todo
+          setTimeout(() => {
+            if (confirm('✓ Registro completado\n\n¿Deseas registrar un nuevo operativo?')) {
+              regidResetearFormulario();
+            } else {
+              switchMain('recs', document.getElementById('sidebtn-recs'));
             }
-          });
+          }, 800);
+        }
       })
       .catch(err => {
         console.error(err);
@@ -7360,8 +6245,7 @@ function regidGuardarDireccion(continuarRegistrando) {
         btnGuardarYSalir.textContent = '💾 Guardar y finalizar';
         btnGuardarYContinuar.textContent = '➕ Seguir registrando en este ID';
       });
-    }); // Cierre de snapResultados
-  }); // Cierre de snap OPERATIVOS_REF
+  });
 }
 
 function regidLimpiarFormularioDireccion() {
@@ -7376,84 +6260,12 @@ function regidLimpiarFormularioDireccion() {
   document.getElementById('regid-dir').value = '';
   document.getElementById('regid-barrio').value = '';
   document.getElementById('regid-upz').value = '';
+  document.getElementById('regid-obs').value = '';
   document.getElementById('regid-actaLink').value = '';
   
   const prev = document.getElementById('regid-abPrev');
   prev.textContent = 'Completa los campos para ver la dirección';
   prev.classList.add('empty');
-  
-  // CRÍTICO: Limpiar TODOS los campos de componentes
-  
-  // Limpiar Actividad Económica
-  document.getElementById('regid-tipoAE').value = '';
-  document.getElementById('regid-nomAE').value = '';
-  document.getElementById('regid-entEsc').value = '';
-  document.getElementById('regid-nomColegio').value = '';
-  document.getElementById('regid-persAE').value = '';
-  document.getElementById('regid-bebAE').value = '';
-  document.getElementById('regid-armasAE').value = '';
-  document.getElementById('regid-dosisAE').value = '';
-  document.getElementById('regid-aplicoMedida').value = '';
-  document.getElementById('regid-medidaAE').value = '';
-  document.getElementById('regid-diasAE').value = '';
-  document.getElementById('regid-compAE').value = '';
-  document.getElementById('regid-motivoSusp').value = '';
-  document.getElementById('regid-motivoCierreDef').value = '';
-  document.getElementById('regid-compPrev').value = '';
-  document.getElementById('regid-resAE').value = '';
-  
-  // Limpiar Espacio Público
-  document.getElementById('regid-secMonEPVal').value = '';
-  document.getElementById('regid-poligono').value = '';
-  document.getElementById('regid-elemHN').value = '';
-  document.getElementById('regid-numElemHN').value = '';
-  document.getElementById('regid-ftEP').value = '';
-  document.getElementById('regid-m2RecEP').value = '';
-  document.getElementById('regid-vendRetEP').value = '';
-  document.getElementById('regid-resEP').value = '';
-  
-  // Limpiar Ambiente
-  document.getElementById('regid-lineaAmb').value = '';
-  document.getElementById('regid-m2Amb').value = '';
-  document.getElementById('regid-m3Amb').value = '';
-  document.getElementById('regid-llantasAmb').value = '';
-  document.getElementById('regid-hcAmb').value = '';
-  document.getElementById('regid-regPersAmb').value = '';
-  document.getElementById('regid-capturasAmb').value = '';
-  document.getElementById('regid-cambAmb').value = '';
-  document.getElementById('regid-carAmb').value = '';
-  document.getElementById('regid-dosisAmb').value = '';
-  document.getElementById('regid-nArmasAmb').value = '';
-  document.getElementById('regid-tipoArmaAmb').value = '';
-  document.getElementById('regid-resAmb').value = '';
-  
-  // Limpiar Movilidad
-  document.getElementById('regid-accionMovVal').value = '';
-  document.getElementById('regid-vehMov').value = '';
-  document.getElementById('regid-nCompMov').value = '';
-  document.getElementById('regid-m2Mov').value = '';
-  document.getElementById('regid-obsMov').value = '';
-  
-  // Limpiar Obras
-  document.getElementById('regid-obraEnOp').value = '';
-  document.getElementById('regid-ocupaEPObr').value = '';
-  document.getElementById('regid-m2OcupaObr').value = '';
-  document.getElementById('regid-personaAtiende').value = '';
-  document.getElementById('regid-obsObr').value = '';
-  
-  // Ocultar bloques condicionales usando tc() para consistencia
-  const bloquesCond = ['regid-cdEntEsc', 'regid-cdColegio', 'regid-cdBebidas', 'regid-cdMedida', 
-                       'regid-cdSusp', 'regid-cdCierreDef', 'regid-cdCierrePrev',
-                       'regid-cdPoligonos', 'regid-cdHechosNot', 'regid-cdFoodTrucks',
-                       'regid-cdOcupaEP'];
-  bloquesCond.forEach(id => {
-    tc(id, false); // Usar tc() para consistencia
-  });
-  
-  // Desmarcar chips de medidas y acciones
-  document.querySelectorAll('#regid-medidaChips .chip').forEach(chip => chip.classList.remove('on'));
-  document.querySelectorAll('#regid-secMonEP .chip').forEach(chip => chip.classList.remove('on'));
-  document.querySelectorAll('#regid-accionMov .chip').forEach(chip => chip.classList.remove('on'));
   
   // Limpiar flag de edición
   delete window.regidDireccionEditandoKey;
@@ -7528,417 +6340,37 @@ function regidToggleOtroResp() {
 }
 
 function regidEditarDireccion(direccionKey) {
-  console.log('🔍 regidEditarDireccion llamado con key:', direccionKey);
-  console.log('🔍 window.regidRegistrosCompletos existe?', !!window.regidRegistrosCompletos);
-  console.log('🔍 Keys disponibles:', window.regidRegistrosCompletos ? Object.keys(window.regidRegistrosCompletos) : 'NO EXISTE');
+  // Obtener la dirección desde regidDireccionesGuardadas
+  const direccion = regidDireccionesGuardadas[direccionKey];
   
-  // Obtener el registro completo desde memoria
-  let r = window.regidRegistrosCompletos?.[direccionKey];
-  
-  if (!r) {
-    console.error('❌ No se encontró el registro en memoria. Key:', direccionKey);
-    console.log('❌ Registros disponibles:', window.regidRegistrosCompletos);
-    toast('Error: No se encontró el registro', 'err');
+  if (!direccion) {
+    toast('Error: No se encontró la dirección', 'err');
     return;
   }
   
-  console.log('✅ Registro encontrado:', r);
+  // Cargar datos en el formulario
+  // Parsear la dirección para llenar el constructor
+  const dir = direccion.dir || '';
   
-  // NUEVO: Si el registro NO tiene datos de componente, buscar en resultados_operativos
-  const tieneComponente = r.ae || r.ep || r.amb || r.mov || r.obr;
+  // Opción 1: Llenar directamente el campo de texto
+  document.getElementById('regid-dir').value = dir;
   
-  if (!tieneComponente) {
-    console.log('⚠️ Registro antiguo sin datos de componente. Buscando datos completos en Firebase...');
-    const idOp = document.getElementById('regid-idOp').value.trim();
-    
-    // Buscar en resultados_operativos por idOp y dirección
-    RESULTADOS_REF.orderByChild('meta/idOp').equalTo(idOp).once('value', snapResultados => {
-      let registroCompleto = null;
-      
-      snapResultados.forEach(childSnap => {
-        const rec = childSnap.val();
-        // Buscar por dirección exacta
-        if (rec.ub?.dir === r.ub?.dir && rec.ub?.barrio === r.ub?.barrio) {
-          registroCompleto = rec;
-          console.log('✅ Registro completo encontrado en Firebase:', rec);
-        }
-      });
-      
-      if (registroCompleto) {
-        // Reemplazar el registro incompleto con el completo
-        r = registroCompleto;
-        window.regidRegistrosCompletos[direccionKey] = r; // Actualizar en memoria
-        console.log('✅ Registro actualizado con datos completos');
-        cargarDatosEnFormulario(r, direccionKey);
-      } else {
-        console.warn('⚠️ No se encontraron datos completos en Firebase. Continuando con datos parciales.');
-        cargarDatosEnFormulario(r, direccionKey);
-      }
-    });
-  } else {
-    console.log('✅ Registro tiene datos de componente. Cargando directamente.');
-    cargarDatosEnFormulario(r, direccionKey);
-  }
-}
-
-function cargarDatosEnFormulario(r, direccionKey) {
-  console.log('📝 Cargando registro completo para edición');
-  console.log('📦 Registro recibido:', r);
-  
-  // 01 - IDENTIFICACIÓN
-  document.getElementById('regid-h1').value = r.meta?.h1 || '';
-  document.getElementById('regid-h2').value = r.meta?.h2 || '';
-  document.getElementById('regid-resp').value = r.meta?.resp || '';
-  
-  // Megatoma
-  const esMega = r.meta?.megatoma === 'SI';
-  document.getElementById('regid-megatoma-si').checked = esMega;
-  document.getElementById('regid-megatoma-no').checked = !esMega;
-  regidToggleMegatomaStyle();
-  
-  // Operativo conjunto
-  const esConj = r.meta?.opConjunto === 'SI';
-  document.getElementById('regid-conjunto-si').checked = esConj;
-  document.getElementById('regid-conjunto-no').checked = !esConj;
-  document.getElementById('regid-entidades-conjunto').value = r.meta?.entidadesConjunto || '';
-  regidToggleConjuntoStyle();
-  
-  // 02 - UBICACIÓN
-  document.getElementById('regid-dir').value = r.ub?.dir || '';
-  document.getElementById('regid-barrio').value = r.ub?.barrio || '';
-  document.getElementById('regid-upz').value = r.ub?.upz || '';
-  
-  // Actualizar preview del constructor
+  // Actualizar la vista previa del constructor
   const prev = document.getElementById('regid-abPrev');
-  if (r.ub?.dir) {
-    prev.textContent = r.ub.dir;
+  if (dir) {
+    prev.textContent = dir;
     prev.classList.remove('empty');
   }
   
-  // 03 - COMPONENTE (inferir si no existe)
-  let cc = r.cc || '';
-  if (!cc) {
-    if (r.ae && Object.keys(r.ae).length > 0) cc = 'AE';
-    else if (r.ep && Object.keys(r.ep).length > 0) cc = 'EP';
-    else if (r.amb && Object.keys(r.amb).length > 0) cc = 'AMB';
-    else if (r.mov && Object.keys(r.mov).length > 0) cc = 'MOV';
-    else if (r.obr && Object.keys(r.obr).length > 0) cc = 'OBR';
-    console.log('⚠️ cc inferido desde datos:', cc);
-  }
+  // Llenar barrio y UPZ
+  document.getElementById('regid-barrio').value = direccion.barrio || '';
+  document.getElementById('regid-upz').value = direccion.upz || '';
   
-  // CRÍTICO: Marcar el chip del componente ANTES de cargar los datos
-  if (cc) {
-    console.log('🎯 Marcando chip del componente:', cc);
-    document.querySelectorAll('#regid-tipoIVC .chip').forEach(chip => {
-      chip.classList.remove('on');
-      if (chip.dataset.comp === cc) {
-        chip.classList.add('on');
-        console.log('✅ Chip marcado:', chip.textContent);
-      }
-    });
-    
-    // FORZAR mostrar el bloque del componente SÍNCRONAMENTE
-    console.log('🔄 Forzando visibilidad del bloque del componente');
-    regidUpdateCompBlocksSincrono();
-  } else {
-    console.warn('⚠️ No se pudo determinar el componente del registro');
-  }
+  // Llenar observaciones y acta
+  document.getElementById('regid-obs').value = direccion.obs || '';
+  document.getElementById('regid-actaLink').value = direccion.actaLink || '';
   
-  // CORRECCIÓN 4: Función ROBUSTA de asignación con retry
-  const setValRobust = (id, val, retry = true) => {
-    const el = document.getElementById(id);
-    if (el) {
-      // Forzar visibilidad del contenedor padre si está oculto
-      let parent = el.closest('.cond');
-      if (parent && parent.style.display === 'none') {
-        parent.style.display = 'block';
-        parent.classList.add('on');
-        console.log(`   🔓 Contenedor condicional mostrado: ${parent.id}`);
-      }
-      
-      el.value = val || '';
-      console.log(`   ✓ ${id} = "${val}"`);
-      return true;
-    } else {
-      console.warn(`   ⚠️ Campo ${id} no encontrado`);
-      if (retry) {
-        // Retry después de un frame
-        requestAnimationFrame(() => {
-          console.log(`   🔁 Reintentando: ${id}`);
-          setValRobust(id, val, false);
-        });
-      }
-      return false;
-    }
-  };
-  
-  // Ahora cargar los datos del componente
-  if (cc === 'AE' && r.ae) {
-    console.log('✅ Cargando campos de AE');
-    const ae = r.ae;
-    
-    setValRobust('regid-tipoAE', ae.tipo);
-    setValRobust('regid-nomAE', ae.nom);
-    setValRobust('regid-persAE', ae.pers);
-    setValRobust('regid-armasAE', ae.armas);
-    setValRobust('regid-dosisAE', ae.dosis);
-    setValRobust('regid-resAE', ae.res);
-    
-    // Entorno escolar (mostrar bloque si aplica)
-    if (ae.entEsc) {
-      setValRobust('regid-entEsc', ae.entEsc);
-      
-      // CRÍTICO: Marcar visualmente el botón Y/N de entorno escolar
-      const entEscContainer = document.querySelector('#regid-entEsc').closest('.f').querySelector('.yn');
-      if (entEscContainer) {
-        const botones = entEscContainer.querySelectorAll('.yn-btn');
-        botones.forEach(btn => {
-          btn.className = 'yn-btn';
-          if (ae.entEsc === 'SI' && btn.textContent.trim() === 'SÍ') {
-            btn.classList.add('y');
-            console.log('✅ Botón "SÍ" de entorno escolar marcado');
-          } else if (ae.entEsc === 'NO' && btn.textContent.trim() === 'NO') {
-            btn.classList.add('n');
-            console.log('✅ Botón "NO" de entorno escolar marcado');
-          }
-        });
-      }
-      
-      if (ae.entEsc === 'SI') {
-        tc('regid-cdEntEsc', true);
-        
-        if (ae.colegio) {
-          tc('regid-cdColegio', true);
-          setValRobust('regid-nomColegio', ae.colegio);
-        }
-      }
-    }
-    
-    // Bebidas (mostrar bloque si aplica)
-    if (ae.beb) {
-      tc('regid-cdBebidas', true);
-      setValRobust('regid-bebAE', ae.beb);
-    }
-    
-    // Medida correctiva
-    if (ae.aplico === 'SI') {
-      setValRobust('regid-aplicoMedida', 'SI');
-      
-      // PASO 1: Mostrar el bloque de medida correctiva PRIMERO
-      tc('regid-cdMedida', true);
-      
-      // PASO 2: Marcar visualmente el botón "SÍ"
-      const aplicoMedidaContainer = document.querySelector('#regid-aplicoMedida').closest('.f').querySelector('.yn');
-      if (aplicoMedidaContainer) {
-        const botones = aplicoMedidaContainer.querySelectorAll('.yn-btn');
-        botones.forEach(btn => {
-          btn.className = 'yn-btn'; // Limpiar clases
-          if (btn.textContent.trim() === 'SÍ') {
-            btn.classList.add('y'); // Marcar el botón SÍ
-            console.log('✅ Botón "SÍ" de medida correctiva marcado');
-          }
-        });
-      }
-      
-      // PASO 3: Cargar el tipo de medida en el campo hidden
-      setValRobust('regid-medidaAE', ae.medida);
-      
-      // PASO 4: Marcar el chip visual de la medida DESPUÉS de que el bloque sea visible
-      if (ae.medida) {
-        console.log(`🎯 Marcando chip de medida: ${ae.medida}`);
-        // Usar setTimeout para asegurar que el DOM esté actualizado
-        setTimeout(() => {
-          document.querySelectorAll('#regid-medidaChips .chip').forEach(chip => {
-            chip.classList.remove('on');
-            const chipText = chip.textContent.trim();
-            // Comparar el texto del chip con el valor de la medida
-            if (
-              (ae.medida === 'SUSPENSION TEMPORAL' && chipText === 'Suspensión temporal') ||
-              (ae.medida === 'CIERRE DEFINITIVO' && chipText === 'Cierre definitivo') ||
-              (ae.medida === 'CIERRE PREVENTIVO' && chipText === 'Cierre preventivo')
-            ) {
-              chip.classList.add('on');
-              console.log(`✅ Chip marcado: ${chipText}`);
-            }
-          });
-        }, 50);
-      }
-      
-      // PASO 5: Mostrar bloque específico según tipo de medida
-      if (ae.medida === 'SUSPENSION TEMPORAL') {
-        tc('regid-cdSusp', true);
-        setValRobust('regid-diasAE', ae.dias);
-        setValRobust('regid-compAE', ae.comp);
-        setValRobust('regid-motivoSusp', ae.motivoSusp);
-      } else if (ae.medida === 'CIERRE DEFINITIVO') {
-        tc('regid-cdCierreDef', true);
-        setValRobust('regid-motivoCierreDef', ae.motivoCDef);
-      } else if (ae.medida === 'CIERRE PREVENTIVO') {
-        tc('regid-cdCierrePrev', true);
-        setValRobust('regid-compPrev', ae.compPrev);
-      }
-    } else if (ae.aplico === 'NO') {
-      // Marcar el botón "NO"
-      setValRobust('regid-aplicoMedida', 'NO');
-      const aplicoMedidaContainer = document.querySelector('#regid-aplicoMedida').closest('.f').querySelector('.yn');
-      if (aplicoMedidaContainer) {
-        const botones = aplicoMedidaContainer.querySelectorAll('.yn-btn');
-        botones.forEach(btn => {
-          btn.className = 'yn-btn';
-          if (btn.textContent.trim() === 'NO') {
-            btn.classList.add('n'); // Marcar el botón NO
-            console.log('✅ Botón "NO" de medida correctiva marcado');
-          }
-        });
-      }
-    }
-    
-    console.log('✅ Campos de AE cargados');
-    
-  } else if (cc === 'EP' && r.ep) {
-    console.log('✅ Cargando campos de EP');
-    const ep = r.ep;
-    
-    setValRobust('regid-secMonEPVal', ep.secMon);
-    
-    // CRÍTICO: Marcar el chip visual de la sección de monitoreo
-    if (ep.secMon) {
-      console.log(`🎯 Marcando chip de sección: ${ep.secMon}`);
-      document.querySelectorAll('#regid-secMonEP .chip').forEach(chip => {
-        chip.classList.remove('on');
-        // El chip tiene un onclick con el valor, buscar por el valor en el onclick
-        const onclickAttr = chip.getAttribute('onclick');
-        if (onclickAttr && onclickAttr.includes(`'${ep.secMon}'`)) {
-          chip.classList.add('on');
-          console.log(`✅ Chip de sección marcado: ${chip.textContent}`);
-        }
-      });
-    }
-    
-    setValRobust('regid-ftEP', ep.ft);
-    setValRobust('regid-m2RecEP', ep.m2Rec);
-    setValRobust('regid-vendRetEP', ep.vendRet);
-    setValRobust('regid-resEP', ep.res);
-    
-    // Polígonos
-    if (ep.poligono) {
-      tc('regid-cdPoligonos', true);
-      setValRobust('regid-poligono', ep.poligono);
-    }
-    
-    // Hechos notorios
-    if (ep.elemHN || ep.numElemHN) {
-      tc('regid-cdHechosNot', true);
-      setValRobust('regid-elemHN', ep.elemHN);
-      setValRobust('regid-numElemHN', ep.numElemHN);
-    }
-    
-    console.log('✅ Campos de EP cargados');
-    
-  } else if (cc === 'AMB' && r.amb) {
-    console.log('✅ Cargando campos de AMB');
-    const a = r.amb;
-    
-    setValRobust('regid-lineaAmb', a.linea);
-    setValRobust('regid-m2Amb', a.m2);
-    setValRobust('regid-m3Amb', a.m3);
-    setValRobust('regid-llantasAmb', a.llantas);
-    setValRobust('regid-hcAmb', a.hc);
-    setValRobust('regid-regPersAmb', a.regPers);
-    setValRobust('regid-capturasAmb', a.capturas);
-    setValRobust('regid-cambAmb', a.camb);
-    setValRobust('regid-carAmb', a.car);
-    setValRobust('regid-dosisAmb', a.dosis);
-    setValRobust('regid-nArmasAmb', a.nArmas);
-    setValRobust('regid-tipoArmaAmb', a.tipoArma);
-    setValRobust('regid-resAmb', a.res);
-    
-    console.log('✅ Campos de AMB cargados');
-    
-  } else if (cc === 'MOV' && r.mov) {
-    console.log('✅ Cargando campos de MOV');
-    const m = r.mov;
-    
-    setValRobust('regid-accionMovVal', m.accion);
-    
-    // CRÍTICO: Marcar el chip visual de la acción
-    if (m.accion) {
-      console.log(`🎯 Marcando chip de acción: ${m.accion}`);
-      document.querySelectorAll('#regid-accionMov .chip').forEach(chip => {
-        chip.classList.remove('on');
-        const onclickAttr = chip.getAttribute('onclick');
-        if (onclickAttr && onclickAttr.includes(`'${m.accion}'`)) {
-          chip.classList.add('on');
-          console.log(`✅ Chip de acción marcado: ${chip.textContent}`);
-        }
-      });
-    }
-    
-    setValRobust('regid-vehMov', m.veh);
-    setValRobust('regid-nCompMov', m.comp);
-    setValRobust('regid-m2Mov', m.m2);
-    setValRobust('regid-obsMov', m.obs);
-    
-    console.log('✅ Campos de MOV cargados');
-    
-  } else if (cc === 'OBR' && r.obr) {
-    console.log('✅ Cargando campos de OBR');
-    const o = r.obr;
-    
-    // Campo: ¿Se encuentra en operación la obra?
-    if (o.enOp) {
-      setValRobust('regid-obraEnOp', o.enOp);
-      const enOpContainer = document.querySelector('#regid-obraEnOp').closest('.f').querySelector('.yn');
-      if (enOpContainer) {
-        const botones = enOpContainer.querySelectorAll('.yn-btn');
-        botones.forEach(btn => {
-          btn.className = 'yn-btn';
-          if (o.enOp === 'SI' && btn.textContent.trim() === 'SÍ') {
-            btn.classList.add('y');
-            console.log('✅ Botón "SÍ" de obra en operación marcado');
-          } else if (o.enOp === 'NO' && btn.textContent.trim() === 'NO') {
-            btn.classList.add('n');
-            console.log('✅ Botón "NO" de obra en operación marcado');
-          }
-        });
-      }
-    }
-    
-    // Campo: ¿Ocupa espacio público?
-    if (o.ocupaEP) {
-      setValRobust('regid-ocupaEPObr', o.ocupaEP);
-      const ocupaEPContainer = document.querySelector('#regid-ocupaEPObr').closest('.f').querySelector('.yn');
-      if (ocupaEPContainer) {
-        const botones = ocupaEPContainer.querySelectorAll('.yn-btn');
-        botones.forEach(btn => {
-          btn.className = 'yn-btn';
-          if (o.ocupaEP === 'SI' && btn.textContent.trim() === 'SÍ') {
-            btn.classList.add('y');
-            console.log('✅ Botón "SÍ" de ocupa EP marcado');
-          } else if (o.ocupaEP === 'NO' && btn.textContent.trim() === 'NO') {
-            btn.classList.add('n');
-            console.log('✅ Botón "NO" de ocupa EP marcado');
-          }
-        });
-      }
-      
-      // Mostrar bloque de m² si ocupa EP
-      if (o.ocupaEP === 'SI' && o.m2Ocupa) {
-        tc('regid-cdOcupaEP', true);
-      }
-    }
-    
-    setValRobust('regid-m2OcupaObr', o.m2Ocupa);
-    setValRobust('regid-personaAtiende', o.persona);
-    setValRobust('regid-obsObr', o.obs);
-    
-    console.log('✅ Campos de OBR cargados');
-  }
-  
-  // 04 - ACTA
-  document.getElementById('regid-actaLink').value = r.acta?.link || '';
-  
-  // PERSISTENCIA DEL ID ÚNICO DE DIRECCIÓN (CRÍTICO PARA MODO EDICIÓN)
+  // Guardar la key para saber que estamos editando
   window.regidDireccionEditandoKey = direccionKey;
   
   // Scroll a la sección de ubicación
@@ -7946,7 +6378,7 @@ function cargarDatosEnFormulario(r, direccionKey) {
     document.getElementById('regid-s2').scrollIntoView({behavior:'smooth',block:'start'});
   }, 100);
   
-  toast('Registro cargado para edición', 'ok');
+  toast('Dirección cargada para edición', 'ok');
 }
 
 function regidToggleMegatomaStyle() {
@@ -7996,176 +6428,6 @@ function regidToggleConjuntoStyle() {
   }
 }
 
-// ═══ FUNCIONES PREGUNTAS DINÁMICAS REGID ═══════════════════════════════════
-
-function regidOnTipoAEChange() {
-  const v = document.getElementById('regid-tipoAE').value;
-  const bl = v === 'BARES DE ALTO IMPACTO' || v === 'CASAS DEL LENOCINIO';
-  const eb = v === 'BARES DE ALTO IMPACTO';
-  tc('regid-cdEntEsc', bl);
-  tc('regid-cdBebidas', eb);
-  if (!bl) {
-    document.getElementById('regid-entEsc').value = '';
-    document.querySelectorAll('#regid-cdEntEsc .yn-btn').forEach(b => b.className = 'yn-btn');
-    tc('regid-cdColegio', false);
-  }
-  if (!eb) document.getElementById('regid-bebAE').value = '';
-}
-
-function regidSelSecMonEP(el, val) {
-  document.querySelectorAll('#regid-secMonEP .chip').forEach(c => c.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById('regid-secMonEPVal').value = val;
-  tc('regid-cdPoligonos', val === 'POLIGONOS DE MONITOREO');
-  tc('regid-cdHechosNot', val === 'HECHOS NOTORIOS');
-  tc('regid-cdFoodTrucks', val === 'RETIRO FOOD TRUCKS');
-}
-
-function regidSelAccionMov(el, val) {
-  const was = el.classList.contains('on');
-  document.querySelectorAll('#regid-accionMov .chip').forEach(c => c.classList.remove('on'));
-  if (!was) { el.classList.add('on'); }
-  document.getElementById('regid-accionMovVal').value = was ? '' : val;
-}
-
-function regidSelMedida(el, val) {
-  document.querySelectorAll('#regid-medidaChips .chip').forEach(c => c.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById('regid-medidaAE').value = val;
-  tc('regid-cdSusp', val === 'SUSPENSION TEMPORAL');
-  tc('regid-cdCierreDef', val === 'CIERRE DEFINITIVO');
-  tc('regid-cdCierrePrev', val === 'CIERRE PREVENTIVO');
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// FUNCIÓN DE SINCRONIZACIÓN MANUAL
-// Ejecuta en consola: sincronizarOperativosAResultados()
-// ═══════════════════════════════════════════════════════════════════════════
-window.sincronizarOperativosAResultados = function() {
-  if (!confirm('⚠️ SINCRONIZACIÓN DE DATOS\n\nEsta operación sincronizará todos los operativos de REGID a RESULTADOS.\n\n¿Continuar?')) {
-    return;
-  }
-  
-  console.log('🔄 Iniciando sincronización...');
-  const startTime = Date.now();
-  
-  if (!OPERATIVOS_REF) {
-    OPERATIVOS_REF = db.ref('operativos_por_id');
-  }
-  
-  OPERATIVOS_REF.once('value', snapOperativos => {
-    if (!snapOperativos.exists()) {
-      console.log('❌ No hay operativos en operativos_por_id');
-      alert('No se encontraron operativos para sincronizar');
-      return;
-    }
-    
-    const updates = {};
-    let totalDirecciones = 0;
-    let totalOperativos = 0;
-    
-    // Primero obtener todos los registros existentes en resultados_operativos para evitar duplicados
-    RESULTADOS_REF.once('value', snapResultados => {
-      const registrosExistentes = new Map(); // Map de idOp_dirKey -> firebaseKey
-      
-      snapResultados.forEach(child => {
-        const reg = child.val();
-        if (reg.meta?.idOp && reg._dirKey) {
-          const clave = `${reg.meta.idOp}_${reg._dirKey}`;
-          registrosExistentes.set(clave, child.key);
-        }
-      });
-      
-      console.log(`📊 Registros existentes en resultados_operativos: ${registrosExistentes.size}`);
-      
-      // Procesar cada operativo
-      snapOperativos.forEach(childOp => {
-        const idOp = childOp.key;
-        const operativo = childOp.val();
-        totalOperativos++;
-        
-        if (!operativo.direcciones || Object.keys(operativo.direcciones).length === 0) {
-          console.log(`⚠️ Operativo ${idOp} no tiene direcciones`);
-          return;
-        }
-        
-        // Convertir cada dirección a formato resultados_operativos
-        Object.entries(operativo.direcciones).forEach(([dirKey, dirData]) => {
-          totalDirecciones++;
-          
-          const resultado = {
-            meta: {
-              idOp: idOp,
-              fecha: operativo.meta?.fecha || '',
-              h1: operativo.meta?.h1 || '',
-              h2: operativo.meta?.h2 || '',
-              resp: operativo.meta?.resp || '',
-              megatoma: operativo.meta?.megatoma || 'NO',
-              opConjunto: operativo.meta?.opConjunto || 'NO',
-              entidadesConjunto: operativo.meta?.entidadesConjunto || ''
-            },
-            tipoIVC: operativo.tipoIVC || [],
-            cc: (operativo.tipoIVC && operativo.tipoIVC.length > 0) ? operativo.tipoIVC[0] : '',
-            ub: {
-              dir: dirData.dir || '',
-              barrio: dirData.barrio || '',
-              upz: dirData.upz || ''
-            },
-            acta: {
-              link: dirData.actaLink || ''
-            },
-            tot: {},
-            _dirKey: dirKey,
-            _timestamp: dirData.timestamp || Date.now(),
-            _sincronizado: true
-          };
-          
-          // Verificar si ya existe este registro
-          const clave = `${idOp}_${dirKey}`;
-          if (registrosExistentes.has(clave)) {
-            // Actualizar registro existente
-            const firebaseKey = registrosExistentes.get(clave);
-            updates[`resultados_operativos/${firebaseKey}`] = resultado;
-            console.log(`✏️ Actualizando: ${idOp} / ${dirKey}`);
-          } else {
-            // Crear nuevo registro
-            const nuevoKey = db.ref().push().key;
-            updates[`resultados_operativos/${nuevoKey}`] = resultado;
-            console.log(`➕ Creando: ${idOp} / ${dirKey}`);
-          }
-        });
-      });
-      
-      console.log(`📦 Total operativos procesados: ${totalOperativos}`);
-      console.log(`📍 Total direcciones a sincronizar: ${totalDirecciones}`);
-      
-      if (Object.keys(updates).length === 0) {
-        console.log('✅ No hay nada que sincronizar');
-        alert('✅ No hay registros nuevos que sincronizar');
-        return;
-      }
-      
-      // Ejecutar actualización masiva
-      db.ref().update(updates)
-        .then(() => {
-          const duration = ((Date.now() - startTime) / 1000).toFixed(2);
-          console.log(`✅ Sincronización completada en ${duration}s`);
-          console.log(`📊 Registros sincronizados: ${Object.keys(updates).length}`);
-          alert(`✅ SINCRONIZACIÓN EXITOSA\n\n` +
-                `Operativos procesados: ${totalOperativos}\n` +
-                `Direcciones sincronizadas: ${totalDirecciones}\n` +
-                `Tiempo: ${duration}s\n\n` +
-                `Los registros ya están disponibles en Resultados y Dashboard`);
-        })
-        .catch(err => {
-          console.error('❌ Error en sincronización:', err);
-          alert('❌ Error al sincronizar: ' + err.message);
-        });
-    });
-  });
-};
-
-console.log('💡 Función de sincronización disponible. Ejecuta: sincronizarOperativosAResultados()');
 </script>
 
 </div>
