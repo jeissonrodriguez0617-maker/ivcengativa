@@ -1632,12 +1632,21 @@ body { overflow-x: hidden; }
                 <optgroup label="────── Profesionales ──────">
                   <option>JOHANA GARZÓN</option><option>ANDRÉS ARIAS</option><option>ANLLY ROJAS</option>
                   <option>MAURICIO GÓMEZ</option><option>YAMILE ESPITIA</option><option>DAVID ALBA</option>
+                  <option>JOSE GONZALEZ</option><option>HECTOR RAMIREZ</option><option>SAMUEL URBINA</option>
+                  <option>MIGUEL PEREZ</option><option>JENNY ARROYO</option><option>ADRIANA FORERO</option>
+                  <option>JENIFER NIETO</option><option>JHON LADINO</option><option>MARIA ÁLVAREZ</option>
+                  <option>HENRY FORIGUA</option>
                 </optgroup>
                 <optgroup label="────── Gestores ──────">
                   <option>LEONARDO PIÑA</option><option>JAIRO LOZANO</option><option>LILIANA CHARRY</option>
+                  <option>WILDEMAR CARVAJAL</option><option>JENIFER ESPINOSA</option><option>GIOVANNY GAVIRIA</option>
+                  <option>NICOLAS GALEANO</option><option>DANIELA QUINTERO</option><option>CAROL FORERO</option>
+                  <option>ANDRÉS PALACIO</option>
                 </optgroup>
                 <optgroup label="────── Técnicos ──────">
                   <option>JEISSON RODRÍGUEZ</option><option>EFREN SIERRA</option><option>CAMILO VARGAS</option>
+                  <option>LADY MARTINEZ</option><option>JHON MONCADA</option><option>WILSON PULIDO</option>
+                  <option>ALEXANDRA MONTENEGRO</option><option>JUAN CAMPO</option>
                 </optgroup>
                 <option value="__OTRO__">OTRO (especificar)</option>
               </select>
@@ -1815,19 +1824,276 @@ body { overflow-x: hidden; }
             <div class="f mb">
               <label>Tipo de IVC <span class="req">*</span></label>
               <div class="chips" id="regid-tipoIVC">
-                <div class="chip" data-comp="AE" onclick="selChip(this)">ACTIVIDAD ECONÓMICA</div>
-                <div class="chip" data-comp="EP" onclick="selChip(this)">ESPACIO PÚBLICO</div>
-                <div class="chip" data-comp="AMB" onclick="selChip(this)">AMBIENTE</div>
-                <div class="chip" data-comp="MOV" onclick="selChip(this)">MOVILIDAD</div>
-                <div class="chip" data-comp="OBR" onclick="selChip(this)">OBRAS</div>
+                <div class="chip" data-comp="AE" onclick="selChipRegid(this)">ACTIVIDAD ECONÓMICA</div>
+                <div class="chip" data-comp="EP" onclick="selChipRegid(this)">ESPACIO PÚBLICO</div>
+                <div class="chip" data-comp="AMB" onclick="selChipRegid(this)">AMBIENTE</div>
+                <div class="chip" data-comp="MOV" onclick="selChipRegid(this)">MOVILIDAD</div>
+                <div class="chip" data-comp="OBR" onclick="selChipRegid(this)">OBRAS</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 04 OBSERVACIONES Y ACTA -->
+        <!-- 04 DETALLE POR COMPONENTE -->
+        <div id="regid-s3">
+          <div class="stitle">04 · Detalle por Componente</div>
+
+          <!-- AE -->
+          <div id="regid-blkAE" style="display:none">
+            <div class="card">
+              <div class="ch ch-ae">🏪 Actividad Económica</div>
+              <div class="f mb">
+                <label>Tipo de establecimiento</label>
+                <select id="regid-tipoAE" onchange="regidOnTipoAEChange()">
+                  <option value="">— Seleccionar —</option>
+                  <option value="AUTOPARTES">Autopartes</option>
+                  <option value="BARES DE ALTO IMPACTO">Bares de alto impacto</option>
+                  <option value="BICICLETAS">Bicicletas</option>
+                  <option value="BODEGAS DE RECICLAJE">Bodegas de reciclaje</option>
+                  <option value="CASAS DEL LENOCINIO">Casas del lenocinio</option>
+                  <option value="ESTABLECIMIENTOS DE COMERCIO">Establecimientos de comercio</option>
+                  <option value="HOTELES Y MOTELES">Hoteles y moteles</option>
+                  <option value="METROLOGIA LEGAL">Metrología legal</option>
+                  <option value="PARQUEADEROS">Parqueaderos</option>
+                  <option value="POLVORA Y PIROTECNIA">Pólvora y pirotecnia</option>
+                  <option value="TELEFONOS MOVILES CELULARES">Teléfonos móviles celulares</option>
+                </select>
+              </div>
+              <div class="f mb"><label>Nombre del establecimiento</label><input type="text" id="regid-nomAE" placeholder="Nombre del establecimiento"></div>
+              <div class="cond" id="regid-cdEntEsc">
+                <div class="f mb">
+                  <label>¿Está en un entorno escolar?</label>
+                  <div class="yn">
+                    <button class="yn-btn" onclick="ynf(this,'regid-entEsc','SI');tc('regid-cdColegio',true)">SÍ</button>
+                    <button class="yn-btn" onclick="ynf(this,'regid-entEsc','NO');tc('regid-cdColegio',false)">NO</button>
+                  </div>
+                  <input type="hidden" id="regid-entEsc">
+                </div>
+                <div class="cond" id="regid-cdColegio">
+                  <div class="f mb">
+                    <label>Nombre del colegio</label>
+                    <input type="text" id="regid-nomColegio" list="lstColegios" placeholder="Buscar colegio...">
+                  </div>
+                </div>
+              </div>
+              <div class="f mb"><label>Personas intervenidas</label><input type="number" id="regid-persAE" placeholder="0" min="0"></div>
+              <div class="cond" id="regid-cdBebidas">
+                <div class="f mb"><label>N° de bebidas alcohólicas destruidas</label><input type="number" id="regid-bebAE" placeholder="0" min="0"></div>
+              </div>
+              <div class="g2 mb">
+                <div class="f"><label>N° de armas incautadas</label><input type="number" id="regid-armasAE" placeholder="0" min="0"></div>
+                <div class="f"><label>N° de dosis incautadas</label><input type="number" id="regid-dosisAE" placeholder="0" min="0"></div>
+              </div>
+              <div class="f mb">
+                <label>¿Se aplicó medida correctiva?</label>
+                <div class="yn">
+                  <button class="yn-btn" onclick="ynf(this,'regid-aplicoMedida','SI');tc('regid-cdMedida',true)">SÍ</button>
+                  <button class="yn-btn" onclick="ynf(this,'regid-aplicoMedida','NO');tc('regid-cdMedida',false)">NO</button>
+                </div>
+                <input type="hidden" id="regid-aplicoMedida">
+              </div>
+              <div class="cond" id="regid-cdMedida">
+                <div class="f mb">
+                  <label>Tipo de medida correctiva</label>
+                  <div class="chips" id="regid-medidaChips">
+                    <div class="chip" onclick="regidSelMedida(this,'SUSPENSION TEMPORAL')">Suspensión temporal</div>
+                    <div class="chip" onclick="regidSelMedida(this,'CIERRE DEFINITIVO')">Cierre definitivo</div>
+                    <div class="chip" onclick="regidSelMedida(this,'CIERRE PREVENTIVO')">Cierre preventivo</div>
+                  </div>
+                  <input type="hidden" id="regid-medidaAE">
+                </div>
+                <div class="cond" id="regid-cdSusp">
+                  <div class="g2 mb">
+                    <div class="f"><label>Días de suspensión</label><input type="number" id="regid-diasAE" placeholder="0" min="1"></div>
+                    <div class="f"><label>N° del comparendo</label><input type="text" id="regid-compAE" placeholder="N° comparendo"></div>
+                  </div>
+                  <div class="f mb"><label>Motivo de la suspensión</label><textarea id="regid-motivoSusp" placeholder="Describa el motivo..."></textarea></div>
+                </div>
+                <div class="cond" id="regid-cdCierreDef">
+                  <div class="f mb"><label>Motivo del cierre definitivo</label><textarea id="regid-motivoCierreDef" placeholder="Describa el motivo..."></textarea></div>
+                </div>
+                <div class="cond" id="regid-cdCierrePrev">
+                  <div class="f mb"><label>N° del comparendo</label><input type="text" id="regid-compPrev" placeholder="N° comparendo"></div>
+                </div>
+              </div>
+              <div class="f mt"><label>Resultados – Actividad Económica</label><textarea id="regid-resAE" placeholder="Resumen de resultados..."></textarea></div>
+            </div>
+          </div>
+
+          <!-- EP -->
+          <div id="regid-blkEP" style="display:none">
+            <div class="card">
+              <div class="ch ch-ep">🏙 Espacio Público</div>
+              <div class="f mb">
+                <label>Sección de monitoreo</label>
+                <div class="chips" id="regid-secMonEP">
+                  <div class="chip" onclick="regidSelSecMonEP(this,'POLIGONOS DE MONITOREO')">Polígonos de monitoreo</div>
+                  <div class="chip" onclick="regidSelSecMonEP(this,'HECHOS NOTORIOS')">Hechos notorios</div>
+                  <div class="chip" onclick="regidSelSecMonEP(this,'RETIRO FOOD TRUCKS')">Retiro food trucks / trailers</div>
+                  <div class="chip" onclick="regidSelSecMonEP(this,'VENDEDORES INFORMALES')">Vendedores informales</div>
+                </div>
+                <input type="hidden" id="regid-secMonEPVal">
+              </div>
+              <div class="cond" id="regid-cdPoligonos">
+                <div class="sil">Polígono intervenido</div>
+                <div class="f mb">
+                  <label>Nombre del polígono</label>
+                  <select id="regid-poligono">
+                    <option value="">— Seleccionar polígono —</option>
+                    <option>COLINDANCIA QUIRIGUA CENTRAL</option>
+                    <option>HUMEDAL JUAN AMARRILLO</option>
+                    <option>RONDA HUMEDAL SANTA MARIA DEL LAGO</option>
+                    <option>HUMEDAL JABOQUE</option>
+                    <option>CANAL BONANZA</option>
+                  </select>
+                </div>
+              </div>
+              <div class="cond" id="regid-cdHechosNot">
+                <div class="sil">Detalle de hechos notorios</div>
+                <div class="g2 mb">
+                  <div class="f"><label>Elementos encontrados</label><input type="text" id="regid-elemHN" placeholder="Describa los elementos encontrados"></div>
+                  <div class="f"><label>Número de elementos encontrados</label><input type="number" id="regid-numElemHN" placeholder="0" min="0"></div>
+                </div>
+              </div>
+              <div class="cond" id="regid-cdFoodTrucks">
+                <div class="sil">Food trucks / trailers</div>
+                <div class="f mb"><label>Número de food trucks intervenidos</label><input type="number" id="regid-ftEP" placeholder="0" min="0"></div>
+              </div>
+              <div class="sil">Indicadores</div>
+              <div class="g2 mb">
+                <div class="f">
+                  <label>Espacio público recuperado (m²)</label>
+                  <div class="iu"><input type="number" id="regid-m2RecEP" placeholder="0" min="0"><span class="ub">m²</span></div>
+                </div>
+                <div class="f">
+                  <label>Vendedores informales retirados</label>
+                  <input type="number" id="regid-vendRetEP" placeholder="0" min="0">
+                </div>
+              </div>
+              <div class="f"><label>Resultados – Espacio Público</label><textarea id="regid-resEP" placeholder="Resumen de resultados..."></textarea></div>
+            </div>
+          </div>
+
+          <!-- AMB -->
+          <div id="regid-blkAmb" style="display:none">
+            <div class="card">
+              <div class="ch ch-amb">🌿 Ambiente</div>
+              <div class="f mb">
+                <label>Línea de acción</label>
+                <select id="regid-lineaAmb">
+                  <option value="">— Seleccionar línea de acción —</option>
+                  <option value="RECUPERACION EP RONDA">RECUPERACIÓN DE ESPACIO PÚBLICO Y ZONA DE RONDA CUERPOS DE AGUA POR DISPOSICIÓN INADECUADA DE RESIDUOS</option>
+                  <option value="ESTRATEGIA RESIDUOS CARRETEROS CAMBUCHES">ESTRATEGIA DE RESIDUOS (BASURAS), CARRETEROS Y CAMBUCHES</option>
+                  <option value="SENTENCIA RIO BOGOTA">SENTENCIA RIO BOGOTÁ</option>
+                  <option value="CONEXIONES ILEGALES">CONEXIONES ILEGALES</option>
+                </select>
+              </div>
+              <div class="sil">Indicadores cuantitativos</div>
+              <div class="g3 mb">
+                <div class="f"><label>Espacio público recuperado (m²)</label><div class="iu"><input type="number" id="regid-m2Amb" placeholder="0" min="0"><span class="ub">m²</span></div></div>
+                <div class="f"><label>Residuos recolectados (m³)</label><div class="iu"><input type="number" id="regid-m3Amb" placeholder="0" min="0"><span class="ub">m³</span></div></div>
+                <div class="f"><label>Llantas recuperadas</label><input type="number" id="regid-llantasAmb" placeholder="0" min="0"></div>
+              </div>
+              <div class="g3 mb">
+                <div class="f"><label>Habitantes de calle identificados</label><input type="number" id="regid-hcAmb" placeholder="0" min="0"></div>
+                <div class="f"><label>Registros a personas</label><input type="number" id="regid-regPersAmb" placeholder="0" min="0"></div>
+                <div class="f"><label>Capturas</label><input type="number" id="regid-capturasAmb" placeholder="0" min="0"></div>
+              </div>
+              <div class="g3 mb">
+                <div class="f"><label>Cambuches retirados</label><input type="number" id="regid-cambAmb" placeholder="0" min="0"></div>
+                <div class="f"><label>Carretas incautadas o retiradas</label><input type="number" id="regid-carAmb" placeholder="0" min="0"></div>
+                <div class="f"><label>Dosis incautadas</label><input type="number" id="regid-dosisAmb" placeholder="0" min="0"></div>
+              </div>
+              <div class="f mb">
+                <label>¿Hubo armas incautadas?</label>
+                <div class="yn">
+                  <button class="yn-btn" onclick="ynf(this,'regid-armasAmbB','SI');tc('regid-cdArmasAmb',true)">SÍ</button>
+                  <button class="yn-btn" onclick="ynf(this,'regid-armasAmbB','NO');tc('regid-cdArmasAmb',false)">NO</button>
+                </div>
+                <input type="hidden" id="regid-armasAmbB">
+              </div>
+              <div class="cond" id="regid-cdArmasAmb">
+                <div class="g2 mb">
+                  <div class="f"><label>Número de armas incautadas</label><input type="number" id="regid-nArmasAmb" placeholder="0" min="0"></div>
+                  <div class="f">
+                    <label>Tipo de arma</label>
+                    <select id="regid-tipoArmaAmb">
+                      <option value="">— Seleccionar —</option>
+                      <option>ARMA BLANCA</option>
+                      <option>ARMA DE FUEGO</option>
+                      <option>ARMA BLANCA Y DE FUEGO</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="f"><label>Resultados – Ambiente</label><textarea id="regid-resAmb" placeholder="Resumen de resultados..."></textarea></div>
+            </div>
+          </div>
+
+          <!-- MOV -->
+          <div id="regid-blkMov" style="display:none">
+            <div class="card">
+              <div class="ch ch-mov">🚦 Movilidad</div>
+              <div class="f mb">
+                <label>Acción del operativo</label>
+                <div class="chips" id="regid-accionMov">
+                  <div class="chip" onclick="regidSelAccionMov(this,'CONTROL TRANSITO MAL PARQUEO')">Control tránsito — mal parqueo en vía</div>
+                  <div class="chip" onclick="regidSelAccionMov(this,'PEDAGOGIA')">Pedagogía</div>
+                </div>
+                <input type="hidden" id="regid-accionMovVal">
+              </div>
+              <div class="sil">Indicadores</div>
+              <div class="g2 mb">
+                <div class="f"><label>Vehículos inmovilizados</label><input type="number" id="regid-vehMov" placeholder="0" min="0"></div>
+                <div class="f"><label>Comparendos</label><input type="number" id="regid-nCompMov" placeholder="0" min="0"></div>
+              </div>
+              <div class="f mb">
+                <label>Espacio público intervenido (m²)</label>
+                <div class="iu"><input type="number" id="regid-m2Mov" placeholder="0" min="0"><span class="ub">m²</span></div>
+              </div>
+              <div class="f"><label>Observaciones – Movilidad</label><textarea id="regid-obsMov" placeholder="Observaciones del operativo de movilidad..."></textarea></div>
+            </div>
+          </div>
+
+          <!-- OBR -->
+          <div id="regid-blkObr" style="display:none">
+            <div class="card">
+              <div class="ch ch-obr">🏗 Obras y Urbanismo</div>
+              <div class="f mb">
+                <label>¿Se encuentra en operación la obra?</label>
+                <div class="yn">
+                  <button class="yn-btn" onclick="ynf(this,'regid-obraEnOp','SI')">SÍ</button>
+                  <button class="yn-btn" onclick="ynf(this,'regid-obraEnOp','NO')">NO</button>
+                </div>
+                <input type="hidden" id="regid-obraEnOp">
+              </div>
+              <div class="f mb">
+                <label>¿Ocupa espacio público la obra?</label>
+                <div class="yn">
+                  <button class="yn-btn" onclick="ynf(this,'regid-ocupaEPObr','SI');tc('regid-cdOcupaEP',true)">SÍ</button>
+                  <button class="yn-btn" onclick="ynf(this,'regid-ocupaEPObr','NO');tc('regid-cdOcupaEP',false)">NO</button>
+                </div>
+                <input type="hidden" id="regid-ocupaEPObr">
+              </div>
+              <div class="cond" id="regid-cdOcupaEP">
+                <div class="f mb">
+                  <label>Metros cuadrados de ocupación de espacio público</label>
+                  <div class="iu"><input type="number" id="regid-m2OcupaObr" placeholder="0" min="0"><span class="ub">m²</span></div>
+                </div>
+              </div>
+              <div class="f mb"><label>Nombre de la persona que atiende</label><input type="text" id="regid-personaAtiende" placeholder="Nombre completo"></div>
+              <div class="f"><label>Observaciones – Obras</label><textarea id="regid-obsObr" placeholder="Observaciones del operativo de obras y urbanismo..."></textarea></div>
+            </div>
+          </div>
+
+          <div id="regid-noComp" class="card" style="text-align:center;color:var(--muted);font-size:.82rem;padding:40px;display:none">
+            ← Selecciona el Tipo de IVC arriba para ver el formulario del componente
+          </div>
+        </div>
+
+        <!-- 05 OBSERVACIONES Y ACTA -->
         <div id="regid-s4">
-          <div class="stitle">04 · Observaciones y Acta</div>
+          <div class="stitle">05 · Observaciones y Acta</div>
           <div class="card">
             <div class="f mb">
               <label>Observaciones generales</label>
@@ -3079,6 +3345,134 @@ function selChip(el){
       if(s3) s3.scrollIntoView({behavior:'smooth', block:'start'});
     }, 180);
   }
+}
+
+function selChipRegid(el){
+  const was = el.classList.contains('on');
+  document.querySelectorAll('#regid-tipoIVC .chip').forEach(c => c.classList.remove('on'));
+  if(!was){ el.classList.add('on'); }
+  // Mostrar/ocultar bloque de componente
+  const comp = was ? '' : el.dataset.comp;
+  const map = {AE:'regid-blkAE', EP:'regid-blkEP', AMB:'regid-blkAmb', MOV:'regid-blkMov', OBR:'regid-blkObr'};
+  ['AE','EP','AMB','MOV','OBR'].forEach(k => {
+    const el = document.getElementById(map[k]);
+    if(el) el.style.display = (comp === k) ? 'block' : 'none';
+  });
+  const noComp = document.getElementById('regid-noComp');
+  if(noComp) noComp.style.display = comp ? 'none' : 'block';
+  // Scroll al bloque si se acaba de seleccionar
+  if(comp && map[comp]){
+    setTimeout(() => {
+      const blk = document.getElementById(map[comp]);
+      if(blk) blk.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 150);
+  }
+}
+
+// ── Funciones auxiliares para los componentes de regid ──
+function regidOnTipoAEChange(){
+  const v = document.getElementById('regid-tipoAE').value;
+  const bl = v==='BARES DE ALTO IMPACTO' || v==='CASAS DEL LENOCINIO';
+  const eb = v==='BARES DE ALTO IMPACTO';
+  tc('regid-cdEntEsc', bl);
+  tc('regid-cdBebidas', eb);
+  if(!bl){
+    document.getElementById('regid-entEsc').value='';
+    document.querySelectorAll('#regid-cdEntEsc .yn-btn').forEach(b=>b.className='yn-btn');
+    tc('regid-cdColegio',false);
+  }
+  if(!eb) document.getElementById('regid-bebAE').value='';
+}
+
+function regidSelMedida(el, val){
+  document.querySelectorAll('#regid-medidaChips .chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('regid-medidaAE').value = val;
+  tc('regid-cdSusp',    val==='SUSPENSION TEMPORAL');
+  tc('regid-cdCierreDef', val==='CIERRE DEFINITIVO');
+  tc('regid-cdCierrePrev',val==='CIERRE PREVENTIVO');
+}
+
+function regidSelSecMonEP(el, val){
+  document.querySelectorAll('#regid-secMonEP .chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('regid-secMonEPVal').value = val;
+  tc('regid-cdPoligonos',  val==='POLIGONOS DE MONITOREO');
+  tc('regid-cdHechosNot',  val==='HECHOS NOTORIOS');
+  tc('regid-cdFoodTrucks', val==='RETIRO FOOD TRUCKS');
+}
+
+function regidSelAccionMov(el, val){
+  const was = el.classList.contains('on');
+  document.querySelectorAll('#regid-accionMov .chip').forEach(c=>c.classList.remove('on'));
+  if(!was){ el.classList.add('on'); }
+  document.getElementById('regid-accionMovVal').value = was ? '' : val;
+}
+
+// Recolectar datos del componente seleccionado en regid
+function regidCollectComponente(){
+  const chipOn = document.querySelector('#regid-tipoIVC .chip.on');
+  const cc = chipOn ? chipOn.dataset.comp : '';
+  const gv = id => (document.getElementById(id)||{}).value||'';
+  const gn = id => parseFloat((document.getElementById(id)||{}).value||0)||0;
+  if(cc==='AE') return { cc, ae:{
+    tipo:gv('regid-tipoAE'), nom:gv('regid-nomAE'), entEsc:gv('regid-entEsc'),
+    colegio:gv('regid-nomColegio'), pers:gn('regid-persAE'), beb:gn('regid-bebAE'),
+    armas:gn('regid-armasAE'), dosis:gn('regid-dosisAE'), aplico:gv('regid-aplicoMedida'),
+    medida:gv('regid-medidaAE'), dias:gn('regid-diasAE'), comp:gv('regid-compAE'),
+    compPrev:gv('regid-compPrev'), motivoSusp:gv('regid-motivoSusp'),
+    motivoCDef:gv('regid-motivoCierreDef'), res:gv('regid-resAE')
+  }};
+  if(cc==='EP') return { cc, ep:{
+    secMon:gv('regid-secMonEPVal'), poligono:gv('regid-poligono'), elemHN:gv('regid-elemHN'),
+    numElemHN:gn('regid-numElemHN'), ft:gn('regid-ftEP'), m2Rec:gn('regid-m2RecEP'),
+    vendRet:gn('regid-vendRetEP'), res:gv('regid-resEP')
+  }};
+  if(cc==='AMB') return { cc, amb:{
+    linea:gv('regid-lineaAmb'), m2:gn('regid-m2Amb'), m3:gn('regid-m3Amb'),
+    llantas:gn('regid-llantasAmb'), hc:gn('regid-hcAmb'), regPers:gn('regid-regPersAmb'),
+    capturas:gn('regid-capturasAmb'), camb:gn('regid-cambAmb'), car:gn('regid-carAmb'),
+    dosis:gn('regid-dosisAmb'), armasB:gv('regid-armasAmbB'), nArmas:gn('regid-nArmasAmb'),
+    tipoArma:gv('regid-tipoArmaAmb'), res:gv('regid-resAmb')
+  }};
+  if(cc==='MOV') return { cc, mov:{
+    accion:gv('regid-accionMovVal'), veh:gn('regid-vehMov'), comp:gn('regid-nCompMov'),
+    m2:gn('regid-m2Mov'), obs:gv('regid-obsMov')
+  }};
+  if(cc==='OBR') return { cc, obr:{
+    enOp:gv('regid-obraEnOp'), ocupaEP:gv('regid-ocupaEPObr'), m2Ocupa:gn('regid-m2OcupaObr'),
+    persona:gv('regid-personaAtiende'), obs:gv('regid-obsObr')
+  }};
+  return { cc:'' };
+}
+
+// Limpiar los campos del componente seleccionado
+function regidLimpiarComponentes(){
+  // Limpiar AE
+  ['regid-tipoAE','regid-nomAE','regid-nomColegio','regid-entEsc','regid-aplicoMedida','regid-medidaAE','regid-compAE','regid-compPrev'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['regid-persAE','regid-bebAE','regid-armasAE','regid-dosisAE','regid-diasAE'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['regid-motivoSusp','regid-motivoCierreDef','regid-resAE'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.querySelectorAll('#regid-medidaChips .chip').forEach(c=>c.classList.remove('on'));
+  ['regid-cdEntEsc','regid-cdColegio','regid-cdBebidas','regid-cdMedida','regid-cdSusp','regid-cdCierreDef','regid-cdCierrePrev'].forEach(id=>tc(id,false));
+  // Limpiar EP
+  ['regid-secMonEPVal','regid-poligono','regid-elemHN','regid-resEP'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['regid-numElemHN','regid-ftEP','regid-m2RecEP','regid-vendRetEP'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.querySelectorAll('#regid-secMonEP .chip').forEach(c=>c.classList.remove('on'));
+  ['regid-cdPoligonos','regid-cdHechosNot','regid-cdFoodTrucks'].forEach(id=>tc(id,false));
+  // Limpiar AMB
+  ['regid-lineaAmb','regid-armasAmbB','regid-tipoArmaAmb','regid-resAmb'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['regid-m2Amb','regid-m3Amb','regid-llantasAmb','regid-hcAmb','regid-regPersAmb','regid-capturasAmb','regid-cambAmb','regid-carAmb','regid-dosisAmb','regid-nArmasAmb'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  tc('regid-cdArmasAmb',false);
+  // Limpiar MOV
+  ['regid-accionMovVal','regid-obsMov'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['regid-vehMov','regid-nCompMov','regid-m2Mov'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.querySelectorAll('#regid-accionMov .chip').forEach(c=>c.classList.remove('on'));
+  // Limpiar OBR
+  ['regid-obraEnOp','regid-ocupaEPObr','regid-personaAtiende','regid-obsObr'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['regid-m2OcupaObr'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  tc('regid-cdOcupaEP',false);
+  // Resetear yn-btns en todos los bloques
+  document.querySelectorAll('#regid-s3 .yn-btn').forEach(b=>b.className='yn-btn');
 }
 
 function updateCompBlocks(){
@@ -5373,16 +5767,31 @@ function mnavSwitch(v, btn) {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-// Sincronizar nav móvil con nav desktop
+// Sincronizar nav móvil con nav desktop + lógica adicional (wrapper único)
 var _origSwitchMain = switchMain;
 switchMain = function(v, btn) {
   _origSwitchMain(v, btn);
+
+  // Sincronizar nav móvil
   document.querySelectorAll('.mnav-btn').forEach(b => b.classList.remove('active'));
   var mnav = document.getElementById('mnav-' + v);
   if (mnav) mnav.classList.add('active');
-  // Ocultar FAB en formulario, mostrar en resultados/dashboard
+
+  // Ocultar FAB en formulario, mostrar en otras vistas
   var fab = document.getElementById('fab-nuevo');
   if (fab) fab.style.display = (v === 'form') ? 'none' : 'flex';
+
+  // Poblar filtros de reporte al entrar a esa vista
+  if (v === 'reporte') {
+    reportePopularBarrios();
+    reportePopularUPZs();
+    setTimeout(reporteRenderLista, 100);
+  }
+
+  // Inicializar formulario regid al entrar
+  if (v === 'regid') {
+    regidInicializar();
+  }
 };
 
 // Sincronizar estado Firebase con header móvil
@@ -5824,19 +6233,7 @@ function reportePopularUPZs() {
   sel.innerHTML = '<option value="">— Todas —</option>' + upzs.map(u => `<option value="${u}">${u}</option>`).join('');
 }
 
-// Renderizar lista cuando se entra a la vista reporte
-var _origSwitchMain2 = switchMain;
-switchMain = function(v, btn) {
-  _origSwitchMain2(v, btn);
-  if (v === 'reporte') {
-    reportePopularBarrios();
-    reportePopularUPZs();
-    setTimeout(reporteRenderLista, 100);
-  }
-  if (v === 'regid') {
-    regidInicializar();
-  }
-};
+// (lógica de reporte y regid ya integrada en el wrapper único de switchMain arriba)
 
 // ████████████████████████████████████████████████████████████████████████████████
 // ██ REGISTRO POR ID - SISTEMA MULTI-DIRECCIÓN ███████████████████████████████████
@@ -5849,11 +6246,35 @@ let regidDireccionesGuardadas = [];
 function regidInicializar() {
   regidOperativoActual = null;
   regidDireccionesGuardadas = [];
-  
+
   // Fecha actual
   const hoy = new Date().toISOString().split('T')[0];
   document.getElementById('regid-fecha').value = hoy;
-  
+
+  // Limpiar identificación
+  document.getElementById('regid-idOp').value = '';
+  document.getElementById('regid-h1').value = '';
+  document.getElementById('regid-h2').value = '';
+  document.getElementById('regid-resp').value = '';
+  document.getElementById('regid-respOtro').value = '';
+  document.getElementById('regid-respOtroDiv').style.display = 'none';
+
+  // Resetear megatoma y operativo conjunto
+  const megNo = document.getElementById('regid-megatoma-no');
+  const conjNo = document.getElementById('regid-conjunto-no');
+  if (megNo) megNo.checked = true;
+  if (conjNo) conjNo.checked = true;
+  const entEl = document.getElementById('regid-entidades-conjunto');
+  if (entEl) entEl.value = '';
+  regidToggleMegatomaStyle();
+  regidToggleConjuntoStyle();
+
+  // Limpiar chips de tipo IVC
+  document.querySelectorAll('#regid-tipoIVC .chip').forEach(c => c.classList.remove('on'));
+
+  // Limpiar formulario de dirección
+  regidLimpiarFormularioDireccion();
+
   // Ocultar panel de existentes
   document.getElementById('regid-existingPanel').style.display = 'none';
 }
@@ -5992,12 +6413,19 @@ function procesarResultadosAntiguos(snapshot) {
     direcciones: {}
   };
   
-  // Determinar tipo de IVC
+  // Determinar tipo de IVC y componente
   if (firstRecord.tipoIVC && Array.isArray(firstRecord.tipoIVC)) {
     data.tipoIVC = firstRecord.tipoIVC;
   } else if (firstRecord.cc) {
     data.tipoIVC = [firstRecord.cc];
   }
+  // Pasar cc y datos del componente para que regidEditarDireccion pueda cargarlos
+  data.cc  = firstRecord.cc  || (data.tipoIVC[0] || '');
+  data.ae  = firstRecord.ae  || null;
+  data.ep  = firstRecord.ep  || null;
+  data.amb = firstRecord.amb || null;
+  data.mov = firstRecord.mov || null;
+  data.obr = firstRecord.obr || null;
   
   // Convertir todas las direcciones
   records.forEach((rec, idx) => {
@@ -6044,11 +6472,18 @@ function regidCargarDatosOperativo(data) {
     const respVal = data.meta.resp || '';
     console.log('Responsable:', respVal);
     
-    // Lista de responsables predefinidos
+    // Lista de responsables predefinidos (debe coincidir con todas las opciones del select regid-resp)
     const responsablesPredefinidos = [
+      // Profesionales
       'JOHANA GARZÓN','ANDRÉS ARIAS','ANLLY ROJAS','MAURICIO GÓMEZ','YAMILE ESPITIA','DAVID ALBA',
-      'LEONARDO PIÑA','JAIRO LOZANO','LILIANA CHARRY',
-      'JEISSON RODRÍGUEZ','EFREN SIERRA','CAMILO VARGAS'
+      'JOSE GONZALEZ','HECTOR RAMIREZ','SAMUEL URBINA','MIGUEL PEREZ','JENNY ARROYO','ADRIANA FORERO',
+      'JENIFER NIETO','JHON LADINO','MARIA ÁLVAREZ','HENRY FORIGUA',
+      // Gestores
+      'LEONARDO PIÑA','JAIRO LOZANO','LILIANA CHARRY','WILDEMAR CARVAJAL','JENIFER ESPINOSA',
+      'GIOVANNY GAVIRIA','NICOLAS GALEANO','DANIELA QUINTERO','CAROL FORERO','ANDRÉS PALACIO',
+      // Técnicos
+      'JEISSON RODRÍGUEZ','EFREN SIERRA','CAMILO VARGAS','LADY MARTINEZ','JHON MONCADA',
+      'WILSON PULIDO','ALEXANDRA MONTENEGRO','JUAN CAMPO'
     ];
     
     if (respVal && responsablesPredefinidos.includes(respVal.toUpperCase())) {
@@ -6084,17 +6519,27 @@ function regidCargarDatosOperativo(data) {
     regidToggleConjuntoStyle();
   }
   
-  // Cargar tipo IVC
+  // Cargar tipo IVC y mostrar bloque del componente
   if (data.tipoIVC && Array.isArray(data.tipoIVC)) {
     console.log('Tipos IVC:', data.tipoIVC);
     document.querySelectorAll('#regid-tipoIVC .chip').forEach(chip => chip.classList.remove('on'));
+    // Ocultar todos los bloques primero
+    const blkMap = {AE:'regid-blkAE', EP:'regid-blkEP', AMB:'regid-blkAmb', MOV:'regid-blkMov', OBR:'regid-blkObr'};
+    ['AE','EP','AMB','MOV','OBR'].forEach(k => {
+      const b = document.getElementById(blkMap[k]); if(b) b.style.display = 'none';
+    });
+    const cc = data.cc || data.tipoIVC[0] || '';
     data.tipoIVC.forEach(tipo => {
       const chip = document.querySelector(`#regid-tipoIVC .chip[data-comp="${tipo}"]`);
-      if (chip) {
-        chip.classList.add('on');
-        console.log('Tipo IVC activado:', tipo);
-      }
+      if (chip) { chip.classList.add('on'); console.log('Tipo IVC activado:', tipo); }
     });
+    // Mostrar el bloque del componente principal
+    if (cc && blkMap[cc]) {
+      const blk = document.getElementById(blkMap[cc]);
+      if (blk) blk.style.display = 'block';
+    }
+    const noComp = document.getElementById('regid-noComp');
+    if (noComp) noComp.style.display = cc ? 'none' : 'block';
   }
   
   // Mostrar direcciones existentes
@@ -6109,22 +6554,74 @@ function regidCargarDatosOperativo(data) {
     
     const lista = document.getElementById('regid-listExisting');
     const direccionesArray = Object.entries(data.direcciones);
+    const ccLabels = {AE:'Actividad Económica',EP:'Espacio Público',AMB:'Ambiente',MOV:'Movilidad',OBR:'Obras'};
+    const ccColors = {
+      AE:'background:#ede9fe;color:#7c3aed;border:1px solid #c4b5fd',
+      EP:'background:#dbeafe;color:#1e40af;border:1px solid #93c5fd',
+      AMB:'background:#dcfce7;color:#166534;border:1px solid #86efac',
+      MOV:'background:#dbeafe;color:#1e40af;border:1px solid #93c5fd',
+      OBR:'background:#ffedd5;color:#9a3412;border:1px solid #fdba74'
+    };
     lista.innerHTML = direccionesArray.map(([key, d], i) => {
       const tieneActa = d.actaLink && d.actaLink.trim() !== '';
-      const tieneObs = d.obs && d.obs.trim() !== '';
+      const tieneObs  = d.obs && d.obs.trim() !== '';
+      // Componente: primero de la dirección, luego del operativo padre
+      const cc = d.cc || data.cc || (data.tipoIVC && data.tipoIVC[0]) || '';
+      const ccLbl = ccLabels[cc] || '';
+      const ccStyle = ccColors[cc] || 'background:#f1f5f9;color:#475569;border:1px solid #e2e8f0';
+      // Resumen rápido del componente
+      let compResumen = '';
+      if (cc === 'AE' && d.ae) {
+        const p = [];
+        if (d.ae.tipo) p.push(d.ae.tipo);
+        if (d.ae.nom)  p.push(d.ae.nom);
+        if (d.ae.medida) p.push('⚖️ '+d.ae.medida);
+        if (d.ae.pers)   p.push('👤 '+d.ae.pers+' pers.');
+        compResumen = p.join(' · ');
+      } else if (cc === 'EP' && d.ep) {
+        const p = [];
+        if (d.ep.secMon)  p.push(d.ep.secMon);
+        if (d.ep.m2Rec)   p.push('📐 '+d.ep.m2Rec+' m²');
+        if (d.ep.vendRet) p.push('🛒 '+d.ep.vendRet+' vend.');
+        compResumen = p.join(' · ');
+      } else if (cc === 'AMB' && d.amb) {
+        const p = [];
+        if (d.amb.linea) p.push(d.amb.linea);
+        if (d.amb.m2)    p.push('📐 '+d.amb.m2+' m²');
+        if (d.amb.m3)    p.push('🪣 '+d.amb.m3+' m³');
+        compResumen = p.join(' · ');
+      } else if (cc === 'MOV' && d.mov) {
+        const p = [];
+        if (d.mov.accion) p.push(d.mov.accion);
+        if (d.mov.veh)    p.push('🚗 '+d.mov.veh+' veh.');
+        if (d.mov.comp)   p.push('📋 '+d.mov.comp+' comp.');
+        compResumen = p.join(' · ');
+      } else if (cc === 'OBR' && d.obr) {
+        const p = [];
+        if (d.obr.enOp)    p.push('Obra en op.: '+d.obr.enOp);
+        if (d.obr.ocupaEP) p.push('Ocupa EP: '+d.obr.ocupaEP);
+        if (d.obr.m2Ocupa) p.push('📐 '+d.obr.m2Ocupa+' m²');
+        compResumen = p.join(' · ');
+      } else if (cc) {
+        compResumen = '(sin detalle guardado aún)';
+      }
       
       return `
       <div style="background:white;border:1.5px solid #86efac;border-radius:10px;padding:12px 16px;transition:all .2s">
         <div style="display:flex;align-items:start;gap:12px">
           <div style="font-size:1.1rem;font-weight:800;color:#166534;min-width:35px;text-align:center;background:#dcfce7;border-radius:6px;padding:4px 8px">#${i + 1}</div>
           <div style="flex:1">
-            <div style="font-size:.85rem;font-weight:700;color:#166534;margin-bottom:4px">📍 ${d.dir || 'Sin dirección'}</div>
-            <div style="font-size:.72rem;color:#15803d;display:flex;gap:8px;flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+              <div style="font-size:.85rem;font-weight:700;color:#166534">📍 ${d.dir || 'Sin dirección'}</div>
+              ${cc ? `<span style="font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:4px;${ccStyle}">${ccLbl||cc}</span>` : ''}
+            </div>
+            <div style="font-size:.72rem;color:#15803d;display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px">
               <span><strong>Barrio:</strong> ${d.barrio || 'N/A'}</span>
               <span>•</span>
               <span><strong>UPZ:</strong> ${d.upz || 'N/A'}</span>
             </div>
-            ${tieneObs ? `<div style="font-size:.7rem;color:#059669;margin-top:6px;padding:6px 10px;background:#f0fdf4;border-radius:6px;border-left:3px solid #86efac"><strong>Obs:</strong> ${d.obs}</div>` : ''}
+            ${compResumen ? `<div style="font-size:.7rem;color:#374151;margin-top:4px;padding:5px 10px;background:#f8fafc;border-radius:6px;border-left:3px solid ${cc?ccColors[cc]?.match(/color:([^;]+)/)?.[1]||'#94a3b8':'#94a3b8'}">${compResumen}</div>` : ''}
+            ${tieneObs ? `<div style="font-size:.7rem;color:#059669;margin-top:4px;padding:5px 10px;background:#f0fdf4;border-radius:6px;border-left:3px solid #86efac"><strong>Obs:</strong> ${d.obs}</div>` : ''}
           </div>
           <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
             ${tieneActa ? '<div style="font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:4px;background:#dcfce7;color:#166534">📎 Con acta</div>' : '<div style="font-size:.65rem;font-weight:600;padding:3px 10px;border-radius:4px;background:#fef3c7;color:#92400e">⚠️ Sin acta</div>'}
@@ -6157,14 +6654,22 @@ function regidGuardarDireccion(continuarRegistrando) {
   btnGuardarYSalir.textContent = 'Guardando...';
   btnGuardarYContinuar.textContent = 'Guardando...';
   
-  // Construir objeto de dirección
+  // Construir objeto de dirección — incluye datos del componente de esta visita
+  const compData = regidCollectComponente();
   const direccion = {
     dir: document.getElementById('regid-dir').value.trim(),
     barrio: document.getElementById('regid-barrio').value,
     upz: document.getElementById('regid-upz').value,
     obs: document.getElementById('regid-obs').value.trim(),
     actaLink: document.getElementById('regid-actaLink').value.trim(),
-    timestamp: Date.now()
+    timestamp: Date.now(),
+    // Componente de este punto visitado
+    cc:  compData.cc  || null,
+    ae:  compData.ae  || null,
+    ep:  compData.ep  || null,
+    amb: compData.amb || null,
+    mov: compData.mov || null,
+    obr: compData.obr || null
   };
   
   // Construir objeto de operativo completo
@@ -6181,7 +6686,14 @@ function regidGuardarDireccion(continuarRegistrando) {
       opConjunto: document.querySelector('input[name="regid-opconjunto"]:checked')?.value || 'NO',
       entidadesConjunto: document.getElementById('regid-entidades-conjunto')?.value.trim() || ''
     },
+    // cc/ae/ep/amb/mov/obr del último registro (compatibilidad con vista de resultados)
+    cc: compData.cc,
     tipoIVC: Array.from(document.querySelectorAll('#regid-tipoIVC .chip.on')).map(c => c.dataset.comp),
+    ae: compData.ae || null,
+    ep: compData.ep || null,
+    amb: compData.amb || null,
+    mov: compData.mov || null,
+    obr: compData.obr || null,
     direcciones: {}
   };
   
@@ -6262,13 +6774,23 @@ function regidLimpiarFormularioDireccion() {
   document.getElementById('regid-upz').value = '';
   document.getElementById('regid-obs').value = '';
   document.getElementById('regid-actaLink').value = '';
-  
+
   const prev = document.getElementById('regid-abPrev');
   prev.textContent = 'Completa los campos para ver la dirección';
   prev.classList.add('empty');
-  
+
   // Limpiar flag de edición
   delete window.regidDireccionEditandoKey;
+
+  // Limpiar y ocultar bloques de componente
+  regidLimpiarComponentes();
+  document.querySelectorAll('#regid-tipoIVC .chip').forEach(c => c.classList.remove('on'));
+  ['regid-blkAE','regid-blkEP','regid-blkAmb','regid-blkMov','regid-blkObr'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+  const noComp = document.getElementById('regid-noComp');
+  if(noComp) noComp.style.display = 'none';
 }
 
 function regidResetearFormulario() {
@@ -6340,45 +6862,172 @@ function regidToggleOtroResp() {
 }
 
 function regidEditarDireccion(direccionKey) {
-  // Obtener la dirección desde regidDireccionesGuardadas
   const direccion = regidDireccionesGuardadas[direccionKey];
-  
-  if (!direccion) {
-    toast('Error: No se encontró la dirección', 'err');
-    return;
-  }
-  
-  // Cargar datos en el formulario
-  // Parsear la dirección para llenar el constructor
+  if (!direccion) { toast('Error: No se encontró la dirección', 'err'); return; }
+
+  // ── Dirección ──
   const dir = direccion.dir || '';
-  
-  // Opción 1: Llenar directamente el campo de texto
   document.getElementById('regid-dir').value = dir;
-  
-  // Actualizar la vista previa del constructor
   const prev = document.getElementById('regid-abPrev');
-  if (dir) {
-    prev.textContent = dir;
-    prev.classList.remove('empty');
-  }
-  
-  // Llenar barrio y UPZ
+  if (dir) { prev.textContent = dir; prev.classList.remove('empty'); }
+  else { prev.textContent = 'Completa los campos para ver la dirección'; prev.classList.add('empty'); }
+
+  // ── Barrio / UPZ ──
   document.getElementById('regid-barrio').value = direccion.barrio || '';
-  document.getElementById('regid-upz').value = direccion.upz || '';
-  
-  // Llenar observaciones y acta
-  document.getElementById('regid-obs').value = direccion.obs || '';
+  document.getElementById('regid-upz').value    = direccion.upz    || '';
+
+  // ── Observaciones / Acta ──
+  document.getElementById('regid-obs').value      = direccion.obs      || '';
   document.getElementById('regid-actaLink').value = direccion.actaLink || '';
-  
-  // Guardar la key para saber que estamos editando
+
+  // ── Componente: leer primero de la direccion, si no del operativo padre ──
+  const op = regidOperativoActual || {};
+  const cc = direccion.cc || op.cc || (op.tipoIVC && op.tipoIVC[0]) || '';
+  const ae  = direccion.ae  || op.ae  || null;
+  const ep  = direccion.ep  || op.ep  || null;
+  const amb = direccion.amb || op.amb || null;
+  const mov = direccion.mov || op.mov || null;
+  const obr = direccion.obr || op.obr || null;
+
+  // Limpiar componentes antes de cargar
+  regidLimpiarComponentes();
+
+  // Activar chip y mostrar bloque
+  const blkMap = {AE:'regid-blkAE', EP:'regid-blkEP', AMB:'regid-blkAmb', MOV:'regid-blkMov', OBR:'regid-blkObr'};
+  document.querySelectorAll('#regid-tipoIVC .chip').forEach(c => c.classList.remove('on'));
+  ['AE','EP','AMB','MOV','OBR'].forEach(k => {
+    const blk = document.getElementById(blkMap[k]);
+    if (blk) blk.style.display = (cc === k) ? 'block' : 'none';
+  });
+  if (cc) {
+    const chip = document.querySelector(`#regid-tipoIVC .chip[data-comp="${cc}"]`);
+    if (chip) chip.classList.add('on');
+  }
+  const noComp = document.getElementById('regid-noComp');
+  if (noComp) noComp.style.display = cc ? 'none' : 'block';
+
+  // ── Rellenar campos del componente ──
+  const sv = (id, val) => { const el = document.getElementById(id); if(el && val != null && val !== '') el.value = val; };
+  const sn = (id, val) => { const el = document.getElementById(id); if(el && val) el.value = val; };
+  const setYN = (hiddenId, btnContainerSelector, val) => {
+    if (!val) return;
+    const hid = document.getElementById(hiddenId);
+    if (hid) hid.value = val;
+    const btns = document.querySelectorAll(btnContainerSelector + ' .yn-btn');
+    btns.forEach(b => b.className = 'yn-btn');
+    if (btns.length >= 2) btns[val === 'SI' ? 0 : 1].classList.add(val === 'SI' ? 'y' : 'n');
+  };
+
+  if (cc === 'AE' && ae) {
+    sv('regid-tipoAE', ae.tipo); regidOnTipoAEChange();
+    sv('regid-nomAE',  ae.nom);
+    sn('regid-persAE', ae.pers);
+    sn('regid-bebAE',  ae.beb);
+    sn('regid-armasAE',ae.armas);
+    sn('regid-dosisAE',ae.dosis);
+    sv('regid-resAE',  ae.res);
+    // Entorno escolar
+    if (ae.entEsc) {
+      setYN('regid-entEsc', '#regid-cdEntEsc', ae.entEsc);
+      tc('regid-cdEntEsc', true);
+      if (ae.entEsc === 'SI') { tc('regid-cdColegio', true); sv('regid-nomColegio', ae.colegio); }
+    }
+    // Medida correctiva
+    if (ae.aplico) {
+      setYN('regid-aplicoMedida', '#regid-blkAE .card > .f.mb:nth-of-type(6)', ae.aplico);
+      tc('regid-cdMedida', ae.aplico === 'SI');
+    }
+    if (ae.medida) {
+      document.getElementById('regid-medidaAE').value = ae.medida;
+      document.querySelectorAll('#regid-medidaChips .chip').forEach(c => {
+        c.classList.toggle('on', ae.medida.startsWith(c.textContent.trim().toUpperCase().split(' ')[0]) ||
+          c.textContent.trim().toUpperCase().replace('Ó','O').replace('É','E').replace('Ú','U').includes(ae.medida.split(' ')[0]));
+      });
+      tc('regid-cdSusp',      ae.medida === 'SUSPENSION TEMPORAL');
+      tc('regid-cdCierreDef', ae.medida === 'CIERRE DEFINITIVO');
+      tc('regid-cdCierrePrev',ae.medida === 'CIERRE PREVENTIVO');
+      sn('regid-diasAE',         ae.dias);
+      sv('regid-compAE',         ae.comp);
+      sv('regid-compPrev',       ae.compPrev);
+      sv('regid-motivoSusp',     ae.motivoSusp);
+      sv('regid-motivoCierreDef',ae.motivoCDef);
+    }
+  }
+
+  if (cc === 'EP' && ep) {
+    if (ep.secMon) {
+      document.getElementById('regid-secMonEPVal').value = ep.secMon;
+      document.querySelectorAll('#regid-secMonEP .chip').forEach(c => c.classList.remove('on'));
+      document.querySelectorAll('#regid-secMonEP .chip').forEach(c => {
+        if (ep.secMon.includes(c.textContent.trim().toUpperCase().split(' ')[0])) c.classList.add('on');
+      });
+      tc('regid-cdPoligonos',  ep.secMon === 'POLIGONOS DE MONITOREO');
+      tc('regid-cdHechosNot',  ep.secMon === 'HECHOS NOTORIOS');
+      tc('regid-cdFoodTrucks', ep.secMon === 'RETIRO FOOD TRUCKS');
+    }
+    sv('regid-poligono',  ep.poligono);
+    sv('regid-elemHN',    ep.elemHN);
+    sn('regid-numElemHN', ep.numElemHN);
+    sn('regid-ftEP',      ep.ft);
+    sn('regid-m2RecEP',   ep.m2Rec);
+    sn('regid-vendRetEP', ep.vendRet);
+    sv('regid-resEP',     ep.res);
+  }
+
+  if (cc === 'AMB' && amb) {
+    sv('regid-lineaAmb',    amb.linea);
+    sn('regid-m2Amb',       amb.m2);
+    sn('regid-m3Amb',       amb.m3);
+    sn('regid-llantasAmb',  amb.llantas);
+    sn('regid-hcAmb',       amb.hc);
+    sn('regid-regPersAmb',  amb.regPers);
+    sn('regid-capturasAmb', amb.capturas);
+    sn('regid-cambAmb',     amb.camb);
+    sn('regid-carAmb',      amb.car);
+    sn('regid-dosisAmb',    amb.dosis);
+    sv('regid-resAmb',      amb.res);
+    if (amb.armasB) {
+      setYN('regid-armasAmbB', '#regid-blkAmb .card > .f.mb:last-of-type', amb.armasB);
+      tc('regid-cdArmasAmb', amb.armasB === 'SI');
+      sn('regid-nArmasAmb',   amb.nArmas);
+      sv('regid-tipoArmaAmb', amb.tipoArma);
+    }
+  }
+
+  if (cc === 'MOV' && mov) {
+    if (mov.accion) {
+      document.getElementById('regid-accionMovVal').value = mov.accion;
+      document.querySelectorAll('#regid-accionMov .chip').forEach(c =>
+        c.classList.toggle('on', mov.accion === c.dataset?.val ||
+          c.textContent.toUpperCase().includes(mov.accion.split(' ')[0]))
+      );
+    }
+    sn('regid-vehMov',   mov.veh);
+    sn('regid-nCompMov', mov.comp);
+    sn('regid-m2Mov',    mov.m2);
+    sv('regid-obsMov',   mov.obs);
+  }
+
+  if (cc === 'OBR' && obr) {
+    setYN('regid-obraEnOp',  '#regid-blkObr .card > .f.mb:first-of-type', obr.enOp);
+    if (obr.ocupaEP) {
+      setYN('regid-ocupaEPObr', '#regid-blkObr .card > .f.mb:nth-of-type(2)', obr.ocupaEP);
+      tc('regid-cdOcupaEP', obr.ocupaEP === 'SI');
+      sn('regid-m2OcupaObr', obr.m2Ocupa);
+    }
+    sv('regid-personaAtiende', obr.persona);
+    sv('regid-obsObr',         obr.obs);
+  }
+
+  // Guardar la key para modo edición
   window.regidDireccionEditandoKey = direccionKey;
-  
-  // Scroll a la sección de ubicación
+
+  // Scroll a tipo IVC para que el usuario vea el bloque del componente
   setTimeout(() => {
-    document.getElementById('regid-s2').scrollIntoView({behavior:'smooth',block:'start'});
-  }, 100);
-  
-  toast('Dirección cargada para edición', 'ok');
+    document.getElementById('regid-s1b').scrollIntoView({behavior:'smooth', block:'start'});
+  }, 120);
+
+  toast(`✏️ Editando punto #${Object.keys(regidDireccionesGuardadas).indexOf(direccionKey)+1} — ${cc || 'sin componente'}`, 'ok');
 }
 
 function regidToggleMegatomaStyle() {
