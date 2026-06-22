@@ -736,6 +736,14 @@ body { overflow-x: hidden; }
     <!-- VISTA: RESULTADOS -->
     <div class="mview on" id="mview-recs">
   <div class="ca">
+    <!-- Banner de diagnóstico / sincronización -->
+    <div id="recsDiag" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#f1f5f9;border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:.72rem;color:var(--muted)">
+      <span id="recsDiagTxt">Verificando datos…</span>
+      <button onclick="sincronizarAhora()" id="btnSyncAhora"
+        style="margin-left:auto;padding:5px 12px;background:var(--primary);color:#fff;border:none;border-radius:6px;font-family:'Inter',sans-serif;font-size:.7rem;font-weight:700;cursor:pointer">
+        ⟳ Sincronizar ahora
+      </button>
+    </div>
     <!-- Header con botones de acción -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px;flex-wrap:wrap">
       <div style="display:flex;align-items:center;gap:10px;flex:1;flex-wrap:wrap">
@@ -1202,7 +1210,6 @@ body { overflow-x: hidden; }
               <div class="f mb"><label>N&deg; del comparendo</label><input type="text" id="compPrev" placeholder="N&deg; comparendo"></div>
             </div>
           </div>
-          <div class="f mt"><label>Resultados &ndash; Actividad Econ&oacute;mica</label><textarea id="resAE" placeholder="Resumen de resultados..."></textarea></div>
         </div>
       </div>
 
@@ -1270,7 +1277,6 @@ body { overflow-x: hidden; }
             </div>
           </div>
 
-          <div class="f"><label>Resultados &ndash; Espacio P&uacute;blico</label><textarea id="resEP" placeholder="Resumen de resultados..."></textarea></div>
         </div>
       </div>
 
@@ -1282,13 +1288,18 @@ body { overflow-x: hidden; }
           <!-- L&iacute;nea de acci&oacute;n -->
           <div class="f mb">
             <label>L&iacute;nea de acci&oacute;n <span class="req">*</span></label>
-            <select id="lineaAmb">
+            <select id="lineaAmb" onchange="toggleOtraLineaAmb('lineaAmb','otraLineaAmb')">
               <option value="">&#8212; Seleccionar l&iacute;nea de acci&oacute;n &#8212;</option>
               <option value="RECUPERACION EP RONDA">RECUPERACI&Oacute;N DE ESPACIO P&Uacute;BLICO Y ZONA DE RONDA CUERPOS DE AGUA POR DISPOSICI&Oacute;N INADECUADA DE RESIDUOS</option>
               <option value="ESTRATEGIA RESIDUOS CARRETEROS CAMBUCHES">ESTRATEGIA DE RESIDUOS (BASURAS), CARRETEROS Y CAMBUCHES</option>
               <option value="SENTENCIA RIO BOGOTA">SENTENCIA RIO BOGOT&Aacute;</option>
               <option value="CONEXIONES ILEGALES">CONEXIONES ILEGALES</option>
+              <option value="__OTRO__">&#10002; Otra l&iacute;nea...</option>
             </select>
+          </div>
+          <div id="otraLineaAmb" style="display:none" class="f mb">
+            <label>Especificar l&iacute;nea de acci&oacute;n</label>
+            <input type="text" id="otraLineaAmbVal" placeholder="Describa la línea de acción..." oninput="this.value=this.value.toUpperCase()">
           </div>
 
           <!-- Indicadores cuantitativos -->
@@ -1360,7 +1371,6 @@ body { overflow-x: hidden; }
             </div>
           </div>
 
-          <div class="f"><label>Resultados &ndash; Ambiente</label><textarea id="resAmb" placeholder="Resumen de resultados..."></textarea></div>
         </div>
       </div>
 
@@ -1916,7 +1926,6 @@ body { overflow-x: hidden; }
                   <div class="f mb"><label>N° del comparendo</label><input type="text" id="regid-compPrev" placeholder="N° comparendo"></div>
                 </div>
               </div>
-              <div class="f mt"><label>Resultados – Actividad Económica</label><textarea id="regid-resAE" placeholder="Resumen de resultados..."></textarea></div>
             </div>
           </div>
 
@@ -1970,7 +1979,6 @@ body { overflow-x: hidden; }
                   <input type="number" id="regid-vendRetEP" placeholder="0" min="0">
                 </div>
               </div>
-              <div class="f"><label>Resultados – Espacio Público</label><textarea id="regid-resEP" placeholder="Resumen de resultados..."></textarea></div>
             </div>
           </div>
 
@@ -1980,13 +1988,18 @@ body { overflow-x: hidden; }
               <div class="ch ch-amb">🌿 Ambiente</div>
               <div class="f mb">
                 <label>Línea de acción</label>
-                <select id="regid-lineaAmb">
+                <select id="regid-lineaAmb" onchange="toggleOtraLineaAmb('regid-lineaAmb','regid-otraLineaAmb')">
                   <option value="">— Seleccionar línea de acción —</option>
                   <option value="RECUPERACION EP RONDA">RECUPERACIÓN DE ESPACIO PÚBLICO Y ZONA DE RONDA CUERPOS DE AGUA POR DISPOSICIÓN INADECUADA DE RESIDUOS</option>
                   <option value="ESTRATEGIA RESIDUOS CARRETEROS CAMBUCHES">ESTRATEGIA DE RESIDUOS (BASURAS), CARRETEROS Y CAMBUCHES</option>
                   <option value="SENTENCIA RIO BOGOTA">SENTENCIA RIO BOGOTÁ</option>
                   <option value="CONEXIONES ILEGALES">CONEXIONES ILEGALES</option>
+                  <option value="__OTRO__">✎ Otra línea...</option>
                 </select>
+              </div>
+              <div id="regid-otraLineaAmb" style="display:none" class="f mb">
+                <label>Especificar línea de acción</label>
+                <input type="text" id="regid-otraLineaAmbVal" placeholder="Describa la línea de acción..." oninput="this.value=this.value.toUpperCase()">
               </div>
               <div class="sil">Indicadores cuantitativos</div>
               <div class="g3 mb">
@@ -2026,7 +2039,6 @@ body { overflow-x: hidden; }
                   </div>
                 </div>
               </div>
-              <div class="f"><label>Resultados – Ambiente</label><textarea id="regid-resAmb" placeholder="Resumen de resultados..."></textarea></div>
             </div>
           </div>
 
@@ -2159,21 +2171,48 @@ body { overflow-x: hidden; }
                 <option>74 ENGATIVA</option><option>105 JARDIN BOTANICO</option><option>116 ALAMOS</option>
               </select>
             </div>
-            <!-- BARRIO -->
-            <div style="display:flex;flex-direction:column;gap:2px">
+            <!-- BARRIO multi-selector -->
+            <div style="display:flex;flex-direction:column;gap:2px;position:relative" id="dash-barrio-wrap">
               <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#a0b4c8">BARRIO</div>
-              <select id="dash-barrio" onchange="renderDash()" style="background:#0a1628;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:4px 8px;font-family:'Inter',sans-serif;font-size:.72rem;min-width:120px">
-                <option value="">All</option>
-              </select>
+              <button id="dash-barrio-btn" onclick="toggleDashBarrioDropdown(event)"
+                style="background:#0a1628;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:4px 8px;font-family:'Inter',sans-serif;font-size:.72rem;min-width:140px;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:6px">
+                <span id="dash-barrio-label" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">All</span>
+                <span style="color:#4a7fa5;font-size:.6rem;flex-shrink:0">▼</span>
+              </button>
+              <!-- Dropdown panel -->
+              <div id="dash-barrio-panel"
+                style="display:none;position:absolute;top:100%;left:0;z-index:200;background:#0a1628;border:1px solid #1e3a5f;border-radius:6px;min-width:200px;max-height:240px;box-shadow:0 8px 24px rgba(0,0,0,.5);margin-top:3px">
+                <div style="padding:6px 8px;border-bottom:1px solid #1e3a5f;display:flex;gap:6px">
+                  <button onclick="dashBarrioSelAll()" style="flex:1;background:#1e3a5f;color:#e0f0ff;border:none;border-radius:4px;padding:3px 6px;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:700;cursor:pointer">Todos</button>
+                  <button onclick="dashBarrioSelNone()" style="flex:1;background:#1e3a5f;color:#e0f0ff;border:none;border-radius:4px;padding:3px 6px;font-family:'Inter',sans-serif;font-size:.6rem;font-weight:700;cursor:pointer">Ninguno</button>
+                </div>
+                <div id="dash-barrio-list" style="overflow-y:auto;max-height:190px;padding:4px 0"></div>
+              </div>
             </div>
-            <!-- DIRECCIÓN -->
+            <!-- DIRECCIÓN (constructor) -->
             <div style="display:flex;flex-direction:column;gap:2px">
               <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#a0b4c8">DIRECCIÓN</div>
-              <div style="display:flex;align-items:center;gap:4px;background:#0a1628;border:1px solid #1e3a5f;border-radius:4px;padding:4px 8px">
-                <input type="text" id="dash-dir" placeholder="Search" oninput="renderDash()"
-                  style="background:transparent;border:none;color:#e0f0ff;font-family:'Inter',sans-serif;font-size:.72rem;outline:none;width:90px">
-                <span style="color:#4a7fa5;font-size:.7rem;cursor:pointer" onclick="document.getElementById('dash-dir').value='';renderDash()">✕</span>
+              <div style="background:#0a1628;border:1px solid #1e3a5f;border-radius:6px;padding:6px 8px;min-width:340px">
+                <div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-bottom:5px">
+                  <select id="dSigla" onchange="buildDashDir()" style="background:#071020;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:3px 5px;font-family:'Inter',sans-serif;font-size:.68rem;max-width:82px">
+                    <option value="">Sigla</option>
+                    <option>CL</option><option>CR</option><option>AV CL</option><option>AV CR</option><option>TV</option><option>DG</option>
+                  </select>
+                  <input type="text" id="dN1" placeholder="73" maxlength="5" oninput="buildDashDir()" style="background:#071020;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:3px 5px;font-family:'Inter',sans-serif;font-size:.68rem;width:44px">
+                  <input type="text" id="dL1" placeholder="A" maxlength="3"  oninput="buildDashDir()" style="background:#071020;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:3px 5px;font-family:'Inter',sans-serif;font-size:.68rem;width:32px">
+                  <span style="color:#4a7fa5;font-weight:800">#</span>
+                  <input type="text" id="dN2" placeholder="65" maxlength="5" oninput="buildDashDir()" style="background:#071020;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:3px 5px;font-family:'Inter',sans-serif;font-size:.68rem;width:44px">
+                  <input type="text" id="dL2" placeholder="B" maxlength="3"  oninput="buildDashDir()" style="background:#071020;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:3px 5px;font-family:'Inter',sans-serif;font-size:.68rem;width:32px">
+                  <select id="dBis" onchange="buildDashDir()" style="background:#071020;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:3px 5px;font-family:'Inter',sans-serif;font-size:.68rem;width:52px"><option value="">—</option><option>BIS</option></select>
+                  <span style="color:#4a7fa5;font-weight:800">-</span>
+                  <input type="text" id="dN3" placeholder="43" maxlength="5" oninput="buildDashDir()" style="background:#071020;color:#e0f0ff;border:1px solid #1e3a5f;border-radius:4px;padding:3px 5px;font-family:'Inter',sans-serif;font-size:.68rem;width:44px">
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
+                  <div id="dAbPrev" style="font-size:.68rem;color:#4a7fa5;font-style:italic;flex:1">Sin dirección</div>
+                  <button onclick="clearDashDir()" style="background:transparent;border:1px solid #1e3a5f;color:#4a7fa5;padding:2px 7px;border-radius:4px;font-family:'Inter',sans-serif;font-size:.6rem;cursor:pointer;white-space:nowrap">✕ Limpiar</button>
+                </div>
               </div>
+              <input type="hidden" id="dash-dir">
             </div>
             <!-- FECHA -->
             <div style="display:flex;flex-direction:column;gap:2px">
@@ -2485,9 +2524,69 @@ const LISTAS_REF    = db.ref('listas_admin');
 // Listas dinámicas — se cargan desde Firebase, con fallback a datos hardcoded
 let _listas = null;  // null = aún no cargadas
 // ── STATE ──────────────────────────────────────────────
-let recs = [];           // se llena desde Firebase en tiempo real
+let recs = [];           // se llena desde Firebase en tiempo real (combinado)
 let recsMap = {};        // firebaseKey → record (para eliminar)
 let selIdx = null, selKey = null;
+
+// ── FUENTES DE DATOS DE LA VISTA DE RESULTADOS ──────────────────────
+// La vista combina DOS orígenes en tiempo real:
+//   _recsBase  ← resultados_operativos (formulario antiguo / registros sueltos)
+//   _recsNuevo ← operativos_por_id      (formulario nuevo "✦", aplanando direcciones)
+// Así los registros del formulario nuevo SIEMPRE aparecen, sin depender de
+// copiarlos a otro nodo.
+let _recsBase = [];
+let _recsNuevo = [];
+
+// Aplana un operativo de operativos_por_id en una lista de registros planos
+// con la forma que espera la vista (ub.dir/barrio/upz, meta.*, cc, ae/ep/...).
+function regidAplanarOperativo(idOp, operativo) {
+  var salida = [];
+  var dirs = (operativo && operativo.direcciones) ? operativo.direcciones : {};
+  var meta = (operativo && operativo.meta) ? operativo.meta : {};
+  var tipoIVCOp = (operativo && operativo.tipoIVC) ? operativo.tipoIVC : [];
+  Object.keys(dirs).forEach(function(dirKey){
+    var d = dirs[dirKey] || {};
+    var cc = d.cc || '';
+    salida.push({
+      id: d.timestamp || 0,
+      _origen: 'regid',
+      _idOp: String(idOp),
+      _dirKey: dirKey,
+      _fbKey: 'regid::' + idOp + '::' + dirKey, // identidad sintética
+      meta: {
+        idOp: String(idOp),
+        fecha: meta.fecha || '',
+        h1: meta.h1 || '',
+        h2: meta.h2 || '',
+        resp: meta.resp || ''
+      },
+      ub: { barrio: d.barrio || '', upz: d.upz || '', dir: d.dir || '' },
+      tipoIVC: (tipoIVCOp && tipoIVCOp.length) ? tipoIVCOp : (cc ? [cc] : []),
+      cc: cc,
+      ae:  d.ae  || null,
+      ep:  d.ep  || null,
+      amb: d.amb || null,
+      mov: d.mov || null,
+      obr: d.obr || null,
+      tot: {},
+      gen: { obs: d.obs || '' },
+      acta: d.actaLink ? { link: d.actaLink } : null
+    });
+  });
+  return salida;
+}
+
+// Combina ambas fuentes en `recs` (más reciente primero) y re-renderiza.
+function _rebuildRecs() {
+  recs = _recsNuevo.concat(_recsBase);
+  recs.sort(function(a, b){
+    var fa = (a.meta && a.meta.fecha) || '';
+    var fb = (b.meta && b.meta.fecha) || '';
+    if (fa !== fb) return fa < fb ? 1 : -1; // fecha desc
+    return (b.id || 0) - (a.id || 0);
+  });
+  updateRecsList();
+}
 const SEC = ['s1','s2','s1b','s3','s6','s7'];
 let cur = 's1';
 const REQS = [
@@ -2518,17 +2617,19 @@ updateCompBlocks();
 // Listener en tiempo real → mantiene recs sincronizado con Firebase
 RESULTADOS_REF.orderByChild('meta/fecha').on('value', function(snap){
   const fbStatus = document.getElementById('fbStatus');
-  recs = [];
+  _recsBase = [];
   recsMap = {};
   if(snap.exists()){
     snap.forEach(function(child){
       const rec = child.val();
+      // Ignorar copias antiguas del espejo: ahora operativos_por_id se lee en vivo.
+      if(rec && rec._origen === 'regid') return;
       rec._fbKey = child.key;
       recsMap[child.key] = rec;
-      recs.unshift(rec);   // más reciente primero
+      _recsBase.unshift(rec);   // más reciente primero
     });
   }
-  updateRecsList();
+  _rebuildRecs();
   publicarPuenteOperativos();
 // ══════════════════════════════════════════════════════════
 // PUENTE SIGRE — publica índice de operativos por dirección
@@ -2679,6 +2780,19 @@ function poblarSelects(listas) {
     if (cur) selAE.value = cur;
   }
 
+  // ── Tipo AE (regid) ──
+  const selAERegid = document.getElementById('regid-tipoAE');
+  if (selAERegid) {
+    const cur = selAERegid.value;
+    selAERegid.innerHTML = '<option value="">&#8212; Seleccionar &#8212;</option>';
+    (listas.tipos_ae || []).forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t.value || t; opt.textContent = t.label || t;
+      selAERegid.appendChild(opt);
+    });
+    if (cur) selAERegid.value = cur;
+  }
+
   // ── Línea Ambiente ──
   const selAmb = document.getElementById('lineaAmb');
   if (selAmb) {
@@ -2689,7 +2803,22 @@ function poblarSelects(listas) {
       opt.value = l.value || l; opt.textContent = l.label || l;
       selAmb.appendChild(opt);
     });
+    selAmb.innerHTML += '<option value="__OTRO__">✎ Otra línea...</option>';
     if (cur) selAmb.value = cur;
+  }
+
+  // ── Línea Ambiente (regid) ──
+  const selAmbRegid = document.getElementById('regid-lineaAmb');
+  if (selAmbRegid) {
+    const cur = selAmbRegid.value;
+    selAmbRegid.innerHTML = '<option value="">&#8212; Seleccionar línea de acción &#8212;</option>';
+    (listas.lineas_amb || []).forEach(l => {
+      const opt = document.createElement('option');
+      opt.value = l.value || l; opt.textContent = l.label || l;
+      selAmbRegid.appendChild(opt);
+    });
+    selAmbRegid.innerHTML += '<option value="__OTRO__">✎ Otra línea...</option>';
+    if (cur) selAmbRegid.value = cur;
   }
 
   // ── Colegios (datalist) ──
@@ -2716,6 +2845,22 @@ function poblarSelects(listas) {
       div.textContent = lbl;
       div.onclick = function() { selSecMonEP(this, val); };
       secMonEP.appendChild(div);
+    });
+  }
+
+  // ── Tipos EP (chips regid) ──
+  const regidSecMonEP = document.getElementById('regid-secMonEP');
+  if (regidSecMonEP) {
+    const curVal = document.getElementById('regid-secMonEPVal')?.value || '';
+    regidSecMonEP.innerHTML = '';
+    (listas.tipos_ep || []).forEach(t => {
+      const val = t.value || t;
+      const lbl = t.label || t;
+      const div = document.createElement('div');
+      div.className = 'chip' + (curVal === val ? ' on' : '');
+      div.textContent = lbl;
+      div.onclick = function() { regidSelSecMonEP(this, val); };
+      regidSecMonEP.appendChild(div);
     });
   }
 
@@ -2853,7 +2998,47 @@ function limpiarDash() {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
+  _dashBarriosSeleccionados = new Set();
+  const list = document.getElementById('dash-barrio-list');
+  if (list) list.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = true);
+  updateDashBarrioLabel();
+  clearDashDir(false);
   renderDash();
+}
+
+function buildDashDir() {
+  const s  = document.getElementById('dSigla')?.value || '';
+  const n1 = (document.getElementById('dN1')?.value || '').toUpperCase();
+  const l1 = (document.getElementById('dL1')?.value || '').toUpperCase();
+  const n2 = (document.getElementById('dN2')?.value || '').toUpperCase();
+  const l2 = (document.getElementById('dL2')?.value || '').toUpperCase();
+  const bis = document.getElementById('dBis')?.value || '';
+  const n3 = (document.getElementById('dN3')?.value || '').toUpperCase();
+  const prev   = document.getElementById('dAbPrev');
+  const hidden = document.getElementById('dash-dir');
+  if (!s && !n1) {
+    if (prev)   { prev.textContent = 'Sin dirección'; prev.style.color = '#4a7fa5'; prev.style.fontStyle = 'italic'; }
+    if (hidden) hidden.value = '';
+    renderDash(); return;
+  }
+  let addr = s;
+  if (n1) addr += ' ' + n1 + l1;
+  if (n2) addr += ' # ' + n2 + l2;
+  if (bis) addr += ' ' + bis;
+  if (n3) addr += ' - ' + n3;
+  if (prev)   { prev.textContent = addr; prev.style.color = '#f0b429'; prev.style.fontStyle = 'normal'; }
+  if (hidden) hidden.value = addr;
+  renderDash();
+}
+
+function clearDashDir(rerender = true) {
+  ['dSigla','dBis'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+  ['dN1','dL1','dN2','dL2','dN3'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+  const prev = document.getElementById('dAbPrev');
+  if (prev) { prev.textContent = 'Sin dirección'; prev.style.color = '#4a7fa5'; prev.style.fontStyle = 'italic'; }
+  const hidden = document.getElementById('dash-dir');
+  if (hidden) hidden.value = '';
+  if (rerender) renderDash();
 }
 
 function setDashTab(tab) {
@@ -2878,15 +3063,14 @@ function setDashTab(tab) {
 
 function getDashRecs() {
   const upzF  = document.getElementById('dash-upz')?.value || '';
-  const barF  = document.getElementById('dash-barrio')?.value || '';
-  const dirF  = (document.getElementById('dash-dir')?.value || '').toLowerCase();
+  const dirF  = (document.getElementById('dash-dir')?.value || '').toLowerCase().trim();
   const desde = document.getElementById('dash-desde')?.value || '';
   const hasta = document.getElementById('dash-hasta')?.value || '';
   const tipoEstF = document.getElementById('dash-tipo-est')?.value || '';
   return recs.filter(r => {
     if (r.cc !== dashTab) return false;
     if (upzF  && (r.ub?.upz||'')    !== upzF)  return false;
-    if (barF  && (r.ub?.barrio||'') !== barF)   return false;
+    if (_dashBarriosSeleccionados.size > 0 && !_dashBarriosSeleccionados.has(r.ub?.barrio||'')) return false;
     if (dirF  && !(r.ub?.dir||'').toLowerCase().includes(dirF)) return false;
     if (desde && (r.meta?.fecha||'') < desde)   return false;
     if (hasta && (r.meta?.fecha||'') > hasta)   return false;
@@ -2896,13 +3080,96 @@ function getDashRecs() {
   });
 }
 
+// ── Multi-selector barrio ──
+let _dashBarriosSeleccionados = new Set(); // vacío = todos
+
 function populateDashBarrioFilter() {
   const upzF = document.getElementById('dash-upz')?.value || '';
-  const sel = document.getElementById('dash-barrio');
-  if (!sel) return;
-  const barrios = [...new Set(recs.filter(r => !upzF || r.ub?.upz === upzF).map(r => r.ub?.barrio||'').filter(Boolean))].sort();
-  sel.innerHTML = '<option value="">All</option>' + barrios.map(b => `<option>${b}</option>`).join('');
+  const list = document.getElementById('dash-barrio-list');
+  if (!list) return;
+  const barrios = [...new Set(
+    recs
+      .filter(r => r.cc === dashTab && (!upzF || r.ub?.upz === upzF))
+      .map(r => r.ub?.barrio || '')
+      .filter(Boolean)
+  )].sort();
+  // Limpiar selección que ya no existe en la lista nueva
+  const validSet = new Set(barrios);
+  _dashBarriosSeleccionados.forEach(b => { if (!validSet.has(b)) _dashBarriosSeleccionados.delete(b); });
+  list.innerHTML = barrios.map(b => {
+    const checked = _dashBarriosSeleccionados.size === 0 || _dashBarriosSeleccionados.has(b);
+    return `<label style="display:flex;align-items:center;gap:7px;padding:5px 10px;cursor:pointer;transition:background .1s"
+      onmouseover="this.style.background='#1e3a5f'" onmouseout="this.style.background='transparent'">
+      <input type="checkbox" value="${b}" ${checked ? 'checked' : ''}
+        onchange="onDashBarrioChange()"
+        style="accent-color:#f59e0b;width:13px;height:13px;cursor:pointer;flex-shrink:0">
+      <span style="font-size:.68rem;color:#e0f0ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${b}</span>
+    </label>`;
+  }).join('');
+  updateDashBarrioLabel();
 }
+
+function onDashBarrioChange() {
+  const list = document.getElementById('dash-barrio-list');
+  if (!list) return;
+  const checked = [...list.querySelectorAll('input[type=checkbox]:checked')].map(cb => cb.value);
+  const all     = [...list.querySelectorAll('input[type=checkbox]')].map(cb => cb.value);
+  // Si todos marcados o ninguno → tratar como "todos"
+  if (checked.length === 0 || checked.length === all.length) {
+    _dashBarriosSeleccionados = new Set();
+  } else {
+    _dashBarriosSeleccionados = new Set(checked);
+  }
+  updateDashBarrioLabel();
+  renderDash();
+}
+
+function updateDashBarrioLabel() {
+  const lbl = document.getElementById('dash-barrio-label');
+  if (!lbl) return;
+  if (_dashBarriosSeleccionados.size === 0) {
+    lbl.textContent = 'All';
+    lbl.style.color = '#e0f0ff';
+  } else {
+    lbl.textContent = `${_dashBarriosSeleccionados.size} barrio${_dashBarriosSeleccionados.size > 1 ? 's' : ''}`;
+    lbl.style.color = '#f59e0b';
+  }
+}
+
+function toggleDashBarrioDropdown(e) {
+  e.stopPropagation();
+  const panel = document.getElementById('dash-barrio-panel');
+  if (!panel) return;
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'block';
+}
+
+function dashBarrioSelAll() {
+  const list = document.getElementById('dash-barrio-list');
+  if (!list) return;
+  list.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = true);
+  _dashBarriosSeleccionados = new Set();
+  updateDashBarrioLabel();
+  renderDash();
+}
+
+function dashBarrioSelNone() {
+  const list = document.getElementById('dash-barrio-list');
+  if (!list) return;
+  list.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
+  _dashBarriosSeleccionados = new Set();
+  updateDashBarrioLabel();
+  renderDash();
+}
+
+// Cerrar dropdown al hacer clic fuera
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('dash-barrio-wrap');
+  const panel = document.getElementById('dash-barrio-panel');
+  if (wrap && panel && !wrap.contains(e.target)) {
+    panel.style.display = 'none';
+  }
+});
 
 function populateDashTipoEstFilter() {
   const sel = document.getElementById('dash-tipo-est');
@@ -3320,6 +3587,10 @@ function switchMain(v, btn) {
     // Inicializar el tab correcto si es la primera vez
     setDashTab(dashTab);
   }
+
+  if (v === 'recs' && typeof actualizarDiagnosticoRecs === 'function') {
+    actualizarDiagnosticoRecs();
+  }
 }
 
 // ── SECTION NAV (stub — vista vertical, sin pasos) ─────
@@ -3421,19 +3692,19 @@ function regidCollectComponente(){
     armas:gn('regid-armasAE'), dosis:gn('regid-dosisAE'), aplico:gv('regid-aplicoMedida'),
     medida:gv('regid-medidaAE'), dias:gn('regid-diasAE'), comp:gv('regid-compAE'),
     compPrev:gv('regid-compPrev'), motivoSusp:gv('regid-motivoSusp'),
-    motivoCDef:gv('regid-motivoCierreDef'), res:gv('regid-resAE')
+    motivoCDef:gv('regid-motivoCierreDef')
   }};
   if(cc==='EP') return { cc, ep:{
     secMon:gv('regid-secMonEPVal'), poligono:gv('regid-poligono'), elemHN:gv('regid-elemHN'),
     numElemHN:gn('regid-numElemHN'), ft:gn('regid-ftEP'), m2Rec:gn('regid-m2RecEP'),
-    vendRet:gn('regid-vendRetEP'), res:gv('regid-resEP')
+    vendRet:gn('regid-vendRetEP')
   }};
   if(cc==='AMB') return { cc, amb:{
-    linea:gv('regid-lineaAmb'), m2:gn('regid-m2Amb'), m3:gn('regid-m3Amb'),
+    linea:(gv('regid-lineaAmb')==='__OTRO__'?gv('regid-otraLineaAmbVal'):gv('regid-lineaAmb')), m2:gn('regid-m2Amb'), m3:gn('regid-m3Amb'),
     llantas:gn('regid-llantasAmb'), hc:gn('regid-hcAmb'), regPers:gn('regid-regPersAmb'),
     capturas:gn('regid-capturasAmb'), camb:gn('regid-cambAmb'), car:gn('regid-carAmb'),
     dosis:gn('regid-dosisAmb'), armasB:gv('regid-armasAmbB'), nArmas:gn('regid-nArmasAmb'),
-    tipoArma:gv('regid-tipoArmaAmb'), res:gv('regid-resAmb')
+    tipoArma:gv('regid-tipoArmaAmb')
   }};
   if(cc==='MOV') return { cc, mov:{
     accion:gv('regid-accionMovVal'), veh:gn('regid-vehMov'), comp:gn('regid-nCompMov'),
@@ -3451,16 +3722,16 @@ function regidLimpiarComponentes(){
   // Limpiar AE
   ['regid-tipoAE','regid-nomAE','regid-nomColegio','regid-entEsc','regid-aplicoMedida','regid-medidaAE','regid-compAE','regid-compPrev'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   ['regid-persAE','regid-bebAE','regid-armasAE','regid-dosisAE','regid-diasAE'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  ['regid-motivoSusp','regid-motivoCierreDef','regid-resAE'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['regid-motivoSusp','regid-motivoCierreDef'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.querySelectorAll('#regid-medidaChips .chip').forEach(c=>c.classList.remove('on'));
   ['regid-cdEntEsc','regid-cdColegio','regid-cdBebidas','regid-cdMedida','regid-cdSusp','regid-cdCierreDef','regid-cdCierrePrev'].forEach(id=>tc(id,false));
   // Limpiar EP
-  ['regid-secMonEPVal','regid-poligono','regid-elemHN','regid-resEP'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['regid-secMonEPVal','regid-poligono','regid-elemHN'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   ['regid-numElemHN','regid-ftEP','regid-m2RecEP','regid-vendRetEP'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.querySelectorAll('#regid-secMonEP .chip').forEach(c=>c.classList.remove('on'));
   ['regid-cdPoligonos','regid-cdHechosNot','regid-cdFoodTrucks'].forEach(id=>tc(id,false));
   // Limpiar AMB
-  ['regid-lineaAmb','regid-armasAmbB','regid-tipoArmaAmb','regid-resAmb'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['regid-lineaAmb','regid-armasAmbB','regid-tipoArmaAmb'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';}); const otraL=document.getElementById('regid-otraLineaAmb'); if(otraL) otraL.style.display='none'; const otraLV=document.getElementById('regid-otraLineaAmbVal'); if(otraLV) otraLV.value='';
   ['regid-m2Amb','regid-m3Amb','regid-llantasAmb','regid-hcAmb','regid-regPersAmb','regid-capturasAmb','regid-cambAmb','regid-carAmb','regid-dosisAmb','regid-nArmasAmb'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   tc('regid-cdArmasAmb',false);
   // Limpiar MOV
@@ -3625,9 +3896,9 @@ function collect(){
     ub:{barrio:gv('barrio'),upz:gv('upz'),dir:gv('dir')},
     tipoIVC:a?[a.textContent.trim()]:[],
     cc,
-    ae:cc==='AE'?{tipo:gv('tipoAE'),nom:gv('nomAE'),entEsc:gv('entEsc'),colegio:gv('nomColegio'),pers:gn('persAE'),beb:gn('bebAE'),armas:gn('armasAE'),dosis:gn('dosisAE'),aplico:gv('aplicoMedida'),medida:gv('medidaAE'),dias:gn('diasAE'),comp:gv('compAE'),compPrev:gv('compPrev'),motivoSusp:gv('motivoSusp'),motivoCDef:gv('motivoCierreDef'),res:gv('resAE')}:null,
-    ep:cc==='EP'?{secMon:gv('secMonEPVal'),poligono:gv('poligono'),elemHN:gv('elemHN'),numElemHN:gn('numElemHN'),ft:gn('ftEP'),m2Rec:gn('m2RecEP'),vendRet:gn('vendRetEP'),res:gv('resEP')}:null,
-    amb:cc==='AMB'?{linea:gv('lineaAmb'),m2:gn('m2Amb'),m3:gn('m3Amb'),llantas:gn('llantasAmb'),hc:gn('hcAmb'),regPers:gn('regPersAmb'),capturas:gn('capturasAmb'),camb:gn('cambAmb'),car:gn('carAmb'),dosis:gn('dosisAmb'),armasB:gv('armasAmbB'),nArmas:gn('nArmasAmb'),tipoArma:gv('tipoArmaAmb'),res:gv('resAmb')}:null,
+    ae:cc==='AE'?{tipo:gv('tipoAE'),nom:gv('nomAE'),entEsc:gv('entEsc'),colegio:gv('nomColegio'),pers:gn('persAE'),beb:gn('bebAE'),armas:gn('armasAE'),dosis:gn('dosisAE'),aplico:gv('aplicoMedida'),medida:gv('medidaAE'),dias:gn('diasAE'),comp:gv('compAE'),compPrev:gv('compPrev'),motivoSusp:gv('motivoSusp'),motivoCDef:gv('motivoCierreDef')}:null,
+    ep:cc==='EP'?{secMon:gv('secMonEPVal'),poligono:gv('poligono'),elemHN:gv('elemHN'),numElemHN:gn('numElemHN'),ft:gn('ftEP'),m2Rec:gn('m2RecEP'),vendRet:gn('vendRetEP')}:null,
+    amb:cc==='AMB'?{linea:(gv('lineaAmb')==='__OTRO__'?gv('otraLineaAmbVal'):gv('lineaAmb')),m2:gn('m2Amb'),m3:gn('m3Amb'),llantas:gn('llantasAmb'),hc:gn('hcAmb'),regPers:gn('regPersAmb'),capturas:gn('capturasAmb'),camb:gn('cambAmb'),car:gn('carAmb'),dosis:gn('dosisAmb'),armasB:gv('armasAmbB'),nArmas:gn('nArmasAmb'),tipoArma:gv('tipoArmaAmb')}:null,
     mov:cc==='MOV'?{accion:gv('accionMovVal'),veh:gn('vehMov'),comp:gn('nCompMov'),m2:gn('m2Mov'),obs:gv('obsMov')}:null,
     obr:cc==='OBR'?{enOp:gv('obraEnOp'),ocupaEP:gv('ocupaEPObr'),m2Ocupa:gn('m2OcupaObr'),persona:gv('personaAtiende'),obs:gv('obsObr')}:null,
     tot:{m2:gn('totM2'),m3:gn('totM3'),veh:gn('totVeh'),camb:gn('totCamb'),car:gn('totCar'),vend:gn('totVend'),ft:gn('totFT'),pers:gn('totPers'),armas:gn('totArmas'),dosis:gn('totDosis'),comp:gn('totComp'),susp:gn('totSusp')},
@@ -3935,6 +4206,7 @@ function clearFilters(){
 }
 
 function updateRecsList(){
+  if (typeof actualizarDiagnosticoRecs === 'function') actualizarDiagnosticoRecs();
   const filtered = getFilteredRecs();
   const total = recs.length;
   const n = filtered.length;
@@ -4257,7 +4529,24 @@ function closeMo(){
   selIdx=null; selKey=null;
 }
 function delRec(){
-  if(selIdx===null||!confirm('¿Eliminar este registro de Firebase? Esta acción no se puede deshacer.')) return;
+  if(selIdx===null) return;
+  const r = recs[selIdx];
+
+  // Registros del formulario nuevo: borrar la dirección dentro de operativos_por_id
+  if (r && r._origen === 'regid') {
+    if (!confirm('¿Eliminar esta dirección del operativo ' + r._idOp + '? Esta acción no se puede deshacer.')) return;
+    OPERATIVOS_REF.child(r._idOp).child('direcciones').child(r._dirKey).remove()
+      .then(function(){
+        toast('Dirección eliminada', 'warn');
+        closeMo();
+      })
+      .catch(function(err){
+        toast('Error al eliminar: ' + err.message, 'err');
+      });
+    return;
+  }
+
+  if(!confirm('¿Eliminar este registro de Firebase? Esta acción no se puede deshacer.')) return;
   const key = selKey || recs[selIdx]?._fbKey;
   if(!key){ toast('No se encontró la clave del registro','err'); return; }
   RESULTADOS_REF.child(key).remove()
@@ -4569,7 +4858,22 @@ function verificarClaveAccion(){
 function abrirEditar(){
   if(selIdx===null) return;
   const r = recs[selIdx];
-  
+
+  // Registros del formulario nuevo: se editan desde "Nuevo registro"
+  if (r && r._origen === 'regid') {
+    closeMo();
+    switchMain('regid', document.getElementById('sidebtn-regid'));
+    setTimeout(function(){
+      var idInput = document.getElementById('regid-idOp');
+      if (idInput) {
+        idInput.value = r._idOp;
+        regidCheckIdExists(); // carga el operativo y muestra sus direcciones con botón Editar
+      }
+      toast('Edita la dirección desde la lista «Direcciones ya registradas»', 'ok');
+    }, 200);
+    return;
+  }
+
   // Actualizar info de navegación
   updateEditNavInfo();
   
@@ -6243,6 +6547,76 @@ const OPERATIVOS_REF = db.ref('operativos_por_id');
 let regidOperativoActual = null;
 let regidDireccionesGuardadas = [];
 
+// ── LECTURA EN VIVO operativos_por_id → vista de resultados ──────────
+// Escucha operativos_por_id y aplana cada operativo a registros planos
+// que se muestran directamente en la vista de resultados. Sin copiar a
+// otro nodo: lo que ves es exactamente lo que guarda el formulario nuevo.
+let _statsOperativosPorId = { operativos: 0, direcciones: 0 };
+
+OPERATIVOS_REF.on('value', function(snap) {
+  var nOps = 0, nDirs = 0, planos = [];
+  if (snap.exists()) {
+    snap.forEach(function(child) {
+      var idOp = child.key;
+      var operativo = child.val();
+      if (operativo && operativo.direcciones) {
+        var n = Object.keys(operativo.direcciones).length;
+        nOps++; nDirs += n;
+        planos = planos.concat(regidAplanarOperativo(idOp, operativo));
+      }
+    });
+  }
+  _statsOperativosPorId = { operativos: nOps, direcciones: nDirs };
+  _recsNuevo = planos;
+  _rebuildRecs();
+  actualizarDiagnosticoRecs();
+}, function(err){
+  console.warn('No se pudo leer operativos_por_id:', err);
+  actualizarDiagnosticoRecs();
+});
+
+// Diagnóstico visible en la vista de resultados
+function actualizarDiagnosticoRecs() {
+  var el = document.getElementById('recsDiagTxt');
+  if (!el) return;
+  var fb = document.getElementById('fbStatus');
+  var conn = fb ? fb.textContent : '';
+  var msg = '📋 En esta vista: <b>' + (typeof recs !== 'undefined' ? recs.length : 0) + '</b> registro(s)';
+  msg += ' &nbsp;·&nbsp; 🆕 Formulario nuevo: <b>' + _statsOperativosPorId.operativos
+       + '</b> operativo(s) / <b>' + _statsOperativosPorId.direcciones + '</b> dirección(es)';
+  msg += ' &nbsp;·&nbsp; 📄 Sueltos: <b>' + _recsBase.length + '</b>';
+  if (conn) msg += ' &nbsp;·&nbsp; ' + conn;
+  el.innerHTML = msg;
+}
+
+// Botón "Sincronizar ahora": vuelve a leer y re-renderiza (la lectura ya es
+// en vivo, esto sirve para forzar un refresco manual).
+function sincronizarAhora() {
+  var btn = document.getElementById('btnSyncAhora');
+  if (btn) { btn.disabled = true; btn.textContent = 'Actualizando…'; }
+  OPERATIVOS_REF.once('value').then(function(snap){
+    var nOps = 0, nDirs = 0, planos = [];
+    if (snap.exists()) {
+      snap.forEach(function(child){
+        var operativo = child.val();
+        if (operativo && operativo.direcciones) {
+          nOps++; nDirs += Object.keys(operativo.direcciones).length;
+          planos = planos.concat(regidAplanarOperativo(child.key, operativo));
+        }
+      });
+    }
+    _statsOperativosPorId = { operativos: nOps, direcciones: nDirs };
+    _recsNuevo = planos;
+    _rebuildRecs();
+    if (typeof toast === 'function') toast('✓ Vista actualizada', 'ok');
+  }).catch(function(err){
+    console.error(err);
+    if (typeof toast === 'function') toast('Error al actualizar: ' + (err.message||err), 'err');
+  }).finally(function(){
+    if (btn) { btn.disabled = false; btn.textContent = '⟳ Sincronizar ahora'; }
+  });
+}
+
 function regidInicializar() {
   regidOperativoActual = null;
   regidDireccionesGuardadas = [];
@@ -6925,7 +7299,6 @@ function regidEditarDireccion(direccionKey) {
     sn('regid-bebAE',  ae.beb);
     sn('regid-armasAE',ae.armas);
     sn('regid-dosisAE',ae.dosis);
-    sv('regid-resAE',  ae.res);
     // Entorno escolar
     if (ae.entEsc) {
       setYN('regid-entEsc', '#regid-cdEntEsc', ae.entEsc);
@@ -6971,11 +7344,21 @@ function regidEditarDireccion(direccionKey) {
     sn('regid-ftEP',      ep.ft);
     sn('regid-m2RecEP',   ep.m2Rec);
     sn('regid-vendRetEP', ep.vendRet);
-    sv('regid-resEP',     ep.res);
   }
 
   if (cc === 'AMB' && amb) {
-    sv('regid-lineaAmb',    amb.linea);
+    // Si la línea no existe en el select, cargar como OTRO
+    const selLinea = document.getElementById('regid-lineaAmb');
+    if (selLinea && amb.linea) {
+      const opts = Array.from(selLinea.options).map(o => o.value);
+      if (opts.includes(amb.linea)) {
+        sv('regid-lineaAmb', amb.linea);
+      } else {
+        sv('regid-lineaAmb', '__OTRO__');
+        sv('regid-otraLineaAmbVal', amb.linea);
+        document.getElementById('regid-otraLineaAmb').style.display = 'block';
+      }
+    }
     sn('regid-m2Amb',       amb.m2);
     sn('regid-m3Amb',       amb.m3);
     sn('regid-llantasAmb',  amb.llantas);
@@ -6985,7 +7368,6 @@ function regidEditarDireccion(direccionKey) {
     sn('regid-cambAmb',     amb.camb);
     sn('regid-carAmb',      amb.car);
     sn('regid-dosisAmb',    amb.dosis);
-    sv('regid-resAmb',      amb.res);
     if (amb.armasB) {
       setYN('regid-armasAmbB', '#regid-blkAmb .card > .f.mb:last-of-type', amb.armasB);
       tc('regid-cdArmasAmb', amb.armasB === 'SI');
@@ -7028,6 +7410,18 @@ function regidEditarDireccion(direccionKey) {
   }, 120);
 
   toast(`✏️ Editando punto #${Object.keys(regidDireccionesGuardadas).indexOf(direccionKey)+1} — ${cc || 'sin componente'}`, 'ok');
+}
+
+// ── Otra línea de acción AMB ──
+function toggleOtraLineaAmb(selId, divId) {
+  const sel = document.getElementById(selId);
+  const div = document.getElementById(divId);
+  if (!sel || !div) return;
+  div.style.display = sel.value === '__OTRO__' ? 'block' : 'none';
+  if (sel.value !== '__OTRO__') {
+    const inp = document.getElementById(divId + 'Val');
+    if (inp) inp.value = '';
+  }
 }
 
 function regidToggleMegatomaStyle() {
